@@ -6,13 +6,12 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:50:07 by nflan             #+#    #+#             */
-/*   Updated: 2022/03/21 11:54:23 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:24:20 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-
 # include <string.h>
 # include <stdio.h>
 # include <stdlib.h>
