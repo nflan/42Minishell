@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/12 17:49:12 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/13 15:17:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,20 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 }	t_cmd;
 
+typedef struct s_tree
+{
+	t_cmd			*cmd;
+	unsigned int	prof;// profondeur
+	struct s_tree	*left;
+	struct s_tree	*right;
+	struct s_tree	*parent;
+}	t_tree;
+
 typedef struct s_info
 {
 	char	*rdline;
 	int		nbdiff;
-	t_cmd	**cmd;
+	t_tree	*tree;
 }	t_info;
 
 #endif
