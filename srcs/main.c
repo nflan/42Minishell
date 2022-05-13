@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/12 18:02:47 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/13 13:02:49 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,96 @@ char	*ft_cmd_line(char *str)
 	return (cmd);
 }
 
-int	ft_fill_cmd(t_info *info, int i)
+void	ft_cmdadd_back(t_cmd **acmd, t_cmd *new)
 {
-	char	*cmd_line;
 	t_cmd	*tmp;
 
 	tmp = NULL;
-	cmd_line = ft_cmd_line(info->rdline);
-	for (int y = 0; y < 3; y++)
+	tmp = *acmd;
+	if (acmd && new)
 	{
-		info->cmd[i]->line = cmd_line;
-		if (!info->cmd[0]->line)
+		if (*acmd == NULL)
+			*acmd = new;
+		else
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			new->prev = tmp;
+			tmp->next = new;
+		}
+	}
+}
+
+char	*ft_onecmd(t_info *info, int i)
+{
+	char	*cmd_line;
+	char	*cmd;
+	int		y;
+
+	cmd = NULL;
+	y = 0;
+	cmd_line = ft_cmd_line(info->rdline);
+	if (!cmd_line)
+		return (NULL);
+	if (i)
+	{
+		y = -1;
+		while (i && cmd_line[++y])
+			if (cmd_line[y - 1] == '|')
+				i--;
+	}
+	while (cmd_line[y + i] && cmd_line[y + i] != '|')
+		i++;
+	printf("i = %d\n", i);
+	cmd = ft_calloc(sizeof(char), i);
+	if (!cmd)
+		return (NULL);
+	i = -1;
+	y -= 1;
+	while (cmd_line[++y] && cmd_line[++i] != '|')
+		cmd[i] = cmd_line[y];
+	return (cmd);
+}
+
+t_cmd	*ft_cmdnew(t_info *info, int i)
+{
+	t_cmd	*new;
+
+	new = ft_calloc(sizeof(t_cmd), 1);
+	if (!new)
+		return (NULL);
+	new->line = ft_onecmd(info, i);
+	new->fdin = 0;
+	new->fdout = 1;
+	new->index = i;
+	new->type = 0;
+	new->next = NULL;
+	new->prev = NULL;
+	return (new);
+}
+
+int	ft_count_pipe(t_info *info)
+{
+	int	count;
+
+	count = 0;
+
+	return (count);
+}
+
+int	ft_fill_cmd(t_info *info, int i)
+{
+	t_cmd	*tmp;
+	int		j;
+
+	tmp = NULL;
+	j = 0;
+	for (int y = 0; y < 2; y++)
+	{
+		tmp = ft_cmdnew(info, y);
+		if (!tmp)
 			return (1);
-		info->cmd[i]->fdin = 0;
-		info->cmd[i]->fdout = 1;
-		info->cmd[i]->index = 0;
-		info->cmd[i]->next = tmp;
-		info->cmd[i]->prev = NULL;
-		tmp = info->cmd[i];
+		ft_cmdadd_back(&info->cmd[i], tmp);
 	}
 	return (0);
 }
@@ -102,14 +174,14 @@ int	ft_init_cmd(t_info *info)
 	info->cmd = ft_calloc(sizeof(t_cmd *), info->nbdiff + 1);
 	if (!info->cmd)
 		return (1);
-	while (++i <= info->nbdiff)
-	{
-		info->cmd[i] = ft_calloc(sizeof(t_cmd), 1);
-		if (!info->cmd[i])
-			return (1);
-		if (ft_fill_cmd(info, i))
-			return (1);
-	}
+//	while (++i <= info->nbdiff)
+//	{
+//		info->cmd[i] = ft_calloc(sizeof(t_cmd), 1);
+//		if (!info->cmd[i])
+//			return (1);
+	if (ft_fill_cmd(info, 0))
+		return (1);
+//	}
 	return (0);
 }
 
@@ -126,7 +198,19 @@ void	ft_print_cmd(t_info *info)
 			printf("info->cmd->fdin = %d\n", info->cmd[i]->fdin);
 			printf("info->cmd->fdout = %d\n", info->cmd[i]->fdout);
 			printf("info->cmd->index = %d\n", info->cmd[i]->index);
+			printf("info->cmd->next = %p\n", info->cmd[i]->next);
+			printf("info->cmd->prev = %p\n", info->cmd[i]->prev);
 			info->cmd[i] = info->cmd[i]->next;
+		}
+		while (info->cmd[i]->prev)
+		{
+			printf("info->cmd->line = %s\n", info->cmd[i]->line);
+			printf("info->cmd->fdin = %d\n", info->cmd[i]->fdin);
+			printf("info->cmd->fdout = %d\n", info->cmd[i]->fdout);
+			printf("info->cmd->index = %d\n", info->cmd[i]->index);
+			printf("info->cmd->next = %p\n", info->cmd[i]->next);
+			printf("info->cmd->prev = %p\n", info->cmd[i]->prev);
+			info->cmd[i] = info->cmd[i]->prev;
 		}
 	}
 }
