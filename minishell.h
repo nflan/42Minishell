@@ -6,25 +6,28 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/15 21:29:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/16 23:40:35 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-typedef enum s_tok
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef enum s_tok_type
 {
 	TOK_IDK,
 	TOK_SEP,
 	TOK_QUOTER,
-	TOK_EXPANDER,
 	TOK_EXPANDER_OP,
 	TOK_EXPANDER_CL,
 	TOK_OPERATOR,
 	TOK_PATH,
 	TOK_WORD,
-} t_tok;
+	TOK_EXPANDER,
+} t_tok_type;
 
 typedef enum s_char_type
 {
@@ -65,7 +68,19 @@ typedef enum s_char_type
 	CHR_TILDA,
 } t_char_type;
 
-static t_char_type get_char_class[255] =
+typedef	struct 				s_token
+{
+	int						sp_before;
+//	int						sp_after;
+	int						length;
+	t_tok_type				token;
+	int						quoted;
+	struct s_token			*prev;
+	struct s_token			*next;
+}							t_token;
+
+
+static const t_char_type get_char_class[255] =
 	{
 		['\0'] = CHR_NULL,
 		['\t'] = CHR_SPACE,
@@ -73,16 +88,16 @@ static t_char_type get_char_class[255] =
 		['!'] = CHR_EXCLAM,
 		['"'] = CHR_D_QUOTE,
 		['#'] = CHR_COMMENT,
-		['\$'] = CHR_DOL,
+		['$'] = CHR_DOL,
 		['%'] = CHR_PER,
 		['&'] = CHR_AND,
 		['\''] = CHR_S_QUOTE,
-		['\('] = CHR_OP_PAREN,
-		['\)'] = CHR_CL_PAREN,
-		['\*'] = CHR_AST,
-		['\+'] = CHR_PLUS,
+		['('] = CHR_OP_PAREN,
+		[')'] = CHR_CL_PAREN,
+		['*'] = CHR_AST,
+		['+'] = CHR_PLUS,
 		['-'] = CHR_DASH_MINES,
-		['\.'] = CHR_POINT,
+		['.'] = CHR_POINT,
 		['/'] = CHR_SLASH,
 		['0' ... '9'] = CHR_NUM,
 		[':'] = CHR_COLON,
@@ -93,20 +108,20 @@ static t_char_type get_char_class[255] =
 		['?'] = CHR_INTEROG,
 		['@'] = CHR_AT,
 		['A' ... 'Z'] = CHR_ALPHA,
-		['\['] = CHR_OP_BRACKET,
+		['['] = CHR_OP_BRACKET,
 		['\\'] = CHR_ANTI_SLASH,
-		['\]'] = CHR_CL_BRACKET,
-		['\^'] = CHR_CIRCUM,
+		[']'] = CHR_CL_BRACKET,
+		['^'] = CHR_CIRCUM,
 		['_'] = CHR_UNDERSCORE,
 		['`'] = CHR_BACKTICK,
 		['a' ... 'z'] = CHR_ALPHA,
-		['\{'] = CHR_OP_BRACE,
-		['\|'] = CHR_PIPE,
-		['\}'] = CHR_CL_BRACE,
+		['{'] = CHR_OP_BRACE,
+		['|'] = CHR_PIPE,
+		['}'] = CHR_CL_BRACE,
 		['~'] = CHR_TILDA,
 };
 
-static t_tok get_tok_type[255] =
+static const t_tok_type get_tok_type[255] =
 	{
 		[CHR_NULL] = TOK_IDK,
 		[CHR_SPACE] = TOK_SEP,
@@ -139,12 +154,25 @@ static t_tok get_tok_type[255] =
 		[CHR_CL_BRACKET] = TOK_EXPANDER_CL,
 		[CHR_CIRCUM] = TOK_IDK,
 		[CHR_UNDERSCORE] = TOK_WORD,
-		[CHR_BACKTICK] = TOK_EXPANDER,
 		[CHR_ALPHA] = TOK_WORD,
 		[CHR_OP_BRACE] = TOK_EXPANDER_OP,
 		[CHR_PIPE] = TOK_OPERATOR,
 		[CHR_CL_BRACE] = TOK_EXPANDER_CL,
 		[CHR_TILDA] = TOK_PATH,
+		[CHR_BACKTICK] = TOK_IDK,
 };
+
+static	int	rules[9][255];
+
+//----------tokenizer.c--------------------------------------
+
+void ft_fill_tab(int n, int **tab, t_tok_type *get_tok_type);
+void fill_them_tables(int **tab, int size, t_tok_type *get_tok_type);
+t_token 	*ft_create_token(t_tok_type tok_type);
+void		add_tok_last(t_token **tok_list, t_tok_type tok_type, int length);
+int	is_quoted(t_token **tok_list, int rank_in_list);
+void	init_tok_struct(t_token **tok_list, int	rank_in_list, int length);
+
+//-----------
 
 #endif
