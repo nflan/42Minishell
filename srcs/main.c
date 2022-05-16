@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/13 13:02:49 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/16 17:44:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*ft_cmd_line(char *str)
 	return (cmd);
 }
 
-void	ft_cmdadd_back(t_cmd **acmd, t_cmd *new)
+/*void	ft_cmdadd_back(t_cmd **acmd, t_cmd *new)
 {
 	t_cmd	*tmp;
 
@@ -89,7 +89,7 @@ void	ft_cmdadd_back(t_cmd **acmd, t_cmd *new)
 			tmp->next = new;
 		}
 	}
-}
+}*/
 
 char	*ft_onecmd(t_info *info, int i)
 {
@@ -122,98 +122,189 @@ char	*ft_onecmd(t_info *info, int i)
 	return (cmd);
 }
 
-t_cmd	*ft_cmdnew(t_info *info, int i)
-{
-	t_cmd	*new;
-
-	new = ft_calloc(sizeof(t_cmd), 1);
-	if (!new)
-		return (NULL);
-	new->line = ft_onecmd(info, i);
-	new->fdin = 0;
-	new->fdout = 1;
-	new->index = i;
-	new->type = 0;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
-}
-
-int	ft_count_pipe(t_info *info)
+/*int	ft_count_pipe(t_info *info)
 {
 	int	count;
 
 	count = 0;
 
 	return (count);
+}*/
+
+/*t_cmd	*ft_cmdnew(t_info *info, char *cmd)
+{
+	t_cmd	*new;
+
+	new = ft_calloc(sizeof(t_cmd), 1);
+	if (!new)
+		return (NULL);
+	new->cmd = cmd;
+	new->fdin = 0;
+	new->fdout = 1;
+	return (new);
+}*/
+
+void	ft_print_cmd(t_cmd	*cmd)
+{
+	printf("cmd->line = %s\n", cmd->cmd);
+	printf("cmd->fdin = %d\n", cmd->fdin);
+	printf("cmd->fdout = %d\n", cmd->fdout);
 }
 
-int	ft_fill_cmd(t_info *info, int i)
+t_cmd	*ft_cmdnew(char *cmd, t_tree *ptr)
 {
 	t_cmd	*tmp;
-	int		j;
+
+	if (!cmd)
+		return (NULL);
+	tmp = NULL;
+	tmp = ft_calloc(sizeof(t_cmd), 1);
+	if (!tmp)
+		return (NULL);
+	tmp->cmd = cmd;
+	tmp->fdin = 0;
+	tmp->fdout = 1;
+	tmp->tree = NULL;
+	if (ptr)
+		tmp->tree = ptr;
+	return (tmp);
+}
+
+void	ft_lstadd_tree(t_tree **alst, t_tree *new, int i)
+{
+	t_tree	*tmp;
 
 	tmp = NULL;
-	j = 0;
-	for (int y = 0; y < 2; y++)
+	tmp = *alst;
+	if (alst && new)
 	{
-		tmp = ft_cmdnew(info, y);
-		if (!tmp)
-			return (1);
-		ft_cmdadd_back(&info->cmd[i], tmp);
+		if (*alst == NULL)
+			*alst = new;
+		else if (i == 2)
+		{
+			while (tmp->right)
+				tmp = tmp->right;
+			tmp->right = new;
+		}
+		else if (i == 1)
+		{
+			while (tmp->right)
+				tmp = tmp->right;
+			tmp->left = new;
+		}
 	}
-	return (0);
 }
 
-int	ft_init_cmd(t_info *info)
+t_tree	*ft_treenew(char *str, t_tree *ptr)
 {
-	int	i;
-	
-	i = -1;
-	info->cmd = NULL;
-	info->cmd = ft_calloc(sizeof(t_cmd *), info->nbdiff + 1);
-	if (!info->cmd)
-		return (1);
-//	while (++i <= info->nbdiff)
-//	{
-//		info->cmd[i] = ft_calloc(sizeof(t_cmd), 1);
-//		if (!info->cmd[i])
-//			return (1);
-	if (ft_fill_cmd(info, 0))
-		return (1);
-//	}
-	return (0);
+	t_tree	*new;
+
+	new = NULL;
+	new = ft_calloc(sizeof(t_tree), 1);
+	if (!new)
+		return (NULL);
+	new->cmd = ft_cmdnew(str, ptr);
+	new->right = NULL;
+	new->left = NULL;
+	return (new);
 }
 
-void	ft_print_cmd(t_info *info)
+t_tree	*ft_fill_tree(t_info *info)
 {
-	int	i;
+	t_tree	*ptr;
+	t_tree	*new;
+	t_tree	*tmpcmd;
+	char	**tab;
+	int		i;
 
 	i = 0;
-	if (info->cmd)
+	tmpcmd = NULL;
+	ptr = NULL;
+	new = NULL;
+	tab = ft_split(info->rdline, ';');
+	if (!tab)
+		return (NULL);
+	for (int y = 0; tab[y]; y++)
+		printf("tab[%d] = %s\n", y, tab[y]);
+	while (tab[i])
 	{
-		while (info->cmd[i]->next)
+		ptr = ft_treenew(tab[i], ptr);
+		if (!ptr)
+			return (NULL);
+		if (i % 2)
 		{
-			printf("info->cmd->line = %s\n", info->cmd[i]->line);
-			printf("info->cmd->fdin = %d\n", info->cmd[i]->fdin);
-			printf("info->cmd->fdout = %d\n", info->cmd[i]->fdout);
-			printf("info->cmd->index = %d\n", info->cmd[i]->index);
-			printf("info->cmd->next = %p\n", info->cmd[i]->next);
-			printf("info->cmd->prev = %p\n", info->cmd[i]->prev);
-			info->cmd[i] = info->cmd[i]->next;
+			if (i != 1)
+			{
+				ft_lstadd_tree(&new, ptr, 2);
+				ptr = new->right;
+			}
+			else
+				new = ptr;
+			ft_lstadd_tree(&new, tmpcmd, 1);
 		}
-		while (info->cmd[i]->prev)
+		else
+			tmpcmd = ptr;
+		i++;
+		if (!tab[i])
+			ft_lstadd_tree(&new, tmpcmd, 2);
+	}
+//	printf("tmp = %s\n", tmp->left->cmd->cmd);
+	return (new);
+}
+
+int	ft_init_tree(t_info *info)
+{
+	int	i = 0;
+
+	info->status = 0;
+	info->tree = ft_fill_tree(info);
+	if (!info->tree)
+			return (1);
+		while (info->tree->right)
+	{
+		printf("racine %d = %s\n", i, info->tree->cmd->cmd);
+		printf("left %d = %s\n", i, info->tree->left->cmd->cmd);
+		printf("left->cmd apres %s %d = %s\n", info->tree->cmd->cmd, i, info->tree->cmd->tree->cmd->cmd);
+		printf("right %d = %s\n", i, info->tree->right->cmd->cmd);
+		i++;
+		info->tree = info->tree->right;
+	}
+	return (0);
+}
+
+/*void	ft_print_tree(t_info *info)
+{
+	int	i;
+	t_tree	*tree;
+
+	i = 0;
+	tree = info->tree;
+	if (tree)
+	{
+		while (tree->left)
 		{
-			printf("info->cmd->line = %s\n", info->cmd[i]->line);
-			printf("info->cmd->fdin = %d\n", info->cmd[i]->fdin);
-			printf("info->cmd->fdout = %d\n", info->cmd[i]->fdout);
-			printf("info->cmd->index = %d\n", info->cmd[i]->index);
-			printf("info->cmd->next = %p\n", info->cmd[i]->next);
-			printf("info->cmd->prev = %p\n", info->cmd[i]->prev);
-			info->cmd[i] = info->cmd[i]->prev;
+			tree = tree->left;
+			if (!tree->print)
+				ft_print_cmd(tree->cmd);
+			tree->print = 1;
+		}
+		while (tree->parent)
+		{
+			if (tree->right && !tree->right->print)
+			{
+				tree = tree->right;
+				while (tree->left)
+				{
+					tree = tree->left;
+					if (!tree->print)
+						ft_print_cmd(tree->cmd);
+					tree->print = 1;
+				}
+			}
+			tree = tree->parent;
 		}
 	}
-}
+}*/
 
 int	ft_nb_andor(char *str)
 {
@@ -232,10 +323,12 @@ int	ft_nb_andor(char *str)
 
 int	ft_init_info(t_info *info)
 {
-	info->nbdiff = ft_nb_andor(info->rdline);
-	if (ft_init_cmd(info))
+//	info->nbdiff = ft_nb_andor(info->rdline);
+	info->tree = NULL;
+	if (ft_init_tree(info))
 		return (1);
-	ft_print_cmd(info);
+	info->status = 0;
+//	ft_print_tree(info);
 	return (0);
 }
 
