@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/16 23:40:35 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/17 11:49:57 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,7 @@ int	is_quoted(t_token **tok_list, int rank_in_list);
 void	init_tok_struct(t_token **tok_list, int	rank_in_list, int length);
 
 //-----------
+
+int	ft_pwd(void);
 
 #endif
