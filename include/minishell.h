@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/17 15:57:47 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/17 17:22:11 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef enum s_char_type
 
 typedef	struct 				s_token
 {
+	char					*cmd;
 	int						sp_before;
 //	int						sp_after;
 	int						length;
@@ -189,8 +190,6 @@ typedef struct s_info
 	t_tree	*tree;
 }	t_info;
 
-static	int	rules[9][255];
-
 //----------tokenizer.c--------------------------------------
 
 void	ft_fill_tab(int n, int **tab, t_tok_type *get_tok_type);
@@ -199,6 +198,7 @@ t_token	*ft_create_token(t_tok_type tok_type);
 void	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length);
 int		is_quoted(t_token **tok_list, int rank_in_list);
 void	init_tok_struct(t_token **tok_list, int	rank_in_list, int length);
+void	detect_tokens(t_token **tok_list, char *str);
 
 //-----------
 int	ft_pwd(void);
