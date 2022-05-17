@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/16 23:40:35 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/17 13:35:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,16 @@ typedef enum s_char_type
 	CHR_TILDA,
 } t_char_type;
 
-typedef	struct 				s_token
+typedef struct s_token
 {
-	int						sp_before;
-//	int						sp_after;
-	int						length;
-	t_tok_type				token;
-	int						quoted;
-	struct s_token			*prev;
-	struct s_token			*next;
-}							t_token;
-
+	int sp_before;
+	//	int						sp_after;
+	int length;
+	t_tok_type token;
+	int quoted;
+	struct s_token *prev;
+	struct s_token *next;
+} t_token;
 
 static const t_char_type get_char_class[255] =
 	{
@@ -162,16 +161,17 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_BACKTICK] = TOK_IDK,
 };
 
-static	int	rules[9][255];
+static int rules[9][255];
 
 //----------tokenizer.c--------------------------------------
 
-void ft_fill_tab(int n, int **tab, t_tok_type *get_tok_type);
-void fill_them_tables(int **tab, int size, t_tok_type *get_tok_type);
-t_token 	*ft_create_token(t_tok_type tok_type);
-void		add_tok_last(t_token **tok_list, t_tok_type tok_type, int length);
-int	is_quoted(t_token **tok_list, int rank_in_list);
-void	init_tok_struct(t_token **tok_list, int	rank_in_list, int length);
+t_token 		*ft_create_token(t_tok_type tok_type);
+void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length);
+int 			is_quoted(t_token **tok_list, int rank_in_list);
+void 			init_tok_struct(t_token **tok_list, int rank_in_list, int length);
+int				len_ll_list(t_token *tok_list);
+unsigned int	get_real_tok_type(char c, t_token **tok_list);
+void 			detect_tokens(t_token **tok_list, char *str);
 
 //-----------
 

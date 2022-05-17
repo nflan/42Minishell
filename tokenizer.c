@@ -6,45 +6,15 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/16 23:44:51 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/17 13:46:30 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_fill_tab(int n, int **tab, t_tok_type *get_tok_type)
+t_token *ft_create_token(t_tok_type tok_type)
 {
-	int i;
-
-	i = 0;
-	while (i < 255)
-	{
-		if (get_tok_type[i] == n)
-			(*tab)[i] = 1;
-		else
-			(*tab)[i] = 0;
-		i++;
-	}
-}
-
-void fill_them_tables(int **tab, int size, t_tok_type *get_tok_type)
-{
-	printf("I entered here\n");
-	int i;
-	int *ptr;
-
-	i = 0;
-	while (i < size)
-	{
-		tab[i] = malloc(255 * sizeof(int));
-		ft_fill_tab(i, &(tab[i]), get_tok_type);
-		i++;
-	}
-}
-
-t_token 	*ft_create_token(t_tok_type tok_type)
-{
-	t_token	*tok;
+	t_token *tok;
 
 	tok = (t_token *)malloc(sizeof(t_token));
 	if (!tok)
@@ -54,11 +24,11 @@ t_token 	*ft_create_token(t_tok_type tok_type)
 	return (tok);
 }
 
-void		add_tok_last(t_token **tok_list, t_tok_type tok_type, int length)
+void add_tok_last(t_token **tok_list, t_tok_type tok_type, int length)
 {
-	t_token	*tmp;
-	t_token	*bef_last;
-	int		rank_in_list;
+	t_token *tmp;
+	t_token *bef_last;
+	int rank_in_list;
 
 	if (!*tok_list)
 	{
@@ -80,10 +50,10 @@ void		add_tok_last(t_token **tok_list, t_tok_type tok_type, int length)
 	init_tok_struct(tok_list, rank_in_list, length);
 }
 
-int	is_quoted(t_token **tok_list, int rank_in_list)
+int is_quoted(t_token **tok_list, int rank_in_list)
 {
-	t_token 	*tmp;
-	int			res;
+	t_token *tmp;
+	int res;
 
 	res = 1;
 	tmp = *tok_list;
@@ -103,7 +73,7 @@ int	is_quoted(t_token **tok_list, int rank_in_list)
 	}
 }
 
-void	init_tok_struct(t_token **tok_list, int	rank_in_list, int length)
+void init_tok_struct(t_token **tok_list, int rank_in_list, int length)
 {
 	(*tok_list)->length = length;
 	if (is_quoted(tok_list, rank_in_list))
@@ -113,16 +83,16 @@ void	init_tok_struct(t_token **tok_list, int	rank_in_list, int length)
 	if (!rank_in_list)
 		(*tok_list)->sp_before = -1;
 	else
-		{
-			if ((*tok_list)->prev->token == TOK_SEP)
-				(*tok_list)->sp_before = 1;
-			(*tok_list)->sp_before = 0;
-		}
+	{
+		if ((*tok_list)->prev && (*tok_list)->prev->token == TOK_SEP)
+			(*tok_list)->sp_before = 1;
+		(*tok_list)->sp_before = 0;
+	}
 }
 
-int	len_ll_list(t_token *tok_list)
+int len_ll_list(t_token *tok_list)
 {
-	int	len;
+	int len;
 
 	len = 0;
 	if (!tok_list)
@@ -135,9 +105,9 @@ int	len_ll_list(t_token *tok_list)
 	return (len);
 }
 
-unsigned int	get_real_tok_type(char c, t_token **tok_list)
+unsigned int get_real_tok_type(char c, t_token **tok_list)
 {
-	int	len;
+	int len;
 
 	len = len_ll_list(*tok_list);
 	if (len == 0 || len == 1)
@@ -149,47 +119,48 @@ unsigned int	get_real_tok_type(char c, t_token **tok_list)
 		else
 			return (get_tok_type[get_char_class[c]]);
 	}
-
+	return (-1);
 }
 
-void	detect_tokens(t_token **tok_list, char *str)
+void detect_tokens(t_token **tok_list, char *str)
 {
-	int				i;
-	unsigned int	tok_type;
-	int				length;
+	int i;
+	unsigned int tok_type;
+	int length;
 
 	i = 0;
 	length = 1;
 	if (!str)
-		return ;
+		return;
 	while (str[i])
 	{
-		tok_type = get_tok_type[get_char_class[str[i]]];
+		tok_type = get_real_tok_type(str[i], tok_list);
 		i++;
-		while (str[i] && get_tok_type[get_char_class[str[i]]] == tok_type)
+		while (str[i] && get_real_tok_type(str[i], tok_list) == tok_type)
 		{
 			length++;
 			i++;
 		}
-
+		add_tok_last(tok_list, tok_type, length);
 	}
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
-	static	int	**rules;
-	int	i;
-	int	**ptr;
-	t_tok_type *tokens;
+	t_token *tokens;
 
 	tokens = NULL;
-	i = 0;
-	rules = malloc(9 * sizeof(int *));
-	fill_them_tables(rules, 9, get_tok_type);
-	while (i < 255)
+	detect_tokens(&tokens, argv[1]);
+	t_token *tmp;
+	tmp = tokens;
+	while (tmp)
 	{
-		printf("%d", rules[0][i]);
-		i++;
+		printf("%d\n", tmp->sp_before);
+		printf("%d\n", tmp->token);
+		printf("%d\n", tmp->length);
+		printf("%d\n", tmp->quoted);
+		printf("\n\n");
+		tmp = tmp->next;
 	}
 	return 0;
 }
