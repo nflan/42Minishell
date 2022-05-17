@@ -6,11 +6,10 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/17 13:35:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/17 13:52:40 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
 #define MINISHELL_H
 
 #include <stdio.h>
@@ -174,5 +173,7 @@ unsigned int	get_real_tok_type(char c, t_token **tok_list);
 void 			detect_tokens(t_token **tok_list, char *str);
 
 //-----------
+
+int	ft_pwd(void);
 
 #endif
