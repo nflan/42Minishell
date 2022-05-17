@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/17 14:17:05 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/17 16:19:15 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,59 +253,39 @@ t_tree	*ft_fill_tree(t_info *info)
 	return (new);
 }
 
+void	ft_print_test(t_tree *tree, int i)
+{
+	while (--i > 0)
+		printf("\t");
+	if (tree->cmd)
+		printf(">%s<\n",  tree->cmd->cmd);
+//	if (tree->cmd->tree)
+//		printf("left->cmd apres %s %d = %s\n", tree->cmd->cmd, i, tree->cmd->tree->cmd->cmd);
+}
+
 int	ft_init_tree(t_info *info)
 {
-	int	i = 0;
-
 	info->status = 0;
 	info->tree = ft_fill_tree(info);
 	if (!info->tree)
 			return (1);
-		while (info->tree->right)
-	{
-		printf("racine %d = %s\n", i, info->tree->cmd->cmd);
-		printf("left %d = %s\n", i, info->tree->left->cmd->cmd);
-		printf("left->cmd apres %s %d = %s\n", info->tree->cmd->cmd, i, info->tree->cmd->tree->cmd->cmd);
-		printf("right %d = %s\n", i, info->tree->right->cmd->cmd);
-		i++;
-		info->tree = info->tree->right;
-	}
 	return (0);
 }
 
-/*void	ft_print_tree(t_info *info)
+void	ft_print_tree(t_tree *tree, int i)
 {
-	int	i;
-	t_tree	*tree;
-
-	i = 0;
-	tree = info->tree;
-	if (tree)
+	i++;
+	if (tree->left)
 	{
-		while (tree->left)
-		{
-			tree = tree->left;
-			if (!tree->print)
-				ft_print_cmd(tree->cmd);
-			tree->print = 1;
-		}
-		while (tree->parent)
-		{
-			if (tree->right && !tree->right->print)
-			{
-				tree = tree->right;
-				while (tree->left)
-				{
-					tree = tree->left;
-					if (!tree->print)
-						ft_print_cmd(tree->cmd);
-					tree->print = 1;
-				}
-			}
-			tree = tree->parent;
-		}
+		ft_print_tree(tree->left, i);
+		ft_print_test(tree, i);
+	//	printf("\n");
 	}
-}*/
+	if (tree->right)
+		ft_print_tree(tree->right, i);
+	if (!tree->left)
+		ft_print_test(tree, i);
+}
 
 int	ft_nb_andor(char *str)
 {
@@ -324,12 +304,13 @@ int	ft_nb_andor(char *str)
 
 int	ft_init_info(t_info *info)
 {
-//	info->nbdiff = ft_nb_andor(info->rdline);
+	t_tree	*print;
 	info->tree = NULL;
 	if (ft_init_tree(info))
 		return (1);
 	info->status = 0;
-//	ft_print_tree(info);
+	print = info->tree;
+	ft_print_tree(print, 0);
 	return (0);
 }
 
@@ -337,45 +318,26 @@ void	ft_free_branch(t_tree *branch)
 {
 	free(branch->cmd->cmd);
 	free(branch->cmd);
+	branch->cmd = NULL;
 	free(branch);
 	branch = NULL;
 }
 
-void	ft_free_tree(t_info *info, t_tree *tofree)
+void	ft_free_tree(t_tree *tree)
 {
-	while (info->tree->right)
-	{
-		while (tofree->right)
-		{
-			tofree = tofree->right;
-			if (tofree->left)
-				ft_free_branch(tofree->left);
-			if (tofree->right)
-				ft_free_branch(tofree->right);
-			tofree = info->tree;
-		}
-	}
-	while (info->tree->left)
-	{
-		while (tofree->left)
-		{
-			tofree = tofree->left;
-			if (tofree->left)
-				ft_free_branch(tofree->left);
-			if (tofree->right)
-				ft_free_branch(tofree->right);
-			tofree = info->tree;
-		}
-	}
+	if (tree->left)
+		ft_free_tree(tree->left);
+	if (tree->right)
+		ft_free_tree(tree->right);
+	ft_free_branch(tree);
 }
 
 void	ft_free_all(t_info *info)
 {
 	t_tree	*tofree;
 
-	tofree = NULL;
-	ft_free_tree(info, tofree);
-	ft_free_branch(info->tree);
+	tofree = info->tree;
+	ft_free_tree(tofree);
 	info->tree = NULL;
 	free(info->rdline);
 }
