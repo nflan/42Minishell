@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/16 17:44:39 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/17 11:42:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ t_cmd	*ft_cmdnew(char *cmd, t_tree *ptr)
 	tmp = ft_calloc(sizeof(t_cmd), 1);
 	if (!tmp)
 		return (NULL);
-	tmp->cmd = cmd;
+	tmp->cmd = ft_strdup(cmd);
 	tmp->fdin = 0;
 	tmp->fdout = 1;
 	tmp->tree = NULL;
@@ -224,8 +224,8 @@ t_tree	*ft_fill_tree(t_info *info)
 	tab = ft_split(info->rdline, ';');
 	if (!tab)
 		return (NULL);
-	for (int y = 0; tab[y]; y++)
-		printf("tab[%d] = %s\n", y, tab[y]);
+//	for (int y = 0; tab[y]; y++)
+//		printf("tab[%d] = %s\n", y, tab[y]);
 	while (tab[i])
 	{
 		ptr = ft_treenew(tab[i], ptr);
@@ -248,19 +248,20 @@ t_tree	*ft_fill_tree(t_info *info)
 		if (!tab[i])
 			ft_lstadd_tree(&new, tmpcmd, 2);
 	}
+	ft_free_split(tab, i);
 //	printf("tmp = %s\n", tmp->left->cmd->cmd);
 	return (new);
 }
 
 int	ft_init_tree(t_info *info)
 {
-	int	i = 0;
+//	int	i = 0;
 
 	info->status = 0;
 	info->tree = ft_fill_tree(info);
 	if (!info->tree)
 			return (1);
-		while (info->tree->right)
+/*		while (info->tree->right)
 	{
 		printf("racine %d = %s\n", i, info->tree->cmd->cmd);
 		printf("left %d = %s\n", i, info->tree->left->cmd->cmd);
@@ -269,7 +270,7 @@ int	ft_init_tree(t_info *info)
 		i++;
 		info->tree = info->tree->right;
 	}
-	return (0);
+*/	return (0);
 }
 
 /*void	ft_print_tree(t_info *info)
@@ -332,12 +333,67 @@ int	ft_init_info(t_info *info)
 	return (0);
 }
 
+void	ft_free_branch(t_tree *branch)
+{
+	free(branch->cmd->cmd);
+	free(branch->cmd);
+	free(branch);
+	branch = NULL;
+}
+
+void	ft_free_tree(t_info *info, t_tree *tofree)
+{
+	while (info->tree->right)
+	{
+		while (tofree->right)
+		{
+			tofree = tofree->right;
+			if (tofree->left)
+				ft_free_branch(tofree->left);
+			if (tofree->right)
+				ft_free_branch(tofree->right);
+			tofree = info->tree;
+		}
+	}
+	while (info->tree->left)
+	{
+		while (tofree->left)
+		{
+			tofree = tofree->left;
+			if (tofree->left)
+				ft_free_branch(tofree->left);
+			if (tofree->right)
+				ft_free_branch(tofree->right);
+			tofree = info->tree;
+		}
+	}
+}
+
+void	ft_free_all(t_info *info)
+{
+	t_tree	*tofree;
+
+	tofree = NULL;
+	ft_free_tree(info, tofree);
+	ft_free_branch(info->tree);
+	info->tree = NULL;
+	free(info->rdline);
+}
+
+void	ft_do_it(t_info *info)
+{
+	if (!ft_strncmp(info->tree->cmd->cmd, "pwd", 3))
+		if (ft_pwd())
+			printf("oscour pwd\n");
+}
+
 int	main(int ac, char **av)
 {
-	static char	*line;
 	t_info		info;
+	int			sig;
 
 	(void) av;
+	sig = 0;
 	if (ac > 1)
 		return (ft_putstr_fd("Too much arguments\n", 2), 1);
 	signal(SIGINT, &ft_signal);
@@ -345,14 +401,17 @@ int	main(int ac, char **av)
 	{
 		info.rdline = NULL;
 		info.rdline = readline("Minishell$>");
-		printf("line = %s\n", info.rdline);
+	//	printf("line = %s\n", info.rdline);
 		if (!info.rdline || !ft_exit(info.rdline))
 			break ;
 		else if (ft_keep_history(info.rdline))
 			add_history(info.rdline);
 		if (ft_init_info(&info))
 			return (1);
-		free(line);
+		ft_do_it(&info);
+		sig = info.status;
+		ft_free_all(&info);
 	}
-	return (0);
+	rl_clear_history();
+	return (sig);
 }

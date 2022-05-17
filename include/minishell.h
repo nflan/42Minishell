@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/17 10:11:55 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/17 11:40:22 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ static const t_tok_type get_tok_type[255] =
 	{
 		[CHR_NULL] = TOK_IDK,
 		[CHR_SPACE] = TOK_SEP,
-		[CHR_SPACE] = TOK_SEP,
 		[CHR_EXCLAM] = TOK_IDK,
 		[CHR_D_QUOTE] = TOK_QUOTER,
 		[CHR_COMMENT] = TOK_IDK,
@@ -159,7 +158,6 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_CL_BRACKET] = TOK_EXPANDER_CL,
 		[CHR_CIRCUM] = TOK_IDK,
 		[CHR_UNDERSCORE] = TOK_WORD,
-		[CHR_ALPHA] = TOK_WORD,
 		[CHR_OP_BRACE] = TOK_EXPANDER_OP,
 		[CHR_PIPE] = TOK_OPERATOR,
 		[CHR_CL_BRACE] = TOK_EXPANDER_CL,
@@ -195,13 +193,14 @@ static	int	rules[9][255];
 
 //----------tokenizer.c--------------------------------------
 
-void ft_fill_tab(int n, int **tab, t_tok_type *get_tok_type);
-void fill_them_tables(int **tab, int size, t_tok_type *get_tok_type);
-t_token 	*ft_create_token(t_tok_type tok_type);
-void		add_tok_last(t_token **tok_list, t_tok_type tok_type, int length);
-int	is_quoted(t_token **tok_list, int rank_in_list);
+void	ft_fill_tab(int n, int **tab, t_tok_type *get_tok_type);
+void	fill_them_tables(int **tab, int size, t_tok_type *get_tok_type);
+t_token	*ft_create_token(t_tok_type tok_type);
+void	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length);
+int		is_quoted(t_token **tok_list, int rank_in_list);
 void	init_tok_struct(t_token **tok_list, int	rank_in_list, int length);
 
 //-----------
+int	ft_pwd(void);
 
 #endif
