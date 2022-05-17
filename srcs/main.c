@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/17 11:42:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/17 14:17:05 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,8 +224,8 @@ t_tree	*ft_fill_tree(t_info *info)
 	tab = ft_split(info->rdline, ';');
 	if (!tab)
 		return (NULL);
-//	for (int y = 0; tab[y]; y++)
-//		printf("tab[%d] = %s\n", y, tab[y]);
+	for (int y = 0; tab[y]; y++)
+		printf("tab[%d] = %s\n", y, tab[y]);
 	while (tab[i])
 	{
 		ptr = ft_treenew(tab[i], ptr);
@@ -255,13 +255,13 @@ t_tree	*ft_fill_tree(t_info *info)
 
 int	ft_init_tree(t_info *info)
 {
-//	int	i = 0;
+	int	i = 0;
 
 	info->status = 0;
 	info->tree = ft_fill_tree(info);
 	if (!info->tree)
 			return (1);
-/*		while (info->tree->right)
+		while (info->tree->right)
 	{
 		printf("racine %d = %s\n", i, info->tree->cmd->cmd);
 		printf("left %d = %s\n", i, info->tree->left->cmd->cmd);
@@ -270,7 +270,7 @@ int	ft_init_tree(t_info *info)
 		i++;
 		info->tree = info->tree->right;
 	}
-*/	return (0);
+	return (0);
 }
 
 /*void	ft_print_tree(t_info *info)
@@ -408,7 +408,7 @@ int	main(int ac, char **av)
 			add_history(info.rdline);
 		if (ft_init_info(&info))
 			return (1);
-		ft_do_it(&info);
+	//	ft_do_it(&info);
 		sig = info.status;
 		ft_free_all(&info);
 	}
