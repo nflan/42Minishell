@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/17 17:22:11 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/18 14:05:48 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 #include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <dirent.h>
 
 typedef enum s_tok_type
 {
@@ -183,11 +187,19 @@ typedef struct s_tree
 	struct s_tree	*right;
 }	t_tree;
 
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_info
 {
 	char	*rdline;
 	int		status;
 	t_tree	*tree;
+	t_env	*env;
 }	t_info;
 
 //----------tokenizer.c--------------------------------------
@@ -202,5 +214,12 @@ void	detect_tokens(t_token **tok_list, char *str);
 
 //-----------
 int	ft_pwd(void);
+int	ft_cd(t_info *info, char *dir);
+
+//-----------get_next_line.c--------------------------------
+unsigned int	ft_test_line(char *str);
+char	*ft_fill_str(char *str, char *buf);
+char	*get_line(char *str, int fd);
+char	*get_next_line(int fd);
 
 #endif

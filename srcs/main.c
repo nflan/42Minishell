@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/17 17:55:39 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/18 14:01:31 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_keep_history(char *str)
 
 	i = 0;
 	if (str)
-		while (*str && (*str == ' ' || *str == '\n'))
+		while (*str && *str == '\n')
 			str++;
 	if (str)
 		while (*str++)
@@ -209,7 +209,7 @@ t_tree	*ft_treenew(char *str, t_tree *ptr)
 	return (new);
 }
 
-t_tree	*ft_fill_tree(t_info *info, t_token *token)
+/*t_tree	*ft_fill_tree(t_info *info, t_token *token)
 {
 	t_tree	*ptr;
 	t_tree	*new;
@@ -231,9 +231,9 @@ t_tree	*ft_fill_tree(t_info *info, t_token *token)
 		tok = tok->prev;
 	}
 	return (new);
-}
+}*/
 
-/*t_tree	*ft_fill_tree(t_info *info)
+t_tree	*ft_fill_tree(t_info *info)
 {
 	t_tree	*ptr;
 	t_tree	*new;
@@ -274,7 +274,7 @@ t_tree	*ft_fill_tree(t_info *info, t_token *token)
 	}
 	ft_free_split(tab, i);
 	return (new);
-}*/
+}
 
 void	ft_print_test(t_tree *tree, int i)
 {
@@ -286,7 +286,9 @@ void	ft_print_test(t_tree *tree, int i)
 
 int	ft_init_tree(t_info *info, t_token *token)
 {
-	info->tree = ft_fill_tree(info, token);
+//	info->tree = ft_fill_tree(info, token);
+	(void) token;
+	info->tree = ft_fill_tree(info);
 	if (!info->tree)
 			return (1);
 	return (0);
@@ -321,16 +323,123 @@ int	ft_nb_andor(char *str)
 	return (count);
 }
 
-int	ft_init_info(t_info *info, t_token *token)
+t_env	*ft_envnew(char *line)
 {
-	t_tree	*print;
+	t_env	*new;
+	char	**tab;
 
+	tab = ft_split(line, '=');
+	if (!tab)
+		return (NULL);
+	new = ft_calloc(sizeof(t_env), 1);
+	if (!new)
+		return (NULL);
+	new->name = ft_strdup(tab[0]);
+	new->value = ft_strdup(tab[1]);
+	new->next = NULL;
+	ft_free_split(tab, 2);
+	return (new);
+}
+
+/*t_tree	*ft_fill_tree(t_info *info, t_token *token)
+{
+	t_tree	*ptr;
+	t_tree	*new;
+	t_token	*tok;
+	int		len;
+
+	ptr = NULL;
+	new = NULL;
+	tok = token;
+	while (tok)
+		tok = tok->next;
+	while (tok)
+	{
+		ptr = ft_treenew(tok->cmd, ptr);
+		if (tok->token == TOK_WORD)
+			ft_lstadd_tree(&new, ptr, 1);
+		else if (tok->token == TOK_OPERATOR)
+			ft_lstadd_tree(&new, ptr, 2);
+		tok = tok->prev;
+	}
+	return (new);
+}*/
+
+void	ft_envadd_back(t_env **alst, t_env *new)
+{
+	t_env	*tmp;
+
+	tmp = NULL;
+	tmp = *alst;
+	if (alst && new)
+	{
+		if (*alst == NULL)
+			*alst = new;
+		else
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new;
+		}
+	}
+}
+
+int	ft_init_env(t_info *info, char **envp)
+{
+	t_env	*ptr;
+	t_env	*new;
+	int		i;
+
+	ptr = NULL;
+	new = NULL;
+	i = 0;
+	while (envp[i])
+	{
+		ptr = ft_envnew(envp[i]);
+		if (!ptr)
+			return (1);
+		ft_envadd_back(&new, ptr);
+		i++;
+	}
+	info->env = new;
+	return (0);
+}
+
+void	ft_print_env(t_env *env)
+{
+	t_env	*print;
+
+	print = env;
+	printf("%s=%s\n", print->name, print->value);
+	if (print->next)
+	{
+		print = print->next;
+		while (print)
+		{
+			printf("%s=%s\n", print->name, print->value);
+			print = print->next;
+		}
+	}
+}
+
+int	ft_init_info(t_info *info, t_token *token, char **envp)
+{
 	info->tree = NULL;
 	if (ft_init_tree(info, token))
+	{
+		ft_putstr_fd("Error create tree\n", 2);
 		return (1);
+	}
+	if (envp)
+	{
+		if (ft_init_env(info, envp))
+		{
+			ft_putstr_fd("Error create env\n", 2);
+			return (1);
+		}
+	}
 	info->status = 0;
-	print = info->tree;
-	ft_print_tree(print, 0);
+	ft_print_env(info->env);
 	return (0);
 }
 
@@ -364,9 +473,34 @@ void	ft_free_all(t_info *info)
 
 void	ft_do_it(t_info *info)
 {
-	if (!ft_strncmp(info->tree->cmd->cmd, "pwd", 3))
+	static int	i = 0;
+	char	**tab;
+	t_tree	*tree;
+
+	tree = info->tree;
+	if (i == 2)
+	{
+		i = 0;
+		return ;
+	}
+	if (!ft_strncmp(info->tree->cmd->cmd, "|", 2))
+	{
+		if (!i)
+			tree = info->tree->left;
+		else if (i == 1)
+			tree = info->tree->right;
+		i++;
+	}
+	if (!ft_strncmp(tree->cmd->cmd, "pwd", 3))
 		if (ft_pwd())
 			printf("oscour pwd\n");
+	tab = ft_split(tree->cmd->cmd, ' ');
+	if (!ft_strncmp(tab[0], "cd", 3))
+		if (ft_cd(tab[1]))
+			printf("oscour cd\n");
+	ft_free_split(tab, 2);
+	if (i)
+		ft_do_it(info);
 }
 
 int	ft_je_fais_des_tokens(t_token *token)
@@ -391,21 +525,22 @@ int	ft_je_fais_des_tokens(t_token *token)
 	token->next = t1;
 	t2->prev = t1;
 	t1->prev = token;
-	while (token)
-	{
-		printf("%s\n", token->cmd);
-		token = token->next;
-	}
+//	while (token)
+//	{
+//		printf("%s\n", token->cmd);
+//		token = token->next;
+//	}
 	return (0);
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
 	t_token		*tokens;
 	t_info		info;
 	int			sig;
 
 	(void) av;
+	tokens = NULL;
 	sig = 0;
 	if (ac > 1)
 		return (ft_putstr_fd("Too much arguments\n", 2), 1);
@@ -417,12 +552,12 @@ int	main(int ac, char **av)
 	//	printf("line = %s\n", info.rdline);
 		if (!info.rdline || !ft_exit(info.rdline))
 			break ;
-		else if (ft_keep_history(info.rdline))
+		if (ft_keep_history(info.rdline))
 			add_history(info.rdline);
-		ft_je_fais_des_tokens(tokens);
-		if (ft_init_info(&info, tokens))
+	//	ft_je_fais_des_tokens(tokens);
+		if (ft_init_info(&info, tokens, envp))
 			return (1);
-	//	ft_do_it(&info);
+		ft_do_it(&info);
 		sig = info.status;
 		ft_free_all(&info);
 	}
