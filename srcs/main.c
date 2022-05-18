@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/18 15:43:44 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/18 18:50:52 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,21 +323,50 @@ int	ft_nb_andor(char *str)
 	return (count);
 }
 
+int	ft_fill_envnew(t_env *env, char *line)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = -1;
+	if (!line)
+		return (1);
+	while (line[i] && line[i] != '=')
+		i++;
+	env->name = ft_calloc(sizeof(char), i + 1);
+	if (!env->name)
+		return (1);
+	while (++j < i)
+		env->name[j] = line[j];
+	if (line[j] != '=')
+		return (0);
+	i = 0;
+	j++;
+	while (line[j + i])
+		i++;
+	env->value = ft_calloc(sizeof(char), i + 1);
+	if (!env->value)
+	{
+		free(env->name);
+		return (1);
+	}
+	i = 0;
+	while (line[j])
+		env->value[i++] = line[j++];
+	return (0);
+}
+
 t_env	*ft_envnew(char *line)
 {
 	t_env	*new;
-	char	**tab;
 
-	tab = ft_split(line, '=');
-	if (!tab)
-		return (NULL);
 	new = ft_calloc(sizeof(t_env), 1);
 	if (!new)
 		return (NULL);
-	new->name = ft_strdup(tab[0]);
-	new->value = ft_strdup(tab[1]);
 	new->next = NULL;
-	ft_free_split(tab, 2);
+	if (ft_fill_envnew(new, line))
+		return (NULL);
 	return (new);
 }
 
@@ -426,18 +455,10 @@ int	ft_init_info(t_info *info, t_token *token, char **envp)
 {
 	info->tree = NULL;
 	if (ft_init_tree(info, token))
-	{
-		ft_putstr_fd("Error create tree\n", 2);
-		return (1);
-	}
+		return (ft_putstr_error("Error create tree\n"));
 	if (envp)
-	{
 		if (ft_init_env(info, envp))
-		{
-			ft_putstr_fd("Error create env\n", 2);
-			return (1);
-		}
-	}
+			return (ft_putstr_error("Error create env\n"));
 	info->status = 0;
 //	ft_print_env(info->env);
 	return (0);
@@ -461,13 +482,31 @@ void	ft_free_tree(t_tree *tree)
 	ft_free_branch(tree);
 }
 
+void	ft_free_env(t_env *env)
+{
+	t_env *tmp;
+
+	if (env)
+	{
+		while (env)
+		{
+			tmp = env;
+			env = tmp->next;
+			free(tmp->name);
+			tmp->name = NULL;
+			free(tmp->value);
+			tmp->value = NULL;
+			free(tmp);
+			tmp = NULL;
+		}
+	}
+	tmp = NULL;
+}
+
 void	ft_free_all(t_info *info)
 {
-	t_tree	*tofree;
-
-	tofree = info->tree;
-	ft_free_tree(tofree);
-	info->tree = NULL;
+	ft_free_tree(info->tree);
+	ft_free_env(info->env);
 	free(info->rdline);
 }
 
@@ -537,6 +576,8 @@ int	main(int ac, char **av, char **envp)
 {
 	t_token		*tokens;
 	t_info		info;
+	char		*minishell;
+	char		*tofree;
 	int			sig;
 
 	(void) av;
@@ -547,9 +588,16 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGINT, &ft_signal);
 	while (1)
 	{
+		minishell = NULL;
 		info.rdline = NULL;
-		info.rdline = readline("minishell$>");
-	//	printf("line = %s\n", info.rdline);
+		minishell = getcwd(minishell, 0);
+		if (!minishell)
+			return (1);
+		tofree = minishell;
+		minishell = ft_strjoin(minishell, "$ ");
+		info.rdline = readline(minishell);
+		free(tofree);
+		free(minishell);
 		if (!info.rdline || !ft_exit(info.rdline))
 			break ;
 		if (ft_keep_history(info.rdline))
