@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/18 14:01:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/18 15:43:44 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -439,7 +439,7 @@ int	ft_init_info(t_info *info, t_token *token, char **envp)
 		}
 	}
 	info->status = 0;
-	ft_print_env(info->env);
+//	ft_print_env(info->env);
 	return (0);
 }
 
@@ -496,8 +496,8 @@ void	ft_do_it(t_info *info)
 			printf("oscour pwd\n");
 	tab = ft_split(tree->cmd->cmd, ' ');
 	if (!ft_strncmp(tab[0], "cd", 3))
-		if (ft_cd(tab[1]))
-			printf("oscour cd\n");
+		if (ft_cd(info, tab[1]))
+			return ;
 	ft_free_split(tab, 2);
 	if (i)
 		ft_do_it(info);

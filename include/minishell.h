@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/18 14:05:48 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/18 16:13:15 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,10 +216,8 @@ void	detect_tokens(t_token **tok_list, char *str);
 int	ft_pwd(void);
 int	ft_cd(t_info *info, char *dir);
 
-//-----------get_next_line.c--------------------------------
-unsigned int	ft_test_line(char *str);
-char	*ft_fill_str(char *str, char *buf);
-char	*get_line(char *str, int fd);
-char	*get_next_line(int fd);
+//-----------ft_tools.c--------------------------------
+int	ft_putstr_error(char *error);
+int	ft_perror(char *error, char *str);
 
 #endif
