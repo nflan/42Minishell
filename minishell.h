@@ -6,11 +6,13 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/17 13:52:40 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/18 16:06:25 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define MINISHELL_H
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +28,7 @@ typedef enum s_tok_type
 	TOK_PATH,
 	TOK_WORD,
 	TOK_EXPANDER,
-} t_tok_type;
+} 			t_tok_type;
 
 typedef enum s_char_type
 {
@@ -65,18 +67,19 @@ typedef enum s_char_type
 	CHR_PIPE,
 	CHR_CL_BRACE,
 	CHR_TILDA,
-} t_char_type;
+} 			t_char_type;
 
 typedef struct s_token
 {
-	int sp_before;
 	//	int						sp_after;
-	int length;
+	int 	start;
+	int 	length;
+	char	*value;
 	t_tok_type token;
 	int quoted;
 	struct s_token *prev;
 	struct s_token *next;
-} t_token;
+} 			t_token;
 
 static const t_char_type get_char_class[255] =
 	{
@@ -164,10 +167,10 @@ static int rules[9][255];
 
 //----------tokenizer.c--------------------------------------
 
-t_token 		*ft_create_token(t_tok_type tok_type);
-void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length);
+t_token 		*ft_create_token(t_tok_type tok_type, int length, int i);
+void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
 int 			is_quoted(t_token **tok_list, int rank_in_list);
-void 			init_tok_struct(t_token **tok_list, int rank_in_list, int length);
+void 			init_tok_struct(t_token **tok_list, int rank_in_list);
 int				len_ll_list(t_token *tok_list);
 unsigned int	get_real_tok_type(char c, t_token **tok_list);
 void 			detect_tokens(t_token **tok_list, char *str);

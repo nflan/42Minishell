@@ -6,13 +6,35 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/17 13:46:30 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/18 16:31:05 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft/libft.h"
 
-t_token *ft_create_token(t_tok_type tok_type)
+
+char	*ft_strncpy(char *str, int n)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	ret = malloc(n * sizeof(char));
+	if (!ret)
+		return (NULL);
+	while (i < n)
+	{
+		ret[i] = str[i];
+		i++;
+	}
+	ret[i] = '\0';
+	return (ret);
+}
+
+t_token *ft_create_token(t_tok_type tok_type, int length, int i)
 {
 	t_token *tok;
 
@@ -20,11 +42,13 @@ t_token *ft_create_token(t_tok_type tok_type)
 	if (!tok)
 		return (NULL);
 	tok->token = tok_type;
+	tok->length = length;
+	tok->start = i;
 	tok->next = NULL;
 	return (tok);
 }
 
-void add_tok_last(t_token **tok_list, t_tok_type tok_type, int length)
+void add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 {
 	t_token *tmp;
 	t_token *bef_last;
@@ -32,7 +56,7 @@ void add_tok_last(t_token **tok_list, t_tok_type tok_type, int length)
 
 	if (!*tok_list)
 	{
-		*tok_list = ft_create_token(tok_type);
+		*tok_list = ft_create_token(tok_type, length, i);
 		(*tok_list)->prev = NULL;
 		rank_in_list = 0;
 	}
@@ -42,12 +66,12 @@ void add_tok_last(t_token **tok_list, t_tok_type tok_type, int length)
 		while (tmp->next)
 			tmp = tmp->next;
 		bef_last = tmp;
-		bef_last->next = ft_create_token(tok_type);
+		bef_last->next = ft_create_token(tok_type, length, i);
 		bef_last = bef_last->next;
 		bef_last->prev = tmp;
 		rank_in_list = 1;
 	}
-	init_tok_struct(tok_list, rank_in_list, length);
+	init_tok_struct(tok_list, rank_in_list);
 }
 
 int is_quoted(t_token **tok_list, int rank_in_list)
@@ -73,21 +97,12 @@ int is_quoted(t_token **tok_list, int rank_in_list)
 	}
 }
 
-void init_tok_struct(t_token **tok_list, int rank_in_list, int length)
+void init_tok_struct(t_token **tok_list, int rank_in_list)
 {
-	(*tok_list)->length = length;
 	if (is_quoted(tok_list, rank_in_list))
 		(*tok_list)->quoted = 1;
 	else
 		(*tok_list)->quoted = 0;
-	if (!rank_in_list)
-		(*tok_list)->sp_before = -1;
-	else
-	{
-		if ((*tok_list)->prev && (*tok_list)->prev->token == TOK_SEP)
-			(*tok_list)->sp_before = 1;
-		(*tok_list)->sp_before = 0;
-	}
 }
 
 int len_ll_list(t_token *tok_list)
@@ -127,13 +142,15 @@ void detect_tokens(t_token **tok_list, char *str)
 	int i;
 	unsigned int tok_type;
 	int length;
+	int start;
 
 	i = 0;
-	length = 1;
 	if (!str)
 		return;
 	while (str[i])
 	{
+		length = 1;
+		start = i;
 		tok_type = get_real_tok_type(str[i], tok_list);
 		i++;
 		while (str[i] && get_real_tok_type(str[i], tok_list) == tok_type)
@@ -141,7 +158,21 @@ void detect_tokens(t_token **tok_list, char *str)
 			length++;
 			i++;
 		}
-		add_tok_last(tok_list, tok_type, length);
+		add_tok_last(tok_list, tok_type, length, start);
+	}
+}
+
+void fill_tok_value(t_token **tok, char *str)
+{
+	t_token *tmp;
+
+	if (!*tok || !str)
+		return;
+	tmp = *tok;
+	while (tmp)
+	{
+		tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
+		tmp = tmp->next;
 	}
 }
 
@@ -151,13 +182,15 @@ int main(int argc, char *argv[])
 
 	tokens = NULL;
 	detect_tokens(&tokens, argv[1]);
+	fill_tok_value(&tokens, argv[1]);
 	t_token *tmp;
 	tmp = tokens;
 	while (tmp)
 	{
-		printf("%d\n", tmp->sp_before);
 		printf("%d\n", tmp->token);
+		printf("%s\n", tmp->value);
 		printf("%d\n", tmp->length);
+		printf("%d\n", tmp->start);
 		printf("%d\n", tmp->quoted);
 		printf("\n\n");
 		tmp = tmp->next;
