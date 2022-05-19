@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/18 18:50:52 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/19 12:00:41 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -451,14 +451,11 @@ void	ft_print_env(t_env *env)
 	}
 }
 
-int	ft_init_info(t_info *info, t_token *token, char **envp)
+int	ft_init_info(t_info *info, t_token *token)
 {
 	info->tree = NULL;
 	if (ft_init_tree(info, token))
 		return (ft_putstr_error("Error create tree\n"));
-	if (envp)
-		if (ft_init_env(info, envp))
-			return (ft_putstr_error("Error create env\n"));
 	info->status = 0;
 //	ft_print_env(info->env);
 	return (0);
@@ -506,8 +503,8 @@ void	ft_free_env(t_env *env)
 void	ft_free_all(t_info *info)
 {
 	ft_free_tree(info->tree);
-	ft_free_env(info->env);
 	free(info->rdline);
+	info->rdline = NULL;
 }
 
 void	ft_do_it(t_info *info)
@@ -535,80 +532,95 @@ void	ft_do_it(t_info *info)
 			printf("oscour pwd\n");
 	tab = ft_split(tree->cmd->cmd, ' ');
 	if (!ft_strncmp(tab[0], "cd", 3))
+	{
 		if (ft_cd(info, tab[1]))
+		{
+			ft_free_split(tab, 2);
 			return ;
+		}
+	}
 	ft_free_split(tab, 2);
 	if (i)
 		ft_do_it(info);
 }
 
-int	ft_je_fais_des_tokens(t_token *token)
+char	*ft_get_env_value(t_info *info, char *name)
 {
-	char	*pipe = "|";
-	char	*cmd = "cmd";
-	t_token	*t1;
-	t_token	*t2;
+	t_env	*env;
+	
+	env = NULL;
+	if (!info->env || !name)
+		return (NULL);
+	env = info->env;
+	while (env && ft_strncmp(env->name, name, ft_strlen(name)))
+		env = env->next;
+	if (!env)
+		return (NULL);
+	return (env->value);
+}
 
-	t2 = ft_calloc(sizeof(t_token), 1);
-	t2->token = TOK_WORD;
-	t2->cmd = cmd;
-	t2->next = NULL;
-	t1 = ft_calloc(sizeof(t_token), 1);
-	t1->token = TOK_OPERATOR;
-	t1->cmd = pipe;
-	t1->next = t2;
-	token = ft_calloc(sizeof(t_token), 1);
-	token->token = TOK_WORD;
-	token->cmd = cmd;
-	token->prev = NULL;
-	token->next = t1;
-	t2->prev = t1;
-	t1->prev = token;
-//	while (token)
-//	{
-//		printf("%s\n", token->cmd);
-//		token = token->next;
-//	}
-	return (0);
+char	*ft_rdline_word(t_info *info)
+{
+	char		*word;
+	char		*tmp;
+	char		*tofree;
+
+	word = NULL;
+	tmp = ft_get_env_value(info, "HOME");
+	word = getcwd(word, 0);
+	if (!word)
+		return (NULL);
+	tofree = word;
+	if (tmp && !strncmp(tmp, word, ft_strlen(tmp)))
+	{
+		tmp = ft_substr(word, ft_strlen(tmp), ft_strlen(word) - ft_strlen(tmp));
+		free(tofree);
+		word = ft_strjoin("minishell:~", tmp);
+		free(tmp);
+	}
+	else
+	{
+		word = ft_strjoin("minishell:", word);
+		free(tofree);
+	}
+	tofree = word;
+	word = ft_strjoin(word, "$ ");
+	return (free(tofree), word);
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	t_token		*tokens;
 	t_info		info;
-	char		*minishell;
-	char		*tofree;
-	int			sig;
+	char		*word;
 
 	(void) av;
+	info.rdline = NULL;
 	tokens = NULL;
-	sig = 0;
+	info.status = 0;
+	if (envp)
+		if (ft_init_env(&info, envp))
+			return (ft_putstr_error("Error create env\n"));
 	if (ac > 1)
 		return (ft_putstr_fd("Too much arguments\n", 2), 1);
 	signal(SIGINT, &ft_signal);
 	while (1)
 	{
-		minishell = NULL;
-		info.rdline = NULL;
-		minishell = getcwd(minishell, 0);
-		if (!minishell)
+		word = ft_rdline_word(&info);
+		if (!word)
 			return (1);
-		tofree = minishell;
-		minishell = ft_strjoin(minishell, "$ ");
-		info.rdline = readline(minishell);
-		free(tofree);
-		free(minishell);
+		info.rdline = readline(word);
+		free(word);
 		if (!info.rdline || !ft_exit(info.rdline))
 			break ;
 		if (ft_keep_history(info.rdline))
 			add_history(info.rdline);
-	//	ft_je_fais_des_tokens(tokens);
-		if (ft_init_info(&info, tokens, envp))
+		if (ft_init_info(&info, tokens))
 			return (1);
 		ft_do_it(&info);
-		sig = info.status;
 		ft_free_all(&info);
 	}
 	rl_clear_history();
-	return (sig);
+	ft_free_env(info.env);
+	return (info.status);
 }
