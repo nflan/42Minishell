@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:10:52 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/19 16:31:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/19 16:38:16 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,19 @@ int	ft_perror_free(char *error, char *str, int i)
 	if (i != 1)
 		free(tofree2);
 	return (1);
+}
+
+char	*ft_get_env_value(t_info *info, char *name)
+{
+	t_env	*env;
+
+	env = NULL;
+	if (!info->env || !name)
+		return (NULL);
+	env = info->env;
+	while (env && ft_strncmp(env->name, name, ft_strlen(name)))
+		env = env->next;
+	if (!env)
+		return (NULL);
+	return (env->value);
 }

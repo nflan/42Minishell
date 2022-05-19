@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/19 16:23:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/19 16:57:44 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,6 +323,49 @@ int	ft_nb_andor(char *str)
 	return (count);
 }
 
+/*t_tree	*ft_fill_tree(t_info *info, t_token *token)
+{
+	t_tree	*ptr;
+	t_tree	*new;
+	t_token	*tok;
+	int		len;
+
+	ptr = NULL;
+	new = NULL;
+	tok = token;
+	while (tok)
+		tok = tok->next;
+	while (tok)
+	{
+		ptr = ft_treenew(tok->cmd, ptr);
+		if (tok->token == TOK_WORD)
+			ft_lstadd_tree(&new, ptr, 1);
+		else if (tok->token == TOK_OPERATOR)
+			ft_lstadd_tree(&new, ptr, 2);
+		tok = tok->prev;
+	}
+	return (new);
+}*/
+
+void	ft_envadd_back(t_env **alst, t_env *new)
+{
+	t_env	*tmp;
+
+	tmp = NULL;
+	tmp = *alst;
+	if (alst && new)
+	{
+		if (*alst == NULL)
+			*alst = new;
+		else
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new;
+		}
+	}
+}
+
 int	ft_fill_envnew(t_env *env, char *line)
 {
 	int	i;
@@ -370,47 +413,30 @@ t_env	*ft_envnew(char *line)
 	return (new);
 }
 
-/*t_tree	*ft_fill_tree(t_info *info, t_token *token)
+t_env	*ft_without_env(int i)
 {
-	t_tree	*ptr;
-	t_tree	*new;
-	t_token	*tok;
-	int		len;
+	t_env	*new;
 
-	ptr = NULL;
-	new = NULL;
-	tok = token;
-	while (tok)
-		tok = tok->next;
-	while (tok)
+	new = ft_calloc(sizeof(t_env), 1);
+	if (!new)
+		return (NULL);
+	new->next = NULL;
+	if (i == 0)
 	{
-		ptr = ft_treenew(tok->cmd, ptr);
-		if (tok->token == TOK_WORD)
-			ft_lstadd_tree(&new, ptr, 1);
-		else if (tok->token == TOK_OPERATOR)
-			ft_lstadd_tree(&new, ptr, 2);
-		tok = tok->prev;
+		new->name = ft_strdup("PWD");
+		new->value = getcwd(new->value, 0);
+	}
+	else if (i == 1)
+	{
+		new->name = ft_strdup("SHLVL");
+		new->value = ft_strdup("1");
+	}
+	else if (i == 2)
+	{
+		new->name = ft_strdup("_");
+		new->value = ft_strdup("/usr/bin/env");
 	}
 	return (new);
-}*/
-
-void	ft_envadd_back(t_env **alst, t_env *new)
-{
-	t_env	*tmp;
-
-	tmp = NULL;
-	tmp = *alst;
-	if (alst && new)
-	{
-		if (*alst == NULL)
-			*alst = new;
-		else
-		{
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new;
-		}
-	}
 }
 
 int	ft_init_env(t_info *info, char **envp)
@@ -421,34 +447,29 @@ int	ft_init_env(t_info *info, char **envp)
 
 	ptr = NULL;
 	new = NULL;
-	i = 0;
-	while (envp[i])
+	i = -1;
+	if (envp[0])
 	{
-		ptr = ft_envnew(envp[i]);
-		if (!ptr)
-			return (1);
-		ft_envadd_back(&new, ptr);
-		i++;
+		while (envp[++i])
+		{
+			ptr = ft_envnew(envp[i]);
+			if (!ptr)
+				return (1);
+			ft_envadd_back(&new, ptr);
+		}
+	}
+	else
+	{
+		while (++i < 3)
+		{
+			ptr = ft_without_env(i);
+			if (!ptr)
+				return (1);
+			ft_envadd_back(&new, ptr);
+		}
 	}
 	info->env = new;
 	return (0);
-}
-
-void	ft_print_env(t_env *env)
-{
-	t_env	*print;
-
-	print = env;
-	printf("%s=%s\n", print->name, print->value);
-	if (print->next)
-	{
-		print = print->next;
-		while (print)
-		{
-			printf("%s=%s\n", print->name, print->value);
-			print = print->next;
-		}
-	}
 }
 
 int	ft_init_info(t_info *info, t_token *token)
@@ -457,7 +478,7 @@ int	ft_init_info(t_info *info, t_token *token)
 	if (ft_init_tree(info, token))
 		return (ft_putstr_error("Error create tree\n"));
 	info->status = 0;
-//	ft_print_env(info->env);
+//	ft_env(info->env);
 	return (0);
 }
 
@@ -530,27 +551,14 @@ void	ft_do_it(t_info *info)
 	if (!ft_strncmp(tree->cmd->cmd, "pwd", 3))
 		if (ft_pwd())
 			printf("oscour pwd\n");
+	if (!ft_strncmp(tree->cmd->cmd, "env", 3))
+		ft_env(info->env);
 	tab = ft_split(tree->cmd->cmd, ' ');
 	if (!ft_strncmp(tab[0], "cd", 3))
 		ft_cd(info, tab[1]);
 	ft_free_split(tab, 2);
 	if (i)
 		ft_do_it(info);
-}
-
-char	*ft_get_env_value(t_info *info, char *name)
-{
-	t_env	*env;
-	
-	env = NULL;
-	if (!info->env || !name)
-		return (NULL);
-	env = info->env;
-	while (env && ft_strncmp(env->name, name, ft_strlen(name)))
-		env = env->next;
-	if (!env)
-		return (NULL);
-	return (env->value);
 }
 
 char	*ft_rdline_word(t_info *info)
@@ -586,9 +594,8 @@ int	main(int ac, char **av, char **envp)
 	info.status = 0;
 	if (ac > 1)
 		return (ft_putstr_fd("Too much arguments\n", 2), 1);
-	if (envp)
-		if (ft_init_env(&info, envp))
-			return (ft_putstr_error("Error create env\n"));
+	if (ft_init_env(&info, envp))
+		return (ft_putstr_error("Error create env\n"));
 	signal(SIGINT, &ft_signal);
 	while (1)
 	{
