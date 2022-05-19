@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/18 16:06:25 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/19 19:11:38 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef enum s_char_type
 typedef struct s_token
 {
 	//	int						sp_after;
+	int		index;
 	int 	start;
 	int 	length;
 	char	*value;
@@ -80,6 +81,27 @@ typedef struct s_token
 	struct s_token *prev;
 	struct s_token *next;
 } 			t_token;
+
+typedef enum s_big_tok_type
+{
+	BIG_TOK_PAR,
+	TOK_OR_LEFT,
+	TOK_OR_RIGHT,
+	TOK_AND_LEFT,
+	TOK_AND_RIGHT,
+	TOK_CLEAN
+} 			t_big_tok_type;
+
+typedef struct s_big_token
+{
+	//	int						sp_after;
+	int		index;
+	t_big_tok_type	type;
+	t_tok_type token_start;
+	t_tok_type token_end;
+	struct s_big_token *prev;
+	struct s_big_token *next;
+} 			t_big_token;
 
 static const t_char_type get_char_class[255] =
 	{

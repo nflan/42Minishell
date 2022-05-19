@@ -6,18 +6,17 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/18 16:31:05 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/19 19:20:49 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft/libft.h"
 
-
-char	*ft_strncpy(char *str, int n)
+char *ft_strncpy(char *str, int n)
 {
-	int		i;
-	char	*ret;
+	int i;
+	char *ret;
 
 	i = 0;
 	if (!str)
@@ -174,6 +173,166 @@ void fill_tok_value(t_token **tok, char *str)
 		tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
 		tmp = tmp->next;
 	}
+}
+
+int count_op_tok(t_token **tokens)
+{
+	t_token *tmp;
+	int ret;
+
+	ret = 0;
+	while (tmp)
+	{
+		if (tmp->token == TOK_EXPANDER_OP)
+			ret++;
+		tmp = tmp->next;
+	}
+	return (ret);
+}
+
+int count_cl_tok(t_token **tokens)
+{
+	t_token *tmp;
+	int ret;
+
+	ret = 0;
+	while (tmp)
+	{
+		if (tmp->token == TOK_EXPANDER_CL)
+			ret++;
+		tmp = tmp->next;
+	}
+	return (ret);
+}
+
+int check_count_errors(t_token **tokens)
+{
+	t_token *tmp;
+
+	tmp = *tokens;
+	while (tmp)
+	{
+		if (tmp->token == TOK_OPERATOR && ft_strlen(tmp->value))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int r_quotes_impair(t_token **tokens)
+{
+	t_token *tmp;
+	int q_num;
+
+	q_num = 0;
+	tmp = *tokens;
+	while (tmp)
+	{
+		if (tmp->token == TOK_QUOTER)
+			q_num++;
+		tmp = tmp->next;
+	}
+	if (q_num % 2)
+		return (1);
+	return (0);
+}
+
+int ll_len(t_token **tokens)
+{
+	int len;
+	t_token *tmp;
+
+	len = 0 tmp = *tokens;
+	while (tmp)
+	{
+		len++;
+		tmp = tmp->next;
+	}
+	return (len);
+}
+
+int is_last_op(t_token **tokens)
+{
+	t_token *tmp;
+
+	tmp = *tokens;
+	while (tmp->next)
+	{
+		tmp = tmp->next;
+	}
+	if (tmp->token == TOK_OPERATOR)
+		return (1);
+	return (0);
+}
+
+int syntax_err_handler(t_token **tokens)
+{
+	int nb_optok;
+	int nb_cltok;
+	int err_num[3];
+
+	err_num[0] = 0;
+	err_num[1] = 0;
+	err_num[2] = 0;
+	if (!*tokens)
+		return (-1);
+	nb_optok = count_op_tok(tokens);
+	nb_cltok = count_cl_tok(tokens);
+	if (nb_optok != nb_cltok)
+		return (1);
+	if ((*tokens)->token == TOK_OPERATOR)
+		return (2);
+	if (check_count_errors(tokens))
+		return (3);
+	if (r_quotes_impair(tokens))
+		return (4);
+	if (is_last_op(tokens))
+		return (5);
+	return (0);
+}
+
+void index_toks(t_token **tokens)
+{
+	int i;
+	t_token *tmp;
+
+	i = 0;
+	tmp = *tokens;
+	while (tmp)
+	{
+		tmp->index = i;
+		i++;
+		tmp = tmp->next;
+	}
+}
+
+
+int	check_for_operators(t_token **tokens, int index_start)
+{
+	int	i;
+	t_token	*tmp;
+	int	len;
+	
+	tmp = *tokens;
+	len_ll = ll_len(tokens); 
+	if (index_start >= ll_len)
+		rreturn (-1);
+	while (tmp)
+	{
+		tmp = tmp->next;
+
+	}
+	while (tmp)
+	{
+		if (tmp->token == TOK_OPERATOR)
+			return (tmp->index);	
+		tmp = tmp->next;
+	}
+}
+
+void	divide_b_toks(t_token **tokens)
+{
+	
 }
 
 int main(int argc, char *argv[])
