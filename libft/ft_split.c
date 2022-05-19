@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 16:56:17 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/17 10:50:38 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/19 16:20:57 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static char	*ft_strdup_set(const char *s, char c)
 char	**ft_free_split(char **tab, unsigned int i)
 {
 	while (i-- > 0)
-		free(tab[i]);
+		if (tab[i])
+			free(tab[i]);
 	free(tab);
 	return (NULL);
 }

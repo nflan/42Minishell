@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/19 12:00:41 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/19 16:23:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -532,13 +532,7 @@ void	ft_do_it(t_info *info)
 			printf("oscour pwd\n");
 	tab = ft_split(tree->cmd->cmd, ' ');
 	if (!ft_strncmp(tab[0], "cd", 3))
-	{
-		if (ft_cd(info, tab[1]))
-		{
-			ft_free_split(tab, 2);
-			return ;
-		}
-	}
+		ft_cd(info, tab[1]);
 	ft_free_split(tab, 2);
 	if (i)
 		ft_do_it(info);
@@ -563,29 +557,21 @@ char	*ft_rdline_word(t_info *info)
 {
 	char		*word;
 	char		*tmp;
-	char		*tofree;
 
 	word = NULL;
 	tmp = ft_get_env_value(info, "HOME");
 	word = getcwd(word, 0);
 	if (!word)
 		return (NULL);
-	tofree = word;
 	if (tmp && !strncmp(tmp, word, ft_strlen(tmp)))
 	{
-		tmp = ft_substr(word, ft_strlen(tmp), ft_strlen(word) - ft_strlen(tmp));
-		free(tofree);
-		word = ft_strjoin("minishell:~", tmp);
-		free(tmp);
+		word = ft_substr_free(word, ft_strlen(tmp), ft_strlen(word) - ft_strlen(tmp));
+		word = ft_strjoin_free("minishell:~", word, 2);
 	}
 	else
-	{
-		word = ft_strjoin("minishell:", word);
-		free(tofree);
-	}
-	tofree = word;
-	word = ft_strjoin(word, "$ ");
-	return (free(tofree), word);
+		word = ft_strjoin_free("minishell:", word, 2);
+	word = ft_strjoin_free(word, "$ ", 1);
+	return (word);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -598,11 +584,11 @@ int	main(int ac, char **av, char **envp)
 	info.rdline = NULL;
 	tokens = NULL;
 	info.status = 0;
+	if (ac > 1)
+		return (ft_putstr_fd("Too much arguments\n", 2), 1);
 	if (envp)
 		if (ft_init_env(&info, envp))
 			return (ft_putstr_error("Error create env\n"));
-	if (ac > 1)
-		return (ft_putstr_fd("Too much arguments\n", 2), 1);
 	signal(SIGINT, &ft_signal);
 	while (1)
 	{

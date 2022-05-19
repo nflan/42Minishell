@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/18 16:13:15 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/19 16:16:11 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,12 +212,16 @@ int		is_quoted(t_token **tok_list, int rank_in_list);
 void	init_tok_struct(t_token **tok_list, int	rank_in_list, int length);
 void	detect_tokens(t_token **tok_list, char *str);
 
-//-----------
+//-----------main.c----------------------------------------
+char	*ft_get_env_value(t_info *info, char *name);
+
+//-----------builtins----------------------------------------
 int	ft_pwd(void);
 int	ft_cd(t_info *info, char *dir);
 
 //-----------ft_tools.c--------------------------------
 int	ft_putstr_error(char *error);
 int	ft_perror(char *error, char *str);
+int	ft_perror_free(char *error, char *str, int i);
 
 #endif
