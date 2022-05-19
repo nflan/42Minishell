@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/19 19:20:49 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/19 19:23:00 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,13 +314,14 @@ int	check_for_operators(t_token **tokens, int index_start)
 	int	len;
 	
 	tmp = *tokens;
-	len_ll = ll_len(tokens); 
+	len = ll_len(tokens); 
 	if (index_start >= ll_len)
 		rreturn (-1);
 	while (tmp)
 	{
+		if (tmp->index == index_start)	
+			break;
 		tmp = tmp->next;
-
 	}
 	while (tmp)
 	{
