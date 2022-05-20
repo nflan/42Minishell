@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:50:07 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/19 15:59:08 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/20 12:30:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,14 @@ char	*ft_strnstr(const char *big, const char *little, size_t n);
 long	ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strdup(const char *str);
+char	*ft_strdup_free(char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_substr_free(char *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin_free(char *s1, char *s2, int i);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
-char	**ft_free_split(char **tab, unsigned int i);
+char	**ft_free_split(char **tab);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));

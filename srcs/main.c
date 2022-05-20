@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/19 16:57:44 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/20 17:07:41 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,6 @@ void	ft_signal(int sig)
 	rl_on_new_line();
 	rl_redisplay();
 	signal(SIGINT, &ft_signal);
-}
-
-int	ft_exit(char *str)
-{
-	if (str)
-		while (*str && *str == ' ')
-			str++;
-	if (!ft_strncmp(str, "exit", 5) || !ft_strncmp(str, "exit ", 5))
-		return (0);
-	return (1);
 }
 
 char	*ft_cmd_line(char *str)
@@ -121,15 +111,6 @@ char	*ft_onecmd(t_info *info, int i)
 		cmd[i] = cmd_line[y];
 	return (cmd);
 }
-
-/*int	ft_count_pipe(t_info *info)
-{
-	int	count;
-
-	count = 0;
-
-	return (count);
-}*/
 
 /*t_cmd	*ft_cmdnew(t_info *info, char *cmd)
 {
@@ -272,7 +253,7 @@ t_tree	*ft_fill_tree(t_info *info)
 		if (!tab[i])
 			ft_lstadd_tree(&new, tmpcmd, 2);
 	}
-	ft_free_split(tab, i);
+	ft_free_split(tab);
 	return (new);
 }
 
@@ -390,10 +371,7 @@ int	ft_fill_envnew(t_env *env, char *line)
 		i++;
 	env->value = ft_calloc(sizeof(char), i + 1);
 	if (!env->value)
-	{
-		free(env->name);
-		return (1);
-	}
+		return (free(env->name), 1);
 	i = 0;
 	while (line[j])
 		env->value[i++] = line[j++];
@@ -403,13 +381,21 @@ int	ft_fill_envnew(t_env *env, char *line)
 t_env	*ft_envnew(char *line)
 {
 	t_env	*new;
+	char	*tmp;
 
+	tmp = NULL;
 	new = ft_calloc(sizeof(t_env), 1);
 	if (!new)
 		return (NULL);
 	new->next = NULL;
 	if (ft_fill_envnew(new, line))
 		return (NULL);
+	if (!ft_strncmp(new->name, "SHLVL", 6))
+	{
+		tmp = ft_itoa(ft_atoi(new->value + 1));
+		free(new->value);
+		new->value = ft_strdup_free(tmp);
+	}
 	return (new);
 }
 
@@ -434,7 +420,7 @@ t_env	*ft_without_env(int i)
 	else if (i == 2)
 	{
 		new->name = ft_strdup("_");
-		new->value = ft_strdup("/usr/bin/env");
+		new->value = ft_strdup("./minishell");
 	}
 	return (new);
 }
@@ -504,6 +490,7 @@ void	ft_free_env(t_env *env)
 {
 	t_env *tmp;
 
+	tmp = NULL;
 	if (env)
 	{
 		while (env)
@@ -518,7 +505,6 @@ void	ft_free_env(t_env *env)
 			tmp = NULL;
 		}
 	}
-	tmp = NULL;
 }
 
 void	ft_free_all(t_info *info)
@@ -553,10 +539,18 @@ void	ft_do_it(t_info *info)
 			printf("oscour pwd\n");
 	if (!ft_strncmp(tree->cmd->cmd, "env", 3))
 		ft_env(info->env);
+	if (!ft_strncmp(tree->cmd->cmd, "echo", 4))
+		ft_echo(tree->cmd->cmd + 5, 1);
+	if (!ft_strncmp(tree->cmd->cmd, "unset", 5))
+		ft_unset(info->env, tree->cmd->cmd + 6);
+	if (!ft_strncmp(tree->cmd->cmd, "export", 6))
+		ft_export(info->env, tree->cmd->cmd + 7);
 	tab = ft_split(tree->cmd->cmd, ' ');
+	if (!ft_strncmp(tree->cmd->cmd, "exit", 5) || !ft_strncmp(tree->cmd->cmd, "exit ", 5))
+		ft_exit(info, tab[1], tab);
 	if (!ft_strncmp(tab[0], "cd", 3))
 		ft_cd(info, tab[1]);
-	ft_free_split(tab, 2);
+	ft_free_split(tab);
 	if (i)
 		ft_do_it(info);
 }
@@ -604,8 +598,6 @@ int	main(int ac, char **av, char **envp)
 			return (1);
 		info.rdline = readline(word);
 		free(word);
-		if (!info.rdline || !ft_exit(info.rdline))
-			break ;
 		if (ft_keep_history(info.rdline))
 			add_history(info.rdline);
 		if (ft_init_info(&info, tokens))

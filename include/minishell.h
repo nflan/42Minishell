@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/19 16:44:30 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/20 17:07:38 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,14 +213,25 @@ void	init_tok_struct(t_token **tok_list, int	rank_in_list, int length);
 void	detect_tokens(t_token **tok_list, char *str);
 
 //-----------main.c----------------------------------------
+void	ft_free_env(t_env *env);
+void	ft_free_all(t_info *info);
+void	ft_envadd_back(t_env **alst, t_env *new);
+int		ft_fill_envnew(t_env *env, char *line);
+t_env	*ft_envnew(char *line);
 
 //-----------builtins----------------------------------------
+void	ft_echo(char *line, int fd);
 int	ft_pwd(void);
 int	ft_cd(t_info *info, char *dir);
 void	ft_env(t_env *env);
+//int	ft_exit(t_info *env, int ret);
+int	ft_exit(t_info *env, char *value, char **tofree);
+t_env	*ft_unset(t_env *env, char *line);
+void	ft_export(t_env *env, char *line);
 
 //-----------ft_tools.c--------------------------------
 int	ft_putstr_error(char *error);
+int	ft_putstr_frror(char *error, char *str, int i);
 int	ft_perror(char *error, char *str);
 int	ft_perror_free(char *error, char *str, int i);
 char	*ft_get_env_value(t_info *info, char *name);

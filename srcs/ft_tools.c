@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:10:52 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/19 16:38:16 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/20 17:21:47 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,24 @@ int	ft_putstr_error(char *error)
 	if (error)
 		while (*error)
 			write(2, (void *)error++, 1);
+	return (1);
+}
+
+int	ft_putstr_frror(char *error, char *str, int i)
+{
+	char	*tofree;
+	char	*tofree2;
+
+	tofree = error;
+	tofree2 = str;
+	if (str && error)
+		error = ft_strjoin(error, str);
+	ft_putstr_error(error);
+	if (i != 2)
+		free(tofree);
+	if (i != 1)
+		free(tofree2);
+	free(error);
 	return (1);
 }
 
@@ -43,6 +61,7 @@ int	ft_perror_free(char *error, char *str, int i)
 		free(tofree);
 	if (i != 1)
 		free(tofree2);
+	free(error);
 	return (1);
 }
 

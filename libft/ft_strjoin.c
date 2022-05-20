@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 15:14:31 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/19 16:10:01 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/20 12:59:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,14 @@ char	*ft_strjoin_free(char *s1, char *s2, int i)
 			*new++ = s2[k++];
 	}
 	if (s1 && i != 2)
+	{
 		free(s1);
+		s1 = NULL;
+	}
 	if (s2 && i != 1)
+	{
 		free(s2);
+		s2 = NULL;
+	}
 	return (new - len);
 }

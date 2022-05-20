@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 16:56:17 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/19 16:20:57 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/20 12:31:57 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,15 @@ static char	*ft_strdup_set(const char *s, char c)
 	return (new);
 }
 
-char	**ft_free_split(char **tab, unsigned int i)
+char	**ft_free_split(char **tab)
 {
+	unsigned int	i;
+
+	i = 0;
+	if (!tab)
+		return (NULL);
+	while (tab[i])
+		i++;
 	while (i-- > 0)
 		if (tab[i])
 			free(tab[i]);
@@ -85,7 +92,7 @@ char	**ft_split(const char *s, char c)
 			{
 				tab[line++] = ft_strdup_set(s, c);
 				if (!tab[line - 1])
-					return (ft_free_split(tab, (line - 1)));
+					return (ft_free_split(tab));
 			}
 			while (*s && *s != c)
 				s++;
