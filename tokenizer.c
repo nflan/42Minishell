@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/19 19:23:00 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/20 18:29:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char *ft_strncpy(char *str, int n)
 	return (ret);
 }
 
-t_token *ft_create_token(t_tok_type tok_type, int length, int i)
+t_token *create_token(t_tok_type tok_type, int length, int i)
 {
 	t_token *tok;
 
@@ -42,6 +42,20 @@ t_token *ft_create_token(t_tok_type tok_type, int length, int i)
 		return (NULL);
 	tok->token = tok_type;
 	tok->length = length;
+	tok->start = i;
+	tok->next = NULL;
+	return (tok);
+}
+
+t_big_token *ft_create_btoken()
+{
+	t_big_token *tok;
+
+	tok = (t_big_token *)malloc(sizeof(t_big_token));
+	if (!tok)
+		return (NULL);
+	tok->type = type;
+	tok->t = length;
 	tok->start = i;
 	tok->next = NULL;
 	return (tok);
@@ -138,10 +152,10 @@ unsigned int get_real_tok_type(char c, t_token **tok_list)
 
 void detect_tokens(t_token **tok_list, char *str)
 {
-	int i;
-	unsigned int tok_type;
-	int length;
-	int start;
+	int 			i;
+	unsigned int	tok_type;
+	int				length;
+	int				start;
 
 	i = 0;
 	if (!str)
@@ -212,7 +226,7 @@ int check_count_errors(t_token **tokens)
 	tmp = *tokens;
 	while (tmp)
 	{
-		if (tmp->token == TOK_OPERATOR && ft_strlen(tmp->value))
+		if (tmp->token == TOK_OPERATOR && ft_strlen(tmp->value) > 2)
 			return (1);
 		tmp = tmp->next;
 	}
@@ -237,20 +251,6 @@ int r_quotes_impair(t_token **tokens)
 	return (0);
 }
 
-int ll_len(t_token **tokens)
-{
-	int len;
-	t_token *tmp;
-
-	len = 0 tmp = *tokens;
-	while (tmp)
-	{
-		len++;
-		tmp = tmp->next;
-	}
-	return (len);
-}
-
 int is_last_op(t_token **tokens)
 {
 	t_token *tmp;
@@ -270,7 +270,7 @@ int syntax_err_handler(t_token **tokens)
 	int nb_optok;
 	int nb_cltok;
 	int err_num[3];
-
+	// change that to enum please
 	err_num[0] = 0;
 	err_num[1] = 0;
 	err_num[2] = 0;
@@ -306,34 +306,149 @@ void index_toks(t_token **tokens)
 	}
 }
 
-
-int	check_for_operators(t_token **tokens, int index_start)
+int	check_divider_type(t_tok_type tok)
 {
-	int	i;
-	t_token	*tmp;
-	int	len;
-	
+	if ( !ft_strcmp(tok, "&&"))
+		return (1);
+	if ( !ft_strcmp(tok, "||"))
+		return (2);
+	return (0);
+}
+
+int check_for_operators(t_token **tokens, int index_start, )
+{
+	int i;
+	t_token *tmp;
+	int len;
+
 	tmp = *tokens;
-	len = ll_len(tokens); 
-	if (index_start >= ll_len)
-		rreturn (-1);
+	len = len_ll_list(tokens);
+	if (index_start >= len)
+		return (-1);
 	while (tmp)
 	{
-		if (tmp->index == index_start)	
+		if (tmp->index == index_start)
 			break;
 		tmp = tmp->next;
 	}
 	while (tmp)
 	{
 		if (tmp->token == TOK_OPERATOR)
-			return (tmp->index);	
+			return (tmp->index);
 		tmp = tmp->next;
+	}
+	return (-2);
+}
+
+int	cl_par_ind(t_token **tokens, int ind_op_paren)
+{
+	t_token	*tmp;
+	int		nb_op_par;
+
+	nb_op_par = 1;
+	tmp = *tokens;
+	if (!tmp)
+		return (-1);
+	while (tmp)
+	{
+		if (tmp->index == ind_op_paren)
+			break ;
+		tmp = tmp->next;
+	}
+	while (tmp && tmp->token != TOK_EXPANDER_CL)
+	{
+		if (tmp->token == TOK_EXPANDER_OP)
+			nb_op_par++;
+		tmp = tmp->next;
+	}
+	while (tmp && nb_op_par)
+	{
+		if (tmp->token == TOK_EXPANDER_CL)
+			nb_op_par--;
+		if (!nb_op_par)
+			return (tmp->index);
+		tmp = tmp->next;
+	}
+	return (-1);
+}
+
+int	is_there_oth_op(t_token *tokens)
+{
+	t_token *tmp;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		if (check_divider_type(tmp->token) > 0)
+			return (tmp->index);
+		tmp = tmp->next;
+	}
+	return (-1);
+}
+
+void	move_tok_2_ind(t_token **tokens, int ind)
+{
+	while (*tokens)
+	{
+		if ((*tokens)->index == ind)
+			return ;
+		*tokens = (*tokens)->next;
 	}
 }
 
-void	divide_b_toks(t_token **tokens)
+void	browse_tokens(t_token **tokens)
 {
-	
+	t_token	*tmp;
+	int		jump;
+	int		par;
+	int		and_for_none;
+
+	par = 0;
+	tmp = *tokens;
+	and_for_none = 0;
+	while (tmp)
+	{
+		if (tmp->value == TOK_EXPANDER_OP)
+		{
+			jump = cl_par_ind(tokens, tmp->index);
+			if ((jump + 1) >= len_ll_list(tokens))
+			{
+				move_tok_2_ind(&tmp, jump);
+				tmp = tmp->next;
+				//create wahed kayn entre parentheses
+			}
+			else
+			{
+				//create the big token with arenthesis (it'll be a clear token) avec valeur de start et de end (that would be the last token of your tokens)
+			}
+		}
+		else if (check_divider_type(tmp->value) > 0)
+		{
+			if (is_there_oth_op(tokens) > -1)
+			{
+				//create chnou binathoum
+				//n9ez lmn b3d ma tsala segment
+			}
+			else
+			{
+				//create a big token ghadi htal lkher
+			}
+		}
+		else
+			//ma3reftch
+	}
+
+}
+
+void divide_b_toks(t_token **tokens)
+{
+	int index_start;
+
+	index_start = 0;
+	while (1)
+	{
+		if (check_for_operators(tokens) > 0)
+	}
 }
 
 int main(int argc, char *argv[])

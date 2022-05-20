@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/19 19:11:38 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/20 17:23:58 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,23 +84,37 @@ typedef struct s_token
 
 typedef enum s_big_tok_type
 {
-	BIG_TOK_PAR,
 	TOK_OR_LEFT,
 	TOK_OR_RIGHT,
-	TOK_AND_LEFT,
 	TOK_AND_RIGHT,
-	TOK_CLEAN
+	TOK_AND_LEFT,
+	TOK_PIPE_LEFT,
+	TOK_PIPE_RIGHT,
+	TOK_CLEAN,
 } 			t_big_tok_type;
+
+typedef enum	s_par_left_right
+{
+	NOT_A_PAR,
+	PAR_LEFT_OR,
+	PAR_RIGHT_OR,
+	PAR_LEFT_AND,
+	PAR_RIGHT_AND,
+	PAR_PIPE_LEFT,
+	PAR_PIPE_RIGHT,
+}				t_par_left_right;
 
 typedef struct s_big_token
 {
 	//	int						sp_after;
 	int		index;
+	int		par;
 	t_big_tok_type	type;
-	t_tok_type token_start;
-	t_tok_type token_end;
-	struct s_big_token *prev;
-	struct s_big_token *next;
+	t_tok_type tok_start;
+	t_tok_type tok_end;
+	t_par_left_right more_info;
+	struct s_big_token *child;
+	struct s_big_token *sibling;
 } 			t_big_token;
 
 static const t_char_type get_char_class[255] =
