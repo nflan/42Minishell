@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:10:52 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/20 17:21:47 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/23 17:06:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	ft_putstr_frror(char *error, char *str, int i)
 	if (str && error)
 		error = ft_strjoin(error, str);
 	ft_putstr_error(error);
-	if (i != 2)
+	if (i && i != 2)
 		free(tofree);
-	if (i != 1)
+	if (i && i != 1)
 		free(tofree2);
 	free(error);
 	return (1);
@@ -43,7 +43,8 @@ int	ft_perror(char *error, char *str)
 	if (str)
 		error = ft_strjoin(error, str);
 	perror(error);
-	free(error);
+	if (str)
+		free(error);
 	return (1);
 }
 

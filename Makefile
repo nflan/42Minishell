@@ -6,7 +6,7 @@
 #    By: nflan <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/05 15:05:20 by nflan             #+#    #+#              #
-#    Updated: 2022/05/20 17:02:08 by nflan            ###   ########.fr        #
+#    Updated: 2022/05/23 14:25:20 by nflan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ vpath %.h libft
 vpath ft_%.c libft
 vpath ft_%.o libft
 
-sources = srcs/main.c srcs/ft_pwd.c srcs/ft_cd.c srcs/ft_echo.c srcs/ft_unset.c srcs/ft_export.c srcs/ft_exit.c srcs/ft_env.c srcs/ft_tools.c
+sources = srcs/main.c srcs/ft_cd.c srcs/ft_export.c srcs/ft_tools.c srcs/ft_builtins.c\
+		  srcs/ft_pipex_tools.c srcs/ft_pipex.c srcs/ft_global.c srcs/ft_tools2.c
 
 INC = include/minishell.h
 

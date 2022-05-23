@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:50:07 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/20 12:30:56 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/23 15:21:59 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,13 @@ char	*ft_strdup(const char *str);
 char	*ft_strdup_free(char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_substr_free(char *s, unsigned int start, size_t len);
+// STRJOIN
+void	ft_free_3_str(char *s1, char *s2, char *s3, int i);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin_free(char *s1, char *s2, int i);
+char	*ft_strjoiiin(char const *s1, char const *s2, char const *s3);
+char	*ft_strjoiiin_free(char *s1, char *s2, char *s3, int i);
+//
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 char	**ft_free_split(char **tab);
