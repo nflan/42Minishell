@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/23 17:57:39 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/24 11:55:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ t_cmd	*ft_cmdnew(char *cmd, t_tree *ptr)
 	if (!tmp)
 		return (NULL);
 	tmp->cmd = ft_strdup(cmd);
-	tmp->fdin = 0;
-	tmp->fdout = 1;
+	tmp->fdin = open("/dev/stdin", O_RDONLY);
+	tmp->fdout = open("/dev/stdout", O_WRONLY);
 	tmp->tree = NULL;
 	if (ptr)
 		tmp->tree = ptr;
@@ -543,7 +543,15 @@ void	ft_do_it(t_info *info)
 //		return ;
 //	dup2(tmp[0], info->tree->cmd->fdin);
 //	dup2(tmp[1], info->tree->cmd->fdout);
-	if (i == 2)
+	if (info->tree->right->right)
+	{
+		if (i == 3) 
+		{
+			i = 0;
+			return ;
+		}
+	}
+	else if (i == 2)
 	{
 		i = 0;
 		return ;
@@ -553,9 +561,12 @@ void	ft_do_it(t_info *info)
 		if (!i)
 			tree = info->tree->left;
 		else if (i == 1)
-			tree = info->tree->right;
+			tree = info->tree->right->left;
+		else if (i == 2)
+			tree = info->tree->right->right;
 		i++;
 	}
+	printf("cmd->cmd = %s\n", tree->cmd->cmd);
 	if (!ft_strncmp(tree->cmd->cmd, "pwd", 3))
 	{
 		if (ft_pwd())

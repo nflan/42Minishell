@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/23 15:57:58 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/24 11:44:40 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ typedef struct s_info
 	int		status;
 	t_tree	*tree;
 	t_env	*env;
+	int		pdes[2];
 }	t_info;
 
 //----------tokenizer.c--------------------------------------
@@ -223,6 +224,7 @@ void	ft_free_all(t_info *info, t_env *env);
 void	ft_envadd_back(t_env **alst, t_env *new);
 int		ft_fill_envnew(t_env *env, char *line);
 t_env	*ft_envnew(char *line);
+void	ft_print_cmd(t_cmd *cmd);
 
 //-----------builtins----------------------------------------
 void	ft_echo(char *line, int fd);
@@ -263,7 +265,7 @@ int			ft_cmd_path(t_info *info, t_cmd *cmd);
 int			ft_command(t_info *info, t_cmd *cmd);
 
 //---------ft_pipex_tools2.c---------------------------
-void	ft_error_2(t_info *info);
-int		ft_error(int i, t_info *info);
+void	ft_error_2(t_info *info, t_cmd *cmd);
+int		ft_error(int i, t_info *info, t_cmd *cmd);
 
 #endif
