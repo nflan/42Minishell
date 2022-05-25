@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/25 20:56:04 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/25 23:08:29 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,8 @@ void print_b_tokens(t_big_token *b_token, t_token *tokens)
 	int i;
 	int j;
 
+	// printf ("this is the glabal length of toks: %d\n", len_ll_list(tokens));
+
 	while (b_token)
 	{
 		j = 0;
@@ -242,11 +244,13 @@ int main(int argc, char *argv[])
 	t_big_token *tmp2;
 	tmp2 = b_tokens;
 	print_b_tokens(tmp2, tmp);
+//	exit (1);
 	tmp = tokens;
 	tmp2 = b_tokens;
 	printf("%d\n", is_pipe_in_st_end(tmp2, tmp));
 	divide_by_pipe(&b_tokens, &tokens);
 	tmp2 = b_tokens->child;
+	printf("\n\n\n");
 	print_b_tokens(tmp2, tmp);
 	return 0;
 }
