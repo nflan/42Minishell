@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/20 17:23:58 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/25 20:58:46 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef enum s_tok_type
 	TOK_EXPANDER_CL,
 	TOK_OPERATOR,
 	TOK_PATH,
+	TOK_REDIRECTOR_LEFT,
+	TOK_REDIRECTOR_RIGHT,
 	TOK_WORD,
 	TOK_EXPANDER,
 } 			t_tok_type;
@@ -77,20 +79,23 @@ typedef struct s_token
 	int 	length;
 	char	*value;
 	t_tok_type token;
-	int quoted;
+	int 	quoted;
 	struct s_token *prev;
 	struct s_token *next;
 } 			t_token;
 
 typedef enum s_big_tok_type
 {
-	TOK_OR_LEFT,
-	TOK_OR_RIGHT,
-	TOK_AND_RIGHT,
-	TOK_AND_LEFT,
-	TOK_PIPE_LEFT,
-	TOK_PIPE_RIGHT,
+	TOK_LEFT_OR,
+	TOK_LEFT_AND,
+	TOK_LEFT_PIPE,
 	TOK_CLEAN,
+	TOK_LAST,
+	TOK_PIPE_LAST,
+	// TOK_OR_LEFT,
+	// TOK_AND_RIGHT,
+	// TOK_PIPE_LEFT,
+	// TOK_PIPE_RIGHT,
 } 			t_big_tok_type;
 
 typedef enum	s_par_left_right
@@ -106,13 +111,16 @@ typedef enum	s_par_left_right
 
 typedef struct s_big_token
 {
-	//	int						sp_after;
-	int		index;
-	int		par;
 	t_big_tok_type	type;
-	t_tok_type tok_start;
-	t_tok_type tok_end;
-	t_par_left_right more_info;
+	int				ind_tok_start;
+	int				length;
+	//	int		sp_after;
+	// int		index;
+	// int		par;
+	// int		priority;
+	// t_tok_type tok_start;
+	// t_tok_type tok_end;
+	// t_par_left_right more_info;
 	struct s_big_token *child;
 	struct s_big_token *sibling;
 } 			t_big_token;
@@ -168,7 +176,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_COMMENT] = TOK_IDK,
 		[CHR_DOL] = TOK_EXPANDER,
 		[CHR_PER] = TOK_IDK,
-		[CHR_AND] = TOK_QUOTER,
+		[CHR_AND] = TOK_OPERATOR,
 		[CHR_S_QUOTE] = TOK_QUOTER,
 		[CHR_OP_PAREN] = TOK_EXPANDER_OP,
 		[CHR_CL_PAREN] = TOK_EXPANDER_CL,
@@ -180,39 +188,61 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_NUM] = TOK_WORD,
 		[CHR_COLON] = TOK_PATH,
 		[CHR_SEMI_COLON] = TOK_WORD,
-		[CHR_MINES] = TOK_OPERATOR,
+		[CHR_MINES] = TOK_REDIRECTOR_LEFT,
 		[CHR_EQUAL] = TOK_OPERATOR,
-		[CHR_SUPERIOR] = TOK_OPERATOR,
+		[CHR_SUPERIOR] = TOK_REDIRECTOR_RIGHT,
 		[CHR_INTEROG] = TOK_OPERATOR,
 		[CHR_AT] = TOK_WORD,
 		[CHR_ALPHA] = TOK_WORD,
-		[CHR_OP_BRACKET] = TOK_EXPANDER_OP,
+		[CHR_OP_BRACKET] = TOK_IDK,
 		[CHR_ANTI_SLASH] = TOK_QUOTER,
-		[CHR_CL_BRACKET] = TOK_EXPANDER_CL,
+		[CHR_CL_BRACKET] = TOK_IDK,
 		[CHR_CIRCUM] = TOK_IDK,
 		[CHR_UNDERSCORE] = TOK_WORD,
 		[CHR_ALPHA] = TOK_WORD,
-		[CHR_OP_BRACE] = TOK_EXPANDER_OP,
+		[CHR_OP_BRACE] = TOK_IDK,
 		[CHR_PIPE] = TOK_OPERATOR,
-		[CHR_CL_BRACE] = TOK_EXPANDER_CL,
+		[CHR_CL_BRACE] = TOK_IDK,
 		[CHR_TILDA] = TOK_PATH,
 		[CHR_BACKTICK] = TOK_IDK,
 };
 
 static int rules[9][255];
 
-//----------tokenizer.c--------------------------------------
+//----------tokenizer_1.c--------------------------------------
 
-t_token 		*ft_create_token(t_tok_type tok_type, int length, int i);
-void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
-int 			is_quoted(t_token **tok_list, int rank_in_list);
-void 			init_tok_struct(t_token **tok_list, int rank_in_list);
-int				len_ll_list(t_token *tok_list);
-unsigned int	get_real_tok_type(char c, t_token **tok_list);
-void 			detect_tokens(t_token **tok_list, char *str);
+int len_ll_list(t_token *tok_list);
+int is_quoted(t_token **tok_list, int rank_in_list);
+unsigned int get_real_tok_type(char c, t_token **tok_list);
+t_token *ft_create_token(t_tok_type tok_type, int length, int i);
+void init_tok_struct(t_token **tok_list, int rank_in_list);
+void add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
+void detect_tokens(t_token **tok_list, char *str);
+void fill_tok_value(t_token **tok, char *str);
+char *ft_strncpy(char *str, int n);
+void index_toks(t_token **tokens);
 
-//-----------
+//-----------tok_errorinizer_1.c--------------------------------------
 
-int	ft_pwd(void);
+int count_op_tok(t_token **tokens);
+int count_cl_tok(t_token **tokens);
+int check_count_errors(t_token **tokens);
+int r_quotes_impair(t_token **tokens);
+int is_last_op(t_token **tokens);
+int	r_2_op_succeding(t_token **tokens);
+int syntax_err_handler(t_token **tokens);
+int	is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens);
+
+//------------big_tokenizer_1.c----------------------------------------
+
+t_big_token *ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length);
+void add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length);
+int check_divider_type(char *tmp_value);
+int is_cl_2_op(char *value_tok_op, char *value_tok_cl);
+int cl_par_ind(t_token **tokens, t_tok_type tok, int ind_tok, char *value);
+void move_tok_2_ind(t_token **tokens, int ind);
+void divide_by_or_and(t_big_token **b_tokens, t_token **tokens);
+void divide_by_pipe(t_big_token **b_tokens, t_token **tokens);
+
 
 #endif
