@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/25 21:35:03 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/30 20:58:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct s_big_token
 	// t_tok_type tok_start;
 	// t_tok_type tok_end;
 	// t_par_left_right more_info;
+	struct s_big_token *parent;
 	struct s_big_token *child;
 	struct s_big_token *sibling;
 } 			t_big_token;
@@ -209,40 +210,59 @@ static const t_tok_type get_tok_type[255] =
 
 static int rules[9][255];
 
-//----------tokenizer_1.c--------------------------------------
+//----------tokenizer_1.c-------------------------------------------------------------------
 
-int len_ll_list(t_token *tok_list);
-int is_quoted(t_token **tok_list, int rank_in_list);
-unsigned int get_real_tok_type(char c, t_token **tok_list);
-t_token *ft_create_token(t_tok_type tok_type, int length, int i);
-void init_tok_struct(t_token **tok_list, int rank_in_list);
-void add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
-void detect_tokens(t_token **tok_list, char *str);
-void fill_tok_value(t_token **tok, char *str);
-char *ft_strncpy(char *str, int n);
-void index_toks(t_token **tokens);
+int 			len_ll_list(t_token *tok_list);
+int 			is_quoted(t_token **tok_list, int rank_in_list);
+unsigned int	get_real_tok_type(char c, t_token **tok_list);
+t_token 		*ft_create_token(t_tok_type tok_type, int length, int i);
+void 			init_tok_struct(t_token **tok_list, int rank_in_list);
 
-//-----------tok_errorinizer_1.c--------------------------------------
+//----------tokenizer_2.c-------------------------------------------------------------------
 
-int count_op_tok(t_token **tokens);
-int count_cl_tok(t_token **tokens);
-int check_count_errors(t_token **tokens);
-int r_quotes_impair(t_token **tokens);
-int is_last_op(t_token **tokens);
-int	r_2_op_succeding(t_token **tokens);
-int syntax_err_handler(t_token **tokens);
-int	is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens);
+void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
+void 			detect_tokens(t_token **tok_list, char *str);
+void 			fill_tok_value(t_token **tok, char *str);
+char 			*ft_strncpy(char *str, int n);
+void 			index_toks(t_token **tokens);
 
-//------------big_tokenizer_1.c----------------------------------------
+//-----------syntax_errorinizer_1.c----------------------------------------------------------------------
 
-t_big_token *ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length);
-void add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length);
-int check_divider_type(char *tmp_value);
-int is_cl_2_op(char *value_tok_op, char *value_tok_cl);
-int cl_par_ind(t_token **tokens, t_tok_type tok, int ind_tok, char *value);
-void move_tok_2_ind(t_token **tokens, int ind);
-void divide_by_or_and(t_big_token **b_tokens, t_token **tokens);
-void divide_by_pipe(t_big_token **b_tokens, t_token **tokens);
+int 			count_op_tok(t_token **tokens);
+int 			count_cl_tok(t_token **tokens);
+int 			check_count_errors(t_token **tokens);
+int 			r_quotes_impair(t_token **tokens);
+int 			is_last_op(t_token **tokens);
+
+//-----------syntax_errorinizer_2.c----------------------------------------------------------------------
+
+int				r_2_op_succeding(t_token **tokens);
+int				op_cl_par_succeeding(t_token **tokens);
+int				syntax_err_handler(t_token **tokens);
+int				is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens);
+
+//-----------big_tokenizer_1.c---------------------------------------------------------------------------
+
+t_big_token		*ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length);
+void			add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length);
+int				check_divider_type(char *tmp_value);
+int				is_cl_2_op(char *value_tok_op, char *value_tok_cl);
+void			move_tok_2_ind(t_token **tokens, int ind);
+
+//-----------big_tokenizer_2.c---------------------------------------------------------------------------
+
+int				cl_par_ind(t_token **tokens, t_tok_type tok, int ind_tok, char *value);
+void			divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
+void parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+
+//-----------big_tokenizer_4.c---------------------------------------------------------------------------
+
+void			handle_par(t_big_token **b_tokens, t_token **tokens);
+
+//-----------big_tokenizer_3.c---------------------------------------------------------------------------
+
+// void		divide_by_or_and(t_big_token **b_tokens, t_token **tokens);
+void		divide_by_pipe(t_big_token **b_tokens, t_token **tokens);
 
 
 #endif
