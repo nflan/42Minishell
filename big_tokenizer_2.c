@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/31 18:13:50 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/31 20:51:38 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 	tmp = *tokens;
 	while (tmp)
 	{
-		if (tmp->index == start)
+		if (tmp->index == start_tok)
 			break;
 		tmp = tmp->next;
 	}
@@ -94,7 +94,10 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 	{
 		b_length++;
 		if (tmp->token == TOK_EXPANDER_OP)
+		{
+			printf("\n\nthis is the source of the prolem: %d the value is %s\n\n", tmp->index, tmp->value);
 			divide_by_or_and_1(&tmp, tokens, &b_length);
+		}
 		else if (tmp->token == TOK_OPERATOR && check_divider_type(tmp->value))
 			divide_by_or_and_2(tmp, b_tokens, &start, &b_length);
 //		if (tmp && tmp->index < length)
@@ -119,37 +122,35 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length, int 
 	tmp = *tokens;
 	index_toks(&tmp, start, length);
 	divide_by_or_and(b_tokens, &tmp, start, length);
+	print_b_tokens(*b_tokens, *tokens, start, length);
 	tmp_b = *b_tokens;
-//	print_b_tokens(*b_tokens, tmp);
-	if(!tmp_b)	
+	if(!tmp_b)
 	{
 		printf("je suis nullll!\n");
 		return ;
 	}
-	if (tmp_b && !tmp_b->par && tmp_b->type == TOK_CLEAN)
-	{
-		//	printf("je suis clean\n");
-		return ;
-	}
-	print_b_tokens(tmp_b, tmp);
 	while (tmp_b)
 	{
-		printf("je suis laaa!!\n");
-		printf("%d\n", tmp_b->par);
 		if (tmp_b->par == 1)
 		{
 			printf("je suis rentre dans la paranthese");
+			printf("\n%d %d\n", tmp_b->ind_tok_start, tmp_b->length);
+			// exit (0);
 			parse(&(tmp_b->child), tokens, tmp_b->ind_tok_start, tmp_b->length, 0);
 		}
 		else
 		{
+			printf("\n\ntmp_b->start: %d\n\n", tmp_b->ind_tok_start);
+			exit (0);
 			divide_by_pipe(&tmp_b, tokens);
+			handle_par(&(tmp_b->child), tokens);
 			if (tmp_b->child)
 			{
-				handle_par(&tmp_b->child, tokens);
+				if (tmp_b->child->type == TOK_CLEAN && !tmp_b->child->par)
+					return ;
 				if (tmp_b->child->type == TOK_CLEAN && tmp_b->child->par)
 					parse(&(tmp_b->child), tokens, tmp_b->ind_tok_start, tmp_b->length, 0);
-				if (tmp_b->child && tmp_b->child->type != TOK_CLEAN)
+				else if (tmp_b->child && tmp_b->child->type != TOK_CLEAN)
 				{
 					t_big_token *child;
 					child = tmp_b->child;

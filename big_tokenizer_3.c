@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:57:08 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/31 15:48:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/31 20:34:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
 		i = 0;
 		j = tmp_b->ind_tok_start;
 		length_piped = 0;
+		printf("\nlwngthhhhhhhhhh: %d\n", tmp_b->length);
 		while (i < tmp_b->length)
 		{
 			length_piped++;
 			move_tok_2_ind(&tmp_s, j);
+			printf("\n\n\nalertttt:  %d\n\n\n", j);
 			if (tmp_s->token == TOK_EXPANDER_OP)
 			{
 				st_par = tmp_s->index;
