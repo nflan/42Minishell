@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/23 17:12:55 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/31 12:25:55 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_env(t_env *env)
 	}
 }
 
-void	ft_echo(char *line, int fd)
+void	ft_echo(char *line, int fd, int ret)
 {
 	char	*tmp;
 	int		i;
@@ -52,6 +52,8 @@ void	ft_echo(char *line, int fd)
 	tmp = NULL;
 	if (!line)
 		return ;
+	if (!ft_strncmp(line, "$?", 3))
+		tmp = ft_itoa(ret);
 	if ((line[0] == '-' || line[1] == 'n'))
 	{
 		while (line[i] && line[i] == 'n')

@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/24 11:44:40 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/31 12:25:32 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ t_env	*ft_envnew(char *line);
 void	ft_print_cmd(t_cmd *cmd);
 
 //-----------builtins----------------------------------------
-void	ft_echo(char *line, int fd);
+void	ft_echo(char *line, int fd, int ret);
 int	ft_pwd(void);
 void	ft_env(t_env *env);
 //int	ft_exit(t_info *env, int ret);

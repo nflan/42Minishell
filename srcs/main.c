@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/24 11:55:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/05/31 12:33:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -543,7 +543,7 @@ void	ft_do_it(t_info *info)
 //		return ;
 //	dup2(tmp[0], info->tree->cmd->fdin);
 //	dup2(tmp[1], info->tree->cmd->fdout);
-	if (info->tree->right->right)
+/*	if (info->tree->right->right)
 	{
 		if (i == 3) 
 		{
@@ -556,7 +556,7 @@ void	ft_do_it(t_info *info)
 		i = 0;
 		return ;
 	}
-	if (!ft_strncmp(info->tree->cmd->cmd, "|", 2))
+*/	if (!ft_strncmp(info->tree->cmd->cmd, "|", 2))
 	{
 		if (!i)
 			tree = info->tree->left;
@@ -566,7 +566,7 @@ void	ft_do_it(t_info *info)
 			tree = info->tree->right->right;
 		i++;
 	}
-	printf("cmd->cmd = %s\n", tree->cmd->cmd);
+//	printf("cmd->cmd = %s\n", tree->cmd->cmd);
 	if (!ft_strncmp(tree->cmd->cmd, "pwd", 3))
 	{
 		if (ft_pwd())
@@ -576,7 +576,7 @@ void	ft_do_it(t_info *info)
 	else if (!ft_strncmp(tree->cmd->cmd, "env", 3))
 		ft_env(info->env);
 	else if (!ft_strncmp(tree->cmd->cmd, "echo", 4))
-		ft_echo(tree->cmd->cmd + 5, 1);
+		ft_echo(tree->cmd->cmd + 5, 1, info->status);
 	else if (!ft_strncmp(tree->cmd->cmd, "unset", 5))
 		ft_unset(info->env, tree->cmd->cmd + 6);
 	else if (!ft_strncmp(tree->cmd->cmd, "export", 6))
@@ -629,11 +629,12 @@ int	main(int ac, char **av, char **envp)
 	t_token		*tokens;
 	t_info		info;
 	char		*word;
+	static int	ret = 0;
 
 	(void) av;
 	info.rdline = NULL;
 	tokens = NULL;
-	info.status = 0;
+	info.status = ret;
 	if (ac > 1)
 		return (ft_putstr_fd("Too much arguments\n", 2), 1);
 	if (ft_init_env(&info, envp))
@@ -651,9 +652,10 @@ int	main(int ac, char **av, char **envp)
 		if (ft_init_info(&info, tokens))
 			ft_exit(&info, NULL, NULL);
 		ft_do_it(&info);
+		ret = info.status;
 		ft_free_all(&info, NULL);
 	}
 	rl_clear_history();
 	ft_free_env(info.env);
-	return (info.status);
+	return (ret);
 }
