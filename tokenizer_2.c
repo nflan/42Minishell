@@ -6,7 +6,11 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/30 21:28:38 by omoudni          ###   ########.fr       */
+=======
+/*   Updated: 2022/05/31 17:30:47 by nflan            ###   ########.fr       */
+>>>>>>> d6f19b730d2369e4f03388efc4bee12f8a585fe1
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +59,7 @@ void detect_tokens(t_token **tok_list, char *str)
 		start = i;
 		tok_type = get_real_tok_type(str[i], tok_list);
 		i++;
-		while (str[i] && get_real_tok_type(str[i], tok_list) == tok_type)
+		while (tok_type != TOK_EXPANDER_OP && tok_type != TOK_EXPANDER_CL && str[i] && get_real_tok_type(str[i], tok_list) == tok_type)
 		{
 			length++;
 			i++;
@@ -98,14 +102,20 @@ char *ft_strncpy(char *str, int n)
 	return (ret);
 }
 
-void index_toks(t_token **tokens)
+void index_toks(t_token **tokens, int start, int length)
 {
 	int i;
 	t_token *tmp;
 
 	i = 0;
 	tmp = *tokens;
-	while (tmp)
+	while (tmp && i < start)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	i = 0;
+	while (i < length)
 	{
 		tmp->index = i;
 		i++;

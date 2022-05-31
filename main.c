@@ -1,21 +1,25 @@
 #include "minishell.h"
 #include "libft/libft.h"
 
-void print_b_tokens(t_big_token *b_token, t_token *tokens)
+void print_b_tokens(t_big_token *b_token, t_token *tokens_s)
 {
 	int i;
 	int j;
+	t_big_token	*tmp_b;
+	t_token	*tokens;
 
 	// printf ("this is the glabal length of toks: %d\n", len_ll_list(tokens));
-
-	while (b_token)
+	tmp_b = b_token;
+	tokens = tokens_s;
+	while (tmp_b)
 	{
 		j = 0;
 		printf("Here is a big token :\n");
-		printf("this is the start of the b_token : %d\n", b_token->ind_tok_start);
-		printf("this is the length of the b_token : %d\n", b_token->length);
-		i = b_token->ind_tok_start;
-		while (j < b_token->length)
+		printf("this is the start of the b_token : %d\n", tmp_b->ind_tok_start);
+		printf("this is the length of the b_token : %d\n", tmp_b->length);
+		printf("this is the par of the b_token : %d\n", tmp_b->par);
+		i = tmp_b->ind_tok_start;
+		while (j < tmp_b->length)
 		{
 			move_tok_2_ind(&tokens, i);
 			printf("%s", tokens->value);
@@ -23,7 +27,7 @@ void print_b_tokens(t_big_token *b_token, t_token *tokens)
 			j++;
 		}
 		printf("\n\n");
-		b_token = b_token->sibling;
+		tmp_b = tmp_b->sibling;
 	}
 }
 
@@ -36,7 +40,7 @@ int main(int argc, char *argv[])
 	b_tokens = NULL;
 	detect_tokens(&tokens, argv[1]);
 	fill_tok_value(&tokens, argv[1]);
-	index_toks(&tokens);
+//	index_toks(&tokens, 0, len_ll_list(tokens));
 	t_token *tmp;
 	tmp = tokens;
 	// while (tmp)
@@ -54,7 +58,7 @@ int main(int argc, char *argv[])
 
 
 	// divide_by_or_and(&b_tokens, &tokens, 0, len_ll_list(tokens));
-	parse(&b_tokens, &tokens, 0,len_ll_list(tokens));
+	parse(&b_tokens, &tokens, 0,len_ll_list(tokens), 0);
 		// exit (1);
 
 	t_big_token *tmp2;
@@ -62,11 +66,25 @@ int main(int argc, char *argv[])
 	print_b_tokens(tmp2, tmp);
 	exit (1);
 	tmp = tokens;
+	t_big_token *tmp2;
 	tmp2 = b_tokens;
-//	printf("%d\n", is_pipe_in_st_end(tmp2, tmp));
-	divide_by_pipe(&b_tokens, &tokens);
-	tmp2 = b_tokens->child;
+//	print_b_tokens(tmp2, tmp);
+//	divide_by_pipe(&tmp2, &tokens);
+	/*
+	while (tmp2)
+	{
+		if (tmp2->child)
+		{
+			t_big_token	*tmp3;
+			tmp3 = tmp2->child;
+			print_b_tokens(tmp3, tmp);
+		}
+		tmp2 = tmp2->sibling;
+	}
+	*/
+	exit (0);
+	//	tmp2 = b_tokens->child;
 	printf("\n\n\n");
-	print_b_tokens(tmp2, tmp);
+	//print_b_tokens(tmp2, tmp);
 	return 0;
 }
