@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
 	// divide_by_or_and(&b_tokens, &tokens, 0, len_ll_list(tokens));
 	parse(&b_tokens, &tokens, 0,len_ll_list(tokens));
-		exit (1);
+		// exit (1);
 
 	t_big_token *tmp2;
 	tmp2 = b_tokens;
