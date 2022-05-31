@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/30 20:58:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:43:45 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,16 @@ typedef struct s_big_token
 	int				ind_tok_start;
 	int				length;
 	int				par;
+	struct s_big_token *parent;
+	struct s_big_token *child;
+	struct s_big_token *sibling;
 	//	int		sp_after;
 	// int		index;
 	// int		priority;
 	// t_tok_type tok_start;
 	// t_tok_type tok_end;
 	// t_par_left_right more_info;
-	struct s_big_token *parent;
-	struct s_big_token *child;
-	struct s_big_token *sibling;
+
 } 			t_big_token;
 
 static const t_char_type get_char_class[255] =
@@ -224,7 +225,7 @@ void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 void 			detect_tokens(t_token **tok_list, char *str);
 void 			fill_tok_value(t_token **tok, char *str);
 char 			*ft_strncpy(char *str, int n);
-void 			index_toks(t_token **tokens);
+void 			index_toks(t_token **tokens, int start, int length);
 
 //-----------syntax_errorinizer_1.c----------------------------------------------------------------------
 
@@ -253,7 +254,7 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 
 int				cl_par_ind(t_token **tokens, t_tok_type tok, int ind_tok, char *value);
 void			divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
-void parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+void parse(t_big_token **b_tokens, t_token **tokens, int start, int length, int rtn);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------------------------
 
@@ -265,4 +266,5 @@ void			handle_par(t_big_token **b_tokens, t_token **tokens);
 void		divide_by_pipe(t_big_token **b_tokens, t_token **tokens);
 
 
+void print_b_tokens(t_big_token *b_token, t_token *tokens);
 #endif

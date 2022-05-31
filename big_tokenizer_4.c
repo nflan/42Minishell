@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   big_tokenizer_3.c                                  :+:      :+:    :+:   */
+/*   big_tokenizer_4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/30 17:28:54 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/05/31 18:07:04 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ void handle_par(t_big_token **b_tokens, t_token **tokens)
 
 	tmp_b = *b_tokens;
 	tmp_s = *tokens;
-	init_params(&(params[0]), &(params[1]));
 	while (tmp_b)
 	{
+	init_params(&(params[0]), &(params[1]));
 		tmp_s = *tokens;
+		printf("tok_start (handle part): %d\n", tmp_b->ind_tok_start);
 		move_tok_2_ind(&tmp_s, tmp_b->ind_tok_start);
 		if (tmp_s->token == TOK_SEP && tmp_b->length > 2)
 			handle_par_1(&tmp_s, tmp_b, &(params[0]), &(params[1]));
@@ -61,7 +62,11 @@ void handle_par(t_big_token **b_tokens, t_token **tokens)
 			if (tmp_s->token == TOK_SEP)
 				handle_par_2(&tmp_s, tmp_b, &(params[1]), *tokens);
 			if (tmp_s->token == TOK_EXPANDER_CL)
+			{
+				printf("token expander\n");
 				handle_par_3(&tmp_b, params[1], params[0]);
+			}
+		printf("\n%d %d\n", params[0], params[1]);
 		}
 		else
 			tmp_b->par = 0;
