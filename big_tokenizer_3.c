@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:57:08 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/01 14:55:57 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/01 16:51:10 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
 			}
 			else if (tmp_s->token == TOK_OPERATOR && ft_strlen(tmp_s->value) == 1 && !ft_strncmp(tmp_s->value, "|", 1))
 			{
-			// printf("I added a child!\n");
+				printf("I added a child! in loop\n");
 				add_b_tok_sib_last(&((tmp_b)->child), TOK_LEFT_PIPE, start, length_piped - 1);
 				start = tmp_s->index + 1;
 				length_piped = 0;
@@ -60,12 +60,16 @@ void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
 		}
 		if (!((tmp_b)->child))
 		{
-			// printf("I added a weird child\n");
+			printf("I added a weird child\n");
+			print_s_tokens(tokens, start, length_piped);
+			printf("\n");
 			add_b_tok_sib_last(&((tmp_b)->child), TOK_CLEAN, start, length_piped);
 		}
 		else
 		{
-			// printf("I added a child!\n");
+			printf("I added a child!\n");
+			print_s_tokens(tokens, start, length_piped);
+			printf("\n");
 			add_b_tok_sib_last(&((tmp_b)->child), TOK_PIPE_LAST, start, length_piped);
 		}
 		handle_par(&(tmp_b->child), tokens);

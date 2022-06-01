@@ -64,8 +64,14 @@ while (tmp_b)
 	printf("--");
 	// printf("Here is big token : %d\n", i);
 	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
+	// printf("(voici son type: %d)", tmp_b->type);
+	// printf("( start: %d len : %d + ())", tmp_b->ind_tok_start, tmp_b->length);
+	// print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
 	if (tmp_b->par)
-	 	printf("()");
+	{
+	 	printf("(voici son type de tok : %d ())", tmp_b->type);
+	 	// printf("( start: %d len : %d + ())", tmp_b->ind_tok_start, tmp_b->length);
+	}
 	tmp_b = tmp_b->sibling;
 	i++;
 }
