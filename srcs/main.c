@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/31 12:33:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/01 12:05:38 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -624,7 +624,7 @@ char	*ft_rdline_word(t_info *info)
 	return (word);
 }
 
-int	main(int ac, char **av, char **envp)
+/*int	main(int ac, char **av, char **envp)
 {
 	t_token		*tokens;
 	t_info		info;
@@ -658,4 +658,4 @@ int	main(int ac, char **av, char **envp)
 	rl_clear_history();
 	ft_free_env(info.env);
 	return (ret);
-}
+}*/

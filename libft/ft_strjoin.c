@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 15:14:31 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/23 15:20:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/01 15:19:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,24 @@ char	*ft_strjoin_free(char *s1, char *s2, int i)
 	len = 0;
 	new = NULL;
 	j = 0;
-	if (s1 && s2)
+	if (s1 || s2)
 	{
-		len = ft_strlen(s1) + ft_strlen(s2);
+		if (!s1)
+			len = ft_strlen(s2);
+		else if (!s2)
+			len = ft_strlen(s1);
+		else
+			len = ft_strlen(s1) + ft_strlen(s2);
 		new = ft_calloc(sizeof(char), len + 1);
 		if (new)
 		{
-			while (s1[j])
-				*new++ = s1[j++];
+			if (s1)
+				while (s1[j])
+					*new++ = s1[j++];
 			j = 0;
-			while (s2[j])
-				*new++ = s2[j++];
+			if (s2)
+				while (s2[j])
+					*new++ = s2[j++];
 		}
 	}
 	ft_free_3_str(s1, s2, NULL, i);

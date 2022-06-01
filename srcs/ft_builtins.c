@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/31 12:25:55 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/01 15:25:01 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,68 @@ void	ft_echo(char *line, int fd, int ret)
 		return ;
 	ft_putstr_fd(tmp, fd);
 	free(tmp);
+}
+
+void	ft_print_tokens(t_token *tokens)
+{
+	t_token *tmp;
+
+	tmp = tokens;
+	if (tmp)
+	{
+		while (tmp)
+		{
+			printf("index = %d\n", tmp->index);
+			printf("value = %s\n", tmp->value);
+			printf("quoted = %d\n", tmp->quoted);
+			printf("lenght = %d\n", tmp->length);
+			printf("type = %d\n", tmp->token);
+			printf("start = %d\n\n", tmp->start);
+			tmp = tmp->next;
+		}
+	}
+}
+
+int	ft_convert_cmd(t_big_token *tok, t_token *tokens)
+{
+	t_token	*tmp;
+	char	*line;
+
+	(void)tok;
+	line = NULL;
+	tmp = tokens;
+	ft_print_tokens(tokens);
+	while (tmp)
+	{
+		if (tmp->start >= 6 && tmp->start <= 17)
+			line = ft_strjoin_free(line, tmp->value, 1);
+		tmp = tmp->next;
+	}
+	printf("LINE = %s\n", line);
+	ft_echo(line, 1, 0);
+	return (0);
+}
+
+int	main(int ac, char **av)
+{
+	t_big_token	*tok;
+	t_token *tokens;
+	(void) ac;
+
+	tokens = NULL;
+	detect_tokens(&tokens, av[1]);
+	fill_tok_value(&tokens, av[1]);
+	tok = ft_calloc(sizeof(t_big_token), 1);
+	tok->type = TOK_CLEAN;
+	tok->ind_tok_start = 0;
+	tok->length = 3;
+	tok->par = 0;
+	tok->parent = NULL;
+	tok->child = NULL;
+	tok->sibling = NULL;
+	divide_by_pipe(&tok, &tokens);
+	ft_convert_cmd(tok, tokens);
+	return (0);
 }
 
 int	ft_pwd(void)

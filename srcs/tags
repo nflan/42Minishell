@@ -1,0 +1,89 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+add_b_tok_sib_last	divide.c	/^void add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length)$/;"	f	typeref:typename:void
+add_tok_last	tokenizer2.c	/^void add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)$/;"	f	typeref:typename:void
+check_divider_type	divide.c	/^int check_divider_type(char *tmp_value)$/;"	f	typeref:typename:int
+cl_par_ind	divide.c	/^int cl_par_ind(t_token **tokens, t_tok_type tok, int ind_tok, char *value)$/;"	f	typeref:typename:int
+detect_tokens	tokenizer2.c	/^void detect_tokens(t_token **tok_list, char *str)$/;"	f	typeref:typename:void
+divide_by_or_and	divide.c	/^void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, int length)$/;"	f	typeref:typename:void
+divide_by_or_and_1	divide.c	/^static void divide_by_or_and_1(t_token **tmp, t_token **tokens, int *length)$/;"	f	typeref:typename:void	file:
+divide_by_or_and_2	divide.c	/^static void divide_by_or_and_2(t_token *tmp, t_big_token **b_tokens, int *start, int *length)$/;"	f	typeref:typename:void	file:
+divide_by_pipe	divide.c	/^void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)$/;"	f	typeref:typename:void
+fill_tok_value	tokenizer2.c	/^void fill_tok_value(t_token **tok, char *str)$/;"	f	typeref:typename:void
+ft_cd	ft_cd.c	/^int	ft_cd(t_info *info, char *dir)$/;"	f	typeref:typename:int
+ft_cd_tilde	ft_cd.c	/^char	*ft_cd_tilde(char *home, char *dir)$/;"	f	typeref:typename:char *
+ft_cmd_line	main.c	/^char	*ft_cmd_line(char *str)$/;"	f	typeref:typename:char *
+ft_cmd_path	ft_global.c	/^int	ft_cmd_path(t_info *info, t_cmd *cmd)$/;"	f	typeref:typename:int
+ft_cmdnew	main.c	/^t_cmd	*ft_cmdnew(char *cmd, t_tree *ptr)$/;"	f	typeref:typename:t_cmd *
+ft_command	ft_global.c	/^int	ft_command(t_info *info, t_cmd *cmd)$/;"	f	typeref:typename:int
+ft_convert_cmd	ft_builtins.c	/^int	ft_convert_cmd(t_big_token *tok, t_token *tokens)$/;"	f	typeref:typename:int
+ft_create_btoken	divide.c	/^t_big_token *ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length)$/;"	f	typeref:typename:t_big_token *
+ft_create_token	tokenizer1.c	/^t_token *ft_create_token(t_tok_type tok_type, int length, int i)$/;"	f	typeref:typename:t_token *
+ft_do_export	ft_export.c	/^int	ft_do_export(char *line)$/;"	f	typeref:typename:int
+ft_do_it	main.c	/^void	ft_do_it(t_info *info)$/;"	f	typeref:typename:void
+ft_do_pipe	ft_pipex.c	/^int	ft_do_pipe(t_info *info, t_cmd *cmd, int tmp)$/;"	f	typeref:typename:int
+ft_do_pipex	ft_pipex.c	/^int	ft_do_pipex(t_info *info, t_cmd *cmd)$/;"	f	typeref:typename:int
+ft_echo	ft_builtins.c	/^void	ft_echo(char *line, int fd, int ret)$/;"	f	typeref:typename:void
+ft_env	ft_builtins.c	/^void	ft_env(t_env *env)$/;"	f	typeref:typename:void
+ft_env_to_tab	ft_pipex.c	/^char	**ft_env_to_tab(t_env *env)$/;"	f	typeref:typename:char **
+ft_envadd_back	main.c	/^void	ft_envadd_back(t_env **alst, t_env *new)$/;"	f	typeref:typename:void
+ft_envnew	main.c	/^t_env	*ft_envnew(char *line)$/;"	f	typeref:typename:t_env *
+ft_error	ft_tools2.c	/^int	ft_error(int i, t_info *info, t_cmd *cmd)$/;"	f	typeref:typename:int
+ft_error_2	ft_tools2.c	/^void	ft_error_2(t_info *info, t_cmd *cmd)$/;"	f	typeref:typename:void
+ft_exit	ft_builtins.c	/^int	ft_exit(t_info *info, char *value, char **tofree)$/;"	f	typeref:typename:int
+ft_export	ft_export.c	/^void	ft_export(t_env *env, char *line)$/;"	f	typeref:typename:void
+ft_export_new	ft_export.c	/^void	ft_export_new(t_env *env, t_env *tmp, char *line)$/;"	f	typeref:typename:void
+ft_export_replace	ft_export.c	/^void	ft_export_replace(t_env *env, char *line, int i, int j)$/;"	f	typeref:typename:void
+ft_fill_envnew	main.c	/^int	ft_fill_envnew(t_env *env, char *line)$/;"	f	typeref:typename:int
+ft_fill_tree	main.c	/^t_tree	*ft_fill_tree(t_info *info)$/;"	f	typeref:typename:t_tree *
+ft_free_all	main.c	/^void	ft_free_all(t_info *info, t_env *env)$/;"	f	typeref:typename:void
+ft_free_branch	main.c	/^void	ft_free_branch(t_tree *branch)$/;"	f	typeref:typename:void
+ft_free_env	main.c	/^void	ft_free_env(t_env *env)$/;"	f	typeref:typename:void
+ft_free_tree	main.c	/^void	ft_free_tree(t_tree *tree)$/;"	f	typeref:typename:void
+ft_get_env_value	ft_tools.c	/^char	*ft_get_env_value(t_info *info, char *name)$/;"	f	typeref:typename:char *
+ft_init_env	main.c	/^int	ft_init_env(t_info *info, char **envp)$/;"	f	typeref:typename:int
+ft_init_info	main.c	/^int	ft_init_info(t_info *info, t_token *token)$/;"	f	typeref:typename:int
+ft_init_tree	main.c	/^int	ft_init_tree(t_info *info, t_token *token)$/;"	f	typeref:typename:int
+ft_is_tilde_or_home	ft_cd.c	/^int		ft_is_tilde_or_home(char *home, char *dir)$/;"	f	typeref:typename:int
+ft_keep_history	main.c	/^int	ft_keep_history(char *str)$/;"	f	typeref:typename:int
+ft_lstadd_tree	main.c	/^void	ft_lstadd_tree(t_tree **alst, t_tree *new, int i)$/;"	f	typeref:typename:void
+ft_nb_andor	main.c	/^int	ft_nb_andor(char *str)$/;"	f	typeref:typename:int
+ft_onecmd	main.c	/^char	*ft_onecmd(t_info *info, int i)$/;"	f	typeref:typename:char *
+ft_perror	ft_tools.c	/^int	ft_perror(char *error, char *str)$/;"	f	typeref:typename:int
+ft_perror_free	ft_tools.c	/^int	ft_perror_free(char *error, char *str, int i)$/;"	f	typeref:typename:int
+ft_pipe_to_pipe	ft_pipex.c	/^int	ft_pipe_to_pipe(t_info *info, t_cmd *cmd)$/;"	f	typeref:typename:int
+ft_pipex	ft_pipex.c	/^int	ft_pipex(t_info *info, t_cmd *cmd)$/;"	f	typeref:typename:int
+ft_pipex_end	ft_pipex.c	/^int	ft_pipex_end(t_info *info, t_cmd *cmd)$/;"	f	typeref:typename:int
+ft_print_cmd	main.c	/^void	ft_print_cmd(t_cmd	*cmd)$/;"	f	typeref:typename:void
+ft_print_test	main.c	/^void	ft_print_test(t_tree *tree, int i)$/;"	f	typeref:typename:void
+ft_print_tokens	ft_builtins.c	/^void	ft_print_tokens(t_token *tokens)$/;"	f	typeref:typename:void
+ft_print_tree	main.c	/^void	ft_print_tree(t_tree *tree, int i)$/;"	f	typeref:typename:void
+ft_putstr_error	ft_tools.c	/^int	ft_putstr_error(char *error)$/;"	f	typeref:typename:int
+ft_putstr_frror	ft_tools.c	/^int	ft_putstr_frror(char *error, char *str, int i)$/;"	f	typeref:typename:int
+ft_pwd	ft_builtins.c	/^int	ft_pwd(void)$/;"	f	typeref:typename:int
+ft_rdline_word	main.c	/^char	*ft_rdline_word(t_info *info)$/;"	f	typeref:typename:char *
+ft_signal	main.c	/^void	ft_signal(int sig)$/;"	f	typeref:typename:void
+ft_strncpy	tokenizer2.c	/^char *ft_strncpy(char *str, int n)$/;"	f	typeref:typename:char *
+ft_treenew	main.c	/^t_tree	*ft_treenew(char *str, t_tree *ptr)$/;"	f	typeref:typename:t_tree *
+ft_unset	ft_builtins.c	/^t_env	*ft_unset(t_env *env, char *line)$/;"	f	typeref:typename:t_env *
+ft_without_env	main.c	/^t_env	*ft_without_env(int i)$/;"	f	typeref:typename:t_env *
+get_real_tok_type	tokenizer1.c	/^unsigned int get_real_tok_type(char c, t_token **tok_list)$/;"	f	typeref:typename:unsigned int
+handle_par	divide.c	/^void handle_par(t_big_token **b_tokens, t_token **tokens)$/;"	f	typeref:typename:void
+handle_par_1	divide.c	/^static void handle_par_1(t_token **tmp_s, t_big_token *tmp_b, int *adv_steps, int *to_reduce)$/;"	f	typeref:typename:void	file:
+handle_par_2	divide.c	/^static void handle_par_2(t_token **tmp_s, t_big_token *tmp_b, int *to_reduce, t_token *tokens)$/;"	f	typeref:typename:void	file:
+handle_par_3	divide.c	/^static void handle_par_3(t_big_token **tmp_b, int to_reduce, int adv_steps)$/;"	f	typeref:typename:void	file:
+index_toks	tokenizer2.c	/^void index_toks(t_token **tokens, int start, int length)$/;"	f	typeref:typename:void
+init_cl_par_ind	divide.c	/^static void init_cl_par_ind(int *nb, t_token *tokens, t_token **tmp)$/;"	f	typeref:typename:void	file:
+init_params	divide.c	/^static void init_params(int *adv_steps, int *to_reduce)$/;"	f	typeref:typename:void	file:
+init_tok_struct	tokenizer1.c	/^void init_tok_struct(t_token **tok_list, int rank_in_list)$/;"	f	typeref:typename:void
+is_cl_2_op	divide.c	/^int is_cl_2_op(char *value_tok_op, char *value_tok_cl)$/;"	f	typeref:typename:int
+is_quoted	tokenizer1.c	/^int is_quoted(t_token **tok_list, int rank_in_list)$/;"	f	typeref:typename:int
+len_ll_list	tokenizer1.c	/^int len_ll_list(t_token *tok_list)$/;"	f	typeref:typename:int
+main	ft_builtins.c	/^int	main(int ac, char **av)$/;"	f	typeref:typename:int
+move_tok_2_ind	divide.c	/^void move_tok_2_ind(t_token **tokens, int ind)$/;"	f	typeref:typename:void
+parse	divide.c	/^void parse(t_big_token **b_tokens, t_token **tokens, int start, int length, int rtn)$/;"	f	typeref:typename:void
