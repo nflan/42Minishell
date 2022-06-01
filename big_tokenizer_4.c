@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/01 13:24:51 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/01 18:20:31 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void handle_par(t_big_token **b_tokens, t_token **tokens)
 		// printf("check that start of tmp_b: %d\n", tmp_b->ind_tok_start);
 		if (tmp_s->token == TOK_SEP && tmp_b->length > 2)
 		{
-// printf("YEs I'm in that case\n");
+		//	printf("YEs I'm in that case\n");
 			handle_par_1(&tmp_s, tmp_b, &(params[0]), &(params[1]));
 		}
 		// if (!tmp_s)
@@ -72,7 +72,7 @@ void handle_par(t_big_token **b_tokens, t_token **tokens)
 				handle_par_2(&tmp_s, tmp_b, &(params[1]), *tokens);
 			if (tmp_s->token == TOK_EXPANDER_CL)
 			{
-				// printf("token expander\n");
+			//	printf("token expander\n");
 				handle_par_3(&tmp_b, params[1], params[0]);
 			}
 		// printf("\n%d %d\n", params[0], params[1]);

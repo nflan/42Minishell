@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:57:08 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/01 16:51:10 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/01 18:23:44 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
 			add_b_tok_sib_last(&((tmp_b)->child), TOK_PIPE_LAST, start, length_piped);
 		}
 		handle_par(&(tmp_b->child), tokens);
+	//	printf("tmp_b->child->index = %d\n", tmp_b->child->ind_tok_start);
+	//	printf("tmp_b->child->length = %d\n", tmp_b->child->length);
 //		tmp_b = tmp_b->sibling;
 //	}
 }

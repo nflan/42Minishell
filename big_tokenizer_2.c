@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/01 16:54:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/01 19:10:25 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,13 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 		add_b_tok_sib_last(b_tokens, TOK_CLEAN, start_tok, length);
 	if (!*b_tokens && piped(tokens, start_tok, length))
 		add_b_tok_sib_last(b_tokens, TOK_CLEAN_PIPED, start_tok, length);
-	else
+	else if (start && b_length) //alors, la parenthese venait de la. Je n'ai pas vraiment d'explication mais il y a des moments ou start restait a 0 (comme je t'avais dit :P)
+	{
+		printf("oscour : start = %d et b_length = %d : ", start, b_length);
+		print_s_tokens(tokens, start, b_length);
+		printf("\n");
 		add_b_tok_sib_last(b_tokens, TOK_LAST, start, b_length);
+	}
 	handle_par(b_tokens, tokens);
 }
 
@@ -144,8 +149,6 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 	divide_by_or_and(b_tokens, &tmp, start, length);
 	tmp_b = *b_tokens;
 	// print_b_tokens(&tmp_b, &tmp);
-	// exit (0);
-	tmp_b = *b_tokens;
 	if (!tmp_b)
 	{
 		printf("je suis nullll!\n");
@@ -163,9 +166,9 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 		if (tmp_b->par == 1)
 		{
 			// printf("je suis rentre dans la paranthese");
-			// printf("\n%d %d\n", tmp_b->ind_tok_start, tmp_b->length);
+			printf("\n%d %d\n", tmp_b->ind_tok_start, tmp_b->length);
 			// exit (0);
-			// exit (0);
+			printf("je me ballade\n");
 			parse(&(tmp_b->child), tokens, tmp_b->ind_tok_start, tmp_b->length);
 		}
 		else
@@ -180,7 +183,8 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 					printf("\nvoici le tmp_b clean2: ");
 					print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
 					printf("\n");
-					return;
+					if (!tmp_b->sibling) //ajout d'un if car si pas de child, on partait au lieu d'aller au sibling suivant
+						return;
 				}
 				else if (tmp_b->child->type == TOK_CLEAN && tmp_b->child->par)
 					parse(&(tmp_b->child), tokens, tmp_b->ind_tok_start, tmp_b->length);
@@ -194,7 +198,7 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 					{
 						if (child->par)
 						{
-							// printf("c'est non\n");
+					//		printf("c'est non\n");
 							parse(&(child->child), tokens, child->ind_tok_start, child->length);
 						}
 						child = child->sibling;
