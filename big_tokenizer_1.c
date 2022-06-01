@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:18:51 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/30 14:23:02 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/01 13:22:49 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,10 @@ int is_cl_2_op(char *value_tok_op, char *value_tok_cl)
 
 void move_tok_2_ind(t_token **tokens, int ind)
 {
+	// printf("\nthe length of the list i'm about to move: %d\n", len_ll_list(*tokens));
 	while (*tokens)
 	{
+		// printf("ind: %d\n", (*tokens)->index);
 		if ((*tokens)->index == ind)
 			return;
 		*tokens = (*tokens)->next;

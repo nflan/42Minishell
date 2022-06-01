@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:57:08 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/31 20:34:21 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:55:57 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,23 @@ void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
 		i = 0;
 		j = tmp_b->ind_tok_start;
 		length_piped = 0;
-		printf("\nlwngthhhhhhhhhh: %d\n", tmp_b->length);
+		// printf("\nlwngthhhhhhhhhh: %d\n", tmp_b->length);
 		while (i < tmp_b->length)
 		{
 			length_piped++;
 			move_tok_2_ind(&tmp_s, j);
-			printf("\n\n\nalertttt:  %d\n\n\n", j);
+			// printf("\n\n\nalertttt:  %d\n\n\n", j);
 			if (tmp_s->token == TOK_EXPANDER_OP)
 			{
 				st_par = tmp_s->index;
 				end_par = cl_par_ind(&tmp_s, tmp_s->token, tmp_s->index, tmp_s->value);
 				length_piped += (end_par - st_par);
+				j += (end_par - st_par);
+				i += (end_par - st_par);
 			}
 			else if (tmp_s->token == TOK_OPERATOR && ft_strlen(tmp_s->value) == 1 && !ft_strncmp(tmp_s->value, "|", 1))
 			{
-			printf("I added a child!\n");
+			// printf("I added a child!\n");
 				add_b_tok_sib_last(&((tmp_b)->child), TOK_LEFT_PIPE, start, length_piped - 1);
 				start = tmp_s->index + 1;
 				length_piped = 0;
@@ -58,14 +60,15 @@ void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
 		}
 		if (!((tmp_b)->child))
 		{
-			printf("I added a weird child\n");
+			// printf("I added a weird child\n");
 			add_b_tok_sib_last(&((tmp_b)->child), TOK_CLEAN, start, length_piped);
 		}
 		else
 		{
-			printf("I added a child!\n");
+			// printf("I added a child!\n");
 			add_b_tok_sib_last(&((tmp_b)->child), TOK_PIPE_LAST, start, length_piped);
 		}
+		handle_par(&(tmp_b->child), tokens);
 //		tmp_b = tmp_b->sibling;
 //	}
 }

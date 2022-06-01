@@ -119,3 +119,37 @@
 // 	}
 // init_tok_struct(tok_list, rank_in_list);
 // }
+
+void print_b_tokens(t_big_token *b_token, t_token *tokens_s, int start, int length)
+// {
+// 	int i;
+// 	int j;
+// 	t_big_token	*tmp_b;
+// 	t_token	*tokens;
+
+// 	// printf ("this is the glabal length of toks: %d\n", len_ll_list(tokens));
+// 	tmp_b = b_token;
+// 	tokens = tokens_s;
+// 	while (tmp_b)
+// 	{
+// 		j = 0;
+// 		printf("Here is a big token :\n");
+// 		printf("this is the start of the b_token : %d\n", tmp_b->ind_tok_start);
+// 		printf("this is the length of the b_token : %d\n", tmp_b->length);
+// 		printf("this is the par of the b_token : %d\n", tmp_b->par);
+// 		i = tmp_b->ind_tok_start;
+// 		printf("\n\ni : %d\n\n", i);
+// 		printf("\n\ntmp->b->len: %d\n\n", tmp_b->length);
+// 		while (j < tmp_b->length)
+// 		{
+// //			printf("\n\nj: %d\n\n", j);
+// 			move_tok_2_ind(&tokens, i);
+// //			printf("\n\nindex: %d\n\n", tokens->index);
+// 			printf("%s", tokens->value);
+// 			i++;
+// 			j++;
+// 		}
+// 		printf("\n\n");
+// 		tmp_b = tmp_b->sibling;
+// 	}
+// }

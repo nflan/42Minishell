@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/31 19:28:14 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/01 15:31:00 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef enum s_big_tok_type
 	TOK_LEFT_AND,
 	TOK_LEFT_PIPE,
 	TOK_CLEAN,
+	TOK_CLEAN_PIPED,
 	TOK_LAST,
 	TOK_PIPE_LAST,
 	// TOK_OR_LEFT,
@@ -255,7 +256,7 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 
 int				cl_par_ind(t_token **tokens, t_tok_type tok, int ind_tok, char *value);
 void			divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
-void parse(t_big_token **b_tokens, t_token **tokens, int start, int length, int rtn);
+void parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------------------------
 
@@ -267,5 +268,11 @@ void			handle_par(t_big_token **b_tokens, t_token **tokens);
 void		divide_by_pipe(t_big_token **b_tokens, t_token **tokens);
 
 
-void print_b_tokens(t_big_token *b_token, t_token *tokens);
+void print_b_tokens(t_big_token **b_token, t_token **tokens);
+void print_s_tokens(t_token **tokens, int start, int length);
+int	depth_b_token(t_big_token **b_token);
+void	print_all_everything(t_big_token **b_tokens, t_token **tokens);
+void	print_all_child(t_big_token **b_tokens, t_token **tokens);
+
+
 #endif

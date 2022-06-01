@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/31 19:31:03 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/01 13:37:57 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,26 @@ void index_toks(t_token **tokens, int start, int length)
 	int i;
 	t_token *tmp;
 
-	i = 0;
 	tmp = *tokens;
-	while (tmp && i < start)
-	{
-		tmp = tmp->next;
-		i++;
-	}
 	i = 0;
-	while (i < length)
+	// tmp = *tokens;
+	// while (tmp && i < start)
+	// {
+	// 	tmp = tmp->next;
+	// 	i++;
+	// }
+	// i = 0;
+	// while (tmp i < length)
+	// {
+	// 	tmp->index = i;
+	// 	i++;
+	// 	tmp = tmp->next;
+	// }
+	while (*tokens)
 	{
-		tmp->index = i;
+		(*tokens)->index = i;
+		(*tokens) = (*tokens)->next;
 		i++;
-		tmp = tmp->next;
 	}
+	*tokens = tmp;
 }
