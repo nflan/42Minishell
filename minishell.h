@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/02 11:39:14 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:08:29 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,8 +254,9 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 
 //-----------big_tokenizer_2.c---------------------------------------------------------------------------
 
-int				cl_par_ind(t_token **tokens, t_tok_type tok);
+int				cl_par_ind(t_token **tokens, int ind_tok);
 void			divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
+int	piped(t_token **tokens, int start, int length);
 void parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------------------------

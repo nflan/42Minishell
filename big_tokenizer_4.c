@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/01 18:20:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/02 13:05:27 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,20 @@ static void init_params(int *adv_steps, int *to_reduce)
 	(*adv_steps) = 0;
 	(*to_reduce) = 0;
 }
+
+/*
+
+()            TERM_SCOPE
+|| &&         TERM_OP_OR, TERM_OP_AND
+string        TERM_STRING(char str *)
+
+
+
+
+
+
+assert
+*/
 
 void handle_par(t_big_token **b_tokens, t_token **tokens)
 {

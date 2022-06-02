@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/02 12:14:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:07:34 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,84 +106,84 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 	}
 	if (!*b_tokens && !piped(tokens, start_tok, length))
 		add_b_tok_sib_last(b_tokens, TOK_CLEAN, start_tok, length);
-	if (!*b_tokens && piped(tokens, start_tok, length))
+	else if (!*b_tokens && piped(tokens, start_tok, length))
 		add_b_tok_sib_last(b_tokens, TOK_CLEAN_PIPED, start_tok, length);
 	else
 		add_b_tok_sib_last(b_tokens, TOK_LAST, start_tok, b_length);
 	handle_par(b_tokens, tokens);
 }
 
-void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
-{
-	t_big_token *tmp_b;
-	t_token *tmp;
+// void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
+// {
+// 	t_big_token *tmp_b;
+// 	t_token *tmp;
 
-	// if (rtn)
-	// return ;
-	tmp = *tokens;
-	index_toks(&tmp, start, length);
-	divide_by_or_and(b_tokens, &tmp, start, length);
-	tmp_b = *b_tokens;
-	// print_b_tokens(&tmp_b, &tmp);
-	if (!tmp_b)
-	{
-		printf("je suis nullll!\n");
-		return;
-	}
-	if (tmp_b->type == TOK_CLEAN)
-	{
-		printf("\nvoici le tmp_b clean: ");
-		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
-		printf("\n");
-		return;
-	}
-	while (tmp_b)
-	{
-		if (tmp_b->par == 1)
-		{
-			// printf("je suis rentre dans la paranthese");
-			printf("\n%d %d\n", tmp_b->ind_tok_start, tmp_b->length);
-			// exit (0);
-			printf("je me ballade\n");
-			parse(&(tmp_b->child), tokens, tmp_b->ind_tok_start, tmp_b->length);
-		}
-		else
-		{
-			// printf("\n\ntmp_b->start: %d\n\n", tmp_b->ind_tok_start);
-			divide_by_pipe(&tmp_b, tokens);
-			// print_b_tokens(&(tmp_b->child), tokens);
-			if (tmp_b->child)
-			{
-				if (tmp_b->child->type == TOK_CLEAN && !tmp_b->child->par)
-				{
-					printf("\nvoici le tmp_b clean2: ");
-					print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
-					printf("\n");
-					if (!tmp_b->sibling) //ajout d'un if car si pas de child, on partait au lieu d'aller au sibling suivant
-						return;
-				}
-				else if (tmp_b->child->type == TOK_CLEAN && tmp_b->child->par)
-					parse(&(tmp_b->child), tokens, tmp_b->ind_tok_start, tmp_b->length);
-				// else if (tmp_b->child->type != TOK_CLEAN && tmp_b->child->par)
-				// 	parse(&(tmp_b->child), tokens, tmp_b->ind_tok_start, tmp_b->length);
-				else if (tmp_b->child && tmp_b->child->type != TOK_CLEAN)
-				{
-					t_big_token *child;
-					child = tmp_b->child;
-					while (child)
-					{
-						if (child->par)
-						{
-					//		printf("c'est non\n");
-							parse(&(child->child), tokens, child->ind_tok_start, child->length);
-						}
-						child = child->sibling;
-					}
-				}
-				//		printf("je suis clean et pipe\n");
-				//		parse(&(tmp_b->child->child), tokens, tmp_b->child->ind_tok_start, tmp_b->child->length, 0);
-			}
-		}
-		tmp_b = tmp_b->sibling;
-	}
-}
+// 	// if (rtn)
+// 	// return ;
+// 	tmp = *tokens;
+// 	index_toks(&tmp, start, length);
+// 	divide_by_or_and(b_tokens, &tmp, start, length);
+// 	tmp_b = *b_tokens;
+// 	// print_b_tokens(&tmp_b, &tmp);
+// 	if (!tmp_b)
+// 	{
+// 		printf("je suis nullll!\n");
+// 		return;
+// 	}
+// 	if (tmp_b->type == TOK_CLEAN)
+// 	{
+// 		printf("\nvoici le tmp_b clean: ");
+// 		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
+// 		printf("\n");
+// 		return;
+// 	}
+// 	while (tmp_b)
+// 	{
+// 		if (tmp_b->par == 1)
+// 		{
+// 			// printf("je suis rentre dans la paranthese");
+// 			printf("\n%d %d\n", tmp_b->ind_tok_start, tmp_b->length);
+// 			// exit (0);
+// 			printf("je me ballade\n");
+// 			parse(&(tmp_b->child), tokens, tmp_b->ind_tok_start, tmp_b->length);
+// 		}
+// 		else
+// 		{
+// 			// printf("\n\ntmp_b->start: %d\n\n", tmp_b->ind_tok_start);
+// 			divide_by_pipe(&tmp_b, tokens);
+// 			// print_b_tokens(&(tmp_b->child), tokens);
+// 			if (tmp_b->child)
+// 			{
+// 				if (tmp_b->child->type == TOK_CLEAN && !tmp_b->child->par)
+// 				{
+// 					printf("\nvoici le tmp_b clean2: ");
+// 					print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
+// 					printf("\n");
+// 					if (!tmp_b->sibling) //ajout d'un if car si pas de child, on partait au lieu d'aller au sibling suivant
+// 						return;
+// 				}
+// 				else if (tmp_b->child->type == TOK_CLEAN && tmp_b->child->par)
+// 					parse(&(tmp_b->child), tokens, tmp_b->ind_tok_start, tmp_b->length);
+// 				// else if (tmp_b->child->type != TOK_CLEAN && tmp_b->child->par)
+// 				// 	parse(&(tmp_b->child), tokens, tmp_b->ind_tok_start, tmp_b->length);
+// 				else if (tmp_b->child && tmp_b->child->type != TOK_CLEAN)
+// 				{
+// 					t_big_token *child;
+// 					child = tmp_b->child;
+// 					while (child)
+// 					{
+// 						if (child->par)
+// 						{
+// 					//		printf("c'est non\n");
+// 							parse(&(child->child), tokens, child->ind_tok_start, child->length);
+// 						}
+// 						child = child->sibling;
+// 					}
+// 				}
+// 				//		printf("je suis clean et pipe\n");
+// 				//		parse(&(tmp_b->child->child), tokens, tmp_b->child->ind_tok_start, tmp_b->child->length, 0);
+// 			}
+// 		}
+// 		tmp_b = tmp_b->sibling;
+// 	}
+// }

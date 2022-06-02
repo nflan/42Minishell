@@ -61,9 +61,9 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens)
 	i = 1;
 	while (tmp_b)
 	{
-		if (i > 1)
-			printf(" -> ");
-		printf("(%d)--", i);
+		//if (i > 1)
+//			printf(" -> ");
+		printf("--");
 	//	printf("Here is big token : %d\n", i);
 		printf("'");
 		print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
@@ -96,6 +96,7 @@ void	print_s_tokens(t_token **tokens, int start, int length)
 	while (i < length && tmp_s)
 	{
 		printf("%s", tmp_s->value);
+		// printf("      (type tok: %d)\n", tmp_s->token);
 	//	printf(" %d ", tmp_s->quoted);
 		tmp_s = tmp_s->next;
 		i++;
@@ -114,8 +115,16 @@ int main(int argc, char *argv[])
 	b_tokens = NULL;
 	detect_tokens(&tokens, argv[1]);
 	fill_tok_value(&tokens, argv[1]);
-	// index_toks(&tokens, 0, len_ll_list(tokens));
-	//divide_by_or_and(&b_tokens, &tokens, 0, len_ll_list(tokens));
+	index_toks(&tokens, 0, len_ll_list(tokens));
+	// print_s_tokens(&tokens, 0, len_ll_list(tokens));
+	// if ( syntax_err_handler(&tokens))
+	// {
+		// printf("%d\n", syntax_err_handler(&tokens));
+		// return (1);
+	// }
+	// divide_by_or_and(&b_tokens, &tokens, 0, len_ll_list(tokens));
+	// tmp_b = b_tokens;
+	// print_s_tokens(&tokens, tmp_b->ind_tok_start, tmp_b->length);
 	// tmp = tokens;
 	// tmp_b = b_tokens;
 	// print_b_tokens(&tmp_b,&tmp);
@@ -123,14 +132,16 @@ int main(int argc, char *argv[])
 	// tmp_b = b_tokens;
 	// print_b_tokens(&tmp_b,&tmp);
 	parse(&b_tokens, &tokens, 0, len_ll_list(tokens));
-	print_b_tokens(&b_tokens, &tokens);
 	tmp_b = b_tokens;
+	print_all_everything(&tmp_b, &tokens);
+	// print_b_tokens(&b_tokens, &tokens);
+	// tmp_b = b_tokens;
 	// while (tmp_b)
 	// {
 	// printf("this is the depth of the b_token: %d\n", depth_b_token(&tmp_b));
 	// tmp_b = tmp_b->sibling;
 	// }
-	print_all_everything(&tmp_b, &tokens);
+	// print_all_everything(&tmp_b, &tokens);
 	exit(1);
 
 

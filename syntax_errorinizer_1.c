@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/30 14:00:07 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/02 14:35:29 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int count_cl_tok(t_token **tokens)
 	int ret;
 
 	ret = 0;
+	tmp = *tokens;
 	while (tmp)
 	{
 		if (tmp->token == TOK_EXPANDER_CL)
