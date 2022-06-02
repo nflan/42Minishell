@@ -1,19 +1,6 @@
 #include "minishell.h"
 #include "libft/libft.h"
 
-// void	print_tree(t_big_token **b_tokens, t_token **tokens)
-// {
-// 	t_big_token	*tmp_b_1;
-// 	t_big_token	*tmp_b_2;
-
-// 	tmp_b_1 = *b_tokens;
-// 	tmp_b_2 = *b_tokens;
-// 	while (tmp_b_1)
-// 	{
-
-// 	}
-// }
-
 void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 {
 	t_big_token	*tmp_b;
@@ -23,7 +10,7 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 	i = 1;
 	while (tmp_b)
 	{
-		printf("\nWelcome in the first parent: %d\n", i);
+		printf("\nWelcome in the parent: %d\n", i);
 		printf("\n");
 		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
 		printf("\n");
@@ -33,6 +20,7 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 			printf("\nje n'ai pas de child moi!!\n");
 		tmp_b = tmp_b->sibling;
 		i++;
+		printf("---------------");
 	}
 }
 
@@ -63,12 +51,16 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens)
 	{
 		//if (i > 1)
 //			printf(" -> ");
-		printf("--");
+		printf("   --->>    ");
 	//	printf("Here is big token : %d\n", i);
-		printf("\n");
 		print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
-		printf("\npar param: %d\n", tmp_b->par);
 		printf("\n");
+		printf("It's type is: %d\n", tmp_b->type);
+		printf("It's start is: %d\n", tmp_b->ind_tok_start);
+		printf("It's length is: %d\n", tmp_b->length);
+		printf("It's par_pam is: %d\n", tmp_b->par);
+
+		// printf("\npar param: %d\n", tmp_b->par);
 	//	printf("(voici son type: %d)", tmp_b->type);
 	//	if (i > 1)
 	//		printf(" [start: %d && type : %d && len : %d + ()]", tmp_b->ind_tok_start, tmp_b->type, tmp_b->length);
@@ -81,7 +73,7 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens)
 		tmp_b = tmp_b->sibling;
 		i++;
 	}
-	printf("\n");
+	// printf("\n");
 }
 
 void	print_s_tokens(t_token **tokens, int start, int length)
@@ -96,7 +88,7 @@ void	print_s_tokens(t_token **tokens, int start, int length)
 	// printf("\n");
 	while (i < length && tmp_s)
 	{
-		printf("%s", tmp_s->value);
+		printf("%s[%d] ", tmp_s->value, tmp_s->index);
 		// printf("      (type tok: %d)\n", tmp_s->token);
 	//	printf(" %d ", tmp_s->quoted);
 		tmp_s = tmp_s->next;
@@ -118,12 +110,17 @@ int main(int argc, char *argv[])
 	fill_tok_value(&tokens, argv[1]);
 	index_toks(&tokens, 0, len_ll_list(tokens));
 	// print_s_tokens(&tokens, 0, len_ll_list(tokens));
-	// if ( syntax_err_handler(&tokens))
+//  if ( syntax_err_handler(&tokens))
 	// {
 		// printf("%d\n", syntax_err_handler(&tokens));
 		// return (1);
 	// }
-	// divide_by_or_and(&b_tokens, &tokens, 0, len_ll_list(tokens));
+	divide_by_or_and(&b_tokens, &tokens, 0, len_ll_list(tokens));
+	printf("\n\n\ntest\n\n\n");
+		printf("before the dividing \n");
+	print_b_tokens(&b_tokens, &tokens);
+	divide_by_or_and(&(b_tokens->child), &tokens, b_tokens->ind_tok_start, b_tokens->length);
+	exit (0);
 	// tmp_b = b_tokens;
 	// print_s_tokens(&tokens, tmp_b->ind_tok_start, tmp_b->length);
 	// tmp = tokens;
@@ -134,7 +131,7 @@ int main(int argc, char *argv[])
 	// print_b_tokens(&tmp_b,&tmp);
 	parse(&b_tokens, &tokens, 0, len_ll_list(tokens));
 	tmp_b = b_tokens;
-	print_b_tokens(&tmp_b, &tokens);
+	print_all_everything(&tmp_b, &tokens);
 	// print_all_everything(&tmp_b, &tokens);
 	// print_b_tokens(&b_tokens, &tokens);
 	// tmp_b = b_tokens;

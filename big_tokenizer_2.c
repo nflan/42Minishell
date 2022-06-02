@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/02 13:07:34 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/02 20:27:18 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int cl_par_ind(t_token **tokens, int ind_tok)
 	return (-1);
 }
 
-static void divide_by_or_and_1(t_token **tmp, t_token **tokens, int *length)
+static void divide_by_or_and_1(t_token **tmp, t_token **tokens, int *length, int *i)
 {
 	int st_par;
 	int end_par;
@@ -52,6 +52,7 @@ static void divide_by_or_and_1(t_token **tmp, t_token **tokens, int *length)
 
 	end_par = cl_par_ind(tokens, (*tmp)->index);
 	*length += (end_par - st_par);
+	*i += (end_par - st_par - 1);
 	// printf("end par = %d\n", end_par);
 	move_tok_2_ind(tmp, end_par);
 }
@@ -62,6 +63,7 @@ static void divide_by_or_and_2(t_token *tmp, t_big_token **b_tokens, int *start,
 		add_b_tok_sib_last(b_tokens, TOK_LEFT_AND, (*start), (*length) - 1);
 	else if (!ft_strncmp(tmp->value, "||", 2))
 		add_b_tok_sib_last(b_tokens, TOK_LEFT_OR, (*start), (*length) - 1);
+	move_tok_2_ind(&tmp, tmp->index + 1);
 	(*start) = tmp->index + 1;
 	(*length) = 0;
 }
@@ -89,16 +91,20 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 	t_token	*tmp;
 	int		b_length;
 	int		i;
-
 	i = 0;
 	b_length = 0;
+
+	printf("\n\nlength: %d\n\n", length);
 	tmp = *tokens;
 	move_tok_2_ind(&tmp, start_tok);
-	while (tmp && i < length)
+	while (i < length && tmp)
 	{
+		printf("\ni: %d ; b_len: %d\n", i, b_length);
 		b_length++;
 		if (tmp->token == TOK_EXPANDER_OP)
-			divide_by_or_and_1(&tmp, tokens, &b_length);
+		{
+			divide_by_or_and_1(&tmp, tokens, &b_length, &i);
+		}
 		else if (tmp->token == TOK_OPERATOR && check_divider_type(tmp->value))
 			divide_by_or_and_2(tmp, b_tokens, &start_tok, &b_length);
 		tmp = tmp->next;
@@ -110,7 +116,13 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 		add_b_tok_sib_last(b_tokens, TOK_CLEAN_PIPED, start_tok, length);
 	else
 		add_b_tok_sib_last(b_tokens, TOK_LAST, start_tok, b_length);
+	t_big_token	*tmp_b;
+	tmp_b = *b_tokens;
+	printf("before handle par\n");
+	print_b_tokens(&tmp_b, tokens);
 	handle_par(b_tokens, tokens);
+	printf("\n\nafter handle par\n");
+	print_b_tokens(&tmp_b, tokens);
 }
 
 // void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
