@@ -65,9 +65,10 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens)
 //			printf(" -> ");
 		printf("--");
 	//	printf("Here is big token : %d\n", i);
-		printf("'");
+		printf("\n");
 		print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
-		printf("'");
+		printf("\npar param: %d\n", tmp_b->par);
+		printf("\n");
 	//	printf("(voici son type: %d)", tmp_b->type);
 	//	if (i > 1)
 	//		printf(" [start: %d && type : %d && len : %d + ()]", tmp_b->ind_tok_start, tmp_b->type, tmp_b->length);
@@ -133,7 +134,8 @@ int main(int argc, char *argv[])
 	// print_b_tokens(&tmp_b,&tmp);
 	parse(&b_tokens, &tokens, 0, len_ll_list(tokens));
 	tmp_b = b_tokens;
-	print_all_everything(&tmp_b, &tokens);
+	print_b_tokens(&tmp_b, &tokens);
+	// print_all_everything(&tmp_b, &tokens);
 	// print_b_tokens(&b_tokens, &tokens);
 	// tmp_b = b_tokens;
 	// while (tmp_b)
