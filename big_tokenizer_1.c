@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:18:51 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/01 13:22:49 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/02 11:39:03 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ int check_divider_type(char *tmp_value)
 	return (0);
 }
 
-int is_cl_2_op(char *value_tok_op, char *value_tok_cl)
-{
-	if (!ft_strncmp(value_tok_op, "(", 1) && !ft_strncmp(value_tok_cl, ")", 1))
-		return (1);
-	if (!ft_strncmp(value_tok_op, "{", 1) && !ft_strncmp(value_tok_cl, "}", 1))
-		return (2);
-	return (0);
-}
+// int is_cl_2_op(char *value_tok_op, char *value_tok_cl)
+// {
+// 	if (!ft_strncmp(value_tok_op, "(", 1) && !ft_strncmp(value_tok_cl, ")", 1))
+// 		return (1);
+// 	if (!ft_strncmp(value_tok_op, "{", 1) && !ft_strncmp(value_tok_cl, "}", 1))
+// 		return (2);
+// 	return (0);
+// }
 
 void move_tok_2_ind(t_token **tokens, int ind)
 {

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/01 15:31:00 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/02 11:39:14 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,12 +249,12 @@ int				is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens);
 t_big_token		*ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length);
 void			add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length);
 int				check_divider_type(char *tmp_value);
-int				is_cl_2_op(char *value_tok_op, char *value_tok_cl);
+// int				is_cl_2_op(char *value_tok_op, char *value_tok_cl);
 void			move_tok_2_ind(t_token **tokens, int ind);
 
 //-----------big_tokenizer_2.c---------------------------------------------------------------------------
 
-int				cl_par_ind(t_token **tokens, t_tok_type tok, int ind_tok, char *value);
+int				cl_par_ind(t_token **tokens, t_tok_type tok);
 void			divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
 void parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
 

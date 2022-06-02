@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/02 11:24:34 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/02 12:14:31 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,22 @@ static void init_cl_par_ind(int *nb, t_token **tokens, t_token **tmp)
 	*tmp = *tokens;
 }
 
-int cl_par_ind(t_token **tokens, t_tok_type tok, int ind_tok, char *value)
+int cl_par_ind(t_token **tokens, int ind_tok)
 {
 	t_token *tmp;
 	int nb_op_tok;
 
-	init_cl_par_ind(&nb_op_tok, **tokens, &tmp);
-	while (tmp)
-	{
-		if (tmp->index == ind_tok)
-			break;
-		tmp = tmp->next;
-	}
+	init_cl_par_ind(&nb_op_tok, tokens, &tmp);
+	move_tok_2_ind(&tmp, ind_tok);
 	while (tmp && tmp->token != TOK_EXPANDER_CL)
 	{
-		if (tmp->token == TOK_EXPANDER_OP && !ft_strncmp(value, tmp->value, ft_strlen(value)))
+		if (tmp->token == TOK_EXPANDER_OP && ft_strlen(tmp->value) == 1 && !ft_strncmp("(", tmp->value, 1))
 			nb_op_tok++;
 		tmp = tmp->next;
 	}
 	while (tmp && nb_op_tok)
 	{
-		if (tmp->token == TOK_EXPANDER_CL && is_cl_2_op(value, tmp->value))
+		if (tmp->token == TOK_EXPANDER_CL && ft_strlen(tmp->value) == 1 && !ft_strncmp(")", tmp->value, 1))
 			nb_op_tok--;
 		if (!nb_op_tok)
 			return (tmp->index);
@@ -55,8 +50,7 @@ static void divide_by_or_and_1(t_token **tmp, t_token **tokens, int *length)
 
 	st_par = (*tmp)->index;
 
-	// printf("op par = %d\n", (*tmp)->index);
-	end_par = cl_par_ind(tokens, (*tmp)->token, (*tmp)->index, (*tmp)->value);
+	end_par = cl_par_ind(tokens, (*tmp)->index);
 	*length += (end_par - st_par);
 	// printf("end par = %d\n", end_par);
 	move_tok_2_ind(tmp, end_par);
@@ -72,10 +66,10 @@ static void divide_by_or_and_2(t_token *tmp, t_big_token **b_tokens, int *start,
 	(*length) = 0;
 }
 
-int piped(t_token **tokens, int start, int length)
+int	piped(t_token **tokens, int start, int length)
 {
-	t_token *tmp;
-	int i;
+	t_token	*tmp;
+	int		i;
 
 	tmp = *tokens;
 	i = 0;
@@ -94,11 +88,9 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 {
 	t_token	*tmp;
 	int		b_length;
-	int		start;
 	int		i;
 
 	i = 0;
-	start = 0;
 	b_length = 0;
 	tmp = *tokens;
 	move_tok_2_ind(&tmp, start_tok);
@@ -108,23 +100,16 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 		if (tmp->token == TOK_EXPANDER_OP)
 			divide_by_or_and_1(&tmp, tokens, &b_length);
 		else if (tmp->token == TOK_OPERATOR && check_divider_type(tmp->value))
-			divide_by_or_and_2(tmp, b_tokens, &start, &b_length);
-		//		if (tmp && tmp->index < length)
+			divide_by_or_and_2(tmp, b_tokens, &start_tok, &b_length);
 		tmp = tmp->next;
 		i++;
-		//		break;
 	}
 	if (!*b_tokens && !piped(tokens, start_tok, length))
 		add_b_tok_sib_last(b_tokens, TOK_CLEAN, start_tok, length);
 	if (!*b_tokens && piped(tokens, start_tok, length))
 		add_b_tok_sib_last(b_tokens, TOK_CLEAN_PIPED, start_tok, length);
-	else if (start && b_length) //alors, la parenthese venait de la. Je n'ai pas vraiment d'explication mais il y a des moments ou start restait a 0 (comme je t'avais dit :P)
-	{
-		printf("oscour : start = %d et b_length = %d : ", start, b_length);
-		print_s_tokens(tokens, start, b_length);
-		printf("\n");
-		add_b_tok_sib_last(b_tokens, TOK_LAST, start, b_length);
-	}
+	else
+		add_b_tok_sib_last(b_tokens, TOK_LAST, start_tok, b_length);
 	handle_par(b_tokens, tokens);
 }
 
