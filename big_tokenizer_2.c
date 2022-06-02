@@ -6,17 +6,17 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/01 19:10:25 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/02 11:24:34 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft/libft.h"
 
-static void init_cl_par_ind(int *nb, t_token *tokens, t_token **tmp)
+static void init_cl_par_ind(int *nb, t_token **tokens, t_token **tmp)
 {
 	*nb = 0;
-	*tmp = tokens;
+	*tmp = *tokens;
 }
 
 int cl_par_ind(t_token **tokens, t_tok_type tok, int ind_tok, char *value)
@@ -24,7 +24,7 @@ int cl_par_ind(t_token **tokens, t_tok_type tok, int ind_tok, char *value)
 	t_token *tmp;
 	int nb_op_tok;
 
-	init_cl_par_ind(&nb_op_tok, *tokens, &tmp);
+	init_cl_par_ind(&nb_op_tok, **tokens, &tmp);
 	while (tmp)
 	{
 		if (tmp->index == ind_tok)
@@ -92,30 +92,21 @@ int piped(t_token **tokens, int start, int length)
 
 void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, int length)
 {
-	// printf("\nstart tok: %d, length: %d\n" , start_tok, length);
-	t_token *tmp;
-	int b_length;
-	int start;
-	int i;
+	t_token	*tmp;
+	int		b_length;
+	int		start;
+	int		i;
 
 	i = 0;
 	start = 0;
 	b_length = 0;
 	tmp = *tokens;
-	while (tmp)
-	{
-		if (tmp->index == start_tok)
-			break;
-		tmp = tmp->next;
-	}
+	move_tok_2_ind(&tmp, start_tok);
 	while (tmp && i < length)
 	{
 		b_length++;
 		if (tmp->token == TOK_EXPANDER_OP)
-		{
-			//			printf("\n\nthis is the source of the prolem: %d the value is %s\n\n", tmp->index, tmp->value);
 			divide_by_or_and_1(&tmp, tokens, &b_length);
-		}
 		else if (tmp->token == TOK_OPERATOR && check_divider_type(tmp->value))
 			divide_by_or_and_2(tmp, b_tokens, &start, &b_length);
 		//		if (tmp && tmp->index < length)
