@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/03 18:05:09 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/03 19:18:11 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -460,9 +460,10 @@ int	ft_init_env(t_info *info, char **envp)
 
 int	ft_init_info(t_info *info)
 {
-	info->tree = NULL;
+//	info->tree = NULL;
 //	if (ft_init_tree(info, token))
 //		return (1);
+	main_agent_O(info);
 	info->status = 0;
 	return (0);
 }
@@ -522,7 +523,7 @@ void	ft_free_all(t_info *info, t_env *env)
 {
 	if (info)
 	{
-		ft_free_tree(info->tree);
+//		ft_free_tree(info->tree);
 		free(info->rdline);
 		info->rdline = NULL;
 	}
@@ -530,7 +531,7 @@ void	ft_free_all(t_info *info, t_env *env)
 		ft_free_env(env);
 }
 
-void	ft_do_it(t_info *info)
+/*void	ft_do_it(t_info *info)
 {
 	static int	i = 0;
 //	int		tmp[2];
@@ -543,7 +544,7 @@ void	ft_do_it(t_info *info)
 //		return ;
 //	dup2(tmp[0], info->tree->cmd->fdin);
 //	dup2(tmp[1], info->tree->cmd->fdout);
-/*	if (info->tree->right->right)
+	if (info->tree->right->right)
 	{
 		if (i == 3) 
 		{
@@ -556,7 +557,7 @@ void	ft_do_it(t_info *info)
 		i = 0;
 		return ;
 	}
-*/	if (!ft_strncmp(info->tree->cmd->cmd, "|", 2))
+	if (!ft_strncmp(info->tree->cmd->cmd, "|", 2))
 	{
 		if (!i)
 			tree = info->tree->left;
@@ -601,7 +602,7 @@ void	ft_do_it(t_info *info)
 	ft_free_split(tab);
 	if (i)
 		ft_do_it(info);
-}
+}*/
 
 char	*ft_rdline_word(t_info *info)
 {
@@ -626,8 +627,6 @@ char	*ft_rdline_word(t_info *info)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_token		*tokens;
-	t_big_token	*b_tokens;
 	t_info		info;
 	char		*word;
 	static int	ret = 0;
@@ -642,8 +641,6 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGINT, &ft_signal);
 	while (1)
 	{
-		tokens = NULL;
-		b_tokens = NULL;
 		word = ft_rdline_word(&info);
 		if (!word)
 			return (1);
@@ -651,10 +648,14 @@ int	main(int ac, char **av, char **envp)
 		free(word);
 		if (ft_keep_history(info.rdline))
 			add_history(info.rdline);
-		if (ft_init_info(&info))
+		if (ft_strlen(info.rdline) > 1)
+		{
+			if (ft_init_info(&info))
+				ft_exit(&info, NULL, NULL);
+		}
+		else
 			ft_exit(&info, NULL, NULL);
-		main_agent_O(&tokens, &b_tokens, info.rdline);
-		ft_do_it(&info);
+	//	ft_do_it(&info);
 		ret = info.status;
 		ft_free_all(&info, NULL);
 	}

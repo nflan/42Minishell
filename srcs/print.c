@@ -86,17 +86,17 @@ void	print_s_tokens(t_token **tokens, int start, int length)
 	}
 }
 
-int main_agent_O(t_token **tokens, t_big_token **b_tokens, char *line)
+int main_agent_O(t_info *info)
 {
 	t_big_token	*tmp_b;
 
-	tokens = NULL;
-	b_tokens = NULL;
-	detect_tokens(tokens, line);
-	fill_tok_value(tokens, line);
-	index_toks(tokens);
-	parse(b_tokens, tokens, 0, len_ll_list(*tokens));
-	tmp_b = *b_tokens;
-	print_all_everything(&tmp_b, *&tokens);
+	info->tokens = NULL;
+	info->parse = NULL;
+	detect_tokens(&info->tokens, info->rdline);
+	fill_tok_value(&info->tokens, info->rdline);
+	index_toks(&info->tokens);
+	parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens));
+	tmp_b = info->parse;
+	print_all_everything(&tmp_b, &info->tokens);
 	return 0;
 }

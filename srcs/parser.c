@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:11:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/03 17:44:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/03 18:40:50 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,13 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 	divide_by_or_and(b_tokens, tokens, start, length);
 	tmp_b = *b_tokens;
 	if (!tmp_b || (!tmp_b->par && tmp_b->type == TOK_CLEAN))
+	{
+		printf("tmp_b = %d\n", tmp_b->length);
+		printf("tmp_b = %d\n", tmp_b->par);
+		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
+		printf("\nallo\n");
 		return;
+	}
 	while (tmp_b)
 	{
 		b_start = tmp_b->ind_tok_start;

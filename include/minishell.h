@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/03 17:53:16 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/03 18:54:45 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,11 +247,12 @@ typedef struct s_env
 
 typedef struct s_info
 {
-	char	*rdline;
-	int		status;
-	t_tree	*tree;
-	t_env	*env;
-	int		pdes[2];
+	char		*rdline;
+	int			status;
+	t_env		*env;
+	t_big_token	*parse;
+	t_token		*tokens;
+	int			pdes[2];
 }	t_info;
 
 //-----------main.c------------------------------------------
@@ -366,6 +367,6 @@ void print_s_tokens(t_token **tokens, int start, int length);
 int	depth_b_token(t_big_token **b_token);
 void	print_all_everything(t_big_token **b_tokens, t_token **tokens);
 void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
-int	main_agent_O(t_token **tokens, t_big_token **b_tokens, char *line);
+int	main_agent_O(t_info *info);
 
 #endif
