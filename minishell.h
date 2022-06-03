@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/03 13:03:12 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/03 16:54:53 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_big_token
 	int				ind_tok_start;
 	int				length;
 	int				par;
+	int				hd;
 	struct s_big_token *parent;
 	struct s_big_token *child;
 	struct s_big_token *sibling;
@@ -269,11 +270,11 @@ void			handle_par(t_big_token **b_tokens, t_token **tokens);
 void		divide_by_pipe(t_big_token **b_tokens, t_token **tokens);
 
 
-void print_b_tokens(t_big_token **b_token, t_token **tokens);
+void print_b_tokens(t_big_token **b_token, t_token **tokens, int i, int j);
 void print_s_tokens(t_token **tokens, int start, int length);
 int	depth_b_token(t_big_token **b_token);
 void	print_all_everything(t_big_token **b_tokens, t_token **tokens);
-void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i);
+void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
 
 
 #endif

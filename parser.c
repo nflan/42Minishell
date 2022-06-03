@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:11:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/03 14:59:23 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/03 15:48:00 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 		b_length = tmp_b->length;
 		if (tmp_b->par)
 		{
-			if ((tmp_b))
-				printf("\n\n\nhere is his par_pam1: %d\n", tmp_b->par);
+		//	if ((tmp_b))
+		//		printf("\n\n\nhere is his par_pam1: %d\n", tmp_b->par);
 			parse(&tmp_b->child, tokens, b_start, b_length);
 		}
-		if (piped(tokens, b_start, b_length))
+		else if (piped(tokens, b_start, b_length))
 		{
 			divide_by_pipe(&tmp_b, tokens);
 			if (tmp_b->child)
@@ -43,10 +43,16 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 				b_child = tmp_b->child;
 				while (b_child)
 				{
+		printf("enfant du divide by pipe ");
+		print_s_tokens(tokens, b_child->ind_tok_start, b_child->length);
+		printf("\n");
 					if (b_child->par)
 					{
-						if ((tmp_b))
-							printf("\n\n\nhere is his par_pam2: %d", tmp_b->par);
+				//	printf("J'ai des parantheses ! : ");
+				//	print_s_tokens(tokens, b_child->ind_tok_start, b_child->length);
+				//	printf("\n");
+		//				if ((tmp_b))
+		//					printf("\n\n\nhere is his par_pam2: %d", tmp_b->par);
 						parse(&b_child->child, tokens, b_child->ind_tok_start, b_child->length);
 					}
 					b_child = b_child->sibling;
@@ -54,5 +60,11 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 			}
 		}
 		tmp_b = tmp_b->sibling;
+		if (tmp_b)
+		{
+		printf("sibling while: ");
+		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
+		printf("\n");
+		}
 	}
 }
