@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/01 15:25:01 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/03 17:34:14 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	ft_convert_cmd(t_big_token *tok, t_token *tokens)
 	return (0);
 }
 
-int	main(int ac, char **av)
+/*int	main(int ac, char **av)
 {
 	t_big_token	*tok;
 	t_token *tokens;
@@ -133,7 +133,7 @@ int	main(int ac, char **av)
 	divide_by_pipe(&tok, &tokens);
 	ft_convert_cmd(tok, tokens);
 	return (0);
-}
+}*/
 
 int	ft_pwd(void)
 {

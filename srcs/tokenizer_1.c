@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer1.c                                       :+:      :+:    :+:   */
+/*   tokenizer_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/01 15:30:14 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/03 17:51:38 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int is_quoted(t_token **tok_list, int rank_in_list)
 	{
 		while (tmp->prev)
 		{
-			printf("allo?\n");
 			tmp = tmp->prev;
 			if (tmp->token == TOK_QUOTER)
 				res *= -1;
@@ -58,13 +57,13 @@ unsigned int get_real_tok_type(char c, t_token **tok_list)
 
 	len = len_ll_list(*tok_list);
 	if (len == 0 || len == 1)
-		return (get_tok_type[get_char_class[c]]);
+		return (get_tok_type[get_char_class[c + '0']]);
 	else
 	{
 		if (is_quoted(tok_list, 1))
 			return (TOK_WORD);
 		else
-			return (get_tok_type[get_char_class[c]]);
+			return (get_tok_type[get_char_class[c + '0']]);
 	}
 	return (-1);
 }

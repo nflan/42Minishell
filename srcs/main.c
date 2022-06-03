@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/01 12:05:38 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/03 18:05:09 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,7 @@ void	ft_print_test(t_tree *tree, int i)
 		printf(">%s<\n",  tree->cmd->cmd);
 }
 
-int	ft_init_tree(t_info *info, t_token *token)
+/*int	ft_init_tree(t_info *info, t_token *token)
 {
 //	info->tree = ft_fill_tree(info, token);
 	(void) token;
@@ -273,7 +273,7 @@ int	ft_init_tree(t_info *info, t_token *token)
 	if (!info->tree)
 			return (1);
 	return (0);
-}
+}*/
 
 void	ft_print_tree(t_tree *tree, int i)
 {
@@ -458,11 +458,11 @@ int	ft_init_env(t_info *info, char **envp)
 	return (0);
 }
 
-int	ft_init_info(t_info *info, t_token *token)
+int	ft_init_info(t_info *info)
 {
 	info->tree = NULL;
-	if (ft_init_tree(info, token))
-		return (1);
+//	if (ft_init_tree(info, token))
+//		return (1);
 	info->status = 0;
 	return (0);
 }
@@ -624,16 +624,16 @@ char	*ft_rdline_word(t_info *info)
 	return (word);
 }
 
-/*int	main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	t_token		*tokens;
+	t_big_token	*b_tokens;
 	t_info		info;
 	char		*word;
 	static int	ret = 0;
 
 	(void) av;
 	info.rdline = NULL;
-	tokens = NULL;
 	info.status = ret;
 	if (ac > 1)
 		return (ft_putstr_fd("Too much arguments\n", 2), 1);
@@ -642,6 +642,8 @@ char	*ft_rdline_word(t_info *info)
 	signal(SIGINT, &ft_signal);
 	while (1)
 	{
+		tokens = NULL;
+		b_tokens = NULL;
 		word = ft_rdline_word(&info);
 		if (!word)
 			return (1);
@@ -649,8 +651,9 @@ char	*ft_rdline_word(t_info *info)
 		free(word);
 		if (ft_keep_history(info.rdline))
 			add_history(info.rdline);
-		if (ft_init_info(&info, tokens))
+		if (ft_init_info(&info))
 			ft_exit(&info, NULL, NULL);
+		main_agent_O(&tokens, &b_tokens, info.rdline);
 		ft_do_it(&info);
 		ret = info.status;
 		ft_free_all(&info, NULL);
@@ -658,4 +661,4 @@ char	*ft_rdline_word(t_info *info)
 	rl_clear_history();
 	ft_free_env(info.env);
 	return (ret);
-}*/
+}

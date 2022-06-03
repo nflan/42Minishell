@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer2.c                                       :+:      :+:    :+:   */
+/*   tokenizer_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/01 12:06:18 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/03 17:52:58 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,23 +98,17 @@ char *ft_strncpy(char *str, int n)
 	return (ret);
 }
 
-void index_toks(t_token **tokens, int start, int length)
+void index_toks(t_token **tokens)
 {
 	int i;
 	t_token *tmp;
 
-	i = 0;
 	tmp = *tokens;
-	while (tmp && i < start)
-	{
-		tmp = tmp->next;
-		i++;
-	}
 	i = 0;
-	while (i < length)
+	while (tmp)
 	{
 		tmp->index = i;
-		i++;
 		tmp = tmp->next;
+		i++;
 	}
 }
