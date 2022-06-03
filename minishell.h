@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/02 13:08:29 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/03 13:03:12 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,7 @@ void print_b_tokens(t_big_token **b_token, t_token **tokens);
 void print_s_tokens(t_token **tokens, int start, int length);
 int	depth_b_token(t_big_token **b_token);
 void	print_all_everything(t_big_token **b_tokens, t_token **tokens);
-void	print_all_child(t_big_token **b_tokens, t_token **tokens);
+void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i);
 
 
 #endif
