@@ -6,46 +6,17 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/24 11:45:19 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/06 17:58:44 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**ft_env_to_tab(t_env *env)
-{
-	t_env	*tmp;
-	char	**tab;
-	int		i;
-
-	tab = NULL;
-	tmp = env;
-	i = 0;
-	if (!env)
-		return (NULL);
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	tab = ft_calloc(sizeof(char *), i + 1);
-	i = 0;
-	tmp = env;
-	while (tmp)
-	{
-		tab[i] = ft_strjoiiin(tmp->name, "=", tmp->value);
-		i++;
-		tmp = tmp->next;
-	}
-	return (tab);
-}
-
 int	ft_pipex_end(t_info *info, t_cmd *cmd)
 {
-	cmd->envp = ft_env_to_tab(info->env);
 	cmd->child = -1;
-	if (ft_command(info, cmd))
-		return (ft_putstr_frror(cmd->cmd, ": command not found\n", 0));
+	if (!cmd->cmd)
+		ft_error(3, info, cmd);
 	else
 	{
 		cmd->child = fork();
@@ -62,7 +33,8 @@ int	ft_pipex_end(t_info *info, t_cmd *cmd)
 	}
 //	if (cmd->fdin != 0 && cmd->fdin != 1 && cmd->fdin != 2)
 //		close(cmd->fdin);
-	close(info->pdes[0]);
+	if (info->pdes[0] > 2)
+		close(info->pdes[0]);
 	if (WIFEXITED(cmd->child))
 		return (WEXITSTATUS(cmd->child));
 	return (info->status);
@@ -107,8 +79,16 @@ int	ft_pipe_to_pipe(t_info *info, t_cmd *cmd)
 	return (0);
 }
 
+void    ft_signal_dfl(int sig)
+{
+	signal(sig, SIG_DFL);
+	signal(SIGINT, &ft_signal_dfl);
+}
+
 int	ft_do_pipex(t_info *info, t_cmd *cmd)
 {
+//	printf("allo\n");
+	cmd->child = -1;
 	if (!cmd->cmd)
 		ft_error(3, info, cmd);
 	else
@@ -120,11 +100,16 @@ int	ft_do_pipex(t_info *info, t_cmd *cmd)
 		{
 			dup2(cmd->fdin, STDIN_FILENO);
 			dup2(info->pdes[1], STDOUT_FILENO);
-			close(info->pdes[0]);
+			if (info->pdes[0] > 2)
+				close(info->pdes[0]);
+			signal(SIGQUIT, &ft_signal_dfl);
 			execve(cmd->cmd_p[0], cmd->cmd_p, cmd->envp);
 			return (ft_error(4, info, cmd));
 		}
+		waitpid(cmd->child, &cmd->child, 0);
 	}
+	if (WIFEXITED(cmd->child))
+		return (WEXITSTATUS(cmd->child));
 	return (0);
 }
 
@@ -133,12 +118,18 @@ int	ft_pipex(t_info *info, t_cmd *cmd)
 	if (pipe(info->pdes) == -1)
 		return (ft_error(5, info, cmd));
 	if (ft_command(info, cmd))
-		return (ft_putstr_frror(cmd->cmd, ": command not found\n", 0));
-	cmd->envp = ft_env_to_tab(info->env);
+		return (ft_putstr_frror(cmd->cmd_p[0], ": command not found\n", 0));
 	if (cmd->fdin < 0)
 		ft_error(1, info, cmd);
 	else
-		ft_do_pipex(info, cmd);
-	close(info->pdes[1]);
+	{
+	//	if (cmd->fdin)
+			info->pdes[0] = cmd->fdin;
+	//	if (cmd->fdout)
+			info->pdes[1] = cmd->fdout;
+		info->status = ft_do_pipex(info, cmd);
+	}
+	if (info->pdes[1] > 2)
+		close(info->pdes[1]);
 	return (0);
 }

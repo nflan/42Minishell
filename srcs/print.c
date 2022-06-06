@@ -14,6 +14,7 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 	{
 		printf("\nWelcome in the parent: %d\n", i);
 		printf("\n");
+		printf("start = %d && length = %d\n", tmp_b->ind_tok_start, tmp_b->length);
 		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
 		printf("\n");
 		if (tmp_b->child)
@@ -97,6 +98,6 @@ int main_agent_O(t_info *info)
 	index_toks(&info->tokens);
 	parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens));
 	tmp_b = info->parse;
-	print_all_everything(&tmp_b, &info->tokens);
-	return 0;
+//	print_all_everything(&tmp_b, &info->tokens);
+	return (0);
 }

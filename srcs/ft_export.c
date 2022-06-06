@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/20 17:19:00 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/06 19:02:11 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_export_replace(t_env *env, char *line, int i, int j)
 		env->value = ft_strdup("");
 }
 
-void	ft_export(t_env *env, char *line)
+int	ft_export(t_env *env, char *line)
 {
 	t_env	*tmp;
 	t_env	*ptr;
@@ -62,12 +62,12 @@ void	ft_export(t_env *env, char *line)
 	ptr = NULL;
 	i = 0;
 	if (!env || !line)
-		return ;
+		return (1);
 	if (!ft_do_export(line))
-		return ;
+		return (1);
 	if (*line == '\\')
 		line = line + 1;
-	printf("line = %s\n", line);
+//	printf("line = %s\n", line);
 	while (line[i] && line[i] != '=')
 		i++;
 	j = i + 1;
@@ -79,4 +79,5 @@ void	ft_export(t_env *env, char *line)
 		ft_export_new(env, tmp, line);
 	else
 		ft_export_replace(tmp, line, i, j);
+	return (0);
 }

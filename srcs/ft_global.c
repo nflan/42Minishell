@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:29:38 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/23 15:53:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/06 18:52:16 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ int	ft_cmd_path(t_info *info, t_cmd *cmd)
 int	ft_command(t_info *info, t_cmd *cmd)
 {
 	if (!cmd->cmd)
-		return (1);
-	cmd->cmd_p = ft_split(cmd->cmd, ' ');
-	if (!cmd->cmd_p)
 		return (1);
 	if (access(cmd->cmd_p[0], X_OK) == 0)
 		return (0);

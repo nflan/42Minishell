@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex_tools_bonus.c                             :+:      :+:    :+:   */
+/*   ft_pipex_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/23 11:59:26 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/06 10:22:54 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,3 +91,31 @@ int	ft_pipex_heredoc(t_global *g)
 		ft_do_heredoc(g);
 	return (close_pipex_heredoc(g));
 }*/
+
+char	**ft_env_to_tab(t_env *env)
+{
+	t_env	*tmp;
+	char	**tab;
+	int		i;
+
+	tab = NULL;
+	tmp = env;
+	i = 0;
+	if (!env)
+		return (NULL);
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	tab = ft_calloc(sizeof(char *), i + 1);
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		tab[i] = ft_strjoiiin(tmp->name, "=", tmp->value);
+		i++;
+		tmp = tmp->next;
+	}
+	return (tab);
+}

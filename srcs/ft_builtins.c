@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/03 17:34:14 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/06 17:15:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_exit(t_info *info, char *value, char **tofree)
 	exit(ret);
 }
 
-void	ft_env(t_env *env)
+int	ft_env(t_env *env)
 {
 	t_env	*print;
 
@@ -41,36 +41,7 @@ void	ft_env(t_env *env)
 			print = print->next;
 		}
 	}
-}
-
-void	ft_echo(char *line, int fd, int ret)
-{
-	char	*tmp;
-	int		i;
-
-	i = 2;
-	tmp = NULL;
-	if (!line)
-		return ;
-	if (!ft_strncmp(line, "$?", 3))
-		tmp = ft_itoa(ret);
-	if ((line[0] == '-' || line[1] == 'n'))
-	{
-		while (line[i] && line[i] == 'n')
-			i++;
-		if (line[i] == ' ')
-		{
-			tmp = ft_substr(line, i + 1, ft_strlen(line) - i - 1);
-			if (!tmp)
-				return ;
-		}
-	}
-	if (!tmp)
-		tmp = ft_strjoin(line, "\n");
-	if (!tmp)
-		return ;
-	ft_putstr_fd(tmp, fd);
-	free(tmp);
+	return (0);
 }
 
 void	ft_print_tokens(t_token *tokens)
@@ -93,7 +64,7 @@ void	ft_print_tokens(t_token *tokens)
 	}
 }
 
-int	ft_convert_cmd(t_big_token *tok, t_token *tokens)
+/*int	ft_convert_cmd(t_big_token *tok, t_token *tokens)
 {
 	t_token	*tmp;
 	char	*line;
@@ -111,7 +82,7 @@ int	ft_convert_cmd(t_big_token *tok, t_token *tokens)
 	printf("LINE = %s\n", line);
 	ft_echo(line, 1, 0);
 	return (0);
-}
+}*/
 
 /*int	main(int ac, char **av)
 {

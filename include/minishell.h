@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/03 18:54:45 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/06 18:56:49 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,6 @@ typedef struct s_cmd
 	pid_t			child;
 //	int				type;// && = 1 / || = 2 -> j'envoie dans X ou Y fonction au cas ou
 //	unsigned int	prof;// profondeur
-	struct s_tree	*tree;
 }	t_cmd;
 
 typedef struct s_tree
@@ -257,23 +256,33 @@ typedef struct s_info
 
 //-----------main.c------------------------------------------
 void	ft_free_env(t_env *env);
+void	ft_free_cmd(t_cmd *cmd);
 void	ft_free_all(t_info *info, t_env *env);
 void	ft_envadd_back(t_env **alst, t_env *new);
 int		ft_fill_envnew(t_env *env, char *line);
 t_env	*ft_envnew(char *line);
 void	ft_print_cmd(t_cmd *cmd);
 
+//-----------ft_launch_cmd----------------------------------------
+int	ft_launch_cmd(t_info *info, t_big_token *b_tokens);
+int	ft_find_cmd(t_info *info);
+
 //-----------builtins----------------------------------------
-void	ft_echo(char *line, int fd, int ret);
-int	ft_pwd(void);
-void	ft_env(t_env *env);
+int		ft_pwd(void);
+int		ft_env(t_env *env);
 //int	ft_exit(t_info *env, int ret);
-int	ft_exit(t_info *env, char *value, char **tofree);
+int		ft_exit(t_info *env, char *value, char **tofree);
 t_env	*ft_unset(t_env *env, char *line);
 //-----------ft_cd.c-----------------------------------------
-int	ft_cd(t_info *info, char *dir);
+int		ft_cd(t_info *info, t_cmd *cmd);
 //-----------ft_export.c-------------------------------------
-void	ft_export(t_env *env, char *line);
+int		ft_export(t_env *env, char *line);
+//-----------ft_echo.c-------------------------------------
+int		ft_echo(t_info *info, t_cmd *cmd);
+char	*ft_create_echo(t_info *info, t_cmd *cmd, char *tmp, int i);
+int		ft_echo_none(t_cmd *cmd, int i);
+int		ft_handle_ret(t_cmd *cmd, char *ret, int i);
+int		ft_option_echo(t_cmd *cmd, int i);
 
 //-----------ft_tools.c--------------------------------
 int	ft_putstr_error(char *error);
@@ -286,16 +295,16 @@ char	*ft_get_env_value(t_info *info, char *name);
 int				ft_pipex_end(t_info *info, t_cmd *cmd);
 int				ft_do_pipe(t_info *info, t_cmd *cmd, int tmp);
 int				ft_pipe_to_pipe(t_info *info, t_cmd *cmd);
-char			**ft_env_to_tab(t_env *env);
 int				ft_do_pipex(t_info *info, t_cmd *cmd);
 int				ft_pipex(t_info *info, t_cmd *cmd);
 
 //---------ft_pipex_tools.c----------------------------
-int				ft_fdout_me(t_info *info);
-int				ft_here(t_info *info, int i);
-int				close_pipex_heredoc(t_info *info);
-int				ft_do_heredoc(t_info *info);
-int				ft_pipex_heredoc(t_info *g);
+//int				ft_fdout_me(t_info *info);
+//int				ft_here(t_info *info, int i);
+//int				close_pipex_heredoc(t_info *info);
+//int				ft_do_heredoc(t_info *info);
+//int				ft_pipex_heredoc(t_info *g);
+char			**ft_env_to_tab(t_env *env);
 
 //---------ft_pipex_utils.c----------------------------
 int			ft_cmd_path(t_info *info, t_cmd *cmd);
@@ -349,8 +358,8 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 
 int				cl_par_ind(t_token **tokens, int ind_tok);
 void			divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
-int	piped(t_token **tokens, int start, int length);
-void parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+int				piped(t_token **tokens, int start, int length);
+void			parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------------------------
 
