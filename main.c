@@ -63,6 +63,10 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 		printf("It's length is: %d\n", tmp_b->length);
 		printf("It's par_pam is: %d\n", tmp_b->par);
 		printf("It's rank is: %d\n", k);
+		if (tmp_b->parent)
+		printf("It's got a PARENT!!\n");
+		else if (!(tmp_b->parent))
+		printf("It's an ORPHAN!!\n");
 		if (k && tmp_b->child)
 			print_all_child(&tmp_b->child, tokens, i, j + 1);
 		tmp_b = tmp_b->sibling;
