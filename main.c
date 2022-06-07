@@ -29,20 +29,19 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j)
 {
 	t_big_token	*tmp_b;
-	int	child = 0;
+	// int	child;
 
 	tmp_b = *b_tokens;
 	while (tmp_b)
 	{
-		printf("\nWelcome to the bunch of childs of order: %d of the parent: %d with the rank: %d\n", j, i, child);
+			printf("\nWelcome to the bunch of childs of order: %d of the parent: %d and rank: %d\n", j, i);
 		print_b_tokens(&tmp_b, tokens, i, j);
 		printf("\n");
 		tmp_b = tmp_b->child;
 		j++;
-		child++;
+		// child++;
 	}
 }
-
 
 void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 {

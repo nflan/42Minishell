@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:11:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/07 14:19:43 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/07 18:23:10 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	give_parent(t_big_token **b_child, t_big_token **parent)
 	(*b_child)->parent = *parent;
 }
 
-void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
+void	parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 {
-	t_big_token *tmp_b;
-	t_big_token *b_child;
-	t_token *tmp_s;
-	int b_start;
-	int b_length;
+	t_big_token	*tmp_b;
+	t_big_token	*b_child;
+	t_token		*tmp_s;
+	int			b_start;
+	int			b_length;
 
 	divide_by_or_and(b_tokens, tokens, start, length);
 	tmp_b = *b_tokens;
@@ -60,11 +60,5 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 			}
 		}
 		tmp_b = tmp_b->sibling;
-		if (tmp_b)
-		{
-		printf("sibling while: ");
-		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
-		printf("\n");
-		}
 	}
 }

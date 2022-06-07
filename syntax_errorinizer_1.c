@@ -6,17 +6,17 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/02 14:35:29 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/07 18:20:53 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft/libft.h"
 
-int count_op_tok(t_token **tokens)
+int	count_op_tok(t_token **tokens)
 {
-	t_token *tmp;
-	int ret;
+	t_token	*tmp;
+	int		ret;
 
 	ret = 0;
 	tmp = *tokens;
@@ -29,10 +29,10 @@ int count_op_tok(t_token **tokens)
 	return (ret);
 }
 
-int count_cl_tok(t_token **tokens)
+int	count_cl_tok(t_token **tokens)
 {
-	t_token *tmp;
-	int ret;
+	t_token	*tmp;
+	int		ret;
 
 	ret = 0;
 	tmp = *tokens;
@@ -45,9 +45,9 @@ int count_cl_tok(t_token **tokens)
 	return (ret);
 }
 
-int check_count_errors(t_token **tokens)
+int	check_count_errors(t_token **tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	while (tmp)
@@ -61,10 +61,10 @@ int check_count_errors(t_token **tokens)
 	return (0);
 }
 
-int r_quotes_impair(t_token **tokens)
+int	r_quotes_impair(t_token **tokens)
 {
-	t_token *tmp;
-	int q_num;
+	t_token	*tmp;
+	int		q_num;
 
 	q_num = 0;
 	tmp = *tokens;
@@ -83,9 +83,9 @@ int r_quotes_impair(t_token **tokens)
 	return (0);
 }
 
-int is_last_op(t_token **tokens)
+int	is_last_op(t_token **tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	while (tmp->next)

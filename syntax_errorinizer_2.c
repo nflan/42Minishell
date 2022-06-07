@@ -6,18 +6,18 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/30 14:02:17 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/07 18:18:31 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft/libft.h"
 
-int r_2_op_succeding(t_token **tokens)
+int	r_2_op_succeding(t_token **tokens)
 {
-	t_token *tmp;
-	t_tok_type op_prev;
-	t_tok_type op_next;
+	t_token		*tmp;
+	t_tok_type	op_prev;
+	t_tok_type	op_next;
 
 	tmp = *tokens;
 	while (tmp)
@@ -35,9 +35,9 @@ int r_2_op_succeding(t_token **tokens)
 	return (0);
 }
 
-int op_cl_par_succeeding(t_token **tokens)
+int	op_cl_par_succeeding(t_token **tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	while (tmp)
@@ -46,16 +46,14 @@ int op_cl_par_succeeding(t_token **tokens)
 		{
 			if (tmp->next->token == TOK_EXPANDER_CL)
 				return (1);
-			if ((tmp->next->token == TOK_SEP && tmp->next->next)
-				&& (tmp->next->next->token == TOK_EXPANDER_CL))
+			if ((tmp->next->token == TOK_SEP && tmp->next->next) && (tmp->next->next->token == TOK_EXPANDER_CL))
 				return (2);
 		}
 		if ((tmp->token == TOK_EXPANDER_CL && tmp->next))
 		{
 			if (tmp->next->token == TOK_EXPANDER_OP)
 				return (3);
-			if ((tmp->next->token == TOK_SEP && tmp->next->next)
-				&& (tmp->next->next->token == TOK_EXPANDER_OP))
+			if ((tmp->next->token == TOK_SEP && tmp->next->next) && (tmp->next->next->token == TOK_EXPANDER_OP))
 				return (4);
 		}
 		tmp = tmp->next;
@@ -63,10 +61,10 @@ int op_cl_par_succeeding(t_token **tokens)
 	return (0);
 }
 
-int syntax_err_handler(t_token **tokens)
+int	syntax_err_handler(t_token **tokens)
 {
-	int nb_optok;
-	int nb_cltok;
+	int	nb_optok;
+	int	nb_cltok;
 
 	if (!*tokens)
 		return (-1);
@@ -89,12 +87,10 @@ int syntax_err_handler(t_token **tokens)
 	return (0);
 }
 
-// here where to do my weird experiment
-
-int is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens)
+int	is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens)
 {
-	t_big_token *tmp1;
-	t_token *tmp2;
+	t_big_token	*tmp1;
+	t_token		*tmp2;
 
 	tmp1 = b_tokens;
 	tmp2 = tokens;

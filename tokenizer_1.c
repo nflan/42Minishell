@@ -6,16 +6,16 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/05/30 13:54:24 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/07 18:16:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft/libft.h"
 
-int len_ll_list(t_token *tok_list)
+int	len_ll_list(t_token *tok_list)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (!tok_list)
@@ -28,10 +28,10 @@ int len_ll_list(t_token *tok_list)
 	return (len);
 }
 
-int is_quoted(t_token **tok_list, int rank_in_list)
+int	is_quoted(t_token **tok_list, int rank_in_list)
 {
-	t_token *tmp;
-	int res;
+	t_token	*tmp;
+	int		res;
 
 	res = 1;
 	tmp = *tok_list;
@@ -51,9 +51,9 @@ int is_quoted(t_token **tok_list, int rank_in_list)
 	return (0);
 }
 
-unsigned int get_real_tok_type(char c, t_token **tok_list)
+unsigned int	get_real_tok_type(char c, t_token **tok_list)
 {
-	int len;
+	int	len;
 
 	len = len_ll_list(*tok_list);
 	if (len == 0 || len == 1)
@@ -68,9 +68,9 @@ unsigned int get_real_tok_type(char c, t_token **tok_list)
 	return (-1);
 }
 
-t_token *ft_create_token(t_tok_type tok_type, int length, int i)
+t_token	*ft_create_token(t_tok_type tok_type, int length, int i)
 {
-	t_token *tok;
+	t_token	*tok;
 
 	tok = (t_token *)malloc(sizeof(t_token));
 	if (!tok)
@@ -82,7 +82,7 @@ t_token *ft_create_token(t_tok_type tok_type, int length, int i)
 	return (tok);
 }
 
-void init_tok_struct(t_token **tok_list, int rank_in_list)
+void	init_tok_struct(t_token **tok_list, int rank_in_list)
 {
 	if (is_quoted(tok_list, rank_in_list))
 		(*tok_list)->quoted = 1;
