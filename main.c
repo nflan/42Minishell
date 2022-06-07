@@ -34,7 +34,7 @@ void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j)
 	tmp_b = *b_tokens;
 	while (tmp_b)
 	{
-			printf("\nWelcome to the bunch of childs of order: %d of the parent: %d and rank: %d\n", j, i);
+			printf("\nWelcome to the bunch of childs of order: %d of the parent: %d\n", j, i);
 		print_b_tokens(&tmp_b, tokens, i, j);
 		printf("\n");
 		tmp_b = tmp_b->child;

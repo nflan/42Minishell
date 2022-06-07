@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/03 16:54:53 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/07 20:54:09 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ typedef enum s_char_type
 
 typedef struct s_token
 {
-	//	int						sp_after;
 	int		index;
 	int 	start;
 	int 	length;
@@ -94,10 +93,6 @@ typedef enum s_big_tok_type
 	TOK_CLEAN_PIPED,
 	TOK_LAST,
 	TOK_PIPE_LAST,
-	// TOK_OR_LEFT,
-	// TOK_AND_RIGHT,
-	// TOK_PIPE_LEFT,
-	// TOK_PIPE_RIGHT,
 } 			t_big_tok_type;
 
 typedef enum	s_par_left_right
@@ -121,13 +116,6 @@ typedef struct s_big_token
 	struct s_big_token *parent;
 	struct s_big_token *child;
 	struct s_big_token *sibling;
-	//	int		sp_after;
-	// int		index;
-	// int		priority;
-	// t_tok_type tok_start;
-	// t_tok_type tok_end;
-	// t_par_left_right more_info;
-
 } 			t_big_token;
 
 static const t_char_type get_char_class[255] =
@@ -214,6 +202,13 @@ static const t_tok_type get_tok_type[255] =
 
 static int rules[9][255];
 
+//----------parser.c-------------------------------------------------------------------
+
+void	give_parent(t_big_token **b_child, t_big_token **parent);
+void	sub_parse_1(t_big_token **tmp_b, t_token **tokens, int b_start, int b_length);
+void	sub_parse_2(t_big_token **b_child, t_big_token **tmp_b, t_token **tokens);
+void	parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+
 //----------tokenizer_1.c-------------------------------------------------------------------
 
 int 			len_ll_list(t_token *tok_list);
@@ -258,7 +253,6 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 int				cl_par_ind(t_token **tokens, int ind_tok);
 void			divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
 int	piped(t_token **tokens, int start, int length);
-void parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------------------------
 
