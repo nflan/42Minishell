@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/06 18:33:09 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/07 15:39:09 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -459,6 +459,7 @@ int	ft_init_info(t_info *info, int ret)
 {
 	main_agent_O(info);
 	info->status = ret;
+	info->nb_cmd = 0;
 	return (0);
 }
 
@@ -535,6 +536,10 @@ void	ft_free_all(t_info *info, t_env *env)
 	}
 	if (env)
 		ft_free_env(env);
+	if (info->pdes[0] > 2)
+		close(info->pdes[0]);
+	if (info->pdes[1] > 2)
+		close(info->pdes[1]);
 }
 
 char	*ft_rdline_word(t_info *info)
@@ -567,7 +572,7 @@ int	main(int ac, char **av, char **envp)
 	(void) av;
 	info.rdline = NULL;
 	if (ac > 1)
-		return (ft_putstr_fd("Too much arguments\n", 2), 1);
+		info.nb_cmd = 10;
 	if (ft_init_env(&info, envp))
 		return (ft_putstr_error("Error create env\n"));
 	signal(SIGINT, &ft_signal);
@@ -588,7 +593,8 @@ int	main(int ac, char **av, char **envp)
 		}
 		else
 			ft_exit(&info, NULL, NULL);
-		ft_find_cmd(&info);
+		if (info.nb_cmd != 10)
+			ft_find_cmd(&info);
 	//	printf("info.status = %d\n", info.status);
 		ret = info.status;
 		ft_free_all(&info, NULL);

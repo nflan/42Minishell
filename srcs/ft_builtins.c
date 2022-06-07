@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/06 17:15:42 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/07 18:22:33 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,48 +64,6 @@ void	ft_print_tokens(t_token *tokens)
 	}
 }
 
-/*int	ft_convert_cmd(t_big_token *tok, t_token *tokens)
-{
-	t_token	*tmp;
-	char	*line;
-
-	(void)tok;
-	line = NULL;
-	tmp = tokens;
-	ft_print_tokens(tokens);
-	while (tmp)
-	{
-		if (tmp->start >= 6 && tmp->start <= 17)
-			line = ft_strjoin_free(line, tmp->value, 1);
-		tmp = tmp->next;
-	}
-	printf("LINE = %s\n", line);
-	ft_echo(line, 1, 0);
-	return (0);
-}*/
-
-/*int	main(int ac, char **av)
-{
-	t_big_token	*tok;
-	t_token *tokens;
-	(void) ac;
-
-	tokens = NULL;
-	detect_tokens(&tokens, av[1]);
-	fill_tok_value(&tokens, av[1]);
-	tok = ft_calloc(sizeof(t_big_token), 1);
-	tok->type = TOK_CLEAN;
-	tok->ind_tok_start = 0;
-	tok->length = 3;
-	tok->par = 0;
-	tok->parent = NULL;
-	tok->child = NULL;
-	tok->sibling = NULL;
-	divide_by_pipe(&tok, &tokens);
-	ft_convert_cmd(tok, tokens);
-	return (0);
-}*/
-
 int	ft_pwd(void)
 {
 	char	*buf;
@@ -123,18 +81,36 @@ int	ft_pwd(void)
 	return (0);
 }
 
-t_env	*ft_unset(t_env *env, char *line)
+int	ft_unset_name(t_env **tmp, char *name)
+{
+	int	i;
+
+	i = 0;
+	if (!tmp || !name)
+		return (1);
+	while ((*tmp)->next)
+	{
+		i = 0;
+		while (name[i] && (*tmp)->next->name[i] && name[i] == (*tmp)->next->name[i])
+			i++;
+		if ((size_t)i == ft_strlen(name) && ft_strlen(name) == ft_strlen((*tmp)->next->name))
+			return (0);
+		else
+			*tmp = (*tmp)->next;
+	}
+	return (1);
+}
+
+t_env	*ft_unset(t_env *env, t_cmd *cmd)
 {
 	t_env	*tmp;
 	t_env	*ptr;
 
 	tmp = env;
 	ptr = NULL;
-	if (!env || !line)
+	if (!env || !cmd->cmd)
 		return (NULL);
-	while (tmp->next && ft_strncmp(tmp->next->name, line, ft_strlen(line + 1)))
-		tmp = tmp->next;
-	if (!tmp->next && ft_strncmp(tmp->name, line, ft_strlen(line + 1)))
+	if (ft_unset_name(&tmp, cmd->cmd_p[1]))
 		return (NULL);
 	ptr = tmp->next;
 	tmp->next = ptr->next;

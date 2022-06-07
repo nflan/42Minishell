@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/06 19:25:38 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/07 18:32:16 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,44 @@
 
 int	ft_deeper_bt(t_big_token *b_tokens, t_big_token **tmp_b)
 {
+	int	i;
+
+	i = 0;
 	*tmp_b = b_tokens;
 	if (!tmp_b)
-		return (1);
+		return (-1);
 	while ((*tmp_b)->child)
+	{
 		*tmp_b = (*tmp_b)->child;
-	return (0);
+		i++;
+	}
+	return (i);
 }
 
 int	ft_wash_btoken(t_info *info, t_big_token *b_tokens)
 {
 	t_token	*tokens;
+	int	i;
 
+	i = b_tokens->ind_tok_start;
 	tokens = info->tokens;
-	while (tokens && tokens->start != b_tokens->ind_tok_start)
+//	printf("WASH: Start = %d && length = %d\n", b_tokens->ind_tok_start, b_tokens->length);
+//	printf("value = ");
+//	print_s_tokens(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+//	printf("\n");
+	while (tokens && i--)
+	{
+	//	printf("tokens->start = %d\n", tokens->start);
+	//	printf("tokens->value = %s\n", tokens->value);
 		tokens = tokens->next;
+	}
 	if (!tokens)
 		return (1);
 	if (tokens->token == TOK_SEP)
 	{
 		tokens = tokens->next;
 		b_tokens->ind_tok_start++;
+		b_tokens->length--;
 		if (b_tokens->ind_tok_start == b_tokens->length)
 		{
 			printf("Que des separateurs dans le bat7 (' ')\n");
@@ -73,6 +90,7 @@ t_cmd	*ft_convert_bt_cmd(t_info *info, t_big_token *b_tokens)
 	tmp->envp = ft_env_to_tab(info->env);
 	tmp->fdin = 0;
 	tmp->fdout = 1;
+	tmp->child = -1;
 	return (tmp);
 }
 
@@ -89,13 +107,13 @@ int	ft_builtins(t_info *info, t_cmd *cmd)
 		return (ft_echo(info, cmd));
 	else if (!ft_strncmp(cmd->cmd_p[0], "unset", len))
 	{
-		if (!ft_unset(info->env, cmd->cmd + 6))
+		if (!ft_unset(info->env, cmd))
 			return (1);
 		else
 			return (0);
 	}
 	else if (!ft_strncmp(cmd->cmd_p[0], "export", len))
-		return (ft_export(info->env, cmd->cmd + 7));
+		return (ft_export(info->env, cmd));
 	else if (!ft_strncmp(cmd->cmd_p[0], "cd", len))
 		return (ft_cd(info, cmd));
 	else if (!ft_strncmp(cmd->cmd_p[0], "exit", len) || !ft_strncmp(cmd->cmd, "exit ", 5))
@@ -107,6 +125,7 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 {
 	t_cmd	*cmd;
 
+//	printf("dans launch cmd\n");
 	cmd = ft_convert_bt_cmd(info, b_tokens);
 	if (!cmd)
 		return (1);
@@ -114,8 +133,9 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 	info->status = ft_builtins(info, cmd);
 	if (info->status == 2)
 	{
-		if (ft_pipex(info, cmd))
+		if (ft_pipex(info, cmd, b_tokens))
 			return (ft_free_cmd(cmd), 1);
+//		waitpid(cmd->child, &cmd->child, 0);
 	}
 	else if (info->status == 1)
 		return (ft_free_cmd(cmd), 1);
@@ -129,15 +149,23 @@ int	ft_launch_sibling(t_info *info, t_big_token *b_tokens)
 	tmp_b = b_tokens;
 	while (tmp_b)
 	{
+	//		printf("value b_token\n");
+	//		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+	//		printf("\n");
 		if (ft_wash_btoken(info, tmp_b))
 			return (1);
 		if (ft_launch_cmd(info, tmp_b))
 			return (1);
 		if (tmp_b->sibling)
+//		{
+//	printf("sibling\n");
 			tmp_b = tmp_b->sibling;
+//		}
 		else
 			break;
+		info->nb_cmd++;
 	}
+//		printf("allo\n");
 	return (0);
 }
 
@@ -150,24 +178,54 @@ int	ft_find_cmd(t_info *info)
 	tmp_b = NULL;
 	if (!b_tokens)
 	{
-		printf("pas de b_tokens dans ft_launch_cmd\n");
+		printf("pas de b_tokens dans ft_find_cmd\n");
 		return (1);
 	}
-//	while (b_tokens)
-//	{
-		if (ft_deeper_bt(b_tokens, &tmp_b))
+/*	t_token	*tokens;
+	tokens = info->tokens;
+	printf("valeur des tokens au debut :"); 
+	while (tokens)
+	{
+		printf(" (%d)'%s'", tokens->index, tokens->value);
+		tokens = tokens->next;
+	}
+	printf("\n");*/
+	while (b_tokens)
+	{
+		if (ft_deeper_bt(b_tokens, &tmp_b) == -1)
 		{
 			printf("pb de deeper_bt\n");
 			return (1);
 		}
-	//	while (tmp_b->parent)
-	//	{
-	//	if (tmp_b->sibling)
-			if (ft_launch_sibling(info, tmp_b))
+//		printf("tmp_b->type = %d\n", tmp_b->type);
+//		printf("value\n");
+//		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+//		printf("\n");
+//		printf("type = %d\n", b_tokens->type);
+		if ((!b_tokens->child && !b_tokens->parent))
+		{
+			if (ft_wash_btoken(info, b_tokens))
 				return (1);
-	//		tmp_b = tmp_b->parent;
-	//	}
-//		b_tokens = b_tokens->sibling;
-//	}
+			if (ft_launch_cmd(info, b_tokens))
+				return (1);
+		}
+		if (tmp_b->parent)
+		{
+			while (tmp_b->parent)
+			{
+				if (tmp_b->sibling)
+					if (ft_launch_sibling(info, tmp_b))
+						return (1);
+				if (info->nb_cmd)
+					while (info->nb_cmd--)
+					{
+						printf("je wait une commande\n");
+						wait(NULL);
+					}
+				tmp_b = tmp_b->parent;
+			}
+		}
+		b_tokens = b_tokens->sibling;
+	}
 	return (0);
 }

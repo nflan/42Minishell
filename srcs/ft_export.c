@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/06 19:02:11 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/07 17:17:37 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_export_replace(t_env *env, char *line, int i, int j)
 		env->value = ft_strdup("");
 }
 
-int	ft_export(t_env *env, char *line)
+int	ft_export(t_env *env, t_cmd *cmd)
 {
 	t_env	*tmp;
 	t_env	*ptr;
@@ -61,23 +61,23 @@ int	ft_export(t_env *env, char *line)
 	tmp = env;
 	ptr = NULL;
 	i = 0;
-	if (!env || !line)
+	if (!env || !cmd->cmd)
 		return (1);
-	if (!ft_do_export(line))
+	if (!ft_do_export(cmd->cmd_p[1]))
 		return (1);
-	if (*line == '\\')
-		line = line + 1;
+	if (*cmd->cmd_p[1] == '\\')
+		cmd->cmd_p[1] = cmd->cmd_p[1] + 1;
 //	printf("line = %s\n", line);
-	while (line[i] && line[i] != '=')
+	while (cmd->cmd_p[1][1] && cmd->cmd_p[1][i] != '=')
 		i++;
 	j = i + 1;
-	while (line[j])
+	while (cmd->cmd_p[1][j])
 		j++;
-	while (tmp && ft_strncmp(tmp->name, line, i + 1) != -61)
+	while (tmp && ft_strncmp(tmp->name, cmd->cmd_p[1], i + 1) != -61)
 		tmp = tmp->next;
 	if (!tmp)
-		ft_export_new(env, tmp, line);
+		ft_export_new(env, tmp, cmd->cmd_p[1]);
 	else
-		ft_export_replace(tmp, line, i, j);
+		ft_export_replace(tmp, cmd->cmd_p[1], i, j);
 	return (0);
 }

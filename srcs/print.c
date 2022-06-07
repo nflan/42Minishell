@@ -64,6 +64,10 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 		printf("It's length is: %d\n", tmp_b->length);
 		printf("It's par_pam is: %d\n", tmp_b->par);
 		printf("It's rank is: %d\n", k);
+		if (tmp_b->parent)
+			printf("It's got a PARENT!!\n");
+		else if (!(tmp_b->parent))
+			printf("It's an ORPHAN!!\n");
 		if (k && tmp_b->child)
 			print_all_child(&tmp_b->child, tokens, i, j + 1);
 		tmp_b = tmp_b->sibling;
@@ -96,8 +100,26 @@ int main_agent_O(t_info *info)
 	detect_tokens(&info->tokens, info->rdline);
 	fill_tok_value(&info->tokens, info->rdline);
 	index_toks(&info->tokens);
-	parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens));
+/*	t_token		*tokens;
+	tokens = info->tokens;
+	printf("valeur des tokens au debut :"); 
+	while (tokens)
+	{
+		printf(" (%d)'%s'", tokens->index, tokens->value);
+		tokens = tokens->next;
+	}
+	printf("\n");
+*/	parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens));
 	tmp_b = info->parse;
-//	print_all_everything(&tmp_b, &info->tokens);
+/*	tokens = info->tokens;
+	printf("valeur des tokens a la fin :"); 
+	while (tokens)
+	{
+		printf(" (%d)'%s'", tokens->index, tokens->value);
+		tokens = tokens->next;
+	}
+	printf("\n");
+*/	if (info->nb_cmd == 10)
+		print_all_everything(&tmp_b, &info->tokens);
 	return (0);
 }

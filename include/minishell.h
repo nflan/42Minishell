@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/06 18:56:49 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/07 17:18:01 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ typedef struct s_info
 {
 	char		*rdline;
 	int			status;
+	int			nb_cmd;
 	t_env		*env;
 	t_big_token	*parse;
 	t_token		*tokens;
@@ -272,11 +273,11 @@ int		ft_pwd(void);
 int		ft_env(t_env *env);
 //int	ft_exit(t_info *env, int ret);
 int		ft_exit(t_info *env, char *value, char **tofree);
-t_env	*ft_unset(t_env *env, char *line);
+t_env	*ft_unset(t_env *env, t_cmd *cmd);
 //-----------ft_cd.c-----------------------------------------
 int		ft_cd(t_info *info, t_cmd *cmd);
 //-----------ft_export.c-------------------------------------
-int		ft_export(t_env *env, char *line);
+int		ft_export(t_env *env, t_cmd *cmd);
 //-----------ft_echo.c-------------------------------------
 int		ft_echo(t_info *info, t_cmd *cmd);
 char	*ft_create_echo(t_info *info, t_cmd *cmd, char *tmp, int i);
@@ -296,7 +297,7 @@ int				ft_pipex_end(t_info *info, t_cmd *cmd);
 int				ft_do_pipe(t_info *info, t_cmd *cmd, int tmp);
 int				ft_pipe_to_pipe(t_info *info, t_cmd *cmd);
 int				ft_do_pipex(t_info *info, t_cmd *cmd);
-int				ft_pipex(t_info *info, t_cmd *cmd);
+int				ft_pipex(t_info *info, t_cmd *cmd, t_big_token *b_tokens);
 
 //---------ft_pipex_tools.c----------------------------
 //int				ft_fdout_me(t_info *info);
