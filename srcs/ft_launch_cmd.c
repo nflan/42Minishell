@@ -121,26 +121,54 @@ int	ft_builtins(t_info *info, t_cmd *cmd)
 	return (2);
 }
 
+int	ft_exit_cmd(t_info *info, t_cmd *cmd)
+{
+	(void)cmd;
+	if (cmd)
+		ft_free_cmd(cmd);
+	if (info)
+		ft_free_all(info, info->env);
+	exit (info->status);
+}
+
 int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 {
 	t_cmd	*cmd;
 	pid_t	child;
 
+	cmd = ft_convert_bt_cmd(info, b_tokens);
+	if (!cmd)
+		return (1);
+	if (!ft_strncmp(cmd->cmd_p[0], "exit", 5))
+		ft_exit(info, cmd->cmd_p[1], cmd->cmd_p);
 //	printf("dans launch cmd\n");
 	child = fork();
 	if ((int) child == -1)
 		return (ft_error(2, info, NULL));
 	else if ((int) child == 0)
 	{
-		cmd = ft_convert_bt_cmd(info, b_tokens);
-		if (!cmd)
-			return (1);
 //	printf("cmd->cmd = %s\n", cmd->cmd);
 		if (ft_pipex(info, cmd, b_tokens))
 			return (ft_free_cmd(cmd), 1);
+		ft_exit_cmd(info, cmd);
 	}
-//	waitpid(cmd->child, &cmd->child, 0);
-	return (ft_free_cmd(cmd), 0);
+	if (b_tokens->type != TOK_LEFT_PIPE)
+	{
+		waitpid(child, &child, 0);
+		close(info->pdes[0]);
+	}
+	else if (!info->nb_cmd)
+		close(info->pdes[1]);
+	else
+	{
+		close(info->pdes[0]);
+		info->pdes[0] = info->tmp[0];
+		close(info->pdes[1]);
+	}
+	if (WIFEXITED(child))
+		return (WEXITSTATUS(child));
+//	close(info->pdes[0]);
+	return (ft_free_cmd(cmd), info->status);
 }
 
 int	ft_launch_sibling(t_info *info, t_big_token *b_tokens)
@@ -217,11 +245,13 @@ int	ft_find_cmd(t_info *info)
 					if (ft_launch_sibling(info, tmp_b))
 						return (1);
 				if (info->nb_cmd)
+				{
 					while (info->nb_cmd--)
 					{
 						printf("je wait une commande\n");
 						wait(NULL);
 					}
+				}
 				tmp_b = tmp_b->parent;
 			}
 		}

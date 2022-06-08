@@ -253,6 +253,7 @@ typedef struct s_info
 	t_big_token	*parse;
 	t_token		*tokens;
 	int			pdes[2];
+	int			tmp[2];
 }	t_info;
 
 //-----------main.c------------------------------------------
@@ -295,7 +296,7 @@ char	*ft_get_env_value(t_info *info, char *name);
 
 //----------ft_pipex.c---------------------------------
 int				ft_pipex_end(t_info *info, t_cmd *cmd);
-int				ft_do_pipe(t_info *info, t_cmd *cmd, int tmp);
+int				ft_do_pipe(t_info *info, t_cmd *cmd);
 int				ft_pipe_to_pipe(t_info *info, t_cmd *cmd);
 int				ft_do_pipex(t_info *info, t_cmd *cmd);
 int				ft_pipex(t_info *info, t_cmd *cmd, t_big_token *b_tokens);
