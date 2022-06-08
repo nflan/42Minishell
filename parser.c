@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:11:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/07 20:52:53 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/08 12:24:52 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ void	parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 	divide_by_or_and(b_tokens, tokens, start, length);
 	tmp_b = *b_tokens;
 	if (!tmp_b || (!tmp_b->par && tmp_b->type == TOK_CLEAN))
+	{
 		return;
+	}
 	while (tmp_b)
 	{
 		if (tmp_b->par)

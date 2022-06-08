@@ -1,62 +1,78 @@
 #include "minishell.h"
 #include "libft/libft.h"
 
-char	*concat_argvs(int argc, char **argv)
+char *concat_argvs(int argc, char **argv)
 {
-	int		i;
-	char	*ret;
-	char	*tmp;
-	char	*tmp2;
+	int i;
+	char *ret;
+	char *tmp;
+	char *tmp2;
 
 	i = 2;
 	tmp = NULL;
+	tmp2 = NULL;
 	ret = ft_strdup(argv[1]);
 	while (i < argc)
 	{
-		tmp = ft_strjoin(ret, argv[i]);
-		if (i != argc - 1)
-			tmp2 = ft_strjoin(tmp, " ");
-		else
-			tmp2 = ft_strdup(tmp);
-		if (tmp)
-			free(tmp);
+		tmp2 = ft_strjoin(ret, " ");
+		tmp = ft_strjoin(tmp2, argv[i]);
+		free(tmp2);
 		if (ret)
 			free(ret);
-		ret = tmp2;
-		printf("new ret %s with new i: %d\n", ret, i);
+		ret = tmp;
 		i++;
 	}
 	return (ret);
 }
 
-int	main(int argc, char *argv[])
+void	free_all_tokens(t_token **tokens)
 {
-	t_token		*tokens;
-	t_big_token	*b_tokens;
-	t_big_token	*tmp_b;
-	char		*cmd;
+	t_token *tmp;
+	t_token *tmp2;
 
-if (argc > 1)
-{
-	if (argc > 2)
+	tmp = *tokens;
+	while (tmp)
 	{
-		cmd = concat_argvs(argc, argv);
-		printf("%s\n", cmd);
+		if (tmp->value)
+			free(tmp->value);
+		if (tmp->next)
+		{
+			tmp2 = tmp->next;
+			free(tmp);
+			tmp = tmp2;
+		}
+		else
+		{
+			free(tmp);
+			tmp = NULL;
+		}
 	}
-	else
+}
+
+int main(int argc, char *argv[])
+{
+	t_token *tokens;
+	t_big_token *b_tokens;
+	t_big_token *tmp_b;
+	char *cmd;
+
+	if (argc > 1)
 	{
 		cmd = argv[1];
-		printf("%s\n", cmd);
+		tokens = NULL;
+		b_tokens = NULL;
+		detect_tokens(&tokens, cmd);
+		fill_tok_value(&tokens, cmd);
+		if (syntax_err_handler(&tokens))
+		{
+			free_all_tokens(&tokens);
+			printf("Parsing Error\n");
+			exit(0);
+		}
+		index_toks(&tokens, 0, len_ll_list(tokens));
+		parse(&b_tokens, &tokens, 0, len_ll_list(tokens));
+		tmp_b = b_tokens;
+		print_all_everything(&tmp_b, &tokens);
 	}
-	exit(0);
-	tokens = NULL;
-	b_tokens = NULL;
-	detect_tokens(&tokens, cmd);
-	fill_tok_value(&tokens, cmd);
-	index_toks(&tokens, 0, len_ll_list(tokens));
-	parse(&b_tokens, &tokens, 0, len_ll_list(tokens));
-	tmp_b = b_tokens;
-	print_all_everything(&tmp_b, &tokens);
-}
 	return 0;
 }

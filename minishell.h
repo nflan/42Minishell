@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/08 10:36:25 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/08 12:30:53 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ typedef struct s_big_token
 	int				length;
 	int				par;
 	int				hd;
+	int				red_in;
+	int				fdin;
+	int				red_out;
+	int				fdout;
 	struct s_big_token *parent;
 	struct s_big_token *child;
 	struct s_big_token *sibling;
