@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/07 18:18:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/08 16:57:05 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,44 @@ int	r_2_op_succeding(t_token **tokens)
 	while (tmp)
 	{
 		if (tmp->token == TOK_OPERATOR)
-			op_prev = tmp->token;
-		if (tmp->next && tmp->next->token == TOK_OPERATOR)
 		{
-			op_next = tmp->next->token;
+			if (!tmp->next || (tmp->next && tmp->next->token == TOK_SEP && !tmp->next->next))
+				return (2);
+			op_prev = tmp->token;
+		}
+		if (tmp->next)
+		{
+			if (tmp->next->token == TOK_OPERATOR)
+				op_next = tmp->next->token;
+			else if (tmp->next->token == TOK_SEP && tmp->next->next)
+				op_next = tmp->next->next->token;
 			if (op_prev == op_next)
+				return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	r_dir_op_succeding(t_token **tokens)
+{
+	t_token		*tmp;
+	t_tok_type	op_prev;
+	t_tok_type	op_next;
+
+	tmp = *tokens;
+	while (tmp)
+	{
+		if (tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT)
+		{
+			if (!tmp->next || (tmp->next && tmp->next->token == TOK_SEP && !tmp->next->next))
+				return (2);
+		}
+		if (tmp->next)
+		{
+			if (tmp->next->token == TOK_OPERATOR || tmp->next->token == TOK_REDIRECTOR_LEFT || tmp->next->token == TOK_REDIRECTOR_RIGHT)
+				return (1);
+			else if (tmp->next->token == TOK_SEP && tmp->next->next && (tmp->next->token == TOK_OPERATOR || tmp->next->token == TOK_REDIRECTOR_LEFT || tmp->next->token == TOK_REDIRECTOR_RIGHT))
 				return (1);
 		}
 		tmp = tmp->next;
@@ -84,6 +117,8 @@ int	syntax_err_handler(t_token **tokens)
 		return (6);
 	if (r_2_op_succeding(tokens))
 		return (7);
+	if (r_dir_op_succeding(tokens))
+		return (8);
 	return (0);
 }
 
@@ -107,7 +142,7 @@ int	is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens)
 			tmp2 = tokens;
 			move_tok_2_ind(&tmp2, tmp1->ind_tok_start + tmp1->length - 2);
 		}
-		if (tmp2->token == TOK_OPERATOR && ft_strlen(tmp2->value) == 1 && !ft_strncmp(tmp2->value, "|", 1))
+		if ((tmp2->token == TOK_OPERATOR && ft_strlen(tmp2->value) == 1 && !ft_strncmp(tmp2->value, "|", 1)) || (tmp2->token == TOK_REDIRECTOR_LEFT || tmp2->token == TOK_REDIRECTOR_RIGHT))
 			return (2);
 		tmp1 = tmp1->sibling;
 	}

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/08 12:30:53 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/08 16:53:14 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "libft/libft.h"
 
 typedef enum s_tok_type
@@ -115,8 +117,11 @@ typedef struct s_big_token
 	int				hd;
 	int				red_in;
 	int				fdin;
+	int				err_in;
 	int				red_out;
 	int				fdout;
+	int				err_out;
+	char			*cmd;
 	struct s_big_token *parent;
 	struct s_big_token *child;
 	struct s_big_token *sibling;
