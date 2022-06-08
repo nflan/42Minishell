@@ -100,9 +100,9 @@ int	ft_builtins(t_info *info, t_cmd *cmd)
 
 	len = ft_strlen(cmd->cmd_p[0]) + 1;
 	if (!ft_strncmp(cmd->cmd_p[0], "pwd", len))
-		return (ft_pwd());
+		return (ft_pwd(cmd));
 	else if (!ft_strncmp(cmd->cmd_p[0], "env", len))
-		return (ft_env(info->env));
+		return (ft_env(info->env, cmd));
 	else if (!ft_strncmp(cmd->cmd_p[0], "echo", len))
 		return (ft_echo(info, cmd));
 	else if (!ft_strncmp(cmd->cmd_p[0], "unset", len))
@@ -124,21 +124,22 @@ int	ft_builtins(t_info *info, t_cmd *cmd)
 int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 {
 	t_cmd	*cmd;
+	pid_t	child;
 
 //	printf("dans launch cmd\n");
-	cmd = ft_convert_bt_cmd(info, b_tokens);
-	if (!cmd)
-		return (1);
-//	printf("cmd->cmd = %s\n", cmd->cmd);
-	info->status = ft_builtins(info, cmd);
-	if (info->status == 2)
+	child = fork();
+	if ((int) child == -1)
+		return (ft_error(2, info, NULL));
+	else if ((int) child == 0)
 	{
+		cmd = ft_convert_bt_cmd(info, b_tokens);
+		if (!cmd)
+			return (1);
+//	printf("cmd->cmd = %s\n", cmd->cmd);
 		if (ft_pipex(info, cmd, b_tokens))
 			return (ft_free_cmd(cmd), 1);
-//		waitpid(cmd->child, &cmd->child, 0);
 	}
-	else if (info->status == 1)
-		return (ft_free_cmd(cmd), 1);
+//	waitpid(cmd->child, &cmd->child, 0);
 	return (ft_free_cmd(cmd), 0);
 }
 
@@ -157,10 +158,7 @@ int	ft_launch_sibling(t_info *info, t_big_token *b_tokens)
 		if (ft_launch_cmd(info, tmp_b))
 			return (1);
 		if (tmp_b->sibling)
-//		{
-//	printf("sibling\n");
 			tmp_b = tmp_b->sibling;
-//		}
 		else
 			break;
 		info->nb_cmd++;
@@ -192,6 +190,8 @@ int	ft_find_cmd(t_info *info)
 	printf("\n");*/
 	while (b_tokens)
 	{
+		if (pipe(info->pdes) == -1)
+			return (ft_error(5, info, NULL));
 		if (ft_deeper_bt(b_tokens, &tmp_b) == -1)
 		{
 			printf("pb de deeper_bt\n");

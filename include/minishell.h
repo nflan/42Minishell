@@ -265,12 +265,13 @@ t_env	*ft_envnew(char *line);
 void	ft_print_cmd(t_cmd *cmd);
 
 //-----------ft_launch_cmd----------------------------------------
+int	ft_builtins(t_info *info, t_cmd *cmd);
 int	ft_launch_cmd(t_info *info, t_big_token *b_tokens);
 int	ft_find_cmd(t_info *info);
 
 //-----------builtins----------------------------------------
-int		ft_pwd(void);
-int		ft_env(t_env *env);
+int		ft_pwd(t_cmd *cmd);
+int		ft_env(t_env *env, t_cmd *cmd);
 //int	ft_exit(t_info *env, int ret);
 int		ft_exit(t_info *env, char *value, char **tofree);
 t_env	*ft_unset(t_env *env, t_cmd *cmd);

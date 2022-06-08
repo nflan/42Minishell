@@ -54,12 +54,10 @@ void	ft_export_replace(t_env *env, char *line, int i, int j)
 int	ft_export(t_env *env, t_cmd *cmd)
 {
 	t_env	*tmp;
-	t_env	*ptr;
 	int		i;
 	int		j;
 
 	tmp = env;
-	ptr = NULL;
 	i = 0;
 	if (!env || !cmd->cmd)
 		return (1);

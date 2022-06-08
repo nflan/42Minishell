@@ -28,16 +28,21 @@ int	ft_exit(t_info *info, char *value, char **tofree)
 	exit(ret);
 }
 
-int	ft_env(t_env *env)
+int	ft_env(t_env *env, t_cmd *cmd)
 {
 	t_env	*print;
+	char	*line;
 
 	print = env;
+	line = NULL;
 	if (print)
 	{
 		while (print)
 		{
-			printf("%s=%s\n", print->name, print->value);
+			line = ft_strjoiiin(print->name, "=", print->value);
+			line = ft_strjoin_free(line, "\n", 1);
+			ft_putstr_fd(line, cmd->fdout);
+			free(line);
 			print = print->next;
 		}
 	}
@@ -64,7 +69,7 @@ void	ft_print_tokens(t_token *tokens)
 	}
 }
 
-int	ft_pwd(void)
+int	ft_pwd(t_cmd *cmd)
 {
 	char	*buf;
 	char	*tofree;
@@ -75,7 +80,7 @@ int	ft_pwd(void)
 		return (1);
 	tofree = buf;
 	buf = ft_strjoin(buf, "\n");
-	ft_putstr_fd(buf, 1);
+	ft_putstr_fd(buf, cmd->fdout);
 	free(buf);
 	free(tofree);
 	return (0);

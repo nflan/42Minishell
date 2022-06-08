@@ -457,9 +457,9 @@ int	ft_init_env(t_info *info, char **envp)
 
 int	ft_init_info(t_info *info, int ret)
 {
+	info->nb_cmd = 0;
 	main_agent_O(info);
 	info->status = ret;
-	info->nb_cmd = 0;
 	return (0);
 }
 
@@ -570,6 +570,7 @@ int	main(int ac, char **av, char **envp)
 	static int	ret = 0;
 
 	(void) av;
+	info.nb_cmd = 0;
 	info.rdline = NULL;
 	if (ac > 1)
 		info.nb_cmd = 10;

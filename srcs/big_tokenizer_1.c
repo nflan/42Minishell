@@ -33,12 +33,13 @@ void add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start
 {
 	t_big_token *tmp;
 	t_big_token *bef_last;
-	int rank_in_list;
+//	int rank_in_list;
 
+//	rank_in_list = 0;
 	if (!*b_tok_list)
 	{
 		*b_tok_list = ft_create_btoken(type, start, length);
-		rank_in_list = 0;
+//		rank_in_list = 0;
 	}
 	else
 	{
@@ -47,7 +48,7 @@ void add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start
 			tmp = tmp->sibling;
 		bef_last = tmp;
 		bef_last->sibling = ft_create_btoken(type, start, length);
-		rank_in_list = 1;
+//		rank_in_list = 1;
 	}
 }
 

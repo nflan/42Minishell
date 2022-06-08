@@ -15,6 +15,8 @@
 int	ft_pipex_end(t_info *info, t_cmd *cmd)
 {
 	printf("pipex end\n");
+	cmd->fdout = open(cmd->cmd_p[1], O_WRONLY);
+			printf("cmd[0] = %s\n", cmd->cmd_p[0]);
 	if (!cmd->cmd)
 		ft_error(3, info, cmd);
 	else
@@ -24,10 +26,17 @@ int	ft_pipex_end(t_info *info, t_cmd *cmd)
 			return (ft_error(2, info, cmd));
 		else if ((int) cmd->child == 0)
 		{
-			dup2(info->pdes[0], STDIN_FILENO);
+			if (cmd->fdin != 0)
+				dup2(cmd->fdin, STDIN_FILENO);
+			else
+				dup2(info->pdes[0], STDIN_FILENO);
 			dup2(cmd->fdout, STDOUT_FILENO);
 		//	close(info->pdes[1]);
-			execve(cmd->cmd_p[0], cmd->cmd_p, cmd->envp);
+			printf("cmd[0] = %s\n", cmd->cmd_p[0]);
+			info->status = ft_builtins(info, cmd);
+			printf("info->status = %d\n", info->status);
+			if (info->status == 2)
+				execve(cmd->cmd_p[0], cmd->cmd_p, cmd->envp);
 			return (ft_error(4, info, cmd));
 		}
 		waitpid(cmd->child, &cmd->child, 0);
@@ -78,6 +87,7 @@ int	ft_pipe_to_pipe(t_info *info, t_cmd *cmd)
 
 void    ft_signal_dfl(int sig)
 {
+	signal(SIGQUIT, SIG_DFL);
 	signal(sig, SIG_DFL);
 	signal(SIGINT, &ft_signal_dfl);
 }
@@ -94,11 +104,12 @@ int	ft_do_pipex(t_info *info, t_cmd *cmd)
 			return (ft_error(2, info, cmd));
 		else if ((int) cmd->child == 0)
 		{
-			signal(SIGQUIT, SIG_DFL);
 			dup2(cmd->fdin, STDIN_FILENO);
 			dup2(info->pdes[1], STDOUT_FILENO);
 //			if (info->pdes[0] != 1 && info->pdes[0] != 2)
 				close(info->pdes[0]);
+			if (info->status == 2 && ft_command(info, cmd))
+				return (ft_putstr_frror(cmd->cmd_p[0], ": command not found\n", 0));
 			execve(cmd->cmd_p[0], cmd->cmd_p, cmd->envp);
 			return (ft_error(4, info, cmd));
 		}
@@ -110,10 +121,8 @@ int	ft_do_pipex(t_info *info, t_cmd *cmd)
 
 int	ft_pipex(t_info *info, t_cmd *cmd, t_big_token *b_tokens)
 {
-	if (pipe(info->pdes) == -1)
-		return (ft_error(5, info, cmd));
-	if (ft_command(info, cmd))
-		return (ft_putstr_frror(cmd->cmd_p[0], ": command not found\n", 0));
+//	if (ft_command(info, cmd))
+//		return (ft_putstr_frror(cmd->cmd_p[0], ": command not found\n", 0));
 //	printf("b_tokens->type = %d\n", b_tokens->type);
 //	printf("info->nb_cmd = %d\n", info->nb_cmd);
 	if (cmd->fdin < 0)
