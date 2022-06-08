@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/07 20:54:09 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/08 10:36:25 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,10 +204,17 @@ static int rules[9][255];
 
 //----------parser.c-------------------------------------------------------------------
 
-void	give_parent(t_big_token **b_child, t_big_token **parent);
-void	sub_parse_1(t_big_token **tmp_b, t_token **tokens, int b_start, int b_length);
-void	sub_parse_2(t_big_token **b_child, t_big_token **tmp_b, t_token **tokens);
-void	parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+void			give_parent(t_big_token **b_child, t_big_token **parent);
+void			sub_parse_1(t_big_token **tmp_b, t_token **tokens, int b_start, int b_length);
+void			sub_parse_2(t_big_token **b_child, t_big_token **tmp_b, t_token **tokens);
+void			parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+
+//----------printer.c-------------------------------------------------------------------
+
+void			print_all_everything(t_big_token **b_tokens, t_token **tokens);
+void			print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
+void			print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j);
+void			print_s_tokens(t_token **tokens, int start, int length);
 
 //----------tokenizer_1.c-------------------------------------------------------------------
 
