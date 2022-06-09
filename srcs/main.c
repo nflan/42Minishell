@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/07 15:39:09 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/09 16:37:07 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -457,7 +457,6 @@ int	ft_init_env(t_info *info, char **envp)
 
 int	ft_init_info(t_info *info, int ret)
 {
-	info->nb_cmd = 0;
 	main_agent_O(info);
 	info->status = ret;
 	return (0);
@@ -476,7 +475,7 @@ void	ft_free_cmd(t_cmd *cmd)
 	cmd = NULL;
 }
 
-void	ft_free_branch(t_tree *branch)
+/*void	ft_free_branch(t_tree *branch)
 {
 	waitpid(branch->cmd->child, &branch->cmd->child, 0);
 	if (branch->cmd->cmd)
@@ -491,9 +490,9 @@ void	ft_free_branch(t_tree *branch)
 	if (branch)
 		free(branch);
 	branch = NULL;
-}
+}*/
 
-void	ft_free_tree(t_tree *tree)
+/*void	ft_free_tree(t_tree *tree)
 {
 	if (tree)
 	{
@@ -503,7 +502,7 @@ void	ft_free_tree(t_tree *tree)
 			ft_free_tree(tree->right);
 		ft_free_branch(tree);
 	}
-}
+}*/
 
 void	ft_free_env(t_env *env)
 {
@@ -595,7 +594,8 @@ int	main(int ac, char **av, char **envp)
 		else
 			ft_exit(&info, NULL, NULL);
 		if (info.nb_cmd != 10)
-			ft_find_cmd(&info);
+			if (ft_find_cmd(&info) == 2147483647)
+				ft_exit(&info, NULL, NULL);
 	//	printf("info.status = %d\n", info.status);
 		ret = info.status;
 		ft_free_all(&info, NULL);

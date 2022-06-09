@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/07 17:18:01 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/09 16:33:10 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ typedef struct s_cmd
 	char			**envp;
 	int				fdin;
 	int				fdout;
-	pid_t			child;
+//	pid_t			child;
 //	int				type;// && = 1 / || = 2 -> j'envoie dans X ou Y fonction au cas ou
 //	unsigned int	prof;// profondeur
 }	t_cmd;

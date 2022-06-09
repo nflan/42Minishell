@@ -23,7 +23,7 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 			printf("\nje n'ai pas de child moi!!\n");
 		tmp_b = tmp_b->sibling;
 		i++;
-		printf("---------------");
+		printf("---------------\n");
 	}
 }
 
