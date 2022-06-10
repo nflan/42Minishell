@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/10 12:06:10 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/10 14:40:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int no_sib_has_child(t_big_token **b_tokens)
 	tmp_b = *b_tokens;
 	while (tmp_b)
 	{
-		if (tmp_b->child)
+		if (tmp_b->child && tmp_b->sc == -1)
 			return (0);
 		tmp_b = tmp_b->sibling;
 	}
@@ -47,7 +47,12 @@ void exec_the_bulk(int sib_child, t_big_token **b_tokens)
 		exec_pipex(b_tokens);
 }
 
-void rec_exec(t_big_token **b_tokens, t_token **tokens)
+void	give_parent_sc(t_big_token **child, t_big_token **parent)
+{
+
+}
+
+void rec_exec(t_big_token **b_tokens, t_token **tokens, int and_or)
 {
 	t_big_token *tmp_b;
 	t_big_token *tmp_b_2;
@@ -55,64 +60,77 @@ void rec_exec(t_big_token **b_tokens, t_token **tokens)
 	int pid;
 	int status;
 	int i;
-	int	abd_or;
+	int j;
+	int fc;
 
+	fc = 0;
 	i = 0;
-	and_or =0;
 	tmp_b = *b_tokens;
 	tmp_b_2 = *b_tokens;
 	tmp_s = *tokens;
-	if (!tmp_b || (!tmp_b->par && tmp_b->type == TOK_CLEAN))
+	while (1)
 	{
-		extract_fds(&tmp_b, tokens);
-		// exec(tmp_b);
-		return;
+	while (tmp_b)
+	{
+		if (!i && no_sib_has_child(tmp_b))
+		{
+			exec_the_bulk(no_sib_has_child, tmp_b);
+			if (tmp_b->parent)
+				give_parent_sc(&(tmp_b), &(tmp_b->parent));
+			return;
+		}
+		if (tmp_b->type == TOK_PIPE_LAST)
+		{
+			exec_the_bulk(4, b_tokens);
+			if (tmp_b->parent)
+				give_parent_sc(&(tmp_b), &(tmp_b->parent));
+			return ;
+		}
+		else if (tmp_b->child && tmp_b->sc == -1)
+			rec_exec(&(tmp_b->child), tokens, 0);
+		else if (tmp_b->type == TOK_LEFT_AND && i == and_or)
+		{
+			fc = 1;
+			break;
+		}
+		else if (tmp_b->type == TOK_LEFT_OR && i == and_or)
+		{
+			fc = 2;
+			break;
+		}
+		else if (tmp_b->type == TOK_LAST)
+		{
+			fc = 3;
+			break ;
+		}
+		tmp_b = tmp_b->sibling;
+		i++;
 	}
-
-	else
-
-		while (tmp_b)
-		{
-			if (!i && no_sib_has_child(tmp_b))
+	if (tmp_b->sc != -1)
+		//execute le bloc tmp_b tout seul and get the sc;
+	if (fc == 1)
 			{
-				exec_the_bulk(no_sib_has_child, tmp_b); // should contain the fd extraction & cmd extraction
-				if (tmp_b->parent)
-					give_parent_sc(&(tmp_b), &(tmp_b->parent));
-					return ;
+				if (tmp_b->sc == 1)
+					break ;
+				else
+				{
+					tmp_b = b_tokens;
+					i = 0;
+					and_or++;
+				}
 			}
-			// if (!tmp_b->child)
-			// {
-			// 	extract_fds(&tmp_b, tokens);
-			// 	extract_cmds(&tmp_b, tokens);
-			// 	// exec(tmp_b);
-			// 	// if (tmp_b->parent)
-			// 	// give_sc_to_par(&(tmp_b), &(tmp_b->parent));
-			// }
-			else if (tmp_b->child)
-			{
-				// if (tmp_b->par)
-				// {
-				// 	pid = fork();
-				// 	if (pid < 0)
-				// 		printf("Error while forking!!\n");
-				// 	if (!pid)
-				// 	{
-				// 		rec_exec_1((tmp_b->child)
-				// 		give_parent_sc(&(tmp_b->child), tmp_b);
-				// 	}
-				// 	waitpid(pid, &status, 0);
-				// }
-				// else
-				rec_exec(&(tmp_b->child), tokens);
-			}
-			tmp_b = tmp_b->sibling;
-			if (tmp_b->type == TOK_LEFT_AND && !i)
-				break;
-			i++;
-		}
-		if (btok_sc(tmp_b_2))
+	else if (fc == 2)
 		{
-			exec(btok_sc(tmp_b_2), tmp_b_2);
+				if (tmp_b->sc == 0)
+					break ;
+				else
+				{
+					tmp_b = b_tokens;
+					i = 0;
+					and_or++;
+				}
 		}
-		//while sc put a pointer to the beginning of the ll and start again
+	else if (fc == 3)
+		break;
+}
 }

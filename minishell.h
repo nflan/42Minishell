@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/09 22:44:57 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/10 13:37:51 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_big_token
 	int				fdout;
 	int				err_out;
 	char			*cmd;
+	int				sc;
 	struct s_big_token *parent;
 	struct s_big_token *child;
 	struct s_big_token *sibling;
