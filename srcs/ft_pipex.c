@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/09 19:10:59 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 10:46:54 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	ft_pipex(t_info *info, t_cmd *cmd, t_big_token *b_tokens)
 		printf("do pipex\n");
 		dup2(cmd->fdin, STDIN_FILENO);
 		dup2(info->pdes[1], STDOUT_FILENO);
+		close(info->pdes[0]);
 	}
 	else if (info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
 	{

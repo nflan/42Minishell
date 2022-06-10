@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/07 18:22:33 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 10:20:31 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int	ft_exit(t_info *info, char *value, char **tofree)
 	exit(ret);
 }
 
-int	ft_env(t_env *env, t_cmd *cmd)
+int	ft_env(t_info *info)
 {
 	t_env	*print;
 	char	*line;
 
-	print = env;
+	print = info->env;
 	line = NULL;
 	if (print)
 	{
@@ -41,7 +41,7 @@ int	ft_env(t_env *env, t_cmd *cmd)
 		{
 			line = ft_strjoiiin(print->name, "=", print->value);
 			line = ft_strjoin_free(line, "\n", 1);
-			ft_putstr_fd(line, cmd->fdout);
+			ft_putstr_fd(line, 1);
 			free(line);
 			print = print->next;
 		}
@@ -69,7 +69,7 @@ void	ft_print_tokens(t_token *tokens)
 	}
 }
 
-int	ft_pwd(t_cmd *cmd)
+int	ft_pwd(void)
 {
 	char	*buf;
 	char	*tofree;
@@ -80,7 +80,7 @@ int	ft_pwd(t_cmd *cmd)
 		return (1);
 	tofree = buf;
 	buf = ft_strjoin(buf, "\n");
-	ft_putstr_fd(buf, cmd->fdout);
+	ft_putstr_fd(buf, 1);
 	free(buf);
 	free(tofree);
 	return (0);
@@ -106,14 +106,14 @@ int	ft_unset_name(t_env **tmp, char *name)
 	return (1);
 }
 
-t_env	*ft_unset(t_env *env, t_cmd *cmd)
+t_env	*ft_unset(t_info *info, t_cmd *cmd)
 {
 	t_env	*tmp;
 	t_env	*ptr;
 
-	tmp = env;
+	tmp = info->env;
 	ptr = NULL;
-	if (!env || !cmd->cmd)
+	if (!tmp || !cmd->cmd)
 		return (NULL);
 	if (ft_unset_name(&tmp, cmd->cmd_p[1]))
 		return (NULL);
@@ -121,5 +121,5 @@ t_env	*ft_unset(t_env *env, t_cmd *cmd)
 	tmp->next = ptr->next;
 	ptr->next = NULL;
 	ft_free_env(ptr);
-	return (env);
+	return (info->env);
 }

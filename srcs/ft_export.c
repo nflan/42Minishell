@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/07 17:17:37 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 10:10:29 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ void	ft_export_replace(t_env *env, char *line, int i, int j)
 		env->value = ft_strdup("");
 }
 
-int	ft_export(t_env *env, t_cmd *cmd)
+int	ft_export(t_info *info, t_cmd *cmd)
 {
 	t_env	*tmp;
 	int		i;
 	int		j;
 
-	tmp = env;
+	tmp = info->env;
 	i = 0;
-	if (!env || !cmd->cmd)
+	if (!tmp || !cmd->cmd)
 		return (1);
 	if (!ft_do_export(cmd->cmd_p[1]))
 		return (1);
@@ -74,7 +74,7 @@ int	ft_export(t_env *env, t_cmd *cmd)
 	while (tmp && ft_strncmp(tmp->name, cmd->cmd_p[1], i + 1) != -61)
 		tmp = tmp->next;
 	if (!tmp)
-		ft_export_new(env, tmp, cmd->cmd_p[1]);
+		ft_export_new(info->env, tmp, cmd->cmd_p[1]);
 	else
 		ft_export_replace(tmp, cmd->cmd_p[1], i, j);
 	return (0);

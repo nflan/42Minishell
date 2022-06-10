@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/09 16:33:10 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 10:20:46 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,15 +271,15 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens);
 int	ft_find_cmd(t_info *info);
 
 //-----------builtins----------------------------------------
-int		ft_pwd(t_cmd *cmd);
-int		ft_env(t_env *env, t_cmd *cmd);
+int		ft_pwd(void);
+int		ft_env(t_info *info);
 //int	ft_exit(t_info *env, int ret);
-int		ft_exit(t_info *env, char *value, char **tofree);
-t_env	*ft_unset(t_env *env, t_cmd *cmd);
+int		ft_exit(t_info *info, char *value, char **tofree);
+t_env	*ft_unset(t_info *info, t_cmd *cmd);
 //-----------ft_cd.c-----------------------------------------
 int		ft_cd(t_info *info, t_cmd *cmd);
 //-----------ft_export.c-------------------------------------
-int		ft_export(t_env *env, t_cmd *cmd);
+int		ft_export(t_info *info, t_cmd *cmd);
 //-----------ft_echo.c-------------------------------------
 int		ft_echo(t_info *info, t_cmd *cmd);
 char	*ft_create_echo(t_info *info, t_cmd *cmd, char *tmp, int i);
