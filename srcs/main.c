@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/09 16:37:07 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 12:05:14 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -532,13 +532,13 @@ void	ft_free_all(t_info *info, t_env *env)
 	{
 		free(info->rdline);
 		info->rdline = NULL;
+		if (env)
+			ft_free_env(env);
+		if (info->pdes[0] > 2)
+			close(info->pdes[0]);
+		if (info->pdes[1] > 2)
+			close(info->pdes[1]);
 	}
-	if (env)
-		ft_free_env(env);
-	if (info->pdes[0] > 2)
-		close(info->pdes[0]);
-	if (info->pdes[1] > 2)
-		close(info->pdes[1]);
 }
 
 char	*ft_rdline_word(t_info *info)

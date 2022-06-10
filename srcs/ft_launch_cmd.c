@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/10 10:47:40 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 12:04:10 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ t_cmd	*ft_convert_bt_cmd(t_info *info, t_big_token *b_tokens)
 	tmp->envp = ft_env_to_tab(info->env);
 	tmp->fdin = 0;
 	tmp->fdout = 1;
-//	tmp->child = -1;
 	return (tmp);
 }
 
