@@ -76,7 +76,6 @@ void rec_exec(t_big_token **b_tokens, t_token **tokens, int and_or)
 			rec_exec(&(tmp_b->child), tokens, 0);
 		else if (!i && no_sib_has_child(tmp_b))
 		{
-<<<<<<< HEAD
 			exec_the_bulk(no_sib_has_child, tmp_b);
 			if (tmp_b->parent)
 				give_parent_sc(&(tmp_b), &(tmp_b->parent));
@@ -110,24 +109,6 @@ void rec_exec(t_big_token **b_tokens, t_token **tokens, int and_or)
 	if (tmp_b->sc != -1)
 		//execute le bloc tmp_b tout seul and get the sc;
 	if (fc == 1)
-=======
-			if (!i && no_sib_has_child(tmp_b))
-			{
-				exec_the_bulk(no_sib_has_child, tmp_b); // should contain the fd extraction & cmd extraction
-				if (tmp_b->parent)
-					give_parent_sc(&(tmp_b), &(tmp_b->parent));
-					return ;
-			}
-			// if (!tmp_b->child)
-			// {
-			// 	extract_fds(&tmp_b, tokens);
-			// 	extract_cmds(&tmp_b, tokens);
-			// 	// exec(tmp_b);
-			// 	// if (tmp_b->parent)
-			// 	// give_sc_to_par(&(tmp_b), &(tmp_b->parent));
-			// }
-			else if (tmp_b->child && sc == -1)
->>>>>>> 3a40c96647a476573e33c90231dfa341f3613880
 			{
 				if (tmp_b->sc == 1)
 					break ;
@@ -138,16 +119,7 @@ void rec_exec(t_big_token **b_tokens, t_token **tokens, int and_or)
 					and_or++;
 				}
 			}
-<<<<<<< HEAD
 	else if (fc == 2)
-=======
-			if (tmp_b->type == TOK_LEFT_AND && !and_or && tmp_b->type != TOK_LAST)
-				break;
-			tmp_b = tmp_b->sibling;
-			i++;
-		}
-		if (btok_sc(tmp_b_2, -1))
->>>>>>> 3a40c96647a476573e33c90231dfa341f3613880
 		{
 				if (tmp_b->sc == 0)
 					break ;
