@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/10 14:40:21 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/10 15:13:1t 1 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ void rec_exec(t_big_token **b_tokens, t_token **tokens, int and_or)
 	{
 	while (tmp_b)
 	{
-		if (!i && no_sib_has_child(tmp_b))
+		if (tmp_b->child && tmp_b->sc == -1)
+			rec_exec(&(tmp_b->child), tokens, 0);
+		else if (!i && no_sib_has_child(tmp_b))
 		{
 			exec_the_bulk(no_sib_has_child, tmp_b);
 			if (tmp_b->parent)
@@ -86,8 +88,6 @@ void rec_exec(t_big_token **b_tokens, t_token **tokens, int and_or)
 				give_parent_sc(&(tmp_b), &(tmp_b->parent));
 			return ;
 		}
-		else if (tmp_b->child && tmp_b->sc == -1)
-			rec_exec(&(tmp_b->child), tokens, 0);
 		else if (tmp_b->type == TOK_LEFT_AND && i == and_or)
 		{
 			fc = 1;
