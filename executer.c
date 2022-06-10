@@ -88,7 +88,7 @@ void rec_exec(t_big_token **b_tokens, t_token **tokens)
 			// 	// if (tmp_b->parent)
 			// 	// give_sc_to_par(&(tmp_b), &(tmp_b->parent));
 			// }
-			else if (tmp_b->child)
+			else if (tmp_b->child && sc == -1)
 			{
 				// if (tmp_b->par)
 				// {
@@ -105,12 +105,12 @@ void rec_exec(t_big_token **b_tokens, t_token **tokens)
 				// else
 				rec_exec(&(tmp_b->child), tokens);
 			}
-			tmp_b = tmp_b->sibling;
-			if (tmp_b->type == TOK_LEFT_AND && !i)
+			if (tmp_b->type == TOK_LEFT_AND && !and_or && tmp_b->type != TOK_LAST)
 				break;
+			tmp_b = tmp_b->sibling;
 			i++;
 		}
-		if (btok_sc(tmp_b_2))
+		if (btok_sc(tmp_b_2, -1))
 		{
 			exec(btok_sc(tmp_b_2), tmp_b_2);
 		}
