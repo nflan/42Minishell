@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/08 16:53:14 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/09 22:44:57 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,11 @@ void			give_parent(t_big_token **b_child, t_big_token **parent);
 void			sub_parse_1(t_big_token **tmp_b, t_token **tokens, int b_start, int b_length);
 void			sub_parse_2(t_big_token **b_child, t_big_token **tmp_b, t_token **tokens);
 void			parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+void			extract_fds(t_big_token **tmp_b, t_token **tokens);
+
+//----------executer.c-------------------------------------------------------------------
+
+void			rec_exec(t_big_token **b_tokens, t_token **tokens);
 
 //----------printer.c-------------------------------------------------------------------
 

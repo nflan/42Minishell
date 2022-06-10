@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/08 16:57:05 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/09 16:07:08 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ int	r_2_op_succeding(t_token **tokens)
 	t_tok_type	op_next;
 
 	tmp = *tokens;
+	printf("%s\n", tmp->value);
 	while (tmp)
 	{
 		if (tmp->token == TOK_OPERATOR)
 		{
+
 			if (!tmp->next || (tmp->next && tmp->next->token == TOK_SEP && !tmp->next->next))
 				return (2);
 			op_prev = tmp->token;
-		}
 		if (tmp->next)
 		{
 			if (tmp->next->token == TOK_OPERATOR)
@@ -36,6 +37,7 @@ int	r_2_op_succeding(t_token **tokens)
 				op_next = tmp->next->next->token;
 			if (op_prev == op_next)
 				return (1);
+		}
 		}
 		tmp = tmp->next;
 	}
@@ -55,13 +57,14 @@ int	r_dir_op_succeding(t_token **tokens)
 		{
 			if (!tmp->next || (tmp->next && tmp->next->token == TOK_SEP && !tmp->next->next))
 				return (2);
-		}
 		if (tmp->next)
 		{
+
 			if (tmp->next->token == TOK_OPERATOR || tmp->next->token == TOK_REDIRECTOR_LEFT || tmp->next->token == TOK_REDIRECTOR_RIGHT)
 				return (1);
-			else if (tmp->next->token == TOK_SEP && tmp->next->next && (tmp->next->token == TOK_OPERATOR || tmp->next->token == TOK_REDIRECTOR_LEFT || tmp->next->token == TOK_REDIRECTOR_RIGHT))
+			else if (tmp->next->token == TOK_SEP && tmp->next->next && (tmp->next->next->token == TOK_OPERATOR || tmp->next->next->token == TOK_REDIRECTOR_LEFT || tmp->next->next->token == TOK_REDIRECTOR_RIGHT))
 				return (1);
+		}
 		}
 		tmp = tmp->next;
 	}

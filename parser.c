@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:11:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/08 16:56:14 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/09 22:27:01 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int no_red(t_big_token **tmp_b, t_token **tokens)
 {
 }
 
-void handle_redirections(t_big_token **tmp_b, t_token **tokens)
+void	extract_fds(t_big_token **tmp_b, t_token **tokens)
 {
-	int i;
-	int start;
-	int len;
-	t_token *tmp_s;
-	char *file;
+	int		i;
+	int		start;
+	int		len;
+	t_token	*tmp_s;
+	char	*file;
 
 	start = (*tmp_b)->ind_tok_start;
 	len = (*tmp_b)->length;
@@ -98,20 +98,15 @@ void handle_redirections(t_big_token **tmp_b, t_token **tokens)
 				else
 					(*tmp_b)->fdin = -1;
 			}
-			// else if (ft_strlen(tmp_s->value) == 2)
-			// {
-			// 	here_doc
-			// }
-		}
+			}
 		i++;
 	}
 	if (i == len)
 	{
-		if ((*tmp_b)->red_in == -1000)
-			(*tmp_b)->red_in = 0;
-		if ((*tmp_b)->red_out == -1000)
-			(*tmp_b)->red_out = 1;
-
+		if ((*tmp_b)->fdin == -1000)
+			(*tmp_b)->fdin = 0;
+		if ((*tmp_b)->fdout == -1000)
+			(*tmp_b)->fdout = 1;
 	}
 }
 
@@ -124,7 +119,7 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 	tmp_b = *b_tokens;
 	if (!tmp_b || (!tmp_b->par && tmp_b->type == TOK_CLEAN))
 	{
-		handle_redirections(&tmp_b, tokens);
+		// handle_redirections(&tmp_b, tokens);
 		return;
 	}
 	while (tmp_b)
