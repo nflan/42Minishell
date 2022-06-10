@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/10 16:22:15 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 18:09:55 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,11 +184,12 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 	cmd = ft_convert_bt_cmd(info, b_tokens);
 	if (!cmd)
 		return (1);
+//	printf("cmd->cmd = %s\n", cmd->cmd);
 //	printf("tour %d :\npdes[0] = %d && pdes[1] = %d\ntmp[0] = %d && tmp[1] = %d\n", i, info->pdes[0], info->pdes[1], info->tmp[0], info->tmp[1]);
 	//printf("tour %d :\npdes[0] = %d && pdes[1] = %d\n", i, info->pdes[0], info->pdes[1]);
 	if (ft_lead_fd(info, b_tokens, cmd))
 		return (ft_putstr_error("FD problem\n"));;
-	info->status = ft_builtins_no_fork(info, cmd);
+/*	info->status = ft_builtins_no_fork(info, cmd);
 	if (info->status == 2)
 	{
 		child = fork();
@@ -196,13 +197,12 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 			return (ft_error(2, info, NULL));
 		else if ((int) child == 0)
 		{
-//	printf("cmd->cmd = %s\n", cmd->cmd);
 			if (ft_pipex(info, cmd, b_tokens))
 				return (ft_free_cmd(cmd), 1);
 			ft_exit_cmd(info, cmd);
 		}
 	}
-	ft_close_cmd(info, b_tokens, child);
+*/	ft_close_cmd(info, b_tokens, child);
 	i++;
 	if (b_tokens->type != TOK_LEFT_PIPE)
 		i = 0;
@@ -218,12 +218,14 @@ int	ft_launch_sibling(t_info *info, t_big_token *b_tokens)
 		return (ft_error(5, info, NULL));
 	while (tmp_b)
 	{
-	//		printf("value b_token\n");
-	//		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-	//		printf("\n");
+	printf("value b_token avec start %d et length %d\n", tmp_b->ind_tok_start, tmp_b->length);
+	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+	printf("\n");
 		if (ft_wash_btoken(info, tmp_b))
 			return (2147483647);
 		ft_launch_cmd(info, tmp_b);
+		if (b_tokens->type == TOK_LEFT_AND || b_tokens->type == TOK_LEFT_OR)
+			break ;
 		if (tmp_b->sibling)
 			tmp_b = tmp_b->sibling;
 		else

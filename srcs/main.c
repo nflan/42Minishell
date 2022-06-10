@@ -6,11 +6,13 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/10 16:19:42 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 16:54:14 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	sc;
 
 int	ft_keep_history(char *str)
 {
@@ -29,6 +31,7 @@ int	ft_keep_history(char *str)
 void	ft_signal(int sig)
 {
 	signal(sig, SIG_IGN);
+	sc = sig;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -567,9 +570,9 @@ int	main(int ac, char **av, char **envp)
 {
 	t_info		info;
 	char		*word;
-	static int	ret = 0;
 
 	(void) av;
+	sc = 0;
 	info.nb_cmd = 0;
 	info.rdline = NULL;
 	if (ac > 1)
@@ -589,14 +592,14 @@ int	main(int ac, char **av, char **envp)
 			add_history(info.rdline);
 		if (ft_strlen(info.rdline) > 1)
 		{
-			if (!ft_init_info(&info, ret))
+			if (!ft_init_info(&info, sc))
 			{
 				if (info.nb_cmd != 10)
 					rec_exec(&info, &info.parse, 0);
 		//			if (ft_find_cmd(&info) == 2147483647)
 		//			ft_exit(&info, NULL, NULL);
 	//	printf("info.status = %d\n", info.status);
-				ret = info.status;
+				sc = info.status;
 				ft_free_all(&info, NULL);
 			}
 		}
@@ -605,5 +608,5 @@ int	main(int ac, char **av, char **envp)
 	}
 	rl_clear_history();
 	ft_free_env(info.env);
-	return (ret);
+	return (sc);
 }

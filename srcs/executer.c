@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/10 16:31:56 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 18:24:38 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ int no_sib_has_child(t_big_token *b_tokens)
 void exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 {
 	(void)sib_child;
+//	printf("sib_child = %d\n", sib_child);
 	ft_launch_sibling(info, b_tokens);
-	if (info->nb_cmd)
+/*	if (info->nb_cmd)
 	{
 		while (info->nb_cmd)
 		{
@@ -48,7 +49,9 @@ void exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 			wait(NULL);
 		}
 	}
-/*	if (sib_child == 1)
+*/
+	b_tokens->sc = info->status;
+	/*	if (sib_child == 1)
 	{}
 	//		exec_simple(b_tokens);
 	if (sib_child == 2)
@@ -64,8 +67,8 @@ void exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 
 void	give_parent_sc(t_big_token **child, t_big_token **parent)
 {
-	(void)child;
-	(void)parent;
+//	printf("child->sc = %d\n", (*child)->sc);
+	(*parent)->sc = (*child)->sc;
 }
 
 void rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
@@ -84,6 +87,9 @@ void rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 	tmp_b = *b_tokens;
 	tmp_b_2 = *b_tokens;
 	tmp_s = info->tokens;
+	printf("value b_token && sc = %d\n", (*b_tokens)->sc);
+	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+	printf("\n");
 //	printf("type = %d\n", (*b_tokens)->type);
 	while (1)
 	{
@@ -91,7 +97,7 @@ void rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 		{
 			if (tmp_b->child && tmp_b->sc == -1)
 				rec_exec(info, &(tmp_b->child), 0);
-			else if (!i && no_sib_has_child(tmp_b))
+			else if (no_sib_has_child(tmp_b))
 			{
 				exec_the_bulk(info, no_sib_has_child(tmp_b), tmp_b);
 				if (tmp_b->parent)
@@ -100,6 +106,11 @@ void rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 			}
 			if (tmp_b->type == TOK_PIPE_LAST)
 			{
+//	printf("value b_token test / exec\n");
+//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+//	printf("\n");
+//	print_s_tokens(&info->tokens, (*b_tokens)->ind_tok_start, (*b_tokens)->length);
+//	printf("\n");
 				exec_the_bulk(info, 4, *b_tokens);
 				if (tmp_b->parent)
 					give_parent_sc(&(tmp_b), &(tmp_b->parent));
@@ -125,8 +136,12 @@ void rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 		}
 		if (!tmp_b)
 			break ;
-		if (tmp_b && tmp_b->sc != -1)
-		{}
+		if (tmp_b && !tmp_b->child && tmp_b->sc == -1)
+		{
+			exec_the_bulk(info, no_sib_has_child(tmp_b), tmp_b);
+			if (tmp_b->parent)
+				give_parent_sc(&(tmp_b), &(tmp_b->parent));
+		}
 		//execute le bloc tmp_b tout seul and get the sc;
 		if (fc == 1)
 		{
@@ -134,7 +149,7 @@ void rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 				break ;
 			else
 			{
-				tmp_b = *b_tokens;
+//				tmp_b = *b_tokens;
 				i = 0;
 				and_or++;
 			}
@@ -145,7 +160,7 @@ void rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 				break ;
 			else
 			{
-				tmp_b = *b_tokens;
+//				tmp_b = *b_tokens;
 				i = 0;
 				and_or++;
 			}
