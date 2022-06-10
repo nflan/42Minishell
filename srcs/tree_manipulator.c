@@ -1,5 +1,4 @@
 #include "../include/minishell.h"
-#include "../libft/libft.h"
 
 int	depth_b_token(t_big_token **b_token)
 {

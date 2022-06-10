@@ -6,18 +6,17 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/07 15:00:25 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 16:07:20 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include "../libft/libft.h"
 
-void add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
+void	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 {
-	t_token *tmp;
-	t_token *bef_last;
-	int rank_in_list;
+	t_token	*tmp;
+	t_token	*bef_last;
+	int		rank_in_list;
 
 	if (!*tok_list)
 	{
@@ -39,12 +38,12 @@ void add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 	init_tok_struct(tok_list, rank_in_list);
 }
 
-void detect_tokens(t_token **tok_list, char *str)
+void	detect_tokens(t_token **tok_list, char *str)
 {
-	int i;
-	unsigned int tok_type;
-	int length;
-	int start;
+	int				i;
+	unsigned int	tok_type;
+	int				length;
+	int				start;
 
 	i = 0;
 	if (!str)
@@ -64,9 +63,9 @@ void detect_tokens(t_token **tok_list, char *str)
 	}
 }
 
-void fill_tok_value(t_token **tok, char *str)
+void	fill_tok_value(t_token **tok, char *str)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!*tok || !str)
 		return;
@@ -78,7 +77,7 @@ void fill_tok_value(t_token **tok, char *str)
 	}
 }
 
-char *ft_strncpy(char *str, int n)
+char	*ft_strncpy(char *str, int n)
 {
 	int i;
 	char *ret;
@@ -98,17 +97,20 @@ char *ft_strncpy(char *str, int n)
 	return (ret);
 }
 
-void index_toks(t_token **tokens)
+void	index_toks(t_token **tokens, int start, int length)
 {
 	int i;
 	t_token *tmp;
 
+	(void)start;
+	(void)length;
 	tmp = *tokens;
 	i = 0;
-	while (tmp)
+	while (*tokens)
 	{
-		tmp->index = i;
-		tmp = tmp->next;
+		(*tokens)->index = i;
+		(*tokens) = (*tokens)->next;
 		i++;
 	}
+	*tokens = tmp;
 }

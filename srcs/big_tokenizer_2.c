@@ -6,12 +6,11 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/03 18:41:23 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/03 15:00:56 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include "../libft/libft.h"
 
 static void init_cl_par_ind(int *nb, t_token **tokens, t_token **tmp)
 {
@@ -103,7 +102,6 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 		b_length++;
 		if (tmp->token == TOK_EXPANDER_OP)
 		{
-			printf("je suis la\n");
 			divide_by_or_and_1(&tmp, tokens, &b_length, &i);
 
 		}
@@ -118,7 +116,7 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 		add_b_tok_sib_last(b_tokens, TOK_CLEAN_PIPED, start_tok, length);
 	else
 		add_b_tok_sib_last(b_tokens, TOK_LAST, start_tok, b_length);
-//	t_big_token	*tmp_b;
-//	tmp_b = *b_tokens;
+	t_big_token	*tmp_b;
+	tmp_b = *b_tokens;
 	handle_par(b_tokens, tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/10 12:04:10 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 16:22:15 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,8 @@ int	ft_launch_sibling(t_info *info, t_big_token *b_tokens)
 	t_big_token	*tmp_b;
 
 	tmp_b = b_tokens;
+	if (pipe(info->pdes) == -1)
+		return (ft_error(5, info, NULL));
 	while (tmp_b)
 	{
 	//		printf("value b_token\n");

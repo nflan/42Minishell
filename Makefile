@@ -6,7 +6,7 @@
 #    By: nflan <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/05 15:05:20 by nflan             #+#    #+#              #
-#    Updated: 2022/06/06 17:17:55 by nflan            ###   ########.fr        #
+#    Updated: 2022/06/10 16:00:35 by nflan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,10 @@ vpath ft_%.o libft
 sources = srcs/main.c srcs/ft_cd.c srcs/ft_export.c srcs/ft_tools.c srcs/ft_builtins.c\
 		  srcs/ft_pipex_tools.c srcs/ft_pipex.c srcs/ft_global.c srcs/ft_tools2.c\
 		  srcs/big_tokenizer_1.c srcs/big_tokenizer_2.c srcs/big_tokenizer_3.c\
-		  srcs/big_tokenizer_4.c srcs/parser.c srcs/print.c srcs/tokenizer_1.c\
-		  srcs/tokenizer_2.c srcs/syntax_errorinizer_1.c srcs/syntax_errorinizer_2.c\
-		  srcs/tree_manipulator.c srcs/ft_launch_cmd.c srcs/ft_echo.c
+		  srcs/big_tokenizer_4.c srcs/parser.c srcs/tokenizer_1.c srcs/tokenizer_2.c\
+		  srcs/syntax_errorinizer_1.c srcs/syntax_errorinizer_2.c\
+		  srcs/tree_manipulator.c srcs/ft_launch_cmd.c srcs/ft_echo.c srcs/main_O.c\
+		  srcs/printer.c srcs/executer.c
 
 INC = include/minishell.h
 

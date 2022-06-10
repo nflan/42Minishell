@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/10 12:05:14 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 16:19:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -457,7 +457,8 @@ int	ft_init_env(t_info *info, char **envp)
 
 int	ft_init_info(t_info *info, int ret)
 {
-	main_agent_O(info);
+	if (main_agent_O(info))
+		return (1);
 	info->status = ret;
 	return (0);
 }
@@ -588,17 +589,19 @@ int	main(int ac, char **av, char **envp)
 			add_history(info.rdline);
 		if (ft_strlen(info.rdline) > 1)
 		{
-			if (ft_init_info(&info, ret))
-				ft_exit(&info, NULL, NULL);
+			if (!ft_init_info(&info, ret))
+			{
+				if (info.nb_cmd != 10)
+					rec_exec(&info, &info.parse, 0);
+		//			if (ft_find_cmd(&info) == 2147483647)
+		//			ft_exit(&info, NULL, NULL);
+	//	printf("info.status = %d\n", info.status);
+				ret = info.status;
+				ft_free_all(&info, NULL);
+			}
 		}
 		else
 			ft_exit(&info, NULL, NULL);
-		if (info.nb_cmd != 10)
-			if (ft_find_cmd(&info) == 2147483647)
-				ft_exit(&info, NULL, NULL);
-	//	printf("info.status = %d\n", info.status);
-		ret = info.status;
-		ft_free_all(&info, NULL);
 	}
 	rl_clear_history();
 	ft_free_env(info.env);

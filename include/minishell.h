@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/10 10:20:46 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 16:17:49 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,16 +126,18 @@ typedef struct s_big_token
 	int				ind_tok_start;
 	int				length;
 	int				par;
+	int				hd;
+	int				red_in;
+	int				fdin;
+	int				err_in;
+	int				red_out;
+	int				fdout;
+	int				err_out;
+	char			*cmd;
+	int				sc;
 	struct s_big_token *parent;
 	struct s_big_token *child;
 	struct s_big_token *sibling;
-	//	int		sp_after;
-	// int		index;
-	// int		priority;
-	// t_tok_type tok_start;
-	// t_tok_type tok_end;
-	// t_par_left_right more_info;
-
 } 			t_big_token;
 
 static const t_char_type get_char_class[255] =
@@ -267,6 +269,7 @@ void	ft_print_cmd(t_cmd *cmd);
 
 //-----------ft_launch_cmd----------------------------------------
 int	ft_builtins(t_info *info, t_cmd *cmd);
+int	ft_launch_sibling(t_info *info, t_big_token *b_tokens);
 int	ft_launch_cmd(t_info *info, t_big_token *b_tokens);
 int	ft_find_cmd(t_info *info);
 
@@ -318,6 +321,30 @@ void	ft_error_2(t_info *info, t_cmd *cmd);
 int		ft_error(int i, t_info *info, t_cmd *cmd);
 
 // AGENT O
+//----------main_O.c-------------------------------------------------------------------
+int				main_agent_O(t_info *info);
+void			free_all_tokens(t_token **tokens);
+char			*concat_argvs(int argc, char **argv);
+
+//----------parser.c-------------------------------------------------------------------
+
+void			give_parent(t_big_token **b_child, t_big_token **parent);
+void			sub_parse_1(t_big_token **tmp_b, t_token **tokens, int b_start, int b_length);
+void			sub_parse_2(t_big_token **b_child, t_big_token **tmp_b, t_token **tokens);
+void			parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+void			extract_fds(t_big_token **tmp_b, t_token **tokens);
+
+//----------executer.c-------------------------------------------------------------------
+
+void			rec_exec(t_info *info, t_big_token **b_tokens, int and_or);
+
+//----------printer.c-------------------------------------------------------------------
+
+void			print_all_everything(t_big_token **b_tokens, t_token **tokens);
+void			print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
+void			print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j);
+void			print_s_tokens(t_token **tokens, int start, int length);
+
 //----------tokenizer_1.c-------------------------------------------------------------------
 
 int 			len_ll_list(t_token *tok_list);
@@ -332,7 +359,7 @@ void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 void 			detect_tokens(t_token **tok_list, char *str);
 void 			fill_tok_value(t_token **tok, char *str);
 char 			*ft_strncpy(char *str, int n);
-void 			index_toks(t_token **tokens);
+void 			index_toks(t_token **tokens, int start, int length);
 
 //-----------syntax_errorinizer_1.c----------------------------------------------------------------------
 
@@ -361,8 +388,7 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 
 int				cl_par_ind(t_token **tokens, int ind_tok);
 void			divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
-int				piped(t_token **tokens, int start, int length);
-void			parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+int	piped(t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------------------------
 
@@ -379,6 +405,5 @@ void print_s_tokens(t_token **tokens, int start, int length);
 int	depth_b_token(t_big_token **b_token);
 void	print_all_everything(t_big_token **b_tokens, t_token **tokens);
 void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
-int	main_agent_O(t_info *info);
 
 #endif

@@ -6,12 +6,11 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:57:08 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/03 17:43:38 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 16:05:08 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include "../libft/libft.h"
 
 void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
 {

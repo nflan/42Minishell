@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include "../libft/libft.h"
 
 static void handle_par_1(t_token **tmp_s, t_big_token *tmp_b, int *adv_steps, int *to_reduce)
 {

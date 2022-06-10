@@ -6,12 +6,11 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:18:51 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/07 15:01:55 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/10 13:38:09 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include "../libft/libft.h"
 
 t_big_token *ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length)
 {
@@ -23,6 +22,13 @@ t_big_token *ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length
 	tok->type = type;
 	tok->ind_tok_start = ind_tok_start;
 	tok->length = length;
+	tok->hd = -1000;
+	tok->red_in = -1000;
+	tok->red_out = -1000;
+	tok->fdin = -1000;
+	tok->fdout = -1000;
+	tok->sc = -1;
+	tok->cmd = NULL;
 	tok->parent = NULL;
 	tok->child = NULL;
 	tok->sibling = NULL;
@@ -33,13 +39,12 @@ void add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start
 {
 	t_big_token *tmp;
 	t_big_token *bef_last;
-//	int rank_in_list;
+	int rank_in_list;
 
-//	rank_in_list = 0;
 	if (!*b_tok_list)
 	{
 		*b_tok_list = ft_create_btoken(type, start, length);
-//		rank_in_list = 0;
+		rank_in_list = 0;
 	}
 	else
 	{
@@ -48,7 +53,7 @@ void add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start
 			tmp = tmp->sibling;
 		bef_last = tmp;
 		bef_last->sibling = ft_create_btoken(type, start, length);
-//		rank_in_list = 1;
+		rank_in_list = 1;
 	}
 }
 
