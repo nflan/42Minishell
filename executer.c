@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/10 00:27:21 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/10 12:06:10 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,5 @@ void rec_exec(t_big_token **b_tokens, t_token **tokens)
 		{
 			exec(btok_sc(tmp_b_2), tmp_b_2);
 		}
+		//while sc put a pointer to the beginning of the ll and start again
 }
