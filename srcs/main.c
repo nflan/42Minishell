@@ -6,11 +6,13 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/10 16:19:42 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/13 21:22:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern int sc;
 
 int	ft_keep_history(char *str)
 {
@@ -33,6 +35,7 @@ void	ft_signal(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	sc = sig;
 	signal(SIGINT, &ft_signal);
 }
 
@@ -460,6 +463,7 @@ int	ft_init_info(t_info *info, int ret)
 	if (main_agent_O(info))
 		return (1);
 	info->status = ret;
+	info->nb_cmd = 0;
 	return (0);
 }
 

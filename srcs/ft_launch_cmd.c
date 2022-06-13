@@ -6,11 +6,13 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/10 16:22:15 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/13 21:22:47 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern int	sc;
 
 int	ft_deeper_bt(t_big_token *b_tokens, t_big_token **tmp_b)
 {
@@ -139,24 +141,39 @@ int	ft_exit_cmd(t_info *info, t_cmd *cmd)
 
 void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
 {
-	if (!info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
-		close(info->pdes[1]);
-	else if (info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
+	if (b_tokens->type == TOK_LEFT_PIPE)
 	{
-//		if (info->pdes[0] != 0)
-		close(info->pdes[0]);
-		info->pdes[0] = info->tmp[0];
-	//	if (info->pdes[1] != 1 && info->pdes[1] != 2)
-		close(info->pdes[1]);
+		if (!info->nb_cmd) 
+		{
+//			printf("je ferme premier pipex -> value b_token: ");
+//			print_s_tokens(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+//			printf("\n");
+			close(info->pdes[1]);
+		}
+		else //(b_tokens->type == TOK_LEFT_PIPE || (info->parse->child->sibling && info->parse->child->sibling->ind_tok_start != b_tokens->ind_tok_start)))
+		{
+//			printf("je ferme pipe to pipe -> value b_token: ");
+//			print_s_tokens(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+//			printf("\n");
+//			if (info->pdes[0] != 0)
+			close(info->pdes[0]);
+			info->pdes[0] = info->tmp[0];
+	//		if (info->pdes[1] != 1 && info->pdes[1] != 2)
+			close(info->pdes[1]);
+		}
 	}
 	else
 	{
+//		printf("je ferme le dernier pipe -> value b_token: ");
+//		print_s_tokens(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+//		printf("\n");
 		waitpid(child, &child, 0);
 		if (info->pdes[0] != 0)
 			close(info->pdes[0]);
 	}
 	if (WIFEXITED(child))
 		info->status = WEXITSTATUS(child);
+	sc = info->status;
 }
 
 int	ft_lead_fd(t_info *info, t_big_token *b_tokens, t_cmd *cmd)
@@ -167,14 +184,14 @@ int	ft_lead_fd(t_info *info, t_big_token *b_tokens, t_cmd *cmd)
 			return (ft_error(5, info, cmd));
 		info->pdes[1] = info->tmp[1];
 	}
-	if (cmd->fdin != 0)
+	if (b_tokens->fdin != 0)
 		info->pdes[0] = cmd->fdin;
-	if (cmd->fdout != 1)
+	if (b_tokens->fdout != 1)
 		info->pdes[1] = cmd->fdout;
 	return (0);
 }
 
-int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
+int	ft_launch_cmd(t_info *info, t_big_token *b_tokens, int sib_child)
 {
 	t_cmd	*cmd;
 	pid_t	child;
@@ -185,9 +202,10 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 	if (!cmd)
 		return (1);
 //	printf("tour %d :\npdes[0] = %d && pdes[1] = %d\ntmp[0] = %d && tmp[1] = %d\n", i, info->pdes[0], info->pdes[1], info->tmp[0], info->tmp[1]);
-	//printf("tour %d :\npdes[0] = %d && pdes[1] = %d\n", i, info->pdes[0], info->pdes[1]);
+//	printf("tour %d :\npdes[0] = %d && pdes[1] = %d\n", i, info->pdes[0], info->pdes[1]);
 	if (ft_lead_fd(info, b_tokens, cmd))
 		return (ft_putstr_error("FD problem\n"));;
+//	printf("cmd->cmd = %s\n", cmd->cmd);
 	info->status = ft_builtins_no_fork(info, cmd);
 	if (info->status == 2)
 	{
@@ -196,8 +214,7 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 			return (ft_error(2, info, NULL));
 		else if ((int) child == 0)
 		{
-//	printf("cmd->cmd = %s\n", cmd->cmd);
-			if (ft_pipex(info, cmd, b_tokens))
+			if (ft_pipex(info, cmd, b_tokens, sib_child))
 				return (ft_free_cmd(cmd), 1);
 			ft_exit_cmd(info, cmd);
 		}
@@ -209,11 +226,12 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 	return (ft_free_cmd(cmd), info->status);
 }
 
-int	ft_launch_sibling(t_info *info, t_big_token *b_tokens)
+/*int	ft_launch_sibling(t_info *info, t_big_token *b_tokens)
 {
 	t_big_token	*tmp_b;
 
 	tmp_b = b_tokens;
+	info->nb_cmd = 0;
 	if (pipe(info->pdes) == -1)
 		return (ft_error(5, info, NULL));
 	while (tmp_b)
@@ -223,12 +241,17 @@ int	ft_launch_sibling(t_info *info, t_big_token *b_tokens)
 	//		printf("\n");
 		if (ft_wash_btoken(info, tmp_b))
 			return (2147483647);
-		ft_launch_cmd(info, tmp_b);
+		if (tmp_b->sc == -1)
+		{
+			info->nb_cmd++;
+			ft_launch_cmd(info, tmp_b, 4);
+		}
 		if (tmp_b->sibling)
+		{
 			tmp_b = tmp_b->sibling;
+		}
 		else
 			break;
-		info->nb_cmd++;
 	}
 //		printf("allo\n");
 	return (0);
@@ -246,7 +269,7 @@ int	ft_find_cmd(t_info *info)
 		printf("pas de b_tokens dans ft_find_cmd\n");
 		return (1);
 	}
-/*	t_token	*tokens;
+	t_token	*tokens;
 	tokens = info->tokens;
 	printf("valeur des tokens au debut :"); 
 	while (tokens)
@@ -254,7 +277,7 @@ int	ft_find_cmd(t_info *info)
 		printf(" (%d)'%s'", tokens->index, tokens->value);
 		tokens = tokens->next;
 	}
-	printf("\n");*/
+	printf("\n");
 	while (b_tokens)
 	{
 		if (pipe(info->pdes) == -1)
@@ -273,7 +296,7 @@ int	ft_find_cmd(t_info *info)
 		{
 			if (ft_wash_btoken(info, b_tokens))
 				return (2147483647);
-			ft_launch_cmd(info, b_tokens);
+			ft_launch_cmd(info, b_tokens, 4);
 		}
 		else if (tmp_b->parent)
 		{
@@ -300,4 +323,4 @@ int	ft_find_cmd(t_info *info)
 		b_tokens = b_tokens->sibling;
 	}
 	return (0);
-}
+}*/
