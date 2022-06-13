@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:11:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/09 22:27:01 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/13 12:45:48 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	extract_fds(t_big_token **tmp_b, t_token **tokens)
 		move_tok_2_ind(&tmp_s, start + i);
 		if (tmp_s->token == TOK_REDIRECTOR_RIGHT)
 		{
-			(*tmp_b)->red_out = 1;
 			if (ft_strlen(tmp_s->value) == 1)
 			{
+				(*tmp_b)->red_out = 1;
 				if (tmp_s->next->token != TOK_SEP)
 					(*tmp_b)->fdout = open(tmp_s->next->value, O_RDWR | O_TRUNC | O_CREAT);
 				else if (tmp_s->next->token == TOK_SEP && tmp_s->next->next)
@@ -78,6 +78,7 @@ void	extract_fds(t_big_token **tmp_b, t_token **tokens)
 			}
 			else if (ft_strlen(tmp_s->value) == 2)
 			{
+				(*tmp_b)->red_out = 2;
 				if (tmp_s->next->token != TOK_SEP)
 					(*tmp_b)->fdout = open(tmp_s->next->value, O_RDWR | O_APPEND | O_CREAT);
 				else if (tmp_s->next->token == TOK_SEP && tmp_s->next->next)
@@ -86,9 +87,9 @@ void	extract_fds(t_big_token **tmp_b, t_token **tokens)
 		}
 		else if (tmp_s->token == TOK_REDIRECTOR_LEFT)
 		{
-			(*tmp_b)->red_in = 1;
 			if (ft_strlen(tmp_s->value) == 1)
 			{
+			(*tmp_b)->red_in = 1;
 				if (tmp_s->next->token != TOK_SEP)
 					file = tmp_s->next->value;
 				else if (tmp_s->next->token == TOK_SEP && tmp_s->next->next)

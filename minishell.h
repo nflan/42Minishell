@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/10 13:37:51 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/13 15:54:23 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,16 @@ typedef struct s_big_token
 	int				ind_tok_start;
 	int				length;
 	int				par;
-	int				hd;
-	int				red_in;
-	int				fdin;
-	int				err_in;
-	int				red_out;
-	int				fdout;
-	int				err_out;
+	int				rd_inouthd[3];
+	int				*red_in;
+	char			**delimitator;
+	char			**infile;
+	int				*fdin;
+	int				*err_in;
+	int				*red_out;
+	char			**outfile;
+	int				*fdout;
+	int				*err_out;
 	char			*cmd;
 	int				sc;
 	struct s_big_token *parent;
