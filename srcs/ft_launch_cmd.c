@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/13 21:22:47 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/14 20:09:04 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,30 @@ t_cmd	*ft_convert_bt_cmd(t_info *info, t_big_token *b_tokens)
 	return (tmp);
 }
 
-int	ft_builtins_no_fork(t_info *info, t_cmd *cmd)
+int	ft_check_builtins(t_info *info, t_cmd *cmd)
+{
+	int	len;
+
+	(void)info;
+	len = ft_strlen(cmd->cmd_p[0]) + 1;
+	if (!ft_strncmp(cmd->cmd_p[0], "unset", len))
+		return (0);
+	else if (!ft_strncmp(cmd->cmd_p[0], "export", len))
+		return (0);
+	else if (!ft_strncmp(cmd->cmd_p[0], "cd", len))
+		return (0);
+	else if (!ft_strncmp(cmd->cmd_p[0], "exit", len) || !ft_strncmp(cmd->cmd, "exit ", 5))
+		return (0);
+	else if (!ft_strncmp(cmd->cmd_p[0], "pwd", len))
+		return (0);
+	else if (!ft_strncmp(cmd->cmd_p[0], "env", len))
+		return (0);
+	else if (!ft_strncmp(cmd->cmd_p[0], "echo", len))
+		return (0);
+	return (1);
+}
+
+int	ft_builtins(t_info *info, t_cmd *cmd)
 {
 	int	len;
 
@@ -112,22 +135,14 @@ int	ft_builtins_no_fork(t_info *info, t_cmd *cmd)
 	else if (!ft_strncmp(cmd->cmd_p[0], "cd", len))
 		return (ft_cd(info, cmd));
 	else if (!ft_strncmp(cmd->cmd_p[0], "exit", len) || !ft_strncmp(cmd->cmd, "exit ", 5))
-		ft_exit(info, cmd->cmd_p[1], cmd->cmd_p);
-	return (2);
-}
-
-int	ft_builtins(t_info *info, t_cmd *cmd)
-{
-	int	len;
-
-	len = ft_strlen(cmd->cmd_p[0]) + 1;
-	if (!ft_strncmp(cmd->cmd_p[0], "pwd", len))
+		return (ft_exit(info, cmd->cmd_p[1], cmd->cmd_p));
+	else if (!ft_strncmp(cmd->cmd_p[0], "pwd", len))
 		return (ft_pwd());
 	else if (!ft_strncmp(cmd->cmd_p[0], "env", len))
 		return (ft_env(info));
 	else if (!ft_strncmp(cmd->cmd_p[0], "echo", len))
 		return (ft_echo(info, cmd));
-	return (2);
+	return (1);
 }
 
 int	ft_exit_cmd(t_info *info, t_cmd *cmd)
@@ -141,6 +156,7 @@ int	ft_exit_cmd(t_info *info, t_cmd *cmd)
 
 void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
 {
+//	(void)child;
 	if (b_tokens->type == TOK_LEFT_PIPE)
 	{
 		if (!info->nb_cmd) 
@@ -168,8 +184,9 @@ void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
 //		print_s_tokens(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
 //		printf("\n");
 		waitpid(child, &child, 0);
-		if (info->pdes[0] != 0)
-			close(info->pdes[0]);
+	//	if (info->pdes[0] != 0)
+		close(info->pdes[1]);
+		close(info->pdes[0]);
 	}
 	if (WIFEXITED(child))
 		info->status = WEXITSTATUS(child);
@@ -191,13 +208,12 @@ int	ft_lead_fd(t_info *info, t_big_token *b_tokens, t_cmd *cmd)
 	return (0);
 }
 
-int	ft_launch_cmd(t_info *info, t_big_token *b_tokens, int sib_child)
+int	ft_launch_cmd(t_info *info, t_big_token *b_tokens, int sib_child, int pid)
 {
 	t_cmd	*cmd;
-	pid_t	child;
 	static int	i = 0;
 
-	child = -1;
+	pid = -1;
 	cmd = ft_convert_bt_cmd(info, b_tokens);
 	if (!cmd)
 		return (1);
@@ -206,121 +222,23 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens, int sib_child)
 	if (ft_lead_fd(info, b_tokens, cmd))
 		return (ft_putstr_error("FD problem\n"));;
 //	printf("cmd->cmd = %s\n", cmd->cmd);
-	info->status = ft_builtins_no_fork(info, cmd);
-	if (info->status == 2)
+	if (sib_child == 1 && !ft_check_builtins(info, cmd))
+		info->status = ft_builtins(info, cmd);
+	else
 	{
-		child = fork();
-		if ((int) child == -1)
+		pid = fork();
+		if ((int) pid == -1)
 			return (ft_error(2, info, NULL));
-		else if ((int) child == 0)
+		else if ((int) pid == 0)
 		{
 			if (ft_pipex(info, cmd, b_tokens, sib_child))
 				return (ft_free_cmd(cmd), 1);
 			ft_exit_cmd(info, cmd);
 		}
 	}
-	ft_close_cmd(info, b_tokens, child);
+	ft_close_cmd(info, b_tokens, pid);
 	i++;
 	if (b_tokens->type != TOK_LEFT_PIPE)
 		i = 0;
 	return (ft_free_cmd(cmd), info->status);
 }
-
-/*int	ft_launch_sibling(t_info *info, t_big_token *b_tokens)
-{
-	t_big_token	*tmp_b;
-
-	tmp_b = b_tokens;
-	info->nb_cmd = 0;
-	if (pipe(info->pdes) == -1)
-		return (ft_error(5, info, NULL));
-	while (tmp_b)
-	{
-	//		printf("value b_token\n");
-	//		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-	//		printf("\n");
-		if (ft_wash_btoken(info, tmp_b))
-			return (2147483647);
-		if (tmp_b->sc == -1)
-		{
-			info->nb_cmd++;
-			ft_launch_cmd(info, tmp_b, 4);
-		}
-		if (tmp_b->sibling)
-		{
-			tmp_b = tmp_b->sibling;
-		}
-		else
-			break;
-	}
-//		printf("allo\n");
-	return (0);
-}
-
-int	ft_find_cmd(t_info *info)
-{
-	t_big_token	*b_tokens;
-	t_big_token	*tmp_b;
-
-	b_tokens = info->parse;
-	tmp_b = NULL;
-	if (!b_tokens)
-	{
-		printf("pas de b_tokens dans ft_find_cmd\n");
-		return (1);
-	}
-	t_token	*tokens;
-	tokens = info->tokens;
-	printf("valeur des tokens au debut :"); 
-	while (tokens)
-	{
-		printf(" (%d)'%s'", tokens->index, tokens->value);
-		tokens = tokens->next;
-	}
-	printf("\n");
-	while (b_tokens)
-	{
-		if (pipe(info->pdes) == -1)
-			return (ft_error(5, info, NULL));
-		if (ft_deeper_bt(b_tokens, &tmp_b) == -1)
-		{
-			printf("pb de deeper_bt\n");
-			return (1);
-		}
-//		printf("tmp_b->type = %d\n", tmp_b->type);
-//		printf("value\n");
-//		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-//		printf("\n");
-//		printf("type = %d\n", b_tokens->type);
-		if ((!b_tokens->child && !b_tokens->parent))
-		{
-			if (ft_wash_btoken(info, b_tokens))
-				return (2147483647);
-			ft_launch_cmd(info, b_tokens, 4);
-		}
-		else if (tmp_b->parent)
-		{
-			while (tmp_b->parent)
-			{
-				if (tmp_b->sibling)
-					if (ft_launch_sibling(info, tmp_b) == 2147483647)
-						return (2147483647);
-				if (info->nb_cmd)
-				{
-					while (info->nb_cmd)
-					{
-						info->nb_cmd--;
-						printf("je wait une commande\n");
-						wait(NULL);
-					}
-				}
-				tmp_b = tmp_b->parent;
-			}
-		}
-		if ((b_tokens->type == TOK_LEFT_AND && info->status != 0)
-				|| (b_tokens->type == TOK_LEFT_OR && !info->status))
-			break ;
-		b_tokens = b_tokens->sibling;
-	}
-	return (0);
-}*/

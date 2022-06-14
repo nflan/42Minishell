@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/13 21:18:05 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/14 14:45:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,11 +271,12 @@ void	ft_print_cmd(t_cmd *cmd);
 //-----------ft_launch_cmd----------------------------------------
 int	ft_exit_cmd(t_info *info, t_cmd *cmd);
 int	ft_wash_btoken(t_info *info, t_big_token *b_tokens);
+int	ft_check_builtins(t_info *info, t_cmd *cmd);
 int	ft_builtins(t_info *info, t_cmd *cmd);
 int	ft_launch_sibling(t_info *info, t_big_token *b_tokens);
 void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child);
 int	ft_lead_fd(t_info *info, t_big_token *b_tokens, t_cmd *cmd);
-int	ft_launch_cmd(t_info *info, t_big_token *b_tokens, int sib_child);
+int	ft_launch_cmd(t_info *info, t_big_token *b_tokens, int sib_child, int pid);
 int	ft_find_cmd(t_info *info);
 
 //-----------builtins----------------------------------------

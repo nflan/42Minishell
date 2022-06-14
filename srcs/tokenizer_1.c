@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/10 16:06:52 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/14 20:21:09 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ unsigned int	get_real_tok_type(char c, t_token **tok_list)
 	int	len;
 
 	len = len_ll_list(*tok_list);
-	if (len == 0 || len == 1)
+	//if (len == 0 || len == 1)
+	if (len == 0)
 		return (get_tok_type[get_char_class[(int)c]]);
 	else
 	{

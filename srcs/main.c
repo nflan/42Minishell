@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/13 21:22:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/14 21:05:29 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -531,6 +531,41 @@ void	ft_free_env(t_env *env)
 	}
 }
 
+void	ft_free_tokens(t_token *tokens)
+{
+	if (!tokens)
+		return ;
+	if (tokens->next)
+		ft_free_tokens(tokens->next);
+	if (tokens->value)
+	{
+		free(tokens->value);
+		tokens->value = NULL;
+	}
+	free(tokens);
+	tokens = NULL;
+}
+
+void	ft_free_b_tokens(t_big_token *b_tokens)
+{
+	t_big_token	*tmp_b;
+	t_big_token	*tmp;
+
+	tmp_b = b_tokens;
+	tmp = NULL;
+	if (!b_tokens)
+		return ;
+	while (tmp_b)
+	{
+		if (tmp_b->child)
+			ft_free_b_tokens(tmp_b->child);
+		tmp = tmp_b;
+		tmp_b = tmp_b->sibling;
+		free(tmp);
+		tmp = NULL;
+	}
+}
+
 void	ft_free_all(t_info *info, t_env *env)
 {
 	if (info)
@@ -539,10 +574,20 @@ void	ft_free_all(t_info *info, t_env *env)
 		info->rdline = NULL;
 		if (env)
 			ft_free_env(env);
-		if (info->pdes[0] > 2)
-			close(info->pdes[0]);
-		if (info->pdes[1] > 2)
-			close(info->pdes[1]);
+//		if (info->pdes[0] != -1)
+//			close(info->pdes[0]);
+//		if (info->pdes[1] != -1)
+//			close(info->pdes[1]);
+		if (info->tokens)
+		{
+			ft_free_tokens(info->tokens);
+			info->tokens = NULL;
+		}
+		if (info->parse)
+		{
+			ft_free_b_tokens(info->parse);
+			info->parse = NULL;
+		}
 	}
 }
 
@@ -607,7 +652,6 @@ int	main(int ac, char **av, char **envp)
 		else
 			ft_exit(&info, NULL, NULL);
 	}
-	rl_clear_history();
 	ft_free_env(info.env);
-	return (ret);
+	return (rl_clear_history(), ret);
 }
