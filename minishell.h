@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:31:25 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/14 17:30:26 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/14 19:49:26 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,7 @@ void			print_all_everything(t_big_token **b_tokens, t_token **tokens);
 void			print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
 void			print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j);
 void			print_s_tokens(t_token **tokens, int start, int length);
+void			print_tok_type(int enum_tok);
 
 //----------tokenizer_1.c-------------------------------------------------------------------
 

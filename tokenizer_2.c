@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/07 18:14:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/14 21:18:59 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,31 @@ void	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 	init_tok_struct(tok_list, rank_in_list);
 }
 
+// void	detect_tokens(t_token **tok_list, char *str)
+// {
+// 	int				i;
+// 	unsigned int	tok_type;
+// 	int				length;
+// 	int				start;
+
+// 	i = 0;
+// 	if (!str)
+// 		return;
+// 	while (str[i])
+// 	{
+// 		length = 1;
+// 		start = i;
+// 		tok_type = get_real_tok_type(str[i], tok_list);
+// 		i++;
+// 		while (tok_type != TOK_EXPANDER_OP && tok_type != TOK_EXPANDER_CL && str[i] && get_real_tok_type(str[i], tok_list) == tok_type)
+// 		{
+// 			length++;
+// 			i++;
+// 		}
+// 		add_tok_last(tok_list, tok_type, length, start);
+// 	}
+// }
+
 void	detect_tokens(t_token **tok_list, char *str)
 {
 	int				i;
@@ -60,7 +85,8 @@ void	detect_tokens(t_token **tok_list, char *str)
 			length++;
 			i++;
 		}
-		add_tok_last(tok_list, tok_type, length, start);
+		if (tok_type != TOK_QUOTER)
+			add_tok_last(tok_list, tok_type, length, start);
 	}
 }
 

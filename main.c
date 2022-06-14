@@ -49,6 +49,8 @@ void	free_all_tokens(t_token **tokens)
 	}
 }
 
+
+
 int main(int argc, char *argv[])
 {
 	t_token *tokens;
@@ -64,18 +66,9 @@ int main(int argc, char *argv[])
 		detect_tokens(&tokens, cmd);
 		fill_tok_value(&tokens, cmd);
 		index_toks(&tokens, 0, len_ll_list(tokens));
-		// print_s_tokens(&tokens, 0, len_ll_list(tokens));
-		// if (syntax_err_handler(&tokens))
-		// {
-		// 	printf("Eroor number: %d\n", syntax_err_handler(&tokens));
-		// 	free_all_tokens(&tokens);
-		// 	printf("Parsing Error\n");
-		// 	exit(0);
-		// }
-		parse(&b_tokens, &tokens, 0, len_ll_list(tokens));
-		// rec_exec(&b_tokens, &tokens);
-		tmp_b = b_tokens;
-		print_all_everything(&tmp_b, &tokens);
+		// parse(&b_tokens, &tokens, 0, len_ll_list(tokens));
+		// tmp_b = b_tokens;
+		// print_all_everything(&tmp_b, &tokens);
 	}
 	return 0;
 }

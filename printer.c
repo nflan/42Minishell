@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/14 15:08:58 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/14 19:48:57 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,30 @@ void	print_s_tokens(t_token **tokens, int start, int length)
 		i++;
 	}
 	// printf("\n");
+}
+
+void	print_tok_type(int enum_tok)
+{
+if (enum_tok == 0)
+	printf("TOK_IDK");
+if (enum_tok == 1)
+	printf("TOK_SEP");
+if (enum_tok == 2)
+	printf("TOK_QUOTER");
+if (enum_tok == 3)
+	printf("TOK_EXPANDER_OP");
+if (enum_tok == 4)
+	printf("TOK_EXPANDER_CL");
+if (enum_tok == 5)
+	printf("TOK_OPERATOR");
+if (enum_tok == 6)
+	printf("TOK_PATH");
+if (enum_tok == 7)
+	printf("TOK_REDIRECTOR_LEFT");
+if (enum_tok == 8)
+	printf("TOK_REDIRECTOR_RIGHT");
+if (enum_tok == 9)
+	printf("TOK_WORD");
+if (enum_tok == 10)
+	printf("TOK_EXPANDER");
 }

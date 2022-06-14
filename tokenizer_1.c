@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/07 18:16:21 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/14 21:18:09 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ unsigned int	get_real_tok_type(char c, t_token **tok_list)
 			return (TOK_WORD);
 		else
 			return (get_tok_type[get_char_class[c]]);
-	}
+		}
 	return (-1);
 }
 
