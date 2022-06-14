@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/14 15:38:33 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/14 17:29:27 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,16 +330,19 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 	i = 0;
 	j = 0;
 	type_red = 0;
-	len = (*tmp_b)->length - (*tmp_b)->ind_tok_start + 1;
 	save_word = 0;
 	move_tok_2_ind(&tmp, (*tmp_b)->ind_tok_start);
-	count_red_inout(tmp_b, (*tmp_b)->ind_tok_start, tokens, len);
-	count_cmd_args(tmp_b, (*tmp_b)->ind_tok_start, tokens, len);
+	count_red_inout(tmp_b, (*tmp_b)->ind_tok_start, tokens, (*tmp_b)->length);
+	count_cmd_args(tmp_b, (*tmp_b)->ind_tok_start, tokens, (*tmp_b)->length);
 	inouthd[0] = ((*tmp_b)->rd_inouthd)[0];
 	inouthd[1] = ((*tmp_b)->rd_inouthd)[1];
 	inouthd[2] = ((*tmp_b)->rd_inouthd)[2];
 	cmd_args_num = (*tmp_b)->cmd_args_num;
 	printf("choufi hada: %d\n", cmd_args_num);
+	printf("tmpb_len: %d et tmpb_start: %d\n", (*tmp_b)->length, (*tmp_b)->ind_tok_start);
+	printf("------------\n");
+	print_b_tokens(tmp_b, tokens, 1, 1);
+	printf("------------\n");
 	type_red = 0;
 	while (tmp && j < len)
 	{
@@ -352,7 +355,7 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 		else if (tmp->token == TOK_WORD && !save_word)
 		{
 			printf("I entered here\n");
-			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num];
+			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);
 			cmd_args_num--;
 			save_word = 0;
 		}
