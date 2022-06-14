@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/10 10:46:54 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/13 21:05:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,27 @@ int	ft_do_pipex(t_info *info, t_cmd *cmd)
 	return (info->status);
 }
 
-int	ft_pipex(t_info *info, t_cmd *cmd, t_big_token *b_tokens)
+int	ft_pipex(t_info *info, t_cmd *cmd, t_big_token *b_tokens, int sib_child)
 {
-	if (!info->nb_cmd && b_tokens->type != TOK_LEFT_PIPE)
+	if (sib_child < 4)
 		info->pdes[0] = cmd->fdin;
-	if (!info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
+	if (sib_child == 4 && !info->nb_cmd)
 	{
-		printf("do pipex\n");
+//		printf("do pipex\n");
 		dup2(cmd->fdin, STDIN_FILENO);
 		dup2(info->pdes[1], STDOUT_FILENO);
 		close(info->pdes[0]);
 	}
-	else if (info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
+	else if (sib_child == 4 && info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
 	{
-		printf("pipe to pipe\n");
+//		printf("pipe to pipe\n");
 		dup2(info->pdes[0], STDIN_FILENO);
 		dup2(info->pdes[1], STDOUT_FILENO);
 		close(info->tmp[0]);
 	}
 	else
 	{
-		printf("do pipex end\n");
+//		printf("do pipex end\n");
 		dup2(info->pdes[0], STDIN_FILENO);
 		dup2(cmd->fdout, STDOUT_FILENO);
 	}

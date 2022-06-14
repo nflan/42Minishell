@@ -57,13 +57,13 @@ int main_agent_O(t_info *info)
 	detect_tokens(&info->tokens, info->rdline);
 	fill_tok_value(&info->tokens, info->rdline);
 	index_toks(&info->tokens, 0, len_ll_list(info->tokens));
-	if (syntax_err_handler(&info->tokens))
-	{
-		printf("Error number: %d\n", syntax_err_handler(&info->tokens));
-		free_all_tokens(&info->tokens);
-		ft_putstr_fd("Parsing error\n", 2);
-		return (1);
-	}
+//	if (syntax_err_handler(&info->tokens))
+//	{
+//		printf("Error number: %d\n", syntax_err_handler(&info->tokens));
+//		free_all_tokens(&info->tokens);
+//		ft_putstr_fd("Parsing error\n", 2);
+//		return (1);
+//	}
 	parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens));
 	tmp_b = info->parse;
 	if (info->nb_cmd == 10)
