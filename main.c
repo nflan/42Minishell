@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 		// 	exit(0);
 		// }
 		parse(&b_tokens, &tokens, 0, len_ll_list(tokens));
-		rec_exec(&b_tokens, &tokens);
+		// rec_exec(&b_tokens, &tokens);
 		tmp_b = b_tokens;
 		print_all_everything(&tmp_b, &tokens);
 	}

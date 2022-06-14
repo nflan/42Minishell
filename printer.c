@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/09 22:23:03 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/14 15:08:58 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 	tmp_s = *tokens;
 	int	k;
 	k =0;
+	int	l;
+	l = 0;
 	while (tmp_b)
 	{
 		printf("   --->>    ");
@@ -72,8 +74,22 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 		printf("It's length is: %d\n", tmp_b->length);
 		printf("It's par_pam is: %d\n", tmp_b->par);
 		printf("It's rank is: %d\n", k);
-		printf("It's fd_in is: %d\n", tmp_b->fdin);
-		printf("It's fd_out %d\n", tmp_b->fdout);
+		if (tmp_b->infile)
+			printf("infile : %s\n", tmp_b->infile[0]);
+		if (tmp_b->outfile)
+			printf("outfile : %s\n", tmp_b->outfile[0]);
+		if (tmp_b->cmd_args_num)
+		{
+			printf("Its cm and arguments are: ");
+			while (l < tmp_b->cmd_args_num)
+			{
+				printf("%s ", (tmp_b->cmd_args)[l]);
+				l++;
+			}
+			printf("\n");
+		}
+		// printf("It's fd_in is: %d\n", tmp_b->fdin);
+		// printf("It's fd_out %d\n", tmp_b->fdout);
 		if (tmp_b->parent)
 		printf("It's got a PARENT!!\n");
 		else if (!(tmp_b->parent))

@@ -1,11 +1,8 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/mnt/nfs/homes/omoudni/minishell'
+ 
 make -C libft/
- 
-make: *** No rule to make target 'include/minishell.h', needed by 'srcs/main.o'.
-
 make[1]: Entering directory '/mnt/nfs/homes/omoudni/minishell/libft'
- 
 cc -Wall -Wextra -Werror -c ft_atoi.c -o ft_atoi.o
 cc -Wall -Wextra -Werror -c ft_bzero.c -o ft_bzero.o
 cc -Wall -Wextra -Werror -c ft_calloc.c -o ft_calloc.o
@@ -36,7 +33,6 @@ cc -Wall -Wextra -Werror -c ft_split.c -o ft_split.o
 cc -Wall -Wextra -Werror -c ft_itoa.c -o ft_itoa.o
 cc -Wall -Wextra -Werror -c ft_strmapi.c -o ft_strmapi.o
 cc -Wall -Wextra -Werror -c ft_striteri.c -o ft_striteri.o
- 
 cc -Wall -Wextra -Werror -c ft_putchar_fd.c -o ft_putchar_fd.o
 cc -Wall -Wextra -Werror -c ft_putstr_fd.c -o ft_putstr_fd.o
 cc -Wall -Wextra -Werror -c ft_putendl_fd.c -o ft_putendl_fd.o
@@ -55,3 +51,5 @@ ar rcs libft.a ft_atoi.o ft_bzero.o ft_calloc.o ft_isalnum.o ft_isalpha.o ft_isa
 make[1]: Leaving directory '/mnt/nfs/homes/omoudni/minishell/libft'
 make: Leaving directory '/mnt/nfs/homes/omoudni/minishell'
  
+make: *** No rule to make target 'include/minishell.h', needed by 'srcs/main.o'.
+
