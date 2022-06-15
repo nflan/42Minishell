@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 17:59:41 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 18:46:34 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 	}
 	if (count)
 	{
-		(*tmp_b)->cmd_args = malloc((count) * sizeof(char *));
+		(*tmp_b)->cmd_args = ft_calloc((count), sizeof(char *));
 		(*tmp_b)->cmd_args_num = count;
 	}
 }
@@ -292,7 +292,7 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 	tmp = *tokens;
 	i = 0;
 	j = 0;
-	len = 0;
+	len = len_ll_list(*tokens);
 	type_red = 0;
 	save_word = 0;
 	move_tok_2_ind(&tmp, (*tmp_b)->ind_tok_start);
@@ -312,19 +312,21 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 	{
 		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(i % 2))
 		{
+		//	printf("I entered in rd\n");
 			rd_inout_type(tmp->value, tmp_b, &type_red, &inouthd);
 			i++;
 			save_word = 1;
 		}
 		else if (tmp->token == TOK_WORD && !save_word)
 		{
-	//		printf("I entered here\n");
+		//	printf("I entered arg\n");
 			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);
 			cmd_args_num--;
 			save_word = 0;
 		}
 		else if (tmp->token == TOK_WORD && (i % 2) && save_word)
 		{
+		//	printf("I entered red files\n");
 			handle_red_files(tmp_b, tmp->value, &inouthd, type_red);
 			i++;
 		}
