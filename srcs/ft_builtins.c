@@ -6,25 +6,27 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/14 20:11:36 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 11:54:32 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_exit(t_info *info, char *value, char **tofree)
+int	ft_exit(t_info *info, t_cmd *cmd)
 {
 	int	ret;
 
-	if (value)
-		ret = ft_atoi(value);
+	if (cmd)
+	{
+		ret = ft_atoi(cmd->cmd_p[1]);
+		ft_free_cmd(cmd);
+	}
 	else
 		ret = 0;
-	if (tofree)
-		ft_free_split(tofree);
 	printf("exit\n");
-	if (info)
+	if (cmd)
 		ft_free_all(info, info->env);
+	rl_clear_history();
 	exit(ret);
 }
 

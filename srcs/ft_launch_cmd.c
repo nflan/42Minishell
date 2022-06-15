@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/14 20:09:04 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 11:33:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	ft_builtins(t_info *info, t_cmd *cmd)
 	else if (!ft_strncmp(cmd->cmd_p[0], "cd", len))
 		return (ft_cd(info, cmd));
 	else if (!ft_strncmp(cmd->cmd_p[0], "exit", len) || !ft_strncmp(cmd->cmd, "exit ", 5))
-		return (ft_exit(info, cmd->cmd_p[1], cmd->cmd_p));
+		return (ft_exit(info, cmd));
 	else if (!ft_strncmp(cmd->cmd_p[0], "pwd", len))
 		return (ft_pwd());
 	else if (!ft_strncmp(cmd->cmd_p[0], "env", len))

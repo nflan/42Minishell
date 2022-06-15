@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/14 14:45:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 11:34:03 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,7 +283,7 @@ int	ft_find_cmd(t_info *info);
 int		ft_pwd(void);
 int		ft_env(t_info *info);
 //int	ft_exit(t_info *env, int ret);
-int		ft_exit(t_info *info, char *value, char **tofree);
+int		ft_exit(t_info *info, t_cmd *cmd);
 t_env	*ft_unset(t_info *info, t_cmd *cmd);
 //-----------ft_cd.c-----------------------------------------
 int		ft_cd(t_info *info, t_cmd *cmd);

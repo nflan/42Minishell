@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/14 21:05:15 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 11:24:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,8 @@ int	ft_do_pipex(t_info *info, t_cmd *cmd)
 		if (ft_command(info, cmd))
 			return (ft_putstr_frror(cmd->cmd_p[0], ": command not found\n", 0));
 		else
-		{
-			if (info)
-				ft_free_all(info, info->env);
-			printf("ok\n");
-if (cmd->cmd_p[0])
-	printf("cmd_p[0] = %s\n", cmd->cmd_p[0]);
-if (cmd->cmd_p)
-	printf("cmd_p[1] = %s\n", cmd->cmd_p[1]);
-if (cmd->envp)
-	printf("envp = %s\n", cmd->envp[0]);
 			if (execve(cmd->cmd_p[0], cmd->cmd_p, cmd->envp) == -1)
 				return (ft_error(4, info, cmd));
-		}
 	}
 	return (info->status);
 }
@@ -58,7 +47,7 @@ int	ft_pipex(t_info *info, t_cmd *cmd, t_big_token *b_tokens, int sib_child)
 		info->pdes[0] = cmd->fdin;
 	if (!info->nb_cmd && (sib_child == 4))
 	{
-		printf("do pipex\n");
+	//	printf("do pipex\n");
 	//	printf("b_tokens->start = %d && length = %d\n", b_tokens->ind_tok_start, b_tokens->length);
 //		print_s_tokens(&info->tokens,  b_tokens->ind_tok_start, b_tokens->length);
 		close(info->pdes[0]);
@@ -67,21 +56,21 @@ int	ft_pipex(t_info *info, t_cmd *cmd, t_big_token *b_tokens, int sib_child)
 	}
 	else if (info->nb_cmd && sib_child == 4 && b_tokens->type == TOK_LEFT_PIPE)
 	{
-		printf("pipe to pipe\n");
+	//	printf("pipe to pipe\n");
 		dup2(info->pdes[0], STDIN_FILENO);
 		dup2(info->pdes[1], STDOUT_FILENO);
 		close(info->tmp[0]);
 	}
 	else
 	{
-		printf("do pipex end\n");
+	//	printf("do pipex end\n");
 		dup2(info->pdes[0], STDIN_FILENO);
 		dup2(cmd->fdout, STDOUT_FILENO);
 	}
 	if (b_tokens->par == 1)
 	{
 		rec_exec(info, &(b_tokens)->child, 0);
-		printf("coucou\n");
+	//	printf("coucou\n");
 		ft_exit_cmd(info, cmd);
 	}
 	info->status = ft_do_pipex(info, cmd);

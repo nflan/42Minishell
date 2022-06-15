@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:30:47 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/24 11:44:18 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 11:23:49 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	ft_error(int i, t_info *info, t_cmd *cmd)
 		perror("Command not found");
 	}
 	else if (i == 4)
+	{
 		perror("Exec error");
+		ft_free_all(info, info->env);
+	}
 	else if (i == 6)
 		perror("Malloc error");
 	else if (i == 7)

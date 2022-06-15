@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/14 21:05:29 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 11:52:40 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -570,14 +570,13 @@ void	ft_free_all(t_info *info, t_env *env)
 {
 	if (info)
 	{
-		free(info->rdline);
+		if (info->rdline)
+			free(info->rdline);
 		info->rdline = NULL;
-		if (env)
-			ft_free_env(env);
-//		if (info->pdes[0] != -1)
-//			close(info->pdes[0]);
-//		if (info->pdes[1] != -1)
-//			close(info->pdes[1]);
+	//	if (info->pdes[0] != -1)
+	//		close(info->pdes[0]);
+	//	if (info->pdes[1] != -1)
+	//		close(info->pdes[1]);
 		if (info->tokens)
 		{
 			ft_free_tokens(info->tokens);
@@ -589,6 +588,8 @@ void	ft_free_all(t_info *info, t_env *env)
 			info->parse = NULL;
 		}
 	}
+	if (env)
+		ft_free_env(env);
 }
 
 char	*ft_rdline_word(t_info *info)
@@ -650,8 +651,9 @@ int	main(int ac, char **av, char **envp)
 			}
 		}
 		else
-			ft_exit(&info, NULL, NULL);
+			break ;
 	}
 	ft_free_env(info.env);
-	return (rl_clear_history(), ret);
+	ft_exit(&info, NULL);
+//	return (rl_clear_history(), ret);
 }
