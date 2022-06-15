@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 18:46:34 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 19:05:30 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int *count_red_inout(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 		(*tmp_b)->err_in = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[0]);
 		(*tmp_b)->fdin = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[0]);
 	}
+	else
+		(*tmp_b)->fdin = ft_calloc(sizeof(int), 1);
 	if (((*tmp_b)->rd_inouthd)[1])
 	{
 		(*tmp_b)->red_out = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[1]);
@@ -91,6 +93,8 @@ int *count_red_inout(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 		(*tmp_b)->err_out = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[1]);
 		(*tmp_b)->fdout = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[1]);
 	}
+	else
+		(*tmp_b)->fdout = ft_calloc(sizeof(int), 1);
 	if (((*tmp_b)->rd_inouthd)[2])
 		(*tmp_b)->delimitator = ft_calloc(sizeof(char *), ((*tmp_b)->rd_inouthd)[2]);
 	return (0);
@@ -133,11 +137,11 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 		tmp = tmp->next;
 		i++;
 	}
-	if (count)
-	{
-		(*tmp_b)->cmd_args = ft_calloc((count), sizeof(char *));
-		(*tmp_b)->cmd_args_num = count;
-	}
+	if (count < 2)
+		(*tmp_b)->cmd_args = ft_calloc(2, sizeof(char *));
+	else
+		(*tmp_b)->cmd_args = ft_calloc(count, sizeof(char *));
+	(*tmp_b)->cmd_args_num = count;
 }
 
 void rd_inout_type(char *str, t_big_token **tmp_b, int *type_red, int (*inouthd)[3])

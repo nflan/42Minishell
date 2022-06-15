@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 18:17:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 19:03:04 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int	ft_check_builtins(t_info *info, t_big_token *b_tokens)
 	int	len;
 
 	(void)info;
-	printf("b_tokens[0] = %s\n", b_tokens->cmd_args[0]);
 	len = ft_strlen(b_tokens->cmd_args[0]) + 1;
 	if (!ft_strncmp(b_tokens->cmd_args[0], "unset", len))
 		return (0);
@@ -186,8 +185,11 @@ void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
 //		printf("\n");
 		waitpid(child, &child, 0);
 	//	if (info->pdes[0] != 0)
-		close(info->pdes[1]);
-		close(info->pdes[0]);
+		if (info->nb_cmd > 1)
+		{
+			close(info->pdes[1]);
+			close(info->pdes[0]);
+		}
 	}
 	if (WIFEXITED(child))
 		info->status = WEXITSTATUS(child);

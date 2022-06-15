@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 18:15:25 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 19:04:03 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	ft_open_fd(t_big_token *b_tokens)
 			i++;
 		}
 	}
+	if (!i)
+		b_tokens->fdout[i] = 1;
 	i = 0;
 	if (b_tokens->infile)
 	{
@@ -66,6 +68,8 @@ int	ft_open_fd(t_big_token *b_tokens)
 			i++;
 		}
 	}
+	if (!i)
+		b_tokens->fdin[i] = 0;
 	return (0);
 }
 
@@ -74,7 +78,7 @@ int	ft_close_fd(t_big_token *b_tokens)
 	int	i;
 
 	i = 0;
-	if (*b_tokens->fdout)
+	if (b_tokens->outfile)
 	{
 		while (b_tokens->fdout[i])
 		{
@@ -83,7 +87,7 @@ int	ft_close_fd(t_big_token *b_tokens)
 		}
 	}
 	i = 0;
-	if (*b_tokens->infile)
+	if (b_tokens->infile)
 	{
 		while (b_tokens->fdin[i])
 		{
@@ -99,11 +103,15 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int sib_child, int *pid)
 	t_big_token	*tmp_b;
 	int	i;
 
-	tmp_b = NULL;
+	tmp_b = b_tokens;
 	if (pipe(info->pdes) == -1)
 		return (ft_error(5, info, NULL));
-	if (ft_open_fd(b_tokens))
-		return (ft_error(6, info, NULL));
+	while (tmp_b)
+	{
+		if (ft_open_fd(b_tokens))
+			return (ft_error(6, info, NULL));
+		tmp_b = tmp_b->sibling;
+	}
 	tmp_b = b_tokens;
 	i = 0;
 	//	if (pipe(info->pdes) == -1)
