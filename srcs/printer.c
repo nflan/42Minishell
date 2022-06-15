@@ -6,11 +6,27 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 17:04:37 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 19:27:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	print_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab)
+	{
+		while (tab[i])
+		{
+			printf("%s ", tab[i]);
+			i++;
+		}
+		printf("\n");
+	}
+}
 
 void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 {
@@ -65,6 +81,7 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 	{
 		printf("   --->>    ");
 		print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
+	//	print_tab((*b_tokens)->cmd_args);
 		printf("\n");
 		printf("It's type is: %d\n", tmp_b->type);
 		printf("It's start is: %d\n", tmp_b->ind_tok_start);

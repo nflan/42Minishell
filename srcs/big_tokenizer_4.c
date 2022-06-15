@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 19:05:30 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 19:30:06 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,7 +296,7 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 	tmp = *tokens;
 	i = 0;
 	j = 0;
-	len = len_ll_list(*tokens);
+	len = (*tmp_b)->length;
 	type_red = 0;
 	save_word = 0;
 	move_tok_2_ind(&tmp, (*tmp_b)->ind_tok_start);
@@ -309,6 +309,7 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 //	printf("choufi hada: %d\n", cmd_args_num);
 //	printf("tmpb_len: %d et tmpb_start: %d\n", (*tmp_b)->length, (*tmp_b)->ind_tok_start);
 //	printf("------------\n");
+//	print_s_tokens(tokens, (*tmp_b)->ind_tok_start, (*tmp_b)->length);
 //	print_b_tokens(tmp_b, tokens, 1, 1);
 //	printf("------------\n");
 	type_red = 0;
@@ -323,7 +324,7 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 		}
 		else if (tmp->token == TOK_WORD && !save_word)
 		{
-		//	printf("I entered arg\n");
+			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
 			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);
 			cmd_args_num--;
 			save_word = 0;

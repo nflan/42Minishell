@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 17:45:37 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 19:21:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_CL_PAREN] = TOK_EXPANDER_CL,
 		[CHR_AST] = TOK_EXPANDER,
 		[CHR_PLUS] = TOK_OPERATOR,
-		[CHR_DASH_MINES] = TOK_OPERATOR,
+		[CHR_DASH_MINES] = TOK_WORD,
 		[CHR_POINT] = TOK_PATH,
 		[CHR_SLASH] = TOK_PATH,
 		[CHR_NUM] = TOK_WORD,
