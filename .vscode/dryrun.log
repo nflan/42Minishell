@@ -1,6 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/mnt/nfs/homes/omoudni/minishell'
- 
 make -C libft/
 make[1]: Entering directory '/mnt/nfs/homes/omoudni/minishell/libft'
 cc -Wall -Wextra -Werror -c ft_atoi.c -o ft_atoi.o

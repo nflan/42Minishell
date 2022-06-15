@@ -8,7 +8,7 @@ make: *** No rule to make target 'include/minishell.h', needed by 'srcs/main.o'.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun 14 11:22:55 2022
+# Make data base, printed on Wed Jun 15 14:32:02 2022
 
 # Variables
 
@@ -43,8 +43,6 @@ SHELL = /bin/sh
 # makefile (from 'libft/Makefile', line 29)
 RM = rm -f
 # environment
-GDM_LANG = en
-# environment
 VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
@@ -53,7 +51,7 @@ _ = /usr/bin/code
 # makefile (from 'libft/Makefile', line 31)
 CFLAGS = -Wall -Wextra -Werror
 # environment
-JOURNAL_STREAM = 9:878138
+JOURNAL_STREAM = 9:2140621
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'libft/Makefile', line 1)
@@ -75,15 +73,15 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101608/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 242039
+MANAGERPID = 270516
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-ec3b5801-b386-44f2-ade6-04e94b662be3.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-5eef7af4-a63f-41e7-83fa-7b4240c2f0f8.sock
 # environment
 VSCODE_CWD = /mnt/nfs/homes/omoudni/minishell
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session5
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session2
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101608_9kKK9Y
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_apxQxk
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -93,7 +91,7 @@ GPG_AGENT_INFO = /run/user/101608/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/e3r12p14.clusters.42paris.fr:@/tmp/.ICE-unix/242513,unix/e3r12p14.clusters.42paris.fr:/tmp/.ICE-unix/242513
+SESSION_MANAGER = local/e3r11p11.clusters.42paris.fr:@/tmp/.ICE-unix/270976,unix/e3r11p11.clusters.42paris.fr:/tmp/.ICE-unix/270976
 # environment
 XDG_RUNTIME_DIR = /run/user/101608
 # environment
@@ -103,7 +101,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 48840bd40c4b43ec919627bebb77bdf9
+INVOCATION_ID = a131a05b06034ab8a0e5ed69c5f51b51
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -127,7 +125,7 @@ PWD = /mnt/nfs/homes/omoudni/minishell
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 242429
+SSH_AGENT_PID = 270939
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -139,7 +137,7 @@ HOME = /mnt/nfs/homes/omoudni
 # environment
 VSCODE_CLI = 1
 # environment
-VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/omoudni/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/omoudni/.config/Code/CachedData/dfd34e8260c270da74b5c2d86d61aee4b6d56977
 # environment
 LOGNAME = omoudni
 # environment
@@ -195,11 +193,9 @@ OLDPWD = /mnt/nfs/homes/omoudni
 # automatic
 *F = $(notdir $*)
 # environment
-LANGUAGE = en
-# environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
-VSCODE_IPC_HOOK = /run/user/101608/vscode-6e3f0dc7-1.67.2-main.sock
+VSCODE_IPC_HOOK = /run/user/101608/vscode-6e3f0dc7-1.66.2-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -237,11 +233,11 @@ HEADER = libft.h
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/1429d116_c784_4b89_90d7_174855683f66
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/1ce0f72f_2d5b_4cee_827e_027dd358ff52
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.81
+GNOME_TERMINAL_SERVICE = :1.89
 # default
 SUFFIXES := 
 # environment
@@ -261,9 +257,9 @@ TERM = xterm-256color
 # environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # environment
-VSCODE_PID = 245080
+VSCODE_PID = 272527
 # variable set hash-table stats:
-# Load=125/1024=12%, Rehash=0, Collisions=26/170=15%
+# Load=123/1024=12%, Rehash=0, Collisions=26/168=15%
 
 # Pattern-specific Variable Values
 
@@ -271,20 +267,20 @@ VSCODE_PID = 245080
 
 # Directories
 
-# . (device 56, inode 194015554): 34 files, no impossibilities.
+# . (device 57, inode 194015554): 29 files, no impossibilities.
 # libft/include: could not be stat'd.
-# libft (device 56, inode 171187366): No files, no impossibilities so far.
+# libft (device 57, inode 171187366): No files, no impossibilities so far.
 
-# 34 files, no impossibilities in 3 directories.
+# 29 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
 ft_%.o: ft_%.c
 #  recipe to execute (from 'Makefile', line 40):
 	${CC} ${CFLAGS} -c $< -o $@
+ 
 
 # 1 implicit rules, 0 (0.0%) terminal.
- 
 
 # Files
 
@@ -387,7 +383,7 @@ ft_strtrim.c:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-08 11:28:50.095018347
+#  Last modified 2022-06-14 18:30:01.360894949
 #  File has been updated.
 #  Successfully updated.
 
@@ -565,6 +561,7 @@ ft_isprint.c:
 ft_isascii.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 re: fclean all
@@ -574,7 +571,6 @@ re: fclean all
 #  File has not been updated.
 
 clean:
- 
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
@@ -660,12 +656,12 @@ vpath ft_%.o libft
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 98 / storage = 1065 B / avg = 10 B
-# current buf: size = 8162 B / used = 1065 B / count = 98 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 93 / storage = 1049 B / avg = 11 B
+# current buf: size = 8162 B / used = 1049 B / count = 93 / avg = 11 B
 
-# strcache performance: lookups = 129 / hit rate = 24%
+# strcache performance: lookups = 124 / hit rate = 25%
 # hash-table stats:
-# Load=98/8192=1%, Rehash=0, Collisions=1/129=1%
-# Finished Make data base on Tue Jun 14 11:22:55 2022
+# Load=93/8192=1%, Rehash=0, Collisions=1/124=1%
+# Finished Make data base on Wed Jun 15 14:32:02 2022
 
  
