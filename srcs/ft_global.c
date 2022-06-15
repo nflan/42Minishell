@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-int	ft_cmd_path(t_info *info, t_cmd *cmd)
+int	ft_path(t_info *info, t_big_token *b_tokens)
 {
 	char	*tofree;
 	char	**path;
@@ -20,37 +20,37 @@ int	ft_cmd_path(t_info *info, t_cmd *cmd)
 
 	i = 0;
 	path = ft_split(ft_get_env_value(info, "PATH"), ':');
-	tofree = ft_strjoiiin(path[i], "/", cmd->cmd_p[0]);
+	tofree = ft_strjoiiin(path[i], "/", b_tokens->cmd_args[0]);
 	if (!tofree)
 		return (1);
 	while (path[i] && access(tofree, X_OK) != 0)
 	{
 		free(tofree);
-		tofree = ft_strjoiiin(path[i], "/", cmd->cmd_p[0]);
+		tofree = ft_strjoiiin(path[i], "/", b_tokens->cmd_args[0]);
 		if (!tofree)
 			return (1);
 		i++;
 	}
 	if (path[i])
 	{
-		free(cmd->cmd_p[0]);
-		cmd->cmd_p[0] = ft_strdup_free(tofree);
+		free(b_tokens->cmd_args[0]);
+		b_tokens->cmd_args[0] = ft_strdup_free(tofree);
 	}
-	if (!path[i] || !cmd->cmd_p[0])
+	if (!path[i] || !b_tokens->cmd_args[0])
 		return (ft_free_split(path), free(tofree), 1);
 	ft_free_split(path);
 	return (0);
 }
 
-int	ft_command(t_info *info, t_cmd *cmd)
+int	ft_command(t_info *info, t_big_token *b_tokens)
 {
-	if (!cmd->cmd)
+	if (!b_tokens->cmd_args[0])
 		return (1);
-	if (access(cmd->cmd_p[0], X_OK) == 0)
+	if (access(b_tokens->cmd_args[0], X_OK) == 0)
 		return (0);
-	else if (ft_get_env_value(info, "PATH") && cmd->cmd_p[0][1] != '.' && cmd->cmd_p[0][1] != '/')
+	else if (ft_get_env_value(info, "PATH") && b_tokens->cmd_args[0][1] != '.' && b_tokens->cmd_args[0][1] != '/')
 	{
-		if (ft_cmd_path(info, cmd))
+		if (ft_path(info, b_tokens))
 			return (1);
 	}
 	else

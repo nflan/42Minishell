@@ -24,30 +24,6 @@ char *concat_argvs(int argc, char **argv)
 	return (ret);
 }
 
-void	free_all_tokens(t_token **tokens)
-{
-	t_token *tmp;
-	t_token *tmp2;
-
-	tmp = *tokens;
-	while (tmp)
-	{
-		if (tmp->value)
-			free(tmp->value);
-		if (tmp->next)
-		{
-			tmp2 = tmp->next;
-			free(tmp);
-			tmp = tmp2;
-		}
-		else
-		{
-			free(tmp);
-			tmp = NULL;
-		}
-	}
-}
-
 int main_agent_O(t_info *info)
 {
 	t_big_token	*tmp_b;

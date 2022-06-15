@@ -6,25 +6,25 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 11:54:32 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 17:48:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_exit(t_info *info, t_cmd *cmd)
+int	ft_exit(t_info *info, t_big_token *b_tokens)
 {
 	int	ret;
 
-	if (cmd)
+	if (b_tokens)
 	{
-		ret = ft_atoi(cmd->cmd_p[1]);
-		ft_free_cmd(cmd);
+		ret = ft_atoi(b_tokens->cmd_args[1]);
+		ft_free_cmd(b_tokens);
 	}
 	else
 		ret = 0;
 	printf("exit\n");
-	if (cmd)
+	if (b_tokens)
 		ft_free_all(info, info->env);
 	rl_clear_history();
 	exit(ret);
@@ -108,16 +108,16 @@ int	ft_unset_name(t_env **tmp, char *name)
 	return (1);
 }
 
-t_env	*ft_unset(t_info *info, t_cmd *cmd)
+t_env	*ft_unset(t_info *info, t_big_token *b_tokens)
 {
 	t_env	*tmp;
 	t_env	*ptr;
 
 	tmp = info->env;
 	ptr = NULL;
-	if (!tmp || !cmd->cmd)
+	if (!tmp || !b_tokens->cmd_args[0])
 		return (NULL);
-	if (ft_unset_name(&tmp, cmd->cmd_p[1]))
+	if (ft_unset_name(&tmp, b_tokens->cmd_args[1]))
 		return (NULL);
 	ptr = tmp->next;
 	tmp->next = ptr->next;

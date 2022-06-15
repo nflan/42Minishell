@@ -51,7 +51,7 @@ void	ft_export_replace(t_env *env, char *line, int i, int j)
 		env->value = ft_strdup("");
 }
 
-int	ft_export(t_info *info, t_cmd *cmd)
+int	ft_export(t_info *info, t_big_token *b_tokens)
 {
 	t_env	*tmp;
 	int		i;
@@ -59,23 +59,23 @@ int	ft_export(t_info *info, t_cmd *cmd)
 
 	tmp = info->env;
 	i = 0;
-	if (!tmp || !cmd->cmd)
+	if (!tmp || !b_tokens->cmd_args[0])
 		return (1);
-	if (!ft_do_export(cmd->cmd_p[1]))
+	if (!ft_do_export(b_tokens->cmd_args[1]))
 		return (1);
-	if (*cmd->cmd_p[1] == '\\')
-		cmd->cmd_p[1] = cmd->cmd_p[1] + 1;
+	if (*b_tokens->cmd_args[1] == '\\')
+		b_tokens->cmd_args[1] = b_tokens->cmd_args[1] + 1;
 //	printf("line = %s\n", line);
-	while (cmd->cmd_p[1][1] && cmd->cmd_p[1][i] != '=')
+	while (b_tokens->cmd_args[1][1] && b_tokens->cmd_args[1][i] != '=')
 		i++;
 	j = i + 1;
-	while (cmd->cmd_p[1][j])
+	while (b_tokens->cmd_args[1][j])
 		j++;
-	while (tmp && ft_strncmp(tmp->name, cmd->cmd_p[1], i + 1) != -61)
+	while (tmp && ft_strncmp(tmp->name, b_tokens->cmd_args[1], i + 1) != -61)
 		tmp = tmp->next;
 	if (!tmp)
-		ft_export_new(info->env, tmp, cmd->cmd_p[1]);
+		ft_export_new(info->env, tmp, b_tokens->cmd_args[1]);
 	else
-		ft_export_replace(tmp, cmd->cmd_p[1], i, j);
+		ft_export_replace(tmp, b_tokens->cmd_args[1], i, j);
 	return (0);
 }

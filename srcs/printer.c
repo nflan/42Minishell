@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/10 16:07:56 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 17:04:37 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 		printf("It's length is: %d\n", tmp_b->length);
 		printf("It's par_pam is: %d\n", tmp_b->par);
 		printf("It's rank is: %d\n", k);
-		printf("It's fd_in is: %d\n", tmp_b->fdin);
-		printf("It's fd_out %d\n", tmp_b->fdout);
+		printf("It's fd_in is: %d\n", *tmp_b->fdin);
+		printf("It's fd_out %d\n", *tmp_b->fdout);
 		if (tmp_b->parent)
 		printf("It's got a PARENT!!\n");
 		else if (!(tmp_b->parent))

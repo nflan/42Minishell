@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/06 18:58:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 17:48:32 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,25 @@ char	*ft_cd_tilde(char *home, char *dir)
 	return (new_dir);
 }
 
-int	ft_cd(t_info *info, t_cmd *cmd)
+int	ft_cd(t_info *info, t_big_token *b_tokens)
 {
 	char	*home;
 	char	*new_dir;
 
 	home = ft_get_env_value(info, "HOME");
 	new_dir = NULL;
-	if (cmd->cmd_p[2])
+	if (b_tokens->cmd_args[2])
 		return (ft_putstr_error("minishell: cd: too many arguments\n"));
-	if (ft_is_tilde_or_home(home, cmd->cmd_p[1]) == 1)
+	if (ft_is_tilde_or_home(home, b_tokens->cmd_args[1]) == 1)
 	{
 		if (!home)
 			return (ft_putstr_error("minishell: cd: HOME not set\n"));
 		else if (chdir(home))
-			return (ft_perror("minishell: cd: ", cmd->cmd_p[1]));
+			return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
 	}
-	else if (!ft_is_tilde_or_home(home, cmd->cmd_p[1]))
+	else if (!ft_is_tilde_or_home(home, b_tokens->cmd_args[1]))
 	{
-		new_dir = ft_cd_tilde(home, cmd->cmd_p[1]);
+		new_dir = ft_cd_tilde(home, b_tokens->cmd_args[1]);
 		if (!new_dir)
 			return (1);
 		if (chdir(new_dir))
@@ -75,7 +75,7 @@ int	ft_cd(t_info *info, t_cmd *cmd)
 		free(new_dir);
 	}
 	else
-		if (chdir(cmd->cmd_p[1]))
-			return (ft_perror("minishell: cd: ", cmd->cmd_p[1]));
+		if (chdir(b_tokens->cmd_args[1]))
+			return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
 	return (0);
 }

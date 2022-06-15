@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:09:13 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/19 15:13:19 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 15:30:55 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_substr_free(char *s, unsigned int start, size_t len)
 		if (start < ft_strlen(s))
 			while (i < len && s[start])
 				new[i++] = s[start++];
+		free(s);
 	}
-	free(s);
 	return (new);
 }

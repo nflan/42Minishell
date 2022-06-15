@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:11:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/10 16:06:10 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 15:01:43 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int no_red(t_big_token **tmp_b, t_token **tokens)
 	return (0);
 }
 
-void	extract_fds(t_big_token **tmp_b, t_token **tokens)
+/*void	extract_fds(t_big_token **tmp_b, t_token **tokens)
 {
 	int		i;
 	int		start;
@@ -110,7 +110,7 @@ void	extract_fds(t_big_token **tmp_b, t_token **tokens)
 		if ((*tmp_b)->fdout == -1000)
 			(*tmp_b)->fdout = 1;
 	}
-}
+}*/
 
 void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 {

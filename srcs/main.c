@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 11:52:40 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 17:48:13 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,6 @@ char	*ft_cmd_line(char *str)
 	return (cmd);
 }
 
-/*void	ft_cmdadd_back(t_cmd **acmd, t_cmd *new)
-{
-	t_cmd	*tmp;
-
-	tmp = NULL;
-	tmp = *acmd;
-	if (acmd && new)
-	{
-		if (*acmd == NULL)
-			*acmd = new;
-		else
-		{
-			while (tmp->next)
-				tmp = tmp->next;
-			new->prev = tmp;
-			tmp->next = new;
-		}
-	}
-}*/
-
 char	*ft_onecmd(t_info *info, int i)
 {
 	char	*cmd_line;
@@ -115,218 +95,12 @@ char	*ft_onecmd(t_info *info, int i)
 	return (cmd);
 }
 
-/*t_cmd	*ft_cmdnew(t_info *info, char *cmd)
-{
-	t_cmd	*new;
-
-	new = ft_calloc(sizeof(t_cmd), 1);
-	if (!new)
-		return (NULL);
-	new->cmd = cmd;
-	new->fdin = 0;
-	new->fdout = 1;
-	return (new);
-}*/
-
 void	ft_print_cmd(t_cmd	*cmd)
 {
 	printf("cmd->line = %s\n", cmd->cmd);
 	printf("cmd->fdin = %d\n", cmd->fdin);
 	printf("cmd->fdout = %d\n", cmd->fdout);
 }
-/*
-t_cmd	*ft_cmdnew(char *cmd)
-{
-	t_cmd	*tmp;
-
-	if (!cmd)
-		return (NULL);
-	tmp = NULL;
-	tmp = ft_calloc(sizeof(t_cmd), 1);
-	if (!tmp)
-		return (NULL);
-	tmp->cmd = ft_strdup(cmd);
-	tmp->fdin = open("/dev/stdin", O_RDONLY);
-	tmp->fdout = open("/dev/stdout", O_WRONLY);
-	return (tmp);
-}
-
-void	ft_lstadd_tree(t_tree **alst, t_tree *new, int i)
-{
-	t_tree	*tmp;
-
-	tmp = NULL;
-	tmp = *alst;
-	if (alst && new)
-	{
-		if (*alst == NULL)
-			*alst = new;
-		else if (i == 2)
-		{
-			while (tmp->right)
-				tmp = tmp->right;
-			tmp->right = new;
-		}
-		else if (i == 1)
-		{
-			while (tmp->right)
-				tmp = tmp->right;
-			tmp->left = new;
-		}
-	}
-}
-
-t_tree	*ft_treenew(char *str, t_tree *ptr)
-{
-	t_tree	*new;
-
-	new = NULL;
-	new = ft_calloc(sizeof(t_tree), 1);
-	if (!new)
-		return (NULL);
-	new->cmd = ft_cmdnew(str);
-	new->right = NULL;
-	new->left = NULL;
-	return (new);
-}
-*/
-/*t_tree	*ft_fill_tree(t_info *info, t_token *token)
-{
-	t_tree	*ptr;
-	t_tree	*new;
-	t_token	*tok;
-	int		len;
-
-	ptr = NULL;
-	new = NULL;
-	tok = token;
-	while (tok)
-		tok = tok->next;
-	while (tok)
-	{
-		ptr = ft_treenew(tok->cmd, ptr);
-		if (tok->token == TOK_WORD)
-			ft_lstadd_tree(&new, ptr, 1);
-		else if (tok->token == TOK_OPERATOR)
-			ft_lstadd_tree(&new, ptr, 2);
-		tok = tok->prev;
-	}
-	return (new);
-	}
-
-t_tree	*ft_fill_tree(t_info *info)
-{
-	t_tree	*ptr;
-	t_tree	*new;
-	t_tree	*tmpcmd;
-	char	**tab;
-	int		i;
-
-	i = 0;
-	tmpcmd = NULL;
-	ptr = NULL;
-	new = NULL;
-	tab = ft_split(info->rdline, ';');
-	if (!tab)
-		return (NULL);
-//	for (int y = 0; tab[y]; y++)
-//		printf("tab[%d] = %s\n", y, tab[y]);
-	while (tab[i])
-	{
-		ptr = ft_treenew(tab[i], ptr);
-		if (!ptr)
-			return (NULL);
-		if (i % 2)
-		{
-			if (i != 1)
-			{
-				ft_lstadd_tree(&new, ptr, 2);
-				ptr = new->right;
-			}
-			else
-				new = ptr;
-			ft_lstadd_tree(&new, tmpcmd, 1);
-		}
-		else
-			tmpcmd = ptr;
-		i++;
-		if (!tab[i])
-			ft_lstadd_tree(&new, tmpcmd, 2);
-	}
-	ft_free_split(tab);
-	return (new);
-}
-
-void	ft_print_test(t_tree *tree, int i)
-{
-	while (--i > 0)
-		printf("\t");
-	if (tree->cmd)
-		printf(">%s<\n",  tree->cmd->cmd);
-}
-
-int	ft_init_tree(t_info *info, t_token *token)
-{
-//	info->tree = ft_fill_tree(info, token);
-	(void) token;
-	info->tree = ft_fill_tree(info);
-	if (!info->tree)
-			return (1);
-	return (0);
-}*/
-/*
-void	ft_print_tree(t_tree *tree, int i)
-{
-	i++;
-	if (tree->left)
-	{
-		ft_print_tree(tree->left, i);
-		ft_print_test(tree, i);
-	}
-	if (tree->right)
-		ft_print_tree(tree->right, i);
-	if (!tree->left)
-		ft_print_test(tree, i);
-}
-
-int	ft_nb_andor(char *str)
-{
-	int	count;
-	int	i;
-
-	count = 0;
-	i = -1;
-	if (str)
-		while (str[++i + count])
-			if ((str[i + count] == '|' && str[i + count + 1] == '|')
-				|| (str[i + count] == '&' && str[i + count + 1] == '&'))
-					count++;
-	return (count);
-}
-
-t_tree	*ft_fill_tree(t_info *info, t_token *token)
-{
-	t_tree	*ptr;
-	t_tree	*new;
-	t_token	*tok;
-	int		len;
-
-	ptr = NULL;
-	new = NULL;
-	tok = token;
-	while (tok)
-		tok = tok->next;
-	while (tok)
-	{
-		ptr = ft_treenew(tok->cmd, ptr);
-		if (tok->token == TOK_WORD)
-			ft_lstadd_tree(&new, ptr, 1);
-		else if (tok->token == TOK_OPERATOR)
-			ft_lstadd_tree(&new, ptr, 2);
-		tok = tok->prev;
-	}
-	return (new);
-}*/
 
 void	ft_envadd_back(t_env **alst, t_env *new)
 {
@@ -467,47 +241,16 @@ int	ft_init_info(t_info *info, int ret)
 	return (0);
 }
 
-void	ft_free_cmd(t_cmd *cmd)
+void	ft_free_cmd(t_big_token *b_tokens)
 {
-	if (cmd->cmd)
-		free(cmd->cmd);
-	if (cmd->cmd_p)
-		ft_free_split(cmd->cmd_p);
-	if (cmd->envp)
-		ft_free_split(cmd->envp);
-	if (cmd)
-		free(cmd);
-	cmd = NULL;
+	if (b_tokens->cmd_args)
+		ft_free_split(b_tokens->cmd_args);
+	if (b_tokens->envp)
+		ft_free_split(b_tokens->envp);
+	if (b_tokens)
+		free(b_tokens);
+	b_tokens = NULL;
 }
-
-/*void	ft_free_branch(t_tree *branch)
-{
-	waitpid(branch->cmd->child, &branch->cmd->child, 0);
-	if (branch->cmd->cmd)
-		free(branch->cmd->cmd);
-	if (branch->cmd->cmd_p)
-		ft_free_split(branch->cmd->cmd_p);
-	if (branch->cmd->envp)
-		ft_free_split(branch->cmd->envp);
-	if (branch->cmd)
-		free(branch->cmd);
-	branch->cmd = NULL;
-	if (branch)
-		free(branch);
-	branch = NULL;
-}*/
-
-/*void	ft_free_tree(t_tree *tree)
-{
-	if (tree)
-	{
-		if (tree->left)
-			ft_free_tree(tree->left);
-		if (tree->right)
-			ft_free_tree(tree->right);
-		ft_free_branch(tree);
-	}
-}*/
 
 void	ft_free_env(t_env *env)
 {
