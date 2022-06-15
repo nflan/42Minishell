@@ -41,7 +41,8 @@ int main_agent_O(t_info *info)
 //		return (1);
 //	}
 	parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens));
-	tmp_b = info->parse;
+//	tmp_b = info->parse;
+//	print_tab(tmp_b->cmd_args);
 	if (info->nb_cmd == 10)
 		print_all_everything(&tmp_b, &info->tokens);
 	return (0);

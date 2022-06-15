@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 20:03:24 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 22:40:55 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	ft_do_pipex(t_info *info, t_big_token *b_tokens)
 		info->status = ft_builtins(info, b_tokens);
 		if (info)
 			ft_free_all(info, info->env);
-		if (b_tokens)
-			ft_free_cmd(b_tokens);
 		exit(info->status);
 	}
 	else
@@ -70,8 +68,7 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens, int sib_child)
 	if (b_tokens->par == 1)
 	{
 		rec_exec(info, &(b_tokens)->child, 0);
-	//	printf("coucou\n");
-		ft_exit_cmd(info, b_tokens);
+		ft_exit_cmd(info);
 	}
 	info->status = ft_do_pipex(info, b_tokens);
 	return (0);

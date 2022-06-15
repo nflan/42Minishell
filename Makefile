@@ -6,7 +6,7 @@
 #    By: nflan <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/05 15:05:20 by nflan             #+#    #+#              #
-#    Updated: 2022/06/10 16:00:35 by nflan            ###   ########.fr        #
+#    Updated: 2022/06/15 21:26:14 by nflan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ sources = srcs/main.c srcs/ft_cd.c srcs/ft_export.c srcs/ft_tools.c srcs/ft_buil
 		  srcs/big_tokenizer_4.c srcs/parser.c srcs/tokenizer_1.c srcs/tokenizer_2.c\
 		  srcs/syntax_errorinizer_1.c srcs/syntax_errorinizer_2.c\
 		  srcs/tree_manipulator.c srcs/ft_launch_cmd.c srcs/ft_echo.c srcs/main_O.c\
-		  srcs/printer.c srcs/executer.c
+		  srcs/printer.c srcs/executer.c srcs/ft_free.c
 
 INC = include/minishell.h
 

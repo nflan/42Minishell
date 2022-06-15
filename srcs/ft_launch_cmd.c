@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 19:03:04 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 22:48:40 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,16 +145,15 @@ int	ft_builtins(t_info *info, t_big_token *b_tokens)
 	return (1);
 }
 
-int	ft_exit_cmd(t_info *info, t_big_token *b_tokens)
+int	ft_exit_cmd(t_info *info)
 {
-	if (b_tokens)
-		ft_free_cmd(b_tokens);
 	if (info)
 		ft_free_all(info, info->env);
+	rl_clear_history();
 	exit (info->status);
 }
 
-void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
+void	ft_close_cmd(t_info *info, t_big_token *b_tokens, int sib_child, pid_t child)
 {
 //	(void)child;
 	if (b_tokens->type == TOK_LEFT_PIPE)
@@ -185,7 +184,7 @@ void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
 //		printf("\n");
 		waitpid(child, &child, 0);
 	//	if (info->pdes[0] != 0)
-		if (info->nb_cmd > 1)
+		if (sib_child == 4)
 		{
 			close(info->pdes[1]);
 			close(info->pdes[0]);
@@ -216,16 +215,14 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens, int sib_child, int pid)
 	static int	i = 0;
 
 	pid = -1;
-//	cmd = ft_convert_bt_cmd(info, b_tokens);
-//	if (!cmd)
-//		return (1);
 //	printf("tour %d :\npdes[0] = %d && pdes[1] = %d\ntmp[0] = %d && tmp[1] = %d\n", i, info->pdes[0], info->pdes[1], info->tmp[0], info->tmp[1]);
 //	printf("tour %d :\npdes[0] = %d && pdes[1] = %d\n", i, info->pdes[0], info->pdes[1]);
+	printf("cmd\n");
 	b_tokens->envp = ft_env_to_tab(info->env);
 	if (ft_lead_fd(info, b_tokens))
 		return (ft_putstr_error("FD problem\n"));;
 //	printf("cmd->cmd = %s\n", cmd->cmd);
-	if (sib_child == 1 && !ft_check_builtins(info, b_tokens))
+	if (sib_child == 1 && !ft_check_builtins(info, b_tokens) && (!b_tokens->parent || (b_tokens->parent && !b_tokens->parent->par)))
 		info->status = ft_builtins(info, b_tokens);
 	else
 	{
@@ -236,10 +233,10 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens, int sib_child, int pid)
 		{
 			if (ft_pipex(info, b_tokens, sib_child))
 				return (ft_free_cmd(b_tokens), 1);
-			ft_exit_cmd(info, b_tokens);
+			ft_exit_cmd(info);
 		}
 	}
-	ft_close_cmd(info, b_tokens, pid);
+	ft_close_cmd(info, b_tokens, sib_child, pid);
 	i++;
 	if (b_tokens->type != TOK_LEFT_PIPE)
 		i = 0;

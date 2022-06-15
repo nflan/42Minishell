@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 19:27:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 22:11:35 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_tab(char **tab)
 	{
 		while (tab[i])
 		{
-			printf("%s ", tab[i]);
+			printf("%s\n", tab[i]);
 			i++;
 		}
 		printf("\n");

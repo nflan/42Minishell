@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 19:21:19 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 22:43:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,11 +152,11 @@ typedef struct s_big_token
 	int					*red_out; // donne l'info sur le type d'ecriture sur le out aka > ou >>
 	char				**delimitator; // tableau de delimitateur de here doc (demension== rd_inouthd[2])
 	char				**infile; // tableau de fichier a ouvrir en in (dimension = rd_inouthd[0])
-	int					*fdin; // tableau malloc avec la dimension rd_inouthd[0] a remplir lors de l'extraction des FD
-	int					*err_in; // potentiellement erreur d'ouverture
 	char				**outfile;  // tableau de fichier a ouvrir en out (dimension = rd_inouthd[1])
-
+	int					*fdin; // tableau malloc avec la dimension rd_inouthd[0] a remplir lors de l'extraction des FD
 	int					*fdout;
+	int					*err_in; // potentiellement erreur d'ouverture
+
 	int					*err_out;
 	char				**cmd_args;
 	int					cmd_args_num;
@@ -223,7 +223,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_CL_PAREN] = TOK_EXPANDER_CL,
 		[CHR_AST] = TOK_EXPANDER,
 		[CHR_PLUS] = TOK_OPERATOR,
-		[CHR_DASH_MINES] = TOK_WORD,
+		[CHR_DASH_MINES] = TOK_WORD, // j'ai change c'etait operator
 		[CHR_POINT] = TOK_PATH,
 		[CHR_SLASH] = TOK_PATH,
 		[CHR_NUM] = TOK_WORD,
@@ -236,7 +236,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_AT] = TOK_WORD,
 		[CHR_ALPHA] = TOK_WORD,
 		[CHR_OP_BRACKET] = TOK_IDK,
-		[CHR_ANTI_SLASH] = TOK_QUOTER,
+		[CHR_ANTI_SLASH] = TOK_QUOTER, // j'ai change c'etait quoter
 		[CHR_CL_BRACKET] = TOK_IDK,
 		[CHR_CIRCUM] = TOK_IDK,
 		[CHR_UNDERSCORE] = TOK_WORD,
@@ -286,21 +286,18 @@ typedef struct s_info
 }	t_info;
 
 //-----------main.c------------------------------------------
-void	ft_free_env(t_env *env);
-void	ft_free_cmd(t_big_token *b_tokens);
-void	ft_free_all(t_info *info, t_env *env);
 void	ft_envadd_back(t_env **alst, t_env *new);
 int		ft_fill_envnew(t_env *env, char *line);
 t_env	*ft_envnew(char *line);
 void	ft_print_cmd(t_cmd *cmd);
 
 //-----------ft_launch_cmd----------------------------------------
-int	ft_exit_cmd(t_info *info, t_big_token *b_tokens);
+int	ft_exit_cmd(t_info *info);
 int	ft_wash_btoken(t_info *info, t_big_token *b_tokens);
 int	ft_check_builtins(t_info *info, t_big_token *b_tokens);
 int	ft_builtins(t_info *info, t_big_token *b_tokens);
 int	ft_launch_sibling(t_info *info, t_big_token *b_tokens);
-void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child);
+void	ft_close_cmd(t_info *info, t_big_token *b_tokens, int sib_child, pid_t child);
 int	ft_lead_fd(t_info *info, t_big_token *b_tokens);
 int	ft_launch_cmd(t_info *info, t_big_token *b_tokens, int sib_child, int pid);
 int	ft_find_cmd(t_info *info);
@@ -349,6 +346,13 @@ int			ft_command(t_info *info, t_big_token *b_tokens);
 void	ft_error_2(t_info *info, t_big_token *b_tokens);
 int		ft_error(int i, t_info *info, t_big_token *b_tokens);
 
+//-----------------ft_free.c---------------------------
+void	ft_free_all(t_info *info, t_env *env);
+void	ft_free_b_tokens(t_big_token *b_tokens);
+void	ft_free_cmd(t_big_token *b_tokens);
+void	ft_free_tokens(t_token *tokens);
+void	ft_free_env(t_env *env);
+
 // AGENT O
 //----------main_O.c-------------------------------------------------------------------
 int				main_agent_O(t_info *info);
@@ -368,7 +372,7 @@ void			extract_fds(t_big_token **tmp_b, t_token **tokens);
 int				rec_exec(t_info *info, t_big_token **b_tokens, int and_or);
 
 //----------printer.c-------------------------------------------------------------------
-
+void			print_tab(char **tab);
 void			print_all_everything(t_big_token **b_tokens, t_token **tokens);
 void			print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
 void			print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j);

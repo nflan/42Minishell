@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 19:43:01 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 22:33:41 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 			red = 1;
 			j++;
 		}
-		if (tmp->token == TOK_WORD)
+		if (tmp->token == TOK_WORD || tmp->token == TOK_PATH)
 		{
 			if (!red)
 				count++;
@@ -322,7 +322,7 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 			i++;
 			save_word = 1;
 		}
-		else if (tmp->token == TOK_WORD && !save_word)
+		else if ((tmp->token == TOK_WORD || tmp->token == TOK_PATH) && !save_word)
 		{
 //			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
 			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);

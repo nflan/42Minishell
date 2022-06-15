@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 20:02:59 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 22:45:36 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	ft_open_fd(t_big_token *b_tokens)
 				i++;
 			}
 		}
+		if (!b_tokens->fdout)
+			b_tokens->fdout = ft_calloc(sizeof(int), 1);
 		if (!i)
 			b_tokens->fdout[i] = 1;
 		i = 0;
@@ -71,6 +73,8 @@ int	ft_open_fd(t_big_token *b_tokens)
 				i++;
 			}
 		}
+		if (!b_tokens->fdin)
+			b_tokens->fdin = ft_calloc(sizeof(int), 1);
 		if (!i)
 			b_tokens->fdin[i] = 0;
 		b_tokens = b_tokens->sibling;
@@ -100,6 +104,8 @@ int	ft_close_fd(t_big_token *b_tokens)
 			i++;
 		}
 	}
+//	if (!i)
+//		close(b_tokens->fdin[0]);
 	return (0);
 }
 
@@ -204,9 +210,9 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens, int sib_child)
 
 	ft_open_fd(b_tokens);
 	tmp_b = b_tokens;
-	//		printf("value b_token\n");
-	//		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-	//		printf("\n");
+//	printf("value b_token\n");
+//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+//	printf("\n");
 	if (ft_wash_btoken(info, tmp_b))
 		return (2147483647);
 	if (tmp_b->sc == -1)
@@ -224,7 +230,7 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	int	i;
 	t_big_token	*tmp_b;
 
-	pid = 0;
+	pid = NULL;
 	info->nb_cmd = 0;
 	i = 0;
 	tmp_b = b_tokens;
@@ -242,13 +248,9 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	//	print_s_tokens(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
 	//	printf("\n");
 	//	printf("b_token fdin = %d && fdout = %d\n", b_tokens->fdin, b_tokens->fdout);
-	if (sib_child == 1)
+	if (sib_child >= 1 && sib_child <= 3)
 		ft_exec_simple(info, b_tokens, sib_child);
-	if (sib_child == 2)
-		ft_exec_simple(info, b_tokens, sib_child);
-	if (sib_child == 3)
-		ft_exec_simple(info, b_tokens, sib_child);
-	if (sib_child == 4)
+	else if (sib_child == 4)
 		ft_exec_pipex(info, b_tokens, sib_child, pid);
 	if (pid)
 	{
@@ -280,22 +282,16 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 	i = 0;
 	tmp_b = *b_tokens;
 	tmp_s = info->tokens;
-//	printf("type = %d\n", (*b_tokens)->type);
 	while (tmp_b)
 	{
 //		printf("COUCOU, je suis apres le tmp_b "); print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length); printf("\n"); printf("type = %d\n", tmp_b->type);
 //		if ((!tmp_b->parent && !i) || (tmp_b->parent && tmp_b->parent->par))
-//		{
-	//		printf("hello, j'ai cree un pipe (and_or = %d): ", and_or); print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length); printf("\n");
-//			if (pipe(info->pdes) == -1)
-//				return (1);
-//		}
 		if (tmp_b->child && tmp_b->sc == -1)
 		{
 			if (!tmp_b->par || (tmp_b->par && !tmp_b->sibling))
 				rec_exec(info, &(tmp_b->child), 0);
 		}
-		else if (!i && no_sib_has_child(tmp_b) && tmp_b->parent && tmp_b->sc == -1)
+		else if (!i && no_sib_has_child(tmp_b) && tmp_b->parent && tmp_b->sc == -1 && tmp_b->type == TOK_LEFT_PIPE)
 		{
 //			printf("value b_token si sibling pas child: "); print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length); printf("\n"); printf("je lance sibling sans child !! (start = %d && length = %d)\n", tmp_b->ind_tok_start, tmp_b->length);
 			if (exec_the_bulk(info, no_sib_has_child(tmp_b), tmp_b))
@@ -306,14 +302,14 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 		}
 		if (tmp_b->type == TOK_PIPE_LAST)
 		{
-	//		printf("value b_token dans le pipe last\n"); print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length); printf("\nFC == 1 && b_tok->sc = %d\n", tmp_b->sc);
+//				printf("value b_token dans le pipe last\n"); print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length); printf("\nFC == 1 && b_tok->sc = %d\n", tmp_b->sc);
 			if (exec_the_bulk(info, 4, *b_tokens))
 				return (1);
 			if (tmp_b->parent)
 				give_parent_sc(&(tmp_b), &(tmp_b->parent));
 			return (0);
 		}
-		else if (tmp_b->type == TOK_LEFT_AND && i == and_or)
+		if (tmp_b->type == TOK_LEFT_AND && i == and_or)
 			fc = 1;
 		else if (tmp_b->type == TOK_LEFT_OR && i == and_or)
 			fc = 2;
@@ -334,13 +330,16 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 		if (tmp_b->parent)
 			give_parent_sc(&(tmp_b), &(tmp_b->parent));
 	}
-	if (tmp_b && fc)
+	if (tmp_b && fc > 0 && fc < 3)
 	{
 		//printf("value b_token dans le FC (%d)\n", fc);
 		//print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
 		//printf("\nb_tok->sc = %d\n", tmp_b->sc);
 		if ((fc == 1 && sc == 0) || (fc == 2 && sc))
+		{
 			rec_exec(info, b_tokens, and_or + 1);
+			return (0);
+		}
 		else if (fc == 2 && !sc)
 		{
 			while (tmp_b && tmp_b->type != TOK_LEFT_AND)
@@ -348,8 +347,6 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 				tmp_b = tmp_b->sibling;
 				and_or++;
 			}
-			if (tmp_b)
-				rec_exec(info, &(tmp_b), and_or);
 		}
 		else if (fc == 1 && sc)
 		{
@@ -358,9 +355,9 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 				tmp_b = tmp_b->sibling;
 				and_or++;
 			}
-			if (tmp_b)
-				rec_exec(info, &(tmp_b), and_or);
 		}
+		if (tmp_b)
+			rec_exec(info, &(tmp_b), and_or);
 	}
 //	printf("je pars des parentheses\n");
 	return (0);
