@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 17:43:34 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 20:03:24 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens, int sib_child)
 		info->pdes[0] = b_tokens->fdin[b_tokens->rd_inouthd[0]];
 	if (!info->nb_cmd && (sib_child == 4))
 	{
-	//	printf("do pipex\n");
+//		printf("do pipex\n");
 	//	printf("b_tokens->start = %d && length = %d\n", b_tokens->ind_tok_start, b_tokens->length);
 //		print_s_tokens(&info->tokens,  b_tokens->ind_tok_start, b_tokens->length);
 		close(info->pdes[0]);
@@ -63,7 +63,7 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens, int sib_child)
 	}
 	else
 	{
-	//	printf("do pipex end\n");
+//		printf("pipe end\n");
 		dup2(info->pdes[0], STDIN_FILENO);
 		dup2(b_tokens->fdout[b_tokens->rd_inouthd[1]], STDOUT_FILENO);
 	}

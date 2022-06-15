@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 19:30:06 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/15 19:43:01 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int *count_red_inout(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 	if (((*tmp_b)->rd_inouthd)[0])
 	{
 		(*tmp_b)->red_in = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[0]);
-		(*tmp_b)->infile = ft_calloc(sizeof(char *), ((*tmp_b)->rd_inouthd)[0]);
+		(*tmp_b)->infile = ft_calloc(sizeof(char *), ((*tmp_b)->rd_inouthd)[0] + 1);
 		(*tmp_b)->err_in = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[0]);
 		(*tmp_b)->fdin = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[0]);
 	}
@@ -89,14 +89,14 @@ int *count_red_inout(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 	if (((*tmp_b)->rd_inouthd)[1])
 	{
 		(*tmp_b)->red_out = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[1]);
-		(*tmp_b)->outfile = ft_calloc(sizeof(char *), ((*tmp_b)->rd_inouthd)[1]);
+		(*tmp_b)->outfile = ft_calloc(sizeof(char *), ((*tmp_b)->rd_inouthd)[1] + 1);
 		(*tmp_b)->err_out = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[1]);
 		(*tmp_b)->fdout = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[1]);
 	}
 	else
 		(*tmp_b)->fdout = ft_calloc(sizeof(int), 1);
 	if (((*tmp_b)->rd_inouthd)[2])
-		(*tmp_b)->delimitator = ft_calloc(sizeof(char *), ((*tmp_b)->rd_inouthd)[2]);
+		(*tmp_b)->delimitator = ft_calloc(sizeof(char *), ((*tmp_b)->rd_inouthd)[2] + 1);
 	return (0);
 }
 
@@ -140,7 +140,7 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 	if (count < 2)
 		(*tmp_b)->cmd_args = ft_calloc(2, sizeof(char *));
 	else
-		(*tmp_b)->cmd_args = ft_calloc(count, sizeof(char *));
+		(*tmp_b)->cmd_args = ft_calloc(count + 1, sizeof(char *));
 	(*tmp_b)->cmd_args_num = count;
 }
 
@@ -324,7 +324,7 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 		}
 		else if (tmp->token == TOK_WORD && !save_word)
 		{
-			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
+//			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
 			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);
 			cmd_args_num--;
 			save_word = 0;
