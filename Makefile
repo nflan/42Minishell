@@ -6,7 +6,7 @@
 #    By: nflan <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/05 15:05:20 by nflan             #+#    #+#              #
-#    Updated: 2022/06/15 21:26:14 by nflan            ###   ########.fr        #
+#    Updated: 2022/06/16 16:03:29 by nflan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,15 +30,13 @@ LIBFT = libft/libft.a
 
 NAME = minishell
 
-DEBUG = -g3 -fsanitize=address
-
 .c.o :
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 all:	${NAME}
 
 $(NAME):	${objets} ${INC} ${HEADER} ${LIBFT}
-	${CC} ${CFLAGS} ${objets} ${LIBFT} -I ${INC} -lreadline -g -o ${NAME}
+	${CC} ${CFLAGS} ${objets} ${LIBFT} -I ${INC} -lreadline -o ${NAME}
 
 -include libft/Makefile
 

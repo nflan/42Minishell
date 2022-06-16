@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 22:45:36 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/16 16:42:35 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	ft_open_fd(t_big_token *b_tokens)
 					b_tokens->fdout[i] = open(b_tokens->outfile[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				else
 					b_tokens->fdout[i] = open(b_tokens->outfile[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
+		//		printf("ligne %d --> rd_inouthd[1] = %d && fdout[i] %d && outfile[i] = %s && red_out[i] = %d\n", i, b_tokens->rd_inouthd[1], b_tokens->fdout[i], b_tokens->outfile[i], b_tokens->red_out[i]);
 				if (b_tokens->fdout[i] < 0)
 					return (1);
 				i++;
@@ -109,161 +110,78 @@ int	ft_close_fd(t_big_token *b_tokens)
 	return (0);
 }
 
-int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int sib_child, int *pid)
+int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 {
-	t_big_token	*tmp_b;
 	int	i;
 
-	if (pipe(info->pdes) == -1)
-		return (ft_error(5, info, NULL));
-	if (ft_open_fd(b_tokens))
-		return (ft_error(6, info, NULL));
-	tmp_b = b_tokens;
 	i = 0;
-	//	if (pipe(info->pdes) == -1)
-	//		return (ft_error(5, info, NULL));
-	while (tmp_b)
+	while (b_tokens)
 	{
-		//			printf("value b_token dans pipex et sc = %d && fdin = %d && fdout = %d && done = %d\n", tmp_b->sc, tmp_b->fdin, tmp_b->fdout, tmp_b->done);
-		//			print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-		//			printf("\n");
-		if (ft_wash_btoken(info, tmp_b))
+		if (ft_wash_btoken(info, b_tokens))
 			return (2147483647);
-		//	if (tmp_b->sc == 0)
-		//		break;
-		else if (tmp_b->sc == -1)
+		else if (b_tokens->sc == -1)
 		{
-			ft_launch_cmd(info, tmp_b, sib_child, pid[i]);
+			ft_launch_cmd_pipex(info, b_tokens, pid[i]);
 			info->nb_cmd++;
-			tmp_b->sc = info->status;
-		}
-		if (tmp_b->sibling)
-			tmp_b = tmp_b->sibling;
-		else
-			break ;
-	}
-	ft_close_fd(b_tokens);
-	return (0);
-}
-
-/*int	ft_exec_and(t_info *info, t_big_token *b_tokens, int sib_child, int *pid)
-{
-	t_big_token	*tmp_b;
-	int	i;
-
-	tmp_b = b_tokens;
-	i = 0;
-	//	if (pipe(info->pdes) == -1)
-	//		return (ft_error(5, info, NULL));
-	while (tmp_b)
-	{
-		if (ft_wash_btoken(info, tmp_b))
-			return (2147483647);
-		if (tmp_b->sc == -1)
-		{
-			ft_launch_cmd(info, tmp_b, sib_child, pid[i]);
-			info->nb_cmd++;
-			tmp_b->sc = info->status;
-		}
-		if (tmp_b->sc == 0 && tmp_b->sibling)
-			tmp_b = tmp_b->sibling;
-		else
-			break ;
-	}
-	return (0);
-}
-
-int	ft_exec_or(t_info *info, t_big_token *b_tokens, int sib_child, int *pid)
-{
-	t_big_token	*tmp_b;
-	int	i;
-
-	tmp_b = b_tokens;
-	i = 0;
-	//		printf("value b_token\n");
-	//		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-	//		printf("\n");
-	//	if (pipe(info->pdes) == -1)
-	//		return (ft_error(5, info, NULL));
-	while (tmp_b)
-	{
-		if (ft_wash_btoken(info, tmp_b))
-			return (2147483647);
-		if (tmp_b->sc == -1)
-		{
-			ft_launch_cmd(info, tmp_b, sib_child, pid[i]);
-			info->nb_cmd++;
-			tmp_b->sc = info->status;
+			b_tokens->sc = info->status;
 			i++;
 		}
-		if (tmp_b->sc != 0 && tmp_b->sibling)
-			tmp_b = tmp_b->sibling;
-		else
-			break ;
+		b_tokens = b_tokens->sibling;
 	}
 	return (0);
-}*/
+}
 
-int	ft_exec_simple(t_info *info, t_big_token *b_tokens, int sib_child)
+int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
+{
+	t_big_token	*tmp_b;
+	int	*pid;
+	int	i;
+
+	tmp_b = b_tokens;
+	i = 0;
+	while (tmp_b && ++i)
+		tmp_b = tmp_b->sibling;
+	pid = ft_calloc(sizeof(int), i);
+		if (!pid)
+			return (1);
+	tmp_b = b_tokens;
+	if (pipe(info->pdes) == -1)
+		return (ft_error(5, info, NULL));
+	if (ft_exec_pipex(info, b_tokens, pid) == 2147483647)
+		return (2147483647);
+	i = -1;
+	while (++i < info->nb_cmd - 1)
+		waitpid(pid[i], &pid[i], 0);
+	free(pid);
+	return (0);
+}
+
+int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 {
 	t_big_token	*tmp_b;
 
-	ft_open_fd(b_tokens);
 	tmp_b = b_tokens;
-//	printf("value b_token\n");
-//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-//	printf("\n");
 	if (ft_wash_btoken(info, tmp_b))
 		return (2147483647);
 	if (tmp_b->sc == -1)
 	{
-		ft_launch_cmd(info, tmp_b, sib_child, -1);
+		ft_launch_cmd(info, tmp_b);
 		tmp_b->sc = info->status;
 	}
-	ft_close_fd(b_tokens);
 	return (0);
 }
 
 int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 {
-	int	*pid;
-	int	i;
-	t_big_token	*tmp_b;
-
-	pid = NULL;
 	info->nb_cmd = 0;
-	i = 0;
-	tmp_b = b_tokens;
-	while (tmp_b && ++i)
-		tmp_b = tmp_b->sibling;
-//	printf("nb_cmd = %d\n", i);
-	if (sib_child != 1)
-	{
-		pid = ft_calloc(sizeof(int), i);
-		if (!pid)
-			return (1);
-	}
-	i = 0;
-	//	printf("value b_token\n");
-	//	print_s_tokens(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
-	//	printf("\n");
-	//	printf("b_token fdin = %d && fdout = %d\n", b_tokens->fdin, b_tokens->fdout);
+	if (ft_open_fd(b_tokens))
+		return (ft_error(6, info, NULL));
 	if (sib_child >= 1 && sib_child <= 3)
-		ft_exec_simple(info, b_tokens, sib_child);
+		ft_exec_simple(info, b_tokens);
 	else if (sib_child == 4)
-		ft_exec_pipex(info, b_tokens, sib_child, pid);
-	if (pid)
-	{
-		while (i < info->nb_cmd - 1)
-		{
-			waitpid(pid[i], &pid[i], 0);
-		//	printf("je wait une commande\n");
-			i++;
-		}
-		free(pid);
-	}
+		ft_init_pipex(info, b_tokens);
+	ft_close_fd(b_tokens);
 	return (0);
-	//	printf("b_tok->sc = %d\n", b_tokens->sc);
 }
 
 void	give_parent_sc(t_big_token **child, t_big_token **parent)
@@ -282,16 +200,17 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 	i = 0;
 	tmp_b = *b_tokens;
 	tmp_s = info->tokens;
+//	printf("b_tokens->type = %d\n", (*b_tokens)->type);
 	while (tmp_b)
 	{
 //		printf("COUCOU, je suis apres le tmp_b "); print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length); printf("\n"); printf("type = %d\n", tmp_b->type);
 //		if ((!tmp_b->parent && !i) || (tmp_b->parent && tmp_b->parent->par))
 		if (tmp_b->child && tmp_b->sc == -1)
 		{
-			if (!tmp_b->par || (tmp_b->par && !tmp_b->sibling))
+			if (!tmp_b->par)// || (tmp_b->par && !tmp_b->sibling))
 				rec_exec(info, &(tmp_b->child), 0);
 		}
-		else if (!i && no_sib_has_child(tmp_b) && tmp_b->parent && tmp_b->sc == -1 && tmp_b->type == TOK_LEFT_PIPE)
+		else if ((!i && no_sib_has_child(tmp_b) && tmp_b->parent && tmp_b->sc == -1 && tmp_b->type == TOK_LEFT_PIPE))
 		{
 //			printf("value b_token si sibling pas child: "); print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length); printf("\n"); printf("je lance sibling sans child !! (start = %d && length = %d)\n", tmp_b->ind_tok_start, tmp_b->length);
 			if (exec_the_bulk(info, no_sib_has_child(tmp_b), tmp_b))
@@ -320,11 +239,11 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 		tmp_b = tmp_b->sibling;
 		i++;
 	}
-	if (tmp_b && tmp_b->sc == -1 && !tmp_b->child) //execute le bloc tmp_b tout seul and get the sc;
+	if (tmp_b && tmp_b->sc == -1)// && !tmp_b->child) //execute le bloc tmp_b tout seul and get the sc;
 	{
-	//	printf("value b_token (commande solo) \n");
-	//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-	//	printf("\n");
+//		printf("value b_token (commande solo) \n");
+//		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+//		printf("\n");
 		if (exec_the_bulk(info, 1, tmp_b))
 			return (1);
 		if (tmp_b->parent)

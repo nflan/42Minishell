@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 22:43:19 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/16 16:51:58 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_AT] = TOK_WORD,
 		[CHR_ALPHA] = TOK_WORD,
 		[CHR_OP_BRACKET] = TOK_IDK,
-		[CHR_ANTI_SLASH] = TOK_QUOTER, // j'ai change c'etait quoter
+		[CHR_ANTI_SLASH] = TOK_QUOTER,
 		[CHR_CL_BRACKET] = TOK_IDK,
 		[CHR_CIRCUM] = TOK_IDK,
 		[CHR_UNDERSCORE] = TOK_WORD,
@@ -297,9 +297,10 @@ int	ft_wash_btoken(t_info *info, t_big_token *b_tokens);
 int	ft_check_builtins(t_info *info, t_big_token *b_tokens);
 int	ft_builtins(t_info *info, t_big_token *b_tokens);
 int	ft_launch_sibling(t_info *info, t_big_token *b_tokens);
-void	ft_close_cmd(t_info *info, t_big_token *b_tokens, int sib_child, pid_t child);
+void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child);
 int	ft_lead_fd(t_info *info, t_big_token *b_tokens);
-int	ft_launch_cmd(t_info *info, t_big_token *b_tokens, int sib_child, int pid);
+int	ft_launch_cmd(t_info *info, t_big_token *b_tokens);
+int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid);
 int	ft_find_cmd(t_info *info);
 
 //-----------builtins----------------------------------------
@@ -328,7 +329,7 @@ char	*ft_get_env_value(t_info *info, char *name);
 
 //----------ft_pipex.c---------------------------------
 int				ft_do_pipex(t_info *info, t_big_token *b_tokens);
-int				ft_pipex(t_info *info, t_big_token *b_tokens, int sib_child);
+int				ft_pipex(t_info *info, t_big_token *b_tokens);
 
 //---------ft_pipex_tools.c----------------------------
 //int				ft_fdout_me(t_info *info);

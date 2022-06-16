@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 21:37:33 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/16 14:58:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,9 +292,6 @@ int	main(int ac, char **av, char **envp)
 			{
 				if (info.nb_cmd != 10)
 					rec_exec(&info, &info.parse, 0);
-		//			if (ft_find_cmd(&info) == 2147483647)
-		//			ft_exit(&info, NULL, NULL);
-	//	printf("info.status = %d\n", info.status);
 				ret = info.status;
 				ft_free_all(&info, NULL);
 			}
@@ -304,5 +301,4 @@ int	main(int ac, char **av, char **envp)
 	}
 	ft_free_env(info.env);
 	ft_exit(&info, NULL);
-//	return (rl_clear_history(), ret);
 }

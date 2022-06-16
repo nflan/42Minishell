@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 22:11:35 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/16 17:13:08 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	print_tab(char **tab)
 	i = 0;
 	if (tab)
 	{
+		printf("\nvoici le b_tokens avec ses args: ");
 		while (tab[i])
 		{
 			printf("%s\n", tab[i]);
@@ -44,8 +45,8 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
 		printf("\n");
 		if (tmp_b->child)
-			print_all_child(&(tmp_b->child), tokens, i, j);
-		else
+		print_all_child(&(tmp_b->child), tokens, i, j);
+			else
 			printf("\nje n'ai pas de child moi!!\n");
 		tmp_b = tmp_b->sibling;
 		i++;
@@ -80,16 +81,16 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 	while (tmp_b)
 	{
 		printf("   --->>    ");
-		print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
-	//	print_tab((*b_tokens)->cmd_args);
-		printf("\n");
+	//	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
+		print_tab(tmp_b->cmd_args);
+	//	printf("\n");
 		printf("It's type is: %d\n", tmp_b->type);
 		printf("It's start is: %d\n", tmp_b->ind_tok_start);
 		printf("It's length is: %d\n", tmp_b->length);
 		printf("It's par_pam is: %d\n", tmp_b->par);
 		printf("It's rank is: %d\n", k);
-		printf("It's fd_in is: %d\n", *tmp_b->fdin);
-		printf("It's fd_out %d\n", *tmp_b->fdout);
+//		printf("It's fd_in is: %d\n", *tmp_b->fdin);
+//		printf("It's fd_out %d\n", *tmp_b->fdout);
 		if (tmp_b->parent)
 		printf("It's got a PARENT!!\n");
 		else if (!(tmp_b->parent))

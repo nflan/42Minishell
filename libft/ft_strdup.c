@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:20:05 by nflan             #+#    #+#             */
-/*   Updated: 2022/05/20 11:51:14 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/16 15:13:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ char	*ft_strdup(const char *src)
 	char			*str;
 
 	len = ft_strlen((char *)src);
-	str = malloc(sizeof(char) * (len + 1));
+	str = ft_calloc(sizeof(char), (len + 1));
 	if (!str)
 		return (0);
 	while (*src)
 		*str++ = *src++;
-	*str = '\0';
 	return (str - len);
 }
 

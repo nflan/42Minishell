@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 22:40:55 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/16 16:49:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,21 @@ int	ft_do_pipex(t_info *info, t_big_token *b_tokens)
 	return (info->status);
 }
 
-int	ft_pipex(t_info *info, t_big_token *b_tokens, int sib_child)
+int	ft_pipex(t_info *info, t_big_token *b_tokens)
 {
-	if (sib_child < 4)
-		info->pdes[0] = b_tokens->fdin[b_tokens->rd_inouthd[0]];
-	if (!info->nb_cmd && (sib_child == 4))
+	if (!info->nb_cmd)
 	{
 //		printf("do pipex\n");
 	//	printf("b_tokens->start = %d && length = %d\n", b_tokens->ind_tok_start, b_tokens->length);
 //		print_s_tokens(&info->tokens,  b_tokens->ind_tok_start, b_tokens->length);
 		close(info->pdes[0]);
-		dup2(b_tokens->fdin[b_tokens->rd_inouthd[0]], STDIN_FILENO);
+		if (b_tokens->rd_inouthd[0])
+			dup2(b_tokens->fdin[b_tokens->rd_inouthd[0 - 1]], STDIN_FILENO);
+		else
+			dup2(b_tokens->fdin[0], STDIN_FILENO);
 		dup2(info->pdes[1], STDOUT_FILENO);
 	}
-	else if (info->nb_cmd && sib_child == 4 && b_tokens->type == TOK_LEFT_PIPE)
+	else if (info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
 	{
 	//	printf("pipe to pipe\n");
 		dup2(info->pdes[0], STDIN_FILENO);
@@ -63,7 +64,10 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens, int sib_child)
 	{
 //		printf("pipe end\n");
 		dup2(info->pdes[0], STDIN_FILENO);
-		dup2(b_tokens->fdout[b_tokens->rd_inouthd[1]], STDOUT_FILENO);
+		if (b_tokens->rd_inouthd[1])
+			dup2(b_tokens->fdout[b_tokens->rd_inouthd[0]], STDOUT_FILENO);
+		else
+			dup2(b_tokens->fdout[b_tokens->rd_inouthd[1]], STDOUT_FILENO);
 	}
 	if (b_tokens->par == 1)
 	{

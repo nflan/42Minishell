@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 22:33:41 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/16 16:55:46 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,7 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 		tmp = tmp->next;
 		i++;
 	}
-	if (count < 2)
-		(*tmp_b)->cmd_args = ft_calloc(2, sizeof(char *));
-	else
-		(*tmp_b)->cmd_args = ft_calloc(count + 1, sizeof(char *));
+	(*tmp_b)->cmd_args = ft_calloc(count + 1, sizeof(char *));
 	(*tmp_b)->cmd_args_num = count;
 }
 

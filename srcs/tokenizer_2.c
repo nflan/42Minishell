@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 22:31:29 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/16 16:58:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*ft_strncpy(char *str, int n)
 	i = 0;
 	if (!str)
 		return (NULL);
-	ret = malloc((n + 1) * sizeof(char));
+	ret = ft_calloc((n + 1), sizeof(char));
 	if (!ret)
 		return (NULL);
 	while (i < n)
@@ -94,7 +94,6 @@ char	*ft_strncpy(char *str, int n)
 		ret[i] = str[i];
 		i++;
 	}
-	ret[i] = '\0';
 	return (ret);
 }
 
