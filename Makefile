@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nflan <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/04/05 15:05:20 by nflan             #+#    #+#              #
-#    Updated: 2022/06/10 16:00:35 by nflan            ###   ########.fr        #
+#    Created: 2022/06/16 17:53:03 by omoudni           #+#    #+#              #
+#    Updated: 2022/06/16 19:22:37 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,51 +14,50 @@ vpath %.h libft
 vpath ft_%.c libft
 vpath ft_%.o libft
 
-sources = srcs/main.c srcs/ft_cd.c srcs/ft_export.c srcs/ft_tools.c srcs/ft_builtins.c\
-		  srcs/ft_pipex_tools.c srcs/ft_pipex.c srcs/ft_global.c srcs/ft_tools2.c\
-		  srcs/big_tokenizer_1.c srcs/big_tokenizer_2.c srcs/big_tokenizer_3.c\
-		  srcs/big_tokenizer_4.c srcs/parser.c srcs/tokenizer_1.c srcs/tokenizer_2.c\
-		  srcs/syntax_errorinizer_1.c srcs/syntax_errorinizer_2.c\
-		  srcs/tree_manipulator.c srcs/ft_launch_cmd.c srcs/ft_echo.c srcs/main_O.c\
-		  srcs/printer.c srcs/executer.c
+SRC_DIR = srcs/
+OBJ_DIR = bin/
+INC_DIR = include/
+LIB_DIR = libft/
 
-INC = include/minishell.h
+SRCS = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
+		  ft_pipex_tools.c ft_pipex.c ft_global.c ft_tools2.c\
+		  big_tokenizer_1.c big_tokenizer_2.c big_tokenizer_3.c\
+		  big_tokenizer_4.c parser.c tokenizer_1.c tokenizer_2.c\
+		  syntax_errorinizer_1.c syntax_errorinizer_2.c\
+		  tree_manipulator.c ft_launch_cmd.c ft_echo.c main_O.c\
+		  printer.c executer.c
 
-objets = ${sources:.c=.o}
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS:%.c=%.o))
 
-LIBFT = libft/libft.a
+MINISHELL = minishell
 
-NAME = minishell
+LIBPATH = -L$(LIB_DIR)
+INCPATH = -I$(INC_DIR) -I$(LIB_DIR)
+LIB = ft
 
-DEBUG = -g3 -fsanitize=address
+all: $(MINISHELL)
 
-.c.o :
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+LIBFT:
+	make -C $(LIB_DIR)
 
-all:	${NAME}
+$(MINISHELL): $(OBJS) LIBFT
+	$(CC) $(OBJS) $(CFLAGS) $(LIBPATH) -l$(LIB) -lreadline -o $(MINISHELL)
 
-$(NAME):	${objets} ${INC} ${HEADER} ${LIBFT}
-	${CC} ${CFLAGS} ${objets} ${LIBFT} -I ${INC} -lreadline -g -o ${NAME}
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
+	$(CC) $(INCPATH) $(CFLAGS) -o $@ -c $<
 
--include libft/Makefile
-
-ft_%.o : ft_%.c
-	${CC} ${CFLAGS} -c $< -o $@
-
-$(LIBFT):	${SRCS} ${OBJS} libft.h
-	${MAKE} -C libft/
-
-$(objets):	${INC}
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 clean:
-	$(MAKE) clean -C libft/
-	${RM} ${objets} 
+	make clean -C $(LIB_DIR)
+	rm -rf $(OBJ_DIR)
 
 fclean:
-	$(MAKE) fclean -C libft/
-	${RM} ${NAME}
-	${RM} ${objets}
+	rm -rf $(OBJ_DIR)
+	make fclean -C $(LIB_DIR)
+	rm -f $(minishell)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft
