@@ -8,7 +8,7 @@ make: *** No rule to make target 'include/minishell.h', needed by 'srcs/main.o'.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun 16 16:43:24 2022
+# Make data base, printed on Thu Jun 16 17:19:15 2022
 
 # Variables
 
@@ -53,7 +53,7 @@ _ = /usr/bin/code
 # makefile (from 'libft/Makefile', line 31)
 CFLAGS = -Wall -Wextra -Werror
 # environment
-JOURNAL_STREAM = 9:2605039
+JOURNAL_STREAM = 9:1760271
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'libft/Makefile', line 1)
@@ -75,15 +75,15 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101608/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 338510
+MANAGERPID = 497811
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-6a7e7af8-cce0-4f05-8a5d-2db8371f63c8.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-088867af-dfbf-432a-9e12-ae8cdfe022f2.sock
 # environment
 VSCODE_CWD = /mnt/nfs/homes/omoudni/minishell
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session3
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session7
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101608_sxz7wa
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_b0QuGX
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -93,7 +93,7 @@ GPG_AGENT_INFO = /run/user/101608/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/e3r11p13.clusters.42paris.fr:@/tmp/.ICE-unix/338945,unix/e3r11p13.clusters.42paris.fr:/tmp/.ICE-unix/338945
+SESSION_MANAGER = local/e3r12p12.clusters.42paris.fr:@/tmp/.ICE-unix/498303,unix/e3r12p12.clusters.42paris.fr:/tmp/.ICE-unix/498303
 # environment
 XDG_RUNTIME_DIR = /run/user/101608
 # environment
@@ -101,9 +101,9 @@ XDG_MENU_PREFIX = gnome-
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_CRASH_REPORTER_START_OPTIONS = {"companyName":"Microsoft","productName":"VSCode","submitURL":"appcenter://code?aid=fba07a4d-84bd-4fc8-a125-9640fc8ce171&uid=7fbc45ee-e378-4db2-923f-f5c4fc83123f&iid=7fbc45ee-e378-4db2-923f-f5c4fc83123f&sid=7fbc45ee-e378-4db2-923f-f5c4fc83123f","uploadToServer":true}
+ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = c75e8bff73fb4e149c588aeb44b65ddc
+INVOCATION_ID = f8e2e07a858c4bee94248a4c8f43229b
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -127,19 +127,19 @@ PWD = /mnt/nfs/homes/omoudni/minishell
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 338828
+SSH_AGENT_PID = 498267
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
 GTK_MODULES = gail:atk-bridge
 # environment
-VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /mnt/nfs/homes/omoudni
 # environment
 VSCODE_CLI = 1
 # environment
-VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/omoudni/.config/Code/CachedData/f80445acd5a3dadef24aa209168452a3d97cc326
+VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/omoudni/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
 LOGNAME = omoudni
 # environment
@@ -199,15 +199,13 @@ LANGUAGE = en
 # environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
-VSCODE_IPC_HOOK = /run/user/101608/vscode-6e3f0dc7-1.64.2-main.sock
+VSCODE_IPC_HOOK = /run/user/101608/vscode-6e3f0dc7-1.67.2-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
 MFLAGS = -pqrR
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
-# environment
-BREAKPAD_DUMP_LOCATION = /mnt/nfs/homes/omoudni/.config/Code/exthost Crash Reports
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
@@ -229,8 +227,6 @@ sources = srcs/main.c
 # automatic
 <F = $(notdir $<)
 # environment
-ELECTRON_RUN_AS_NODE = 1
-# environment
 PAGER = less
 # environment
 LC_ALL = C
@@ -241,11 +237,11 @@ HEADER = libft.h
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/a0c391cf_0dce_4970_affa_a16ce9cc91ba
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/94962c71_10a4_4ab1_a467_e5f36494ffef
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.80
+GNOME_TERMINAL_SERVICE = :1.77
 # default
 SUFFIXES := 
 # environment
@@ -265,9 +261,9 @@ TERM = xterm-256color
 # environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # environment
-VSCODE_PID = 339438
+VSCODE_PID = 498796
 # variable set hash-table stats:
-# Load=127/1024=12%, Rehash=0, Collisions=27/172=16%
+# Load=125/1024=12%, Rehash=0, Collisions=26/170=15%
 
 # Pattern-specific Variable Values
 
@@ -275,10 +271,9 @@ VSCODE_PID = 339438
 
 # Directories
 
-# . (device 56, inode 194015554): 30 files, no impossibilities.
+# . (device 61, inode 194015554): 30 files, no impossibilities.
 # libft/include: could not be stat'd.
- 
-# libft (device 56, inode 171187366): No files, no impossibilities so far.
+# libft (device 61, inode 171187366): No files, no impossibilities so far.
 
 # 30 files, no impossibilities in 3 directories.
 
@@ -288,6 +283,7 @@ ft_%.o: ft_%.c
 #  recipe to execute (from 'Makefile', line 40):
 	${CC} ${CFLAGS} -c $< -o $@
 
+ 
 # 1 implicit rules, 0 (0.0%) terminal.
 
 # Files
@@ -555,7 +551,6 @@ ft_strlcat.c:
 
 # Not a target:
 ft_bzero.c:
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -580,6 +575,7 @@ re: fclean all
 
 clean:
 #  Phony target (prerequisite of .PHONY).
+ 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -670,6 +666,6 @@ vpath ft_%.o libft
 # strcache performance: lookups = 125 / hit rate = 24%
 # hash-table stats:
 # Load=94/8192=1%, Rehash=0, Collisions=1/125=1%
-# Finished Make data base on Thu Jun 16 16:43:24 2022
+# Finished Make data base on Thu Jun 16 17:19:15 2022
 
  
