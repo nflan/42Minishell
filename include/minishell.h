@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/16 16:51:58 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 17:49:11 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_EXCLAM] = TOK_IDK,
 		[CHR_D_QUOTE] = TOK_QUOTER,
 		[CHR_COMMENT] = TOK_IDK,
-		[CHR_DOL] = TOK_EXPANDER,
+		[CHR_DOL] = TOK_WORD,
 		[CHR_PER] = TOK_IDK,
 		[CHR_AND] = TOK_OPERATOR,
 		[CHR_S_QUOTE] = TOK_QUOTER,
