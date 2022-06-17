@@ -6,7 +6,8 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/17 15:48:36 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 17:17:36 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 14:24:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +27,24 @@ static void handle_par_2(t_token **tmp_s, t_big_token *tmp_b, int *to_reduce, t_
 	(*to_reduce)++;
 }
 
-static void handle_par_3(t_big_token **tmp_b, int to_reduce, int adv_steps)
+static void handle_par_3(t_big_token **tmp_b, int to_reduce, int adv_steps, t_token **tokens)
 {
+	int		i;
+	t_token	*tmp_s;
+
+	i = 0;
+	tmp_s = *tokens;
 	(*tmp_b)->par = 1;
 	(*tmp_b)->length -= (2 + to_reduce);
 	(*tmp_b)->ind_tok_start += (1 + adv_steps);
+	(*tmp_b)->cmd_args_num = 1;
+	(*tmp_b)->cmd_args = ft_calloc(2, sizeof(char *));
+	while (i < (*tmp_b)->length)
+	{
+	move_tok_2_ind(&tmp_s, (*tmp_b)->ind_tok_start + i);
+	((*tmp_b)->cmd_args)[0] = ft_strjoin_free(((*tmp_b)->cmd_args)[0], tmp_s->value, 1);
+	i++;
+	}
 }
 
 static void init_params(int *adv_steps, int *to_reduce)
@@ -181,7 +195,6 @@ void handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_token **tokens, int 
 	int i;
 	int j;
 	int cl_ind;
-//	int to_where_check;
 	int type_red;
 	int len;
 	int to_reduce;
@@ -350,7 +363,7 @@ void handle_par(t_big_token **b_tokens, t_token **tokens)
 			{
 				end_par = tmp_s->index;
 				if (end_par == cl_par_ind(tokens, st_par))
-					handle_par_3(&tmp_b, params[1], params[0]);
+					handle_par_3(&tmp_b, params[1], params[0], tokens);
 			}
 			else if (tmp_s->token == TOK_WORD)
 			{
