@@ -6,10 +6,10 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/17 17:17:36 by nflan            ###   ########.fr       */
-/*   Updated: 2022/06/17 14:24:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/17 19:04:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../include/minishell.h"
 
@@ -136,11 +136,12 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 			red = 1;
 			j++;
 		}
-		if (tmp->token == TOK_WORD || tmp->token == TOK_PATH)
+		if (tmp->token == TOK_WORD)
 		{
+			printf("%s ", tmp->value);
 			if (!red)
 				count++;
-			else if (red && j == 3)
+			else if (red && j == 2)
 			{
 				count++;
 				j = 0;
@@ -308,26 +309,28 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 	{
 		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(i % 2))
 		{
-		//	printf("I entered in rd\n");
+			printf("I entered in rd\n");
+			printf("%s\n", tmp->value);
 			rd_inout_type(tmp->value, &type_red);
 			i++;
 			save_word = 1;
 		}
-		else if ((tmp->token == TOK_WORD || tmp->token == TOK_PATH) && !save_word)
+		else if ((tmp->token == TOK_WORD) && !save_word)
 		{
-//			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
+			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
 			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);
 			cmd_args_num--;
-			save_word = 0;
 		}
 		else if (tmp->token == TOK_WORD && (i % 2) && save_word)
 		{
-		//	printf("I entered red files\n");
+	printf("I entered red files\n");
+			printf("%s\n", tmp->value);
 			if (type_red == 1 || type_red == 2)
 				ft_fdnew(&(*tmp_b)->fd_in, tmp->value, type_red - 1);
 			else
 				ft_fdnew(&(*tmp_b)->fd_out, tmp->value, type_red - 3);
-		//	handle_red_files(tmp_b, tmp->value, &inouthd, type_red);
+			save_word = 0;
+//	handle_red_files(tmp_b, tmp->value, &inouthd, type_red);
 			i++;
 		}
 		tmp = tmp->next;
@@ -372,7 +375,7 @@ void handle_par(t_big_token **b_tokens, t_token **tokens)
 				handle_par_dir(&tmp_s, &tmp_b, tokens, st_par);
 			}
 		}
-		else
+		else if (!piped(tokens, tmp_b->ind_tok_start, tmp_b->length))
 		{
 			handle_dir(&tmp_b, tokens);
 			// tmp_b->par = 0;

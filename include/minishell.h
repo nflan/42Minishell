@@ -6,13 +6,10 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/06/17 17:49:11 by omoudni          ###   ########.fr       */
-=======
-/*   Updated: 2022/06/17 14:45:16 by nflan            ###   ########.fr       */
->>>>>>> c442577c9230b99d7e1c6dfcef3e6a395f393c98
+/*   Updated: 2022/06/17 18:25:29 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -240,8 +237,8 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_AST] = TOK_EXPANDER,
 		[CHR_PLUS] = TOK_OPERATOR,
 		[CHR_DASH_MINES] = TOK_WORD, // j'ai change c'etait operator
-		[CHR_POINT] = TOK_PATH,
-		[CHR_SLASH] = TOK_PATH,
+		[CHR_POINT] = TOK_WORD,
+		[CHR_SLASH] = TOK_WORD,
 		[CHR_NUM] = TOK_WORD,
 		[CHR_COLON] = TOK_PATH,
 		[CHR_SEMI_COLON] = TOK_WORD,
