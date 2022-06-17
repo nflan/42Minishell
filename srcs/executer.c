@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/17 17:00:11 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 17:45:43 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	ft_close_all_fd(t_fd *fd, int fd_type)
 		while (fd)
 		{
 			if (fd_type || (!fd_type && !fd->red))
-				if (fd->fd != 0 && fd->fd != 1)
+				if (fd->fd > 0)
 					close(fd->fd);
 			fd = fd->next;
 		}

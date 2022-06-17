@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 14:45:16 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 18:09:10 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,7 @@ int		ft_fill_envnew(t_env *env, char *line);
 t_env	*ft_envnew(char *line);
 
 //-----------ft_launch_cmd----------------------------------------
-int	ft_exit_cmd(t_info *info);
+int	ft_exit_cmd(t_info *info, char *str, int err);
 int	ft_wash_btoken(t_info *info, t_big_token *b_tokens);
 int	ft_check_builtins(t_info *info, t_big_token *b_tokens);
 int	ft_builtins(t_info *info, t_big_token *b_tokens);
@@ -363,6 +363,7 @@ void			extract_fds(t_big_token **tmp_b, t_token **tokens);
 //----------executer.c-------------------------------------------------------------------
 
 int				rec_exec(t_info *info, t_big_token **b_tokens, int and_or);
+void			ft_close_fd(t_big_token *b_tokens);
 
 //----------printer.c-------------------------------------------------------------------
 void			print_tab(char **tab);

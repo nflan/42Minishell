@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 17:07:35 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 18:11:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,10 @@ int	ft_do_pipex(t_info *info, t_big_token *b_tokens)
 	else
 	{
 		if (ft_command(info, b_tokens))
-		{
-			info->status = ft_putstr_error(": command not found\n");
-			ft_exit_cmd(info);
-		}
+			ft_exit_cmd(info, b_tokens->cmd_args[0], 1);
 		else
 			if (execve(b_tokens->cmd_args[0], b_tokens->cmd_args, b_tokens->envp) == -1)
-				return (ft_error(4, info, b_tokens));
+				exit (ft_error(4, info, b_tokens));
 	}
 	return (info->status);
 }
@@ -47,8 +44,6 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens)
 	if (!info->nb_cmd)
 	{
 //		printf("do pipex\n");
-	//	printf("b_tokens->start = %d && length = %d\n", b_tokens->ind_tok_start, b_tokens->length);
-//		print_s_tokens(&info->tokens,  b_tokens->ind_tok_start, b_tokens->length);
 		close(info->pdes[0]);
 		dup2(b_tokens->fdin, STDIN_FILENO);
 		dup2(info->pdes[1], STDOUT_FILENO);
@@ -69,7 +64,7 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens)
 	if (b_tokens->par == 1)
 	{
 		rec_exec(info, &(b_tokens)->child, 0);
-		ft_exit_cmd(info);
+		ft_exit_cmd(info, NULL, 0);
 	}
 	info->status = ft_do_pipex(info, b_tokens);
 	return (0);

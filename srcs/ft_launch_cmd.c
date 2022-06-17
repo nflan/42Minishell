@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 17:07:05 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 18:11:09 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,11 @@ int	ft_builtins(t_info *info, t_big_token *b_tokens)
 	return (1);
 }
 
-int	ft_exit_cmd(t_info *info)
+int	ft_exit_cmd(t_info *info, char *str, int err)
 {
+	info->status = err;
+	if (err == 1 && str)
+		ft_putstr_frror(str, ": command not found\n", 0);
 	if (info)
 		ft_free_all(info, info->env);
 	rl_clear_history();
@@ -195,10 +198,16 @@ int	ft_lead_fd(t_info *info, t_big_token *b_tokens)
 			return (ft_error(5, info, NULL));
 		info->pdes[1] = info->tmp[1];
 	}
-	if (b_tokens->fdin && b_tokens->fdin != 0)
+	if (b_tokens->fdin != 0)
+	{
+		printf("je suis utile pour rien !\n");
 		info->pdes[0] = b_tokens->fdin;
-	if (b_tokens->fdout && b_tokens->fdout != 1)
+	}
+	if (b_tokens->fdout != 1)
+	{
+		printf("je suis utile pour rien !\n");
 		info->pdes[1] = b_tokens->fdout;
+	}
 	return (0);
 }
 
@@ -213,7 +222,7 @@ int	ft_fork_par(t_info *info, t_big_token *b_tokens)
 	else if ((int) pid == 0)
 	{
 		rec_exec(info, &(b_tokens)->child, 0);
-		ft_exit_cmd(info);
+		ft_exit_cmd(info, NULL, 0);
 	}
 	waitpid(pid, &pid, 0);
 	if (WIFEXITED(pid))
@@ -235,7 +244,7 @@ int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid)
 	{
 		if (ft_pipex(info, b_tokens))
 			return (ft_free_cmd(b_tokens), 1);
-		ft_exit_cmd(info);
+		ft_exit_cmd(info, NULL, 0);
 	}
 	ft_close_cmd(info, b_tokens, pid);
 	return (info->status);
@@ -255,13 +264,10 @@ int	ft_do_solo(t_info *info, t_big_token *b_tokens)
 		dup2(b_tokens->fdout, STDOUT_FILENO);
 //		printf("b_tokens->fdout[b_tokens->rd_inouthd[1]] = %d\n", b_tokens->fdout[b_tokens->rd_inouthd[1 - 1]]);
 		if (ft_command(info, b_tokens))
-		{
-			info->status = ft_putstr_error(": command not found\n");
-			ft_exit_cmd(info);
-		}
+			ft_exit_cmd(info, b_tokens->cmd_args[0], 1);
 		else
 			if (execve(b_tokens->cmd_args[0], b_tokens->cmd_args, b_tokens->envp) == -1)
-				return (ft_error(4, info, b_tokens));
+				exit (ft_error(4, info, b_tokens));
 	}
 	waitpid(pid, &pid, 0);
 	if (WIFEXITED(pid))
