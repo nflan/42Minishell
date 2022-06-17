@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 12:13:30 by nflan             #+#    #+#              #
-#    Updated: 2022/06/17 10:59:17 by nflan            ###   ########.fr        #
+#    Updated: 2022/06/17 11:44:14 by nflan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 
 CC = cc
 
-RM = rm -f
+RM = rm -fr
 
 CFLAGS = -Wall -Wextra -Werror -g
 

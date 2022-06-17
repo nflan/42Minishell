@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 17:53:03 by omoudni           #+#    #+#              #
-#    Updated: 2022/06/17 11:03:22 by nflan            ###   ########.fr        #
+#    Updated: 2022/06/17 11:48:44 by nflan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJ_DIR = bin/
 INC_DIR = include/
 LIB_DIR = libft/
 
-SRCS = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
+sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  ft_pipex_tools.c ft_pipex.c ft_global.c ft_tools2.c\
 		  big_tokenizer_1.c big_tokenizer_2.c big_tokenizer_3.c\
 		  big_tokenizer_4.c parser.c tokenizer_1.c tokenizer_2.c\
@@ -27,37 +27,47 @@ SRCS = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  tree_manipulator.c ft_launch_cmd.c ft_echo.c main_O.c\
 		  printer.c executer.c ft_free.c
 
-OBJS = $(addprefix $(OBJ_DIR), $(SRCS:%.c=%.o))
+INC = include/minishell.h
 
-MINISHELL = minishell
+objets = $(addprefix $(OBJ_DIR), $(sources:%.c=%.o))
+
+LIBFT = libft/libft.a
+
+NAME = minishell
 
 LIBPATH = -L $(LIB_DIR)
 INCPATH = -I $(INC_DIR) -I $(LIB_DIR)
-LIB = ft
 
-all: $(MINISHELL)
+.c.o :
+	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-LIBFT:
-	make -C $(LIB_DIR)
+all:	${NAME}
 
-$(MINISHELL): $(OBJS) LIBFT
-	$(CC) $(OBJS) $(CFLAGS) $(LIBPATH) -l$(LIB) -lreadline -o $(MINISHELL)
+$(NAME):	${objets} ${INC} ${HEADER} ${LIBFT}
+	${CC} ${CFLAGS} ${objets} ${LIBFT} -I ${INC} -lreadline -o ${NAME}
+
+-include libft/Makefile
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
-	$(CC) $(INCPATH) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
+$(LIBFT):	${SRCS} ${OBJS} libft.h
+	${MAKE} -C libft/
+
+$(objets):	${INC}
+
 clean:
-	make clean -C $(LIB_DIR)
-	rm -rf $(OBJ_DIR)
+	$(MAKE) clean -C $(LIB_DIR)
+	${RM} ${OBJ_DIR}
 
 fclean:
-	rm -rf $(OBJ_DIR)
-	make fclean -C $(LIB_DIR)
-	rm -f $(MINISHELL)
+	$(MAKE) fclean -C $(LIB_DIR)
+	${RM} ${OBJ_DIR}
+	${RM} ${NAME}
 
 re: fclean all
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re
