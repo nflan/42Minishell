@@ -6,6 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
+/*   Updated: 2022/06/17 17:17:36 by nflan            ###   ########.fr       */
 /*   Updated: 2022/06/17 14:24:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -71,45 +72,46 @@ int check_if_piped(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 	return (0);
 }
 
-int *count_red_inout(t_big_token **tmp_b, int ind, t_token **tokens, int len)
+void	ft_fdadd_back(t_fd **alst, t_fd *new)
 {
-	t_token *tmp;
-	int i;
+	t_fd	*tmp;
 
-	tmp = *tokens;
-	i = 0;
-	move_tok_2_ind(&tmp, ind);
-	while (tmp && i < len)
+	tmp = NULL;
+	tmp = *alst;
+	if (alst && new)
 	{
-		if (tmp->token == TOK_REDIRECTOR_LEFT && ft_strlen(tmp->value) == 1)
-			(((*tmp_b)->rd_inouthd)[0])++;
-		else if (tmp->token == TOK_REDIRECTOR_LEFT && ft_strlen(tmp->value) == 2)
-			(((*tmp_b)->rd_inouthd)[2])++;
-		else if (tmp->token == TOK_REDIRECTOR_RIGHT)
-			(((*tmp_b)->rd_inouthd)[1])++;
-		tmp = tmp->next;
-		i++;
+		if (*alst == NULL)
+			*alst = new;
+		else
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new;
+		}
 	}
-	if (((*tmp_b)->rd_inouthd)[0])
-	{
-		(*tmp_b)->red_in = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[0]);
-		(*tmp_b)->infile = ft_calloc(sizeof(char *), ((*tmp_b)->rd_inouthd)[0] + 1);
-		(*tmp_b)->err_in = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[0]);
-		(*tmp_b)->fdin = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[0]);
-	}
-	else
-		(*tmp_b)->fdin = ft_calloc(sizeof(int), 1);
-	if (((*tmp_b)->rd_inouthd)[1])
-	{
-		(*tmp_b)->red_out = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[1]);
-		(*tmp_b)->outfile = ft_calloc(sizeof(char *), ((*tmp_b)->rd_inouthd)[1] + 1);
-		(*tmp_b)->err_out = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[1]);
-		(*tmp_b)->fdout = ft_calloc(sizeof(int), ((*tmp_b)->rd_inouthd)[1]);
-	}
-	else
-		(*tmp_b)->fdout = ft_calloc(sizeof(int), 1);
-	if (((*tmp_b)->rd_inouthd)[2])
-		(*tmp_b)->delimitator = ft_calloc(sizeof(char *), ((*tmp_b)->rd_inouthd)[2] + 1);
+}
+
+int	ft_fill_fdnew(t_fd *fd, char *file, int red)
+{
+	fd->red = red;
+	if (!file)
+		return (1);
+	fd->file = ft_strdup(file);
+	if (!fd->file)
+		return (1);
+	return (0);
+}
+
+int	ft_fdnew(t_fd **fd, char *file, int red)
+{
+	t_fd	*new;
+
+	new = ft_calloc(sizeof(t_fd), 1);
+	if (!new)
+		return (1);
+	if (ft_fill_fdnew(new, file, red))
+		return (1);
+	ft_fdadd_back(fd, new);
 	return (0);
 }
 
@@ -154,51 +156,38 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 	(*tmp_b)->cmd_args_num = count;
 }
 
-void rd_inout_type(char *str, t_big_token **tmp_b, int *type_red, int (*inouthd)[3])
+void rd_inout_type(char *str, int *type_red)
 {
 	if (ft_strlen(str) == 1 && !ft_strncmp(str, "<", 1))
-	{
-	//	if (!((*tmp_b)->red_in))
-	//		printf("Yesss!\n");
-		(*tmp_b)->red_in[((*tmp_b)->rd_inouthd)[0] - (*inouthd)[0]] = 1;
 		(*type_red) = 1;
-	}
 	if (ft_strlen(str) == 2 && !ft_strncmp(str, "<<", 2))
-	{
 		(*type_red) = 2;
-	}
 	if (ft_strlen(str) == 1 && !ft_strncmp(str, ">", 1))
-	{
-		(*tmp_b)->red_out[((*tmp_b)->rd_inouthd)[1] - (*inouthd)[1]] = 1;
 		(*type_red) = 3;
-	}
 	if (ft_strlen(str) == 2 && !ft_strncmp(str, ">>", 2))
-	{
-		(*tmp_b)->red_out[((*tmp_b)->rd_inouthd)[1] - (*inouthd)[1]] = 2;
 		(*type_red) = 4;
-	}
 }
 
-void handle_red_files(t_big_token **tmp_b, char *tmp_value, int (*inouthd)[3], int type_red)
+/*void handle_red_files(t_big_token **tmp_b, char *tmp_value, int (*inouthd)[3], int type_red)
 {
 	if (type_red == 1)
 	{
-		(*tmp_b)->infile[((*tmp_b)->rd_inouthd)[0] - (*inouthd)[0]] = ft_strdup(tmp_value);
+//		(*tmp_b)->infile[((*tmp_b)->rd_inouthd)[0] - (*inouthd)[0]] = ft_strdup(tmp_value);
 		((*inouthd)[0])--;
 	}
 	if (type_red == 2)
 	{
-		(*tmp_b)->delimitator[((*tmp_b)->rd_inouthd)[2] - (*inouthd)[2]] = ft_strdup(tmp_value);
+//		(*tmp_b)->delimitator[((*tmp_b)->rd_inouthd)[2] - (*inouthd)[2]] = ft_strdup(tmp_value);
 		((*inouthd)[2])--;
 	}
 	if (type_red == 3 || type_red == 4)
 	{
 //		printf("got here to fill the outfile with tmp->value: %s!\n", tmp_value);
 //		printf("genius that I thought I was. Here are rd_inouthd[1]: %d and (*inouthd)[1]: %d\n", ((*tmp_b)->rd_inouthd)[1], (*inouthd)[1]);
-		(*tmp_b)->outfile[((*tmp_b)->rd_inouthd)[1] - (*inouthd)[1]] = ft_strdup(tmp_value);
+//		(*tmp_b)->outfile[((*tmp_b)->rd_inouthd)[1] - (*inouthd)[1]] = ft_strdup(tmp_value);
 		((*inouthd)[1])--;
 	}
-}
+}*/
 
 void handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_token **tokens, int ind_word)
 {
@@ -208,7 +197,6 @@ void handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_token **tokens, int 
 	int cl_ind;
 	int type_red;
 	int len;
-	int inouthd[3];
 	int to_reduce;
 	int to_start;
 
@@ -249,10 +237,6 @@ void handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_token **tokens, int 
 				return;
 			}
 			to_reduce += len;
-			count_red_inout(tmp_b, cl_ind + 1, tokens, len);
-			inouthd[0] = ((*tmp_b)->rd_inouthd)[0];
-			inouthd[1] = ((*tmp_b)->rd_inouthd)[1];
-			inouthd[2] = ((*tmp_b)->rd_inouthd)[2];
 		}
 	}
 	type_red = 0;
@@ -266,7 +250,7 @@ void handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_token **tokens, int 
 		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(i % 2))
 		{
 	//		printf("I entered here with : %s\n", tmp->value);
-			rd_inout_type(tmp->value, tmp_b, &type_red, &inouthd);
+			rd_inout_type(tmp->value, &type_red);
 	//		printf("typered: %d\n", type_red);
 			i++;
 		}
@@ -278,7 +262,10 @@ void handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_token **tokens, int 
 		}
 		if (tmp->token == TOK_WORD && (i % 2))
 		{
-			handle_red_files(tmp_b, tmp->value, &inouthd, type_red);
+			if (type_red == 1 || type_red == 2)
+				ft_fdnew(&(*tmp_b)->fd_in, tmp->value, type_red - 1);
+			else
+				ft_fdnew(&(*tmp_b)->fd_out, tmp->value, type_red - 3);
 			i++;
 		}
 		tmp = tmp->next;
@@ -297,7 +284,6 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 //	int to_where_check;
 	int type_red;
 	int len;
-	int inouthd[3];
 	int save_word;
 	int	cmd_args_num;
 
@@ -309,11 +295,7 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 	type_red = 0;
 	save_word = 0;
 	move_tok_2_ind(&tmp, (*tmp_b)->ind_tok_start);
-	count_red_inout(tmp_b, (*tmp_b)->ind_tok_start, tokens, (*tmp_b)->length);
 	count_cmd_args(tmp_b, (*tmp_b)->ind_tok_start, tokens, (*tmp_b)->length);
-	inouthd[0] = ((*tmp_b)->rd_inouthd)[0];
-	inouthd[1] = ((*tmp_b)->rd_inouthd)[1];
-	inouthd[2] = ((*tmp_b)->rd_inouthd)[2];
 	cmd_args_num = (*tmp_b)->cmd_args_num;
 //	printf("choufi hada: %d\n", cmd_args_num);
 //	printf("tmpb_len: %d et tmpb_start: %d\n", (*tmp_b)->length, (*tmp_b)->ind_tok_start);
@@ -327,7 +309,7 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(i % 2))
 		{
 		//	printf("I entered in rd\n");
-			rd_inout_type(tmp->value, tmp_b, &type_red, &inouthd);
+			rd_inout_type(tmp->value, &type_red);
 			i++;
 			save_word = 1;
 		}
@@ -341,7 +323,11 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 		else if (tmp->token == TOK_WORD && (i % 2) && save_word)
 		{
 		//	printf("I entered red files\n");
-			handle_red_files(tmp_b, tmp->value, &inouthd, type_red);
+			if (type_red == 1 || type_red == 2)
+				ft_fdnew(&(*tmp_b)->fd_in, tmp->value, type_red - 1);
+			else
+				ft_fdnew(&(*tmp_b)->fd_out, tmp->value, type_red - 3);
+		//	handle_red_files(tmp_b, tmp->value, &inouthd, type_red);
 			i++;
 		}
 		tmp = tmp->next;
@@ -366,9 +352,7 @@ void handle_par(t_big_token **b_tokens, t_token **tokens)
 		tmp_s = *tokens;
 		move_tok_2_ind(&tmp_s, tmp_b->ind_tok_start);
 		if (tmp_s->token == TOK_SEP && tmp_b->length > 2)
-		{
 			handle_par_1(&tmp_s, tmp_b, &(params[0]), &(params[1]));
-		}
 		if (tmp_s->token == TOK_EXPANDER_OP && tmp_b->length > 2)
 		{
 			st_par = tmp_s->index;

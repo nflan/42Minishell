@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:30:47 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 17:44:40 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 15:47:32 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_error_2(t_info *info, t_big_token *b_tokens)
 {
-	dup2(b_tokens->fdin[b_tokens->rd_inouthd[0]], info->pdes[0]);
+	dup2(b_tokens->fdin, info->pdes[0]);
 	(void) info;
 	perror("FD error");
 }

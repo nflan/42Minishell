@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/16 14:58:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 16:45:32 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,69 +37,6 @@ void	ft_signal(int sig)
 	rl_redisplay();
 	sc = sig;
 	signal(SIGINT, &ft_signal);
-}
-
-char	*ft_cmd_line(char *str)
-{
-	char	*cmd;
-	int		i;
-	int		y;
-
-	i = -1;
-	cmd = NULL;
-	if (str)
-		while (*str && *str == ' ')
-			str++;
-	if (str)
-		while (str[++i])
-			if ((str[i] == '|' && str[i + 1] == '|')
-				|| (str[i] == '&' && str[i + 1] == '&'))
-				break ;
-	cmd = ft_calloc(sizeof(char *), i);
-	if (!cmd)
-		return (NULL);
-	y = -1;
-	while (++y < i)
-		cmd[y] = str[y];
-	return (cmd);
-}
-
-char	*ft_onecmd(t_info *info, int i)
-{
-	char	*cmd_line;
-	char	*cmd;
-	int		y;
-
-	cmd = NULL;
-	y = 0;
-	cmd_line = ft_cmd_line(info->rdline);
-	if (!cmd_line)
-		return (NULL);
-	if (i)
-	{
-		y = -1;
-		while (i && cmd_line[++y])
-			if (cmd_line[y - 1] == '|')
-				i--;
-	}
-	while (cmd_line[y + i] && cmd_line[y + i] != '|')
-		i++;
-	printf("i = %d\n", i);
-	cmd = ft_calloc(sizeof(char), i);
-	if (!cmd)
-		return (NULL);
-	i = -1;
-	y -= 1;
-	while (cmd_line[++y] && cmd_line[++i] != '|')
-		cmd[i] = cmd_line[y];
-	return (cmd);
-}
-
-void	ft_print_cmd(t_cmd	*cmd)
-{
-	printf("cmd->line = %s\n", cmd->cmd);
-	printf("cmd->fdin = %d\n", cmd->fdin);
-	printf("cmd->fdout = %d\n", cmd->fdout);
 }
 
 void	ft_envadd_back(t_env **alst, t_env *new)

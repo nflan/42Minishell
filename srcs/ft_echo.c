@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/06 17:37:09 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 15:48:58 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_handle_ret(t_big_token *b_tokens, char *ret, int i)
 int	ft_echo_none(t_big_token *b_tokens, int i)
 {
 	if (i == 1)
-		ft_putstr_fd("\n", *b_tokens->fdout);
+		ft_putstr_fd("\n", b_tokens->fdout);
 	return (0);
 }
 
@@ -102,7 +102,7 @@ int	ft_echo(t_info *info, t_big_token *b_tokens)
 		return (1);
 	if (!option)
 		tmp = ft_strjoin_free(tmp, "\n", 1);
-	ft_putstr_fd(tmp, *b_tokens->fdout);
+	ft_putstr_fd(tmp, b_tokens->fdout);
 	free(tmp);
 	return (0);
 }

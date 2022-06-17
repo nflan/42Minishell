@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:18:51 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 17:52:54 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 12:27:47 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ t_big_token *ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length
 	tok->ind_tok_start = ind_tok_start;
 	tok->length = length;
 	tok->par = 0;
-	tok->rd_inouthd[0] = 0;
-	tok->rd_inouthd[1] = 0;
-	tok->rd_inouthd[2] = 0;
+	tok->fdin = 0;
+	tok->fdout = -1;
+//	tok->rd_inouthd[0] = 0;
+//	tok->rd_inouthd[1] = 0;
+//	tok->rd_inouthd[2] = 0;
 	tok->sc = -1;
 //	tok->parent = NULL;
 //	tok->child = NULL;

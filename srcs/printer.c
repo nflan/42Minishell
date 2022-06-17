@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/16 17:13:08 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 15:16:16 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,23 @@ void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j)
 	}
 }
 
+void	print_all_fd(t_fd *fd)
+{
+	if (fd)
+	{
+		while (fd)
+		{
+			printf("\t");
+			printf("fd = %d ", fd->fd);
+			printf("red = %d ", fd->red);
+			if (fd->file)
+				printf("file = %s", fd->file);
+			printf("\n");
+			fd = fd->next;
+		}
+	}
+}
+
 void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 {
 	t_big_token	*tmp_b;
@@ -89,8 +106,16 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 		printf("It's length is: %d\n", tmp_b->length);
 		printf("It's par_pam is: %d\n", tmp_b->par);
 		printf("It's rank is: %d\n", k);
-//		printf("It's fd_in is: %d\n", *tmp_b->fdin);
-//		printf("It's fd_out %d\n", *tmp_b->fdout);
+		if (tmp_b->fd_in)
+		{
+			printf("It's all fdin:\n");
+			print_all_fd(tmp_b->fd_in);
+		}
+		if (tmp_b->fd_out)
+		{
+			printf("It's all fdout:\n");
+			print_all_fd(tmp_b->fd_out);
+		}
 		if (tmp_b->parent)
 		printf("It's got a PARENT!!\n");
 		else if (!(tmp_b->parent))

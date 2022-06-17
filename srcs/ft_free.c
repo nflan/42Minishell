@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 21:19:16 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 21:50:10 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 15:51:36 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,30 +60,29 @@ void	ft_free_b_tokens(t_big_token *b_tokens)
 	}
 }
 
+void	ft_free_fd(t_fd *fd)
+{
+	if (fd)
+	{
+		if (fd->next)
+			ft_free_fd(fd->next);
+		if (fd->file)
+			free(fd->file);
+		free(fd);
+		fd = NULL;
+	}
+}
+
 void	ft_free_cmd(t_big_token *b_tokens)
 {
-	if (b_tokens->red_in)
-		free(b_tokens->red_in);
-	if (b_tokens->red_out)
-		free(b_tokens->red_out);
-	if (b_tokens->delimitator)
-		ft_free_split(b_tokens->delimitator);
-	if (b_tokens->infile)
-		ft_free_split(b_tokens->infile);
-	if (b_tokens->outfile)
-		ft_free_split(b_tokens->outfile);
-	if (b_tokens->fdin)
-		free(b_tokens->fdin);
-	if (b_tokens->fdout)
-		free(b_tokens->fdout);
-	if (b_tokens->err_in)
-		free(b_tokens->err_in);
-	if (b_tokens->err_out)
-		free(b_tokens->err_out);
 	if (b_tokens->cmd_args)
 		ft_free_split(b_tokens->cmd_args);
 	if (b_tokens->envp)
 		ft_free_split(b_tokens->envp);
+	if (b_tokens->fd_out)
+		ft_free_fd(b_tokens->fd_out);
+	if (b_tokens->fd_in)
+		ft_free_fd(b_tokens->fd_in);
 	b_tokens = NULL;
 }
 

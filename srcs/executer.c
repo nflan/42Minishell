@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/16 16:42:35 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 17:00:11 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,77 +37,104 @@ int no_sib_has_child(t_big_token *b_tokens)
 	return (0);
 }
 
-int	ft_open_fd(t_big_token *b_tokens)
+void	ft_open_all_fdout(t_big_token *b_tokens)
 {
-	int	i;
+	t_fd	*tmp_fd;
 
-	i = 0;
-	while (b_tokens)
+	tmp_fd = b_tokens->fd_out;
+	if (tmp_fd)
 	{
-		i = 0;
-		if (b_tokens->outfile)
+		while (tmp_fd)
 		{
-			while (b_tokens->outfile[i])
+			printf("file = %s\n", tmp_fd->file);
+			printf("red = %d\n", tmp_fd->red);
+			if (!tmp_fd->red)
 			{
-				if (b_tokens->red_out[i])
-					b_tokens->fdout[i] = open(b_tokens->outfile[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				else
-					b_tokens->fdout[i] = open(b_tokens->outfile[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
-		//		printf("ligne %d --> rd_inouthd[1] = %d && fdout[i] %d && outfile[i] = %s && red_out[i] = %d\n", i, b_tokens->rd_inouthd[1], b_tokens->fdout[i], b_tokens->outfile[i], b_tokens->red_out[i]);
-				if (b_tokens->fdout[i] < 0)
-					return (1);
-				i++;
+				printf("allo\n");
+				tmp_fd->fd = open(tmp_fd->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				printf("tmp_fd->fd = %d\n", tmp_fd->fd);
 			}
-		}
-		if (!b_tokens->fdout)
-			b_tokens->fdout = ft_calloc(sizeof(int), 1);
-		if (!i)
-			b_tokens->fdout[i] = 1;
-		i = 0;
-		if (b_tokens->infile)
-		{
-			while (b_tokens->infile[i])
+			else
+				tmp_fd->fd = open(tmp_fd->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (tmp_fd->fd < 0)
 			{
-				b_tokens->fdin[i] = open(b_tokens->infile[i], O_RDONLY);
-				if (b_tokens->fdin[i] < 0)
-					return (1);
-				i++;
+				ft_putstr_error("Open error\n");
+				b_tokens->sc = 1;
+				tmp_fd->fd = 1;
 			}
+			b_tokens->fdout = tmp_fd->fd;
+			tmp_fd = tmp_fd->next;
 		}
-		if (!b_tokens->fdin)
-			b_tokens->fdin = ft_calloc(sizeof(int), 1);
-		if (!i)
-			b_tokens->fdin[i] = 0;
-		b_tokens = b_tokens->sibling;
 	}
-	return (0);
 }
 
-int	ft_close_fd(t_big_token *b_tokens)
+void	ft_open_all_fdin(t_big_token *b_tokens)
 {
-	int	i;
+	t_fd	*tmp_fd;
 
-	i = 0;
-	if (b_tokens->outfile)
+	tmp_fd = b_tokens->fd_in;
+	if (tmp_fd)
 	{
-		while (b_tokens->fdout[i])
+		while (tmp_fd)
 		{
-			close(b_tokens->fdout[i]);
-			i++;
+			printf("file = %s\n", tmp_fd->file);
+			printf("red = %d\n", tmp_fd->red);
+			if (!tmp_fd->red)
+				tmp_fd->fd = open(tmp_fd->file, O_RDONLY);
+			if (tmp_fd->fd < 0)
+			{
+				ft_putstr_error("Open error\n");
+				b_tokens->sc = 1;
+				tmp_fd->fd = 0;
+			}
+			b_tokens->fdin = tmp_fd->fd;
+			tmp_fd = tmp_fd->next;
 		}
 	}
-	i = 0;
-	if (b_tokens->infile)
+}
+
+void	ft_open_fd(t_big_token *b_tokens)
+{
+	if (b_tokens)
 	{
-		while (b_tokens->fdin[i])
+		while (b_tokens)
 		{
-			close(b_tokens->fdin[i]);
-			i++;
+			if (b_tokens->fd_out)
+				ft_open_all_fdout(b_tokens);
+			if (b_tokens->fd_in)
+				ft_open_all_fdin(b_tokens);
+			b_tokens = b_tokens->sibling;
 		}
 	}
-//	if (!i)
-//		close(b_tokens->fdin[0]);
-	return (0);
+}
+
+void	ft_close_all_fd(t_fd *fd, int fd_type)
+{
+	if (fd)
+	{
+		while (fd)
+		{
+			if (fd_type || (!fd_type && !fd->red))
+				if (fd->fd != 0 && fd->fd != 1)
+					close(fd->fd);
+			fd = fd->next;
+		}
+	}
+}
+
+void	ft_close_fd(t_big_token *b_tokens)
+{
+	if (b_tokens)
+	{
+		while (b_tokens)
+		{
+			if (b_tokens->fd_out)
+				ft_close_all_fd(b_tokens->fd_out, 1);
+			if (b_tokens->fd_in)
+				ft_close_all_fd(b_tokens->fd_in, 0);
+			b_tokens = b_tokens->sibling;
+		}
+	}
 }
 
 int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
@@ -119,7 +146,7 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 	{
 		if (ft_wash_btoken(info, b_tokens))
 			return (2147483647);
-		else if (b_tokens->sc == -1)
+		else if (b_tokens->sc == -1 || b_tokens->sc == 1)
 		{
 			ft_launch_cmd_pipex(info, b_tokens, pid[i]);
 			info->nb_cmd++;
@@ -174,8 +201,7 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 {
 	info->nb_cmd = 0;
-	if (ft_open_fd(b_tokens))
-		return (ft_error(6, info, NULL));
+	ft_open_fd(b_tokens);
 	if (sib_child >= 1 && sib_child <= 3)
 		ft_exec_simple(info, b_tokens);
 	else if (sib_child == 4)
@@ -203,11 +229,9 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 //	printf("b_tokens->type = %d\n", (*b_tokens)->type);
 	while (tmp_b)
 	{
-//		printf("COUCOU, je suis apres le tmp_b "); print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length); printf("\n"); printf("type = %d\n", tmp_b->type);
-//		if ((!tmp_b->parent && !i) || (tmp_b->parent && tmp_b->parent->par))
 		if (tmp_b->child && tmp_b->sc == -1)
 		{
-			if (!tmp_b->par)// || (tmp_b->par && !tmp_b->sibling))
+			if (!tmp_b->par)
 				rec_exec(info, &(tmp_b->child), 0);
 		}
 		else if ((!i && no_sib_has_child(tmp_b) && tmp_b->parent && tmp_b->sc == -1 && tmp_b->type == TOK_LEFT_PIPE))

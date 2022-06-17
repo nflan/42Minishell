@@ -6,7 +6,11 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/17 17:49:11 by omoudni          ###   ########.fr       */
+=======
+/*   Updated: 2022/06/17 14:45:16 by nflan            ###   ########.fr       */
+>>>>>>> c442577c9230b99d7e1c6dfcef3e6a395f393c98
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,31 +145,43 @@ typedef enum	s_par_left_right
 	struct s_big_token *sibling;
 } 			t_big_token;*/
 
+//	int					*err_in; // potentiellement erreur d'ouverture
+//	int					*err_out;
+//	int					rd_inouthd[3]; //0 -> nb de fdin - 1 -> nb de fdout 2-> nb de heredoc
+//	int					*red_in;
+//	int					*red_out; // donne l'info sur le type d'ecriture sur le out aka > ou >>
+//	char				**delimitator; // tableau de delimitateur de here doc (demension== rd_inouthd[2])
+//	char				**infile; // tableau de fichier a ouvrir en in (dimension = rd_inouthd[0])
+//	char				**outfile;  // tableau de fichier a ouvrir en out (dimension = rd_inouthd[1])
+//	int					*fdin; // tableau malloc avec la dimension rd_inouthd[0] a remplir lors de l'extraction des FD
+//	int					*fdout;
+
+typedef struct s_fd
+{
+	int					fd; // fd in ou out (que je rempli a l'exec SI PAS HEREDOC)
+	int					red; // if 1 >> if 0 >. Si fd_in && 1, heredoc
+	char				*file; // nom du ficher infile ou outfile ou delimiteur
+	struct s_fd			*next;
+}	t_fd;
+
 typedef struct s_big_token
 {
 	t_big_tok_type		type;
 	int					ind_tok_start;
 	int					length;
 	int					par;
-	int					rd_inouthd[3]; //0 -> nb de fdin - 1 -> nb de fdout 2-> nb de heredoc
-	int					*red_in;
-	int					*red_out; // donne l'info sur le type d'ecriture sur le out aka > ou >>
-	char				**delimitator; // tableau de delimitateur de here doc (demension== rd_inouthd[2])
-	char				**infile; // tableau de fichier a ouvrir en in (dimension = rd_inouthd[0])
-	char				**outfile;  // tableau de fichier a ouvrir en out (dimension = rd_inouthd[1])
-	int					*fdin; // tableau malloc avec la dimension rd_inouthd[0] a remplir lors de l'extraction des FD
-	int					*fdout;
-	int					*err_in; // potentiellement erreur d'ouverture
-
-	int					*err_out;
-	char				**cmd_args;
+	int					fdin;
+	int					fdout;
 	int					cmd_args_num;
-	int					sc;
+	char				**cmd_args;
 	char				**envp;
+	int					sc;
+	t_fd				*fd_in;
+	t_fd				*fd_out;
 	struct s_big_token	*parent;
 	struct s_big_token	*child;
 	struct s_big_token	*sibling;
-} 			t_big_token;
+} 	t_big_token;
 
 static const t_char_type get_char_class[255] =
 	{
@@ -247,25 +263,6 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_BACKTICK] = TOK_IDK,
 };
 
-typedef struct s_cmd
-{
-	char			*cmd;
-	char			**cmd_p;
-	char			**envp;
-	int				fdin;
-	int				fdout;
-//	pid_t			child;
-//	int				type;// && = 1 / || = 2 -> j'envoie dans X ou Y fonction au cas ou
-//	unsigned int	prof;// profondeur
-}	t_cmd;
-
-typedef struct s_tree
-{
-	t_cmd			*cmd;
-	struct s_tree	*left;
-	struct s_tree	*right;
-}	t_tree;
-
 typedef struct s_env
 {
 	char			*name;
@@ -289,7 +286,6 @@ typedef struct s_info
 void	ft_envadd_back(t_env **alst, t_env *new);
 int		ft_fill_envnew(t_env *env, char *line);
 t_env	*ft_envnew(char *line);
-void	ft_print_cmd(t_cmd *cmd);
 
 //-----------ft_launch_cmd----------------------------------------
 int	ft_exit_cmd(t_info *info);

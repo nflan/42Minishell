@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/16 16:42:22 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 17:07:05 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,10 +195,10 @@ int	ft_lead_fd(t_info *info, t_big_token *b_tokens)
 			return (ft_error(5, info, NULL));
 		info->pdes[1] = info->tmp[1];
 	}
-	if (b_tokens->fdin && *b_tokens->fdin != 0)
-		info->pdes[0] = b_tokens->fdin[b_tokens->rd_inouthd[0]];
-	if (b_tokens->fdout && *b_tokens->fdout != 1)
-		info->pdes[1] = b_tokens->fdout[b_tokens->rd_inouthd[1]];
+	if (b_tokens->fdin && b_tokens->fdin != 0)
+		info->pdes[0] = b_tokens->fdin;
+	if (b_tokens->fdout && b_tokens->fdout != 1)
+		info->pdes[1] = b_tokens->fdout;
 	return (0);
 }
 
@@ -251,11 +251,14 @@ int	ft_do_solo(t_info *info, t_big_token *b_tokens)
 		return (ft_error(2, info, NULL));
 	else if ((int) pid == 0)
 	{
-		dup2(b_tokens->fdin[b_tokens->rd_inouthd[0 - 1]], STDIN_FILENO);
-		dup2(b_tokens->fdout[b_tokens->rd_inouthd[1 - 1]], STDOUT_FILENO);
+		dup2(b_tokens->fdin, STDIN_FILENO);
+		dup2(b_tokens->fdout, STDOUT_FILENO);
 //		printf("b_tokens->fdout[b_tokens->rd_inouthd[1]] = %d\n", b_tokens->fdout[b_tokens->rd_inouthd[1 - 1]]);
 		if (ft_command(info, b_tokens))
-			return (ft_putstr_frror(b_tokens->cmd_args[0], ": command not found\n", 0));
+		{
+			info->status = ft_putstr_error(": command not found\n");
+			ft_exit_cmd(info);
+		}
 		else
 			if (execve(b_tokens->cmd_args[0], b_tokens->cmd_args, b_tokens->envp) == -1)
 				return (ft_error(4, info, b_tokens));
