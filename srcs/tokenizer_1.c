@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 13:33:08 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/20 14:26:03 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,16 @@ int	len_ll_list(t_token *tok_list)
 	return (len);
 }
 
-int	is_quoted(t_token **tok_list, int rank_in_list)
+int	is_quoted(t_token **tok_list, char c)
 {
 	t_token	*tmp;
 	int		dq;
 	int		sq;
+	int		i;
 
 	dq = 1;
 	sq = 1;
 	tmp = *tok_list;
-	if (!rank_in_list)
-		return (0);
-	else
-	{
 		while (tmp->prev)
 		{
 			tmp = tmp->prev;
@@ -48,28 +45,29 @@ int	is_quoted(t_token **tok_list, int rank_in_list)
 			else if (tmp->token == TOK_QUOTER && ft_strlen(tmp->value) && !ft_strncmp('\"', tmp->value, 1))
 				dq *= -1;
 		}
-		if (sq < 0 && dq > 0)
+		if (sq < 0 && dq > 0 && c != '\'')
 			return (1);
-		if (dq < 0 && sq > 0)
+		else if (dq < 0 && sq > 0 && c != '\"')
 			return (2);
-		if (dq < 0 && sq < 0)
-			return (3);
-	}
 	return (0);
 }
 
 unsigned int	get_real_tok_type(char c, t_token **tok_list)
 {
-	int	len;
+	int		len;
+	t_token	*last_tok;
 
 	len = len_ll_list(*tok_list);
-	//if (len == 0 || len == 1)
+	while (last_tok)
+		last_tok = last_tok->next;
 	if (len == 0)
 		return (get_tok_type[get_char_class[(int)c]]);
 	else
 	{
-		if (c != '\'' && c != '\"' && is_quoted(tok_list, 1))
-			return (TOK_WORD);
+		if (is_quoted(&last_tok, c) == 1)
+			return (TOK_WORD_S_QUOTED);
+		else if (is_quoted(&last_tok, c) == 2)
+			return (TOK_WORD_D_QUOTED);
 		else
 			return (get_tok_type[get_char_class[(int)c]]);
 	}
