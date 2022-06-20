@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 18:37:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 20:04:50 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ void	ft_open_all_fdout(t_big_token *b_tokens)
 	{
 		while (tmp_fd)
 		{
-			printf("file = %s\n", tmp_fd->file);
-			printf("red = %d\n", tmp_fd->red);
+		//	printf("file = %s\n", tmp_fd->file);
+		//	printf("red = %d\n", tmp_fd->red);
 			if (!tmp_fd->red)
 			{
-				printf("allo\n");
+		//		printf("allo\n");
 				tmp_fd->fd = open(tmp_fd->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				printf("tmp_fd->fd = %d\n", tmp_fd->fd);
+		//		printf("tmp_fd->fd = %d\n", tmp_fd->fd);
 			}
 			else
 				tmp_fd->fd = open(tmp_fd->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -82,8 +82,8 @@ void	ft_open_all_fdin(t_big_token *b_tokens)
 	{
 		while (tmp_fd)
 		{
-			printf("file = %s\n", tmp_fd->file);
-			printf("red = %d\n", tmp_fd->red);
+//			printf("file = %s\n", tmp_fd->file);
+//			printf("red = %d\n", tmp_fd->red);
 			tmp_fd->fd = open(tmp_fd->file, O_RDONLY);
 			if (tmp_fd->fd < 0)
 			{

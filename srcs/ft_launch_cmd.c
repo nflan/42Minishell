@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/20 18:37:18 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 20:06:52 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,8 @@ void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
 	}
 	else if (b_tokens->type == TOK_LEFT_PIPE)
 	{
-		printf("type = %d\n", b_tokens->type);
-		printf("je ferme pipe to pipe -> value b_token: ");
+//		printf("type = %d\n", b_tokens->type);
+//		printf("je ferme pipe to pipe -> value b_token: ");
 //		if (info->pdes[0] != 0)
 		close(info->pdes[0]);
 		info->pdes[0] = info->tmp[0];
@@ -195,19 +195,19 @@ int	ft_lead_fd(t_info *info, t_big_token *b_tokens)
 {
 	if (info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
 	{
-		printf("j'ai fait un pipe tmp\n");
+//		printf("j'ai fait un pipe tmp\n");
 		if (pipe(info->tmp) == -1)
 			return (ft_error(5, info, NULL));
 		info->pdes[1] = info->tmp[1];
 	}
 	if (b_tokens->fdin != 0)
 	{
-		printf("je suis utile pour rien !\n");
+//		printf("je suis utile pour rien !\n");
 		info->pdes[0] = b_tokens->fdin;
 	}
 	if (b_tokens->fdout != 1)
 	{
-		printf("je suis utile pour rien !\n");
+//		printf("je suis utile pour rien !\n");
 		info->pdes[1] = b_tokens->fdout;
 	}
 	return (0);

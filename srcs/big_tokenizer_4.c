@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 17:44:37 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 20:32:56 by nflan            ###   ########.fr       */
 /*   Updated: 2022/06/17 14:24:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -167,43 +167,27 @@ int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, char *file, int red)
 void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 {
 	t_token *tmp;
-	int i;
-	int j;
 	int count;
 	int red;
 
 	tmp = *tokens;
-	i = 0;
-	j = 0;
 	count = 0;
 	red = 0;
 	move_tok_2_ind(&tmp, ind);
-	while (tmp && i < len)
+	while (tmp && len--)
 	{
 		if (tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT)
-		{
 			red = 1;
-			j++;
-		}
 		if (tmp->token == TOK_WORD)
 		{
-		//	printf("%s ", tmp->value);
 			if (!red)
 				count++;
-			else if (red && j == 2)
-			{
-				count++;
-				j = 0;
-				red = 0;
-			}
 			else
-				j++;
+				red = 0;
 		}
 		tmp = tmp->next;
-		i++;
 	}
-	count++;
-	(*tmp_b)->cmd_args = ft_calloc(count + 1, sizeof(char *));
+	(*tmp_b)->cmd_args = ft_calloc(sizeof(char *), count + 1);
 	(*tmp_b)->cmd_args_num = count;
 }
 
