@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 14:00:13 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/20 22:42:51 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	detect_tokens(t_token **tok_list, char *str)
 		start = i;
 		tok_type = get_real_tok_type(str[i], tok_list);
 		i++;
-		while (str[i] && tok_type != TOK_EXPANDER_OP && tok_type != TOK_EXPANDER_CL && (get_real_tok_type(str[i], tok_list) == tok_type || (get_real_tok_type(str[i], tok_list) == TOK_PATH && tok_type == TOK_WORD) || (get_real_tok_type(str[i], tok_list) == TOK_WORD && tok_type == TOK_PATH))) // modifier car ../blabla/blabla pas pris en compte comme un seul mot
+		while (str[i] && tok_type != TOK_EXPANDER_OP && tok_type != TOK_EXPANDER_CL && (get_real_tok_type(str[i], tok_list) == tok_type)) // modifier car ../blabla/blabla pas pris en compte comme un seul mot
 		{
 			length++;
 			i++;

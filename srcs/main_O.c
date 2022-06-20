@@ -33,6 +33,9 @@ int main_agent_O(t_info *info)
 	detect_tokens(&info->tokens, info->rdline);
 	fill_tok_value(&info->tokens, info->rdline);
 	index_toks(&info->tokens, 0, len_ll_list(info->tokens));
+	dol_expand(&(info->tokens), info);
+	print_s_tokens(&(info->tokens), 0, len_ll_list(info->tokens));
+	exit(0);
 //	if (syntax_err_handler(&info->tokens))
 //	{
 //		printf("Error number: %d\n", syntax_err_handler(&info->tokens));

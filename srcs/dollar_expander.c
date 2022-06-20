@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 21:47:54 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/20 23:31:18 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,18 @@ void expand_1(char **str, int *i, t_info *info)
 	char **tmp;
 	char *to_look_up;
 	int ind_dol;
-	int new_i;
+	int	add_shit;
 
 	s = *str;
 	ind_dol = *i;
-	tmp = malloc(5 * sizeof(char *));
+	add_shit = 0;
+	tmp = ft_calloc(4 , sizeof(char *));
 	if (!tmp)
 		return;
 	tmp[0] = ft_strndup(s, (*i));
 	(*i)++;
-	if (!s[(*i)] || (!ft_isalpha((int)s[(*i)]) || !ft_isdigit((int)s[(*i)])))
+	printf("%d\n", (*i));
+	if (!s[(*i)] || (!ft_isalpha((int)s[(*i)]) && !ft_isdigit((int)s[(*i)])))
 		tmp[1] = ft_strdup("$");
 	else
 	{
@@ -96,16 +98,19 @@ void expand_1(char **str, int *i, t_info *info)
 			(*i)++;
 		to_look_up = ft_strndup(&(s[ind_dol + 1]), ((*i) - ind_dol - 1));
 		tmp[1] = ft_get_env_value(info, to_look_up);
+		free(to_look_up);
 		if (tmp[1])
-			new_i = ind_dol + ft_strlen(tmp[1]);
+			add_shit = ft_strlen(tmp[1]);
 	}
-	if (!s[(*i) + 1])
+	if (!s[((*i)) + 1])
 		tmp[2] = NULL;
 	else
-		tmp[2] = ft_strndup(&(s[ind_dol]), (ft_strlen(s) - ind_dol));
+		tmp[2] = ft_strndup(&(s[ind_dol + 1]), (ft_strlen(s) - ind_dol - 1));
 	free(*str);
 	(*str) = expand_join(tmp[0], tmp[1], tmp[2]);
-	(*i) = new_i;
+	free(tmp);
+	if (add_shit)
+		(*i) = ind_dol + add_shit;
 }
 
 void expand(char **str, t_info *info)
@@ -119,6 +124,7 @@ void expand(char **str, t_info *info)
 		// ft_wildcard(&(str[i]));
 		if ((*str)[i] == '$')
 		{
+			printf("I entered here\n");
 			expand_1(str, &i, info);
 		}
 		else
@@ -126,10 +132,9 @@ void expand(char **str, t_info *info)
 	}
 }
 
-void dol_expand(t_token **old_tokens, t_token **new_tokens, t_info *info)
+void dol_expand(t_token **old_tokens, t_info *info)
 {
 	t_token *tmp_o;
-	t_token *tmp_n;
 
 	tmp_o = *old_tokens;
 	while (tmp_o)

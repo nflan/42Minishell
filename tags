@@ -1,0 +1,400 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+$(LIBFT)	Makefile	/^$(LIBFT):	${SRCS} ${OBJS} libft.h$/;"	t
+$(NAME)	Makefile	/^$(NAME):	${objets} ${INC} ${HEADER} ${LIBFT}$/;"	t
+$(NAME)	libft/Makefile	/^$(NAME): ${OBJS} ${HEADER}$/;"	t
+$(OBJS)	libft/Makefile	/^$(OBJS) :	libft.h$/;"	t
+$(OBJ_DIR)	Makefile	/^$(OBJ_DIR):$/;"	t
+$(OBJ_DIR)%.o	Makefile	/^$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)$/;"	t
+$(objets)	Makefile	/^$(objets):	${INC}$/;"	t
+.c.o	Makefile	/^.c.o :$/;"	t
+.c.o	libft/Makefile	/^.c.o:$/;"	t
+CC	libft/Makefile	/^CC = cc$/;"	m
+CFLAGS	libft/Makefile	/^CFLAGS = -Wall -Wextra -Werror -g$/;"	m
+CHR_ALPHA	include/minishell.h	/^	CHR_ALPHA,$/;"	e	enum:s_char_type
+CHR_AND	include/minishell.h	/^	CHR_AND,$/;"	e	enum:s_char_type
+CHR_ANTI_SLASH	include/minishell.h	/^	CHR_ANTI_SLASH,$/;"	e	enum:s_char_type
+CHR_AST	include/minishell.h	/^	CHR_AST,$/;"	e	enum:s_char_type
+CHR_AT	include/minishell.h	/^	CHR_AT,$/;"	e	enum:s_char_type
+CHR_BACKTICK	include/minishell.h	/^	CHR_BACKTICK,$/;"	e	enum:s_char_type
+CHR_CIRCUM	include/minishell.h	/^	CHR_CIRCUM,$/;"	e	enum:s_char_type
+CHR_CL_BRACE	include/minishell.h	/^	CHR_CL_BRACE,$/;"	e	enum:s_char_type
+CHR_CL_BRACKET	include/minishell.h	/^	CHR_CL_BRACKET,$/;"	e	enum:s_char_type
+CHR_CL_PAREN	include/minishell.h	/^	CHR_CL_PAREN,$/;"	e	enum:s_char_type
+CHR_COLON	include/minishell.h	/^	CHR_COLON,$/;"	e	enum:s_char_type
+CHR_COMMENT	include/minishell.h	/^	CHR_COMMENT,$/;"	e	enum:s_char_type
+CHR_DASH_MINES	include/minishell.h	/^	CHR_DASH_MINES,$/;"	e	enum:s_char_type
+CHR_DOL	include/minishell.h	/^	CHR_DOL,$/;"	e	enum:s_char_type
+CHR_D_QUOTE	include/minishell.h	/^	CHR_D_QUOTE,$/;"	e	enum:s_char_type
+CHR_EQUAL	include/minishell.h	/^	CHR_EQUAL,$/;"	e	enum:s_char_type
+CHR_EXCLAM	include/minishell.h	/^	CHR_EXCLAM,$/;"	e	enum:s_char_type
+CHR_INTEROG	include/minishell.h	/^	CHR_INTEROG,$/;"	e	enum:s_char_type
+CHR_MINES	include/minishell.h	/^	CHR_MINES,$/;"	e	enum:s_char_type
+CHR_NULL	include/minishell.h	/^	CHR_NULL,$/;"	e	enum:s_char_type
+CHR_NUM	include/minishell.h	/^	CHR_NUM,$/;"	e	enum:s_char_type
+CHR_OP_BRACE	include/minishell.h	/^	CHR_OP_BRACE,$/;"	e	enum:s_char_type
+CHR_OP_BRACKET	include/minishell.h	/^	CHR_OP_BRACKET,$/;"	e	enum:s_char_type
+CHR_OP_PAREN	include/minishell.h	/^	CHR_OP_PAREN,$/;"	e	enum:s_char_type
+CHR_PER	include/minishell.h	/^	CHR_PER,$/;"	e	enum:s_char_type
+CHR_PIPE	include/minishell.h	/^	CHR_PIPE,$/;"	e	enum:s_char_type
+CHR_PLUS	include/minishell.h	/^	CHR_PLUS,$/;"	e	enum:s_char_type
+CHR_POINT	include/minishell.h	/^	CHR_POINT,$/;"	e	enum:s_char_type
+CHR_SEMI_COLON	include/minishell.h	/^	CHR_SEMI_COLON,$/;"	e	enum:s_char_type
+CHR_SLASH	include/minishell.h	/^	CHR_SLASH,$/;"	e	enum:s_char_type
+CHR_SPACE	include/minishell.h	/^	CHR_SPACE,$/;"	e	enum:s_char_type
+CHR_SUPERIOR	include/minishell.h	/^	CHR_SUPERIOR,$/;"	e	enum:s_char_type
+CHR_S_QUOTE	include/minishell.h	/^	CHR_S_QUOTE,$/;"	e	enum:s_char_type
+CHR_TILDA	include/minishell.h	/^	CHR_TILDA,$/;"	e	enum:s_char_type
+CHR_UNDERSCORE	include/minishell.h	/^	CHR_UNDERSCORE,$/;"	e	enum:s_char_type
+DIR	libft/Makefile	/^DIR = $(shell pwd | xargs basename)$/;"	m
+HEADER	libft/Makefile	/^HEADER = libft.h$/;"	m
+INC	Makefile	/^INC = include\/minishell.h$/;"	m
+INCPATH	Makefile	/^INCPATH = -I $(INC_DIR) -I $(LIB_DIR)$/;"	m
+INC_DIR	Makefile	/^INC_DIR = include\/$/;"	m
+LIBFT	Makefile	/^LIBFT = libft\/libft.a$/;"	m
+LIBFT_H	libft/libft.h	/^# define LIBFT_H$/;"	d
+LIBPATH	Makefile	/^LIBPATH = -L $(LIB_DIR)$/;"	m
+LIB_DIR	Makefile	/^LIB_DIR = libft\/$/;"	m
+MINISHELL_H	include/minishell.h	/^# define MINISHELL_H$/;"	d
+NAME	Makefile	/^NAME = minishell$/;"	m
+NAME	libft/Makefile	/^NAME = libft.a$/;"	m
+NOT_A_PAR	include/minishell.h	/^	NOT_A_PAR,$/;"	e	enum:s_par_left_right
+OBJS	libft/Makefile	/^OBJS = ${SRCS:.c=.o}$/;"	m
+OBJ_DIR	Makefile	/^OBJ_DIR = bin\/$/;"	m
+PAR_LEFT_AND	include/minishell.h	/^	PAR_LEFT_AND,$/;"	e	enum:s_par_left_right
+PAR_LEFT_OR	include/minishell.h	/^	PAR_LEFT_OR,$/;"	e	enum:s_par_left_right
+PAR_PIPE_LEFT	include/minishell.h	/^	PAR_PIPE_LEFT,$/;"	e	enum:s_par_left_right
+PAR_PIPE_RIGHT	include/minishell.h	/^	PAR_PIPE_RIGHT,$/;"	e	enum:s_par_left_right
+PAR_RIGHT_AND	include/minishell.h	/^	PAR_RIGHT_AND,$/;"	e	enum:s_par_left_right
+PAR_RIGHT_OR	include/minishell.h	/^	PAR_RIGHT_OR,$/;"	e	enum:s_par_left_right
+RM	libft/Makefile	/^RM = rm -fr$/;"	m
+SRCS	libft/Makefile	/^SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \\$/;"	m
+SRC_DIR	Makefile	/^SRC_DIR = srcs\/$/;"	m
+TOK_CLEAN	include/minishell.h	/^	TOK_CLEAN,$/;"	e	enum:s_big_tok_type
+TOK_CLEAN_PIPED	include/minishell.h	/^	TOK_CLEAN_PIPED,$/;"	e	enum:s_big_tok_type
+TOK_EXPANDER	include/minishell.h	/^	TOK_EXPANDER,$/;"	e	enum:s_tok_type
+TOK_EXPANDER_CL	include/minishell.h	/^	TOK_EXPANDER_CL,$/;"	e	enum:s_tok_type
+TOK_EXPANDER_OP	include/minishell.h	/^	TOK_EXPANDER_OP,$/;"	e	enum:s_tok_type
+TOK_IDK	include/minishell.h	/^	TOK_IDK,$/;"	e	enum:s_tok_type
+TOK_LAST	include/minishell.h	/^	TOK_LAST,$/;"	e	enum:s_big_tok_type
+TOK_LEFT_AND	include/minishell.h	/^	TOK_LEFT_AND,$/;"	e	enum:s_big_tok_type
+TOK_LEFT_OR	include/minishell.h	/^	TOK_LEFT_OR,$/;"	e	enum:s_big_tok_type
+TOK_LEFT_PIPE	include/minishell.h	/^	TOK_LEFT_PIPE,$/;"	e	enum:s_big_tok_type
+TOK_OPERATOR	include/minishell.h	/^	TOK_OPERATOR,$/;"	e	enum:s_tok_type
+TOK_PATH	include/minishell.h	/^	TOK_PATH,$/;"	e	enum:s_tok_type
+TOK_PIPE_LAST	include/minishell.h	/^	TOK_PIPE_LAST,$/;"	e	enum:s_big_tok_type
+TOK_QUOTER	include/minishell.h	/^	TOK_QUOTER,$/;"	e	enum:s_tok_type
+TOK_REDIRECTOR_LEFT	include/minishell.h	/^	TOK_REDIRECTOR_LEFT,$/;"	e	enum:s_tok_type
+TOK_REDIRECTOR_RIGHT	include/minishell.h	/^	TOK_REDIRECTOR_RIGHT,$/;"	e	enum:s_tok_type
+TOK_SEP	include/minishell.h	/^	TOK_SEP,$/;"	e	enum:s_tok_type
+TOK_WORD	include/minishell.h	/^	TOK_WORD,$/;"	e	enum:s_tok_type
+TOK_WORD_D_QUOTED	include/minishell.h	/^	TOK_WORD_D_QUOTED,$/;"	e	enum:s_tok_type
+TOK_WORD_S_QUOTED	include/minishell.h	/^	TOK_WORD_S_QUOTED,$/;"	e	enum:s_tok_type
+access_file	srcs/parser.c	/^int access_file(char *file)$/;"	f	typeref:typename:int
+add_b_tok_sib_last	srcs/big_tokenizer_1.c	/^void add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length)$/;"	f	typeref:typename:void
+add_tok_last	srcs/tokenizer_2.c	/^void	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)$/;"	f	typeref:typename:void
+all	Makefile	/^all:	${NAME}$/;"	t
+all	libft/Makefile	/^all: ${NAME}$/;"	t
+begin	libft/libft.h	/^	t_begin	*begin;$/;"	m	struct:s_global	typeref:typename:t_begin *
+bmoves	libft/libft.h	/^	int				bmoves;$/;"	m	struct:s_begin	typeref:typename:int
+btmp	libft/libft.h	/^	t_begin	*btmp;$/;"	m	struct:s_global	typeref:typename:t_begin *
+check_count_errors	srcs/syntax_errorinizer_1.c	/^int	check_count_errors(t_token **tokens)$/;"	f	typeref:typename:int
+check_divider_type	srcs/big_tokenizer_1.c	/^int check_divider_type(char *tmp_value)$/;"	f	typeref:typename:int
+check_if_piped	srcs/big_tokenizer_4.c	/^int check_if_piped(t_big_token **tmp_b, int ind, t_token **tokens, int len)$/;"	f	typeref:typename:int
+child	include/minishell.h	/^	struct s_big_token	*child;$/;"	m	struct:s_big_token	typeref:struct:s_big_token *
+chunk	libft/libft.h	/^	t_chunk	*chunk;$/;"	m	struct:s_global	typeref:typename:t_chunk *
+cl_par_ind	srcs/big_tokenizer_2.c	/^int cl_par_ind(t_token **tokens, int ind_tok)$/;"	f	typeref:typename:int
+clean	Makefile	/^clean:$/;"	t
+clean	libft/Makefile	/^clean:$/;"	t
+cmd_args	include/minishell.h	/^	char				**cmd_args;$/;"	m	struct:s_big_token	typeref:typename:char **
+cmd_args_num	include/minishell.h	/^	int					cmd_args_num;$/;"	m	struct:s_big_token	typeref:typename:int
+concat_argvs	srcs/main_O.c	/^char *concat_argvs(int argc, char **argv)$/;"	f	typeref:typename:char *
+content	libft/libft.h	/^	void			*content;$/;"	m	struct:s_list	typeref:typename:void *
+count_cl_tok	srcs/syntax_errorinizer_1.c	/^int	count_cl_tok(t_token **tokens)$/;"	f	typeref:typename:int
+count_cmd_args	srcs/big_tokenizer_4.c	/^void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)$/;"	f	typeref:typename:void
+count_op_tok	srcs/syntax_errorinizer_1.c	/^int	count_op_tok(t_token **tokens)$/;"	f	typeref:typename:int
+depth_b_token	srcs/tree_manipulator.c	/^int	depth_b_token(t_big_token **b_token)$/;"	f	typeref:typename:int
+detect_tokens	srcs/tokenizer_2.c	/^void	detect_tokens(t_token **tok_list, char *str)$/;"	f	typeref:typename:void
+divide_by_or_and	srcs/big_tokenizer_2.c	/^void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, int length)$/;"	f	typeref:typename:void
+divide_by_or_and_1	srcs/big_tokenizer_2.c	/^static void divide_by_or_and_1(t_token **tmp, t_token **tokens, int *length, int *i)$/;"	f	typeref:typename:void	file:
+divide_by_or_and_2	srcs/big_tokenizer_2.c	/^static void divide_by_or_and_2(t_token *tmp, t_big_token **b_tokens, int *start, int *length)$/;"	f	typeref:typename:void	file:
+divide_by_pipe	srcs/big_tokenizer_3.c	/^void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)$/;"	f	typeref:typename:void
+dol_expand	srcs/dollar_expander.c	/^void dol_expand(t_token **old_tokens, t_token **new_tokens, t_info *info)$/;"	f	typeref:typename:void
+env	include/minishell.h	/^	t_env		*env;$/;"	m	struct:s_info	typeref:typename:t_env *
+envp	include/minishell.h	/^	char				**envp;$/;"	m	struct:s_big_token	typeref:typename:char **
+exec_the_bulk	srcs/executer.c	/^int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+expand	srcs/dollar_expander.c	/^void expand(char **str, t_info *info)$/;"	f	typeref:typename:void
+expand_1	srcs/dollar_expander.c	/^void expand_1(char **str, int *i, t_info *info)$/;"	f	typeref:typename:void
+fclean	Makefile	/^fclean:$/;"	t
+fclean	libft/Makefile	/^fclean: clean$/;"	t
+fd	include/minishell.h	/^	int					fd; \/\/ fd in ou out (que je rempli a l'exec SI PAS HEREDOC)$/;"	m	struct:s_fd	typeref:typename:int
+fd_in	include/minishell.h	/^	t_fd				*fd_in;$/;"	m	struct:s_big_token	typeref:typename:t_fd *
+fd_out	include/minishell.h	/^	t_fd				*fd_out;$/;"	m	struct:s_big_token	typeref:typename:t_fd *
+fdin	include/minishell.h	/^	int					fdin;$/;"	m	struct:s_big_token	typeref:typename:int
+fdout	include/minishell.h	/^	int					fdout;$/;"	m	struct:s_big_token	typeref:typename:int
+file	include/minishell.h	/^	char				*file; \/\/ nom du ficher infile ou outfile ou delimiteur$/;"	m	struct:s_fd	typeref:typename:char *
+fill_tok_value	srcs/tokenizer_2.c	/^void	fill_tok_value(t_token **tok, char *str)$/;"	f	typeref:typename:void
+ft_atoi	libft/ft_atoi.c	/^long	ft_atoi(const char *str)$/;"	f	typeref:typename:long
+ft_builtins	srcs/ft_launch_cmd.c	/^int	ft_builtins(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_bzero	libft/ft_bzero.c	/^void	ft_bzero(void *s, size_t n)$/;"	f	typeref:typename:void
+ft_calloc	libft/ft_calloc.c	/^void	*ft_calloc(size_t nmemb, size_t size)$/;"	f	typeref:typename:void *
+ft_cd	srcs/ft_cd.c	/^int	ft_cd(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_cd_tilde	srcs/ft_cd.c	/^char	*ft_cd_tilde(char *home, char *dir)$/;"	f	typeref:typename:char *
+ft_check_builtins	srcs/ft_launch_cmd.c	/^int	ft_check_builtins(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_choose_function	libft/ft_printf.c	/^int	ft_choose_function(char c, va_list *argv)$/;"	f	typeref:typename:int
+ft_close_all_fd	srcs/executer.c	/^void	ft_close_all_fd(t_fd *fd, int fd_type)$/;"	f	typeref:typename:void
+ft_close_cmd	srcs/ft_launch_cmd.c	/^void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)$/;"	f	typeref:typename:void
+ft_close_fd	srcs/executer.c	/^void	ft_close_fd(t_big_token *b_tokens)$/;"	f	typeref:typename:void
+ft_command	srcs/ft_global.c	/^int	ft_command(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_create_btoken	srcs/big_tokenizer_1.c	/^t_big_token *ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length)$/;"	f	typeref:typename:t_big_token *
+ft_create_echo	srcs/ft_echo.c	/^char	*ft_create_echo(t_info *info, t_big_token *b_tokens, char *tmp, int i)$/;"	f	typeref:typename:char *
+ft_create_token	srcs/tokenizer_1.c	/^t_token	*ft_create_token(t_tok_type tok_type, int length, int i)$/;"	f	typeref:typename:t_token *
+ft_deeper_bt	srcs/ft_launch_cmd.c	/^int	ft_deeper_bt(t_big_token *b_tokens, t_big_token **tmp_b)$/;"	f	typeref:typename:int
+ft_do_export	srcs/ft_export.c	/^int	ft_do_export(char *line)$/;"	f	typeref:typename:int
+ft_do_pipex	srcs/ft_pipex.c	/^int	ft_do_pipex(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_do_solo	srcs/ft_launch_cmd.c	/^int	ft_do_solo(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_echo	srcs/ft_echo.c	/^int	ft_echo(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_echo_none	srcs/ft_echo.c	/^int	ft_echo_none(t_big_token *b_tokens, int i)$/;"	f	typeref:typename:int
+ft_env	srcs/ft_builtins.c	/^int	ft_env(t_info *info)$/;"	f	typeref:typename:int
+ft_env_to_tab	srcs/ft_pipex_tools.c	/^char	**ft_env_to_tab(t_env *env)$/;"	f	typeref:typename:char **
+ft_envadd_back	srcs/main.c	/^void	ft_envadd_back(t_env **alst, t_env *new)$/;"	f	typeref:typename:void
+ft_envnew	srcs/main.c	/^t_env	*ft_envnew(char *line)$/;"	f	typeref:typename:t_env *
+ft_error	srcs/ft_tools2.c	/^int	ft_error(int i, t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_error_2	srcs/ft_tools2.c	/^void	ft_error_2(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:void
+ft_exec_pipex	srcs/executer.c	/^int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)$/;"	f	typeref:typename:int
+ft_exec_simple	srcs/executer.c	/^int	ft_exec_simple(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_exit	srcs/ft_builtins.c	/^int	ft_exit(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_exit_cmd	srcs/ft_launch_cmd.c	/^int	ft_exit_cmd(t_info *info)$/;"	f	typeref:typename:int
+ft_export	srcs/ft_export.c	/^int	ft_export(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_export_new	srcs/ft_export.c	/^void	ft_export_new(t_env *env, t_env *tmp, char *line)$/;"	f	typeref:typename:void
+ft_export_replace	srcs/ft_export.c	/^void	ft_export_replace(t_env *env, char *line, int i, int j)$/;"	f	typeref:typename:void
+ft_fdadd_back	srcs/big_tokenizer_4.c	/^void	ft_fdadd_back(t_fd **alst, t_fd *new)$/;"	f	typeref:typename:void
+ft_fdnew	srcs/big_tokenizer_4.c	/^int	ft_fdnew(t_fd **fd, char *file, int red)$/;"	f	typeref:typename:int
+ft_fill_envnew	srcs/main.c	/^int	ft_fill_envnew(t_env *env, char *line)$/;"	f	typeref:typename:int
+ft_fill_fdnew	srcs/big_tokenizer_4.c	/^int	ft_fill_fdnew(t_fd *fd, char *file, int red)$/;"	f	typeref:typename:int
+ft_fork_par	srcs/ft_launch_cmd.c	/^int	ft_fork_par(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_free_3_str	libft/ft_strjoin.c	/^void	ft_free_3_str(char *s1, char *s2, char *s3, int i)$/;"	f	typeref:typename:void
+ft_free_all	srcs/ft_free.c	/^void	ft_free_all(t_info *info, t_env *env)$/;"	f	typeref:typename:void
+ft_free_b_tokens	srcs/ft_free.c	/^void	ft_free_b_tokens(t_big_token *b_tokens)$/;"	f	typeref:typename:void
+ft_free_cmd	srcs/ft_free.c	/^void	ft_free_cmd(t_big_token *b_tokens)$/;"	f	typeref:typename:void
+ft_free_env	srcs/ft_free.c	/^void	ft_free_env(t_env *env)$/;"	f	typeref:typename:void
+ft_free_fd	srcs/ft_free.c	/^void	ft_free_fd(t_fd *fd)$/;"	f	typeref:typename:void
+ft_free_split	libft/ft_split.c	/^char	**ft_free_split(char **tab)$/;"	f	typeref:typename:char **
+ft_free_tokens	srcs/ft_free.c	/^void	ft_free_tokens(t_token *tokens)$/;"	f	typeref:typename:void
+ft_get_env_value	srcs/ft_tools.c	/^char	*ft_get_env_value(t_info *info, char *name)$/;"	f	typeref:typename:char *
+ft_handle_ret	srcs/ft_echo.c	/^int	ft_handle_ret(t_big_token *b_tokens, char *ret, int i)$/;"	f	typeref:typename:int
+ft_hexa_co	libft/ft_printf_tools.c	/^int	ft_hexa_co(unsigned long long nb, char c, unsigned long long count)$/;"	f	typeref:typename:int
+ft_hexa_count	libft/ft_printf_tools.c	/^int	ft_hexa_count(unsigned int nb, char c, unsigned long long count)$/;"	f	typeref:typename:int
+ft_init_env	srcs/main.c	/^int	ft_init_env(t_info *info, char **envp)$/;"	f	typeref:typename:int
+ft_init_info	srcs/main.c	/^int	ft_init_info(t_info *info, int ret)$/;"	f	typeref:typename:int
+ft_init_pipex	srcs/executer.c	/^int	ft_init_pipex(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_is_tilde_or_home	srcs/ft_cd.c	/^int		ft_is_tilde_or_home(char *home, char *dir)$/;"	f	typeref:typename:int
+ft_isalnum	libft/ft_isalnum.c	/^int	ft_isalnum(int c)$/;"	f	typeref:typename:int
+ft_isalpha	libft/ft_isalpha.c	/^int	ft_isalpha(int c)$/;"	f	typeref:typename:int
+ft_isascii	libft/ft_isascii.c	/^int	ft_isascii(int c)$/;"	f	typeref:typename:int
+ft_isdigit	libft/ft_isdigit.c	/^int	ft_isdigit(int c)$/;"	f	typeref:typename:int
+ft_isprint	libft/ft_isprint.c	/^int	ft_isprint(int c)$/;"	f	typeref:typename:int
+ft_itoa	libft/ft_itoa.c	/^char	*ft_itoa(int nb)$/;"	f	typeref:typename:char *
+ft_keep_history	srcs/main.c	/^int	ft_keep_history(char *str)$/;"	f	typeref:typename:int
+ft_launch_cmd	srcs/ft_launch_cmd.c	/^int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_launch_cmd_pipex	srcs/ft_launch_cmd.c	/^int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid)$/;"	f	typeref:typename:int
+ft_lead_fd	srcs/ft_launch_cmd.c	/^int	ft_lead_fd(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_lstadd_back	libft/ft_lstadd_back.c	/^void	ft_lstadd_back(t_list **alst, t_list *new)$/;"	f	typeref:typename:void
+ft_lstadd_front	libft/ft_lstadd_front.c	/^void	ft_lstadd_front(t_pile **alst, t_pile *new)$/;"	f	typeref:typename:void
+ft_lstclear	libft/ft_lstclear.c	/^void	ft_lstclear(t_list **lst, void (*del)(void *))$/;"	f	typeref:typename:void
+ft_lstdelone	libft/ft_lstdelone.c	/^void	ft_lstdelone(t_list *lst, void (*del)(void *))$/;"	f	typeref:typename:void
+ft_lstiter	libft/ft_lstiter.c	/^void	ft_lstiter(t_list *lst, void (*f)(void *))$/;"	f	typeref:typename:void
+ft_lstlast	libft/ft_lstlast.c	/^t_pile	*ft_lstlast(t_pile *lst)$/;"	f	typeref:typename:t_pile *
+ft_lstmap	libft/ft_lstmap.c	/^t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))$/;"	f	typeref:typename:t_list *
+ft_lstnew	libft/ft_lstnew.c	/^t_pile	*ft_lstnew(int num)$/;"	f	typeref:typename:t_pile *
+ft_lstsize	libft/ft_lstsize.c	/^int	ft_lstsize(t_pile *lst)$/;"	f	typeref:typename:int
+ft_memchr	libft/ft_memchr.c	/^void	*ft_memchr(const void *s, int c, size_t n)$/;"	f	typeref:typename:void *
+ft_memcmp	libft/ft_memcmp.c	/^int	ft_memcmp(const void *s1, const void *s2, size_t n)$/;"	f	typeref:typename:int
+ft_memcpy	libft/ft_memcpy.c	/^void	*ft_memcpy(void *dst, const void *src, size_t n)$/;"	f	typeref:typename:void *
+ft_memmove	libft/ft_memmove.c	/^void	*ft_memmove(void *dst, const void *src, size_t len)$/;"	f	typeref:typename:void *
+ft_memset	libft/ft_memset.c	/^void	*ft_memset(void *str, int c, size_t n)$/;"	f	typeref:typename:void *
+ft_open_all_fdin	srcs/executer.c	/^void	ft_open_all_fdin(t_big_token *b_tokens)$/;"	f	typeref:typename:void
+ft_open_all_fdout	srcs/executer.c	/^void	ft_open_all_fdout(t_big_token *b_tokens)$/;"	f	typeref:typename:void
+ft_open_fd	srcs/executer.c	/^void	ft_open_fd(t_big_token *b_tokens)$/;"	f	typeref:typename:void
+ft_option_echo	srcs/ft_echo.c	/^int	ft_option_echo(t_big_token *b_tokens, int i)$/;"	f	typeref:typename:int
+ft_path	srcs/ft_global.c	/^int	ft_path(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_perror	srcs/ft_tools.c	/^int	ft_perror(char *error, char *str)$/;"	f	typeref:typename:int
+ft_perror_free	srcs/ft_tools.c	/^int	ft_perror_free(char *error, char *str, int i)$/;"	f	typeref:typename:int
+ft_pileclear	libft/ft_lstclear.c	/^void	ft_pileclear(t_pile *pile)$/;"	f	typeref:typename:void
+ft_pipex	srcs/ft_pipex.c	/^int	ft_pipex(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_pos	libft/ft_itoa.c	/^static char	ft_pos(int i, int nb)$/;"	f	typeref:typename:char	file:
+ft_print_tokens	srcs/ft_builtins.c	/^void	ft_print_tokens(t_token *tokens)$/;"	f	typeref:typename:void
+ft_printf	libft/ft_printf.c	/^int	ft_printf(const char *str, ...)$/;"	f	typeref:typename:int
+ft_putchar_count	libft/ft_printf.c	/^int	ft_putchar_count(char c)$/;"	f	typeref:typename:int
+ft_putchar_fd	libft/ft_putchar_fd.c	/^void	ft_putchar_fd(char c, int fd)$/;"	f	typeref:typename:void
+ft_putendl_fd	libft/ft_putendl_fd.c	/^void	ft_putendl_fd(char *s, int fd)$/;"	f	typeref:typename:void
+ft_putnbr_count	libft/ft_printf_tools.c	/^int	ft_putnbr_count(int n, int i)$/;"	f	typeref:typename:int
+ft_putnbr_fd	libft/ft_putnbr_fd.c	/^void	ft_putnbr_fd(int n, int fd)$/;"	f	typeref:typename:void
+ft_putstr_count	libft/ft_printf.c	/^int	ft_putstr_count(char *s)$/;"	f	typeref:typename:int
+ft_putstr_error	srcs/ft_tools.c	/^int	ft_putstr_error(char *error)$/;"	f	typeref:typename:int
+ft_putstr_fd	libft/ft_putstr_fd.c	/^int	ft_putstr_fd(char *s, int fd)$/;"	f	typeref:typename:int
+ft_putstr_frror	srcs/ft_tools.c	/^int	ft_putstr_frror(char *error, char *str, int i)$/;"	f	typeref:typename:int
+ft_putunbr_count	libft/ft_printf_tools.c	/^int	ft_putunbr_count(unsigned int nb)$/;"	f	typeref:typename:int
+ft_pwd	srcs/ft_builtins.c	/^int	ft_pwd(void)$/;"	f	typeref:typename:int
+ft_rdline_word	srcs/main.c	/^char	*ft_rdline_word(t_info *info)$/;"	f	typeref:typename:char *
+ft_signal	srcs/main.c	/^void	ft_signal(int sig)$/;"	f	typeref:typename:void
+ft_signal_dfl	srcs/ft_pipex.c	/^void    ft_signal_dfl(int sig)$/;"	f	typeref:typename:void
+ft_size_int	libft/ft_itoa.c	/^static int	ft_size_int(int nb)$/;"	f	typeref:typename:int	file:
+ft_size_int	libft/ft_printf_tools.c	/^static int	ft_size_int(unsigned long long nb, unsigned int base_len)$/;"	f	typeref:typename:int	file:
+ft_split	libft/ft_split.c	/^char	**ft_split(const char *s, char c)$/;"	f	typeref:typename:char **
+ft_strchr	libft/ft_strchr.c	/^char	*ft_strchr(const char *s, int c)$/;"	f	typeref:typename:char *
+ft_strdup	libft/ft_strdup.c	/^char	*ft_strdup(const char *src)$/;"	f	typeref:typename:char *
+ft_strdup_free	libft/ft_strdup.c	/^char	*ft_strdup_free(char *src)$/;"	f	typeref:typename:char *
+ft_strdup_set	libft/ft_split.c	/^static char	*ft_strdup_set(const char *s, char c)$/;"	f	typeref:typename:char *	file:
+ft_striteri	libft/ft_striteri.c	/^void	ft_striteri(char *s, void (*f)(unsigned int, char *))$/;"	f	typeref:typename:void
+ft_strjoiiin	libft/ft_strjoin.c	/^char	*ft_strjoiiin(char const *s1, char const *s2, char const *s3)$/;"	f	typeref:typename:char *
+ft_strjoiiin_free	libft/ft_strjoin.c	/^char	*ft_strjoiiin_free(char *s1, char *s2, char *s3, int i)$/;"	f	typeref:typename:char *
+ft_strjoin	libft/ft_strjoin.c	/^char	*ft_strjoin(char const *s1, char const *s2)$/;"	f	typeref:typename:char *
+ft_strjoin_free	libft/ft_strjoin.c	/^char	*ft_strjoin_free(char *s1, char *s2, int i)$/;"	f	typeref:typename:char *
+ft_strlcat	libft/ft_strlcat.c	/^size_t	ft_strlcat(char *dest, const char *src, size_t size)$/;"	f	typeref:typename:size_t
+ft_strlcpy	libft/ft_strlcpy.c	/^size_t	ft_strlcpy(char *dst, const char *src, size_t size)$/;"	f	typeref:typename:size_t
+ft_strlen	libft/ft_strlen.c	/^size_t	ft_strlen(const char *str)$/;"	f	typeref:typename:size_t
+ft_strmapi	libft/ft_strmapi.c	/^char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))$/;"	f	typeref:typename:char *
+ft_strncmp	libft/ft_strncmp.c	/^int	ft_strncmp(const char *s1, const char *s2, size_t n)$/;"	f	typeref:typename:int
+ft_strncpy	srcs/tokenizer_2.c	/^char	*ft_strncpy(char *str, int n)$/;"	f	typeref:typename:char *
+ft_strnstr	libft/ft_strnstr.c	/^char	*ft_strnstr(const char *big, const char *little, size_t len)$/;"	f	typeref:typename:char *
+ft_strrchr	libft/ft_strrchr.c	/^char	*ft_strrchr(const char *s, int c)$/;"	f	typeref:typename:char *
+ft_strtrim	libft/ft_strtrim.c	/^char	*ft_strtrim(char const *s1, char const *set)$/;"	f	typeref:typename:char *
+ft_substr	libft/ft_substr.c	/^char	*ft_substr(char const *s, unsigned int start, size_t len)$/;"	f	typeref:typename:char *
+ft_substr_free	libft/ft_substr.c	/^char	*ft_substr_free(char *s, unsigned int start, size_t len)$/;"	f	typeref:typename:char *
+ft_tolower	libft/ft_tolower.c	/^int	ft_tolower(int c)$/;"	f	typeref:typename:int
+ft_toupper	libft/ft_toupper.c	/^int	ft_toupper(int c)$/;"	f	typeref:typename:int
+ft_trim_end	libft/ft_strtrim.c	/^static size_t	ft_trim_end(char const *s1, char const *set, unsigned int i)$/;"	f	typeref:typename:size_t	file:
+ft_trim_start	libft/ft_strtrim.c	/^static size_t	ft_trim_start(char const *s1, char const *set, unsigned int i)$/;"	f	typeref:typename:size_t	file:
+ft_unset	srcs/ft_builtins.c	/^t_env	*ft_unset(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:t_env *
+ft_unset_name	srcs/ft_builtins.c	/^int	ft_unset_name(t_env **tmp, char *name)$/;"	f	typeref:typename:int
+ft_wash_btoken	srcs/ft_launch_cmd.c	/^int	ft_wash_btoken(t_info *info, t_big_token *b_tokens)$/;"	f	typeref:typename:int
+ft_without_env	srcs/main.c	/^t_env	*ft_without_env(int i)$/;"	f	typeref:typename:t_env *
+ft_word_count	libft/ft_split.c	/^static size_t	ft_word_count(const char *s, char c)$/;"	f	typeref:typename:size_t	file:
+get_char_class	include/minishell.h	/^static const t_char_type get_char_class[255] =$/;"	v	typeref:typename:const t_char_type[255]
+get_real_tok_type	srcs/tokenizer_1.c	/^unsigned int	get_real_tok_type(char c, t_token **tok_list)$/;"	f	typeref:typename:unsigned int
+get_tok_type	include/minishell.h	/^static const t_tok_type get_tok_type[255] =$/;"	v	typeref:typename:const t_tok_type[255]
+give_parent	srcs/parser.c	/^void give_parent(t_big_token **b_child, t_big_token **parent)$/;"	f	typeref:typename:void
+give_parent_sc	srcs/executer.c	/^void	give_parent_sc(t_big_token **child, t_big_token **parent)$/;"	f	typeref:typename:void
+handle_dir	srcs/big_tokenizer_4.c	/^void handle_dir(t_big_token **tmp_b, t_token **tokens)$/;"	f	typeref:typename:void
+handle_par	srcs/big_tokenizer_4.c	/^void handle_par(t_big_token **b_tokens, t_token **tokens)$/;"	f	typeref:typename:void
+handle_par_1	srcs/big_tokenizer_4.c	/^static void handle_par_1(t_token **tmp_s, t_big_token *tmp_b, int *adv_steps, int *to_reduce)$/;"	f	typeref:typename:void	file:
+handle_par_2	srcs/big_tokenizer_4.c	/^static void handle_par_2(t_token **tmp_s, t_big_token *tmp_b, int *to_reduce, t_token *tokens)$/;"	f	typeref:typename:void	file:
+handle_par_3	srcs/big_tokenizer_4.c	/^static void handle_par_3(t_big_token **tmp_b, int to_reduce, int adv_steps, t_token **tokens)$/;"	f	typeref:typename:void	file:
+handle_par_dir	srcs/big_tokenizer_4.c	/^void handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_token **tokens, int ind_word)$/;"	f	typeref:typename:void
+ind_tok_start	include/minishell.h	/^	int					ind_tok_start;$/;"	m	struct:s_big_token	typeref:typename:int
+index	include/minishell.h	/^	int		index;$/;"	m	struct:s_token	typeref:typename:int
+index	libft/libft.h	/^	int				index;$/;"	m	struct:s_chunk	typeref:typename:int
+index_toks	srcs/tokenizer_2.c	/^void	index_toks(t_token **tokens, int start, int length)$/;"	f	typeref:typename:void
+init_cl_par_ind	srcs/big_tokenizer_2.c	/^static void init_cl_par_ind(int *nb, t_token **tokens, t_token **tmp)$/;"	f	typeref:typename:void	file:
+init_params	srcs/big_tokenizer_4.c	/^static void init_params(int *adv_steps, int *to_reduce)$/;"	f	typeref:typename:void	file:
+init_tok_struct	srcs/tokenizer_1.c	/^void	init_tok_struct(t_token **tok_list, int rank_in_list)$/;"	f	typeref:typename:void
+is_last_op	srcs/syntax_errorinizer_1.c	/^int	is_last_op(t_token **tokens)$/;"	f	typeref:typename:int
+is_pipe_in_st_end	srcs/syntax_errorinizer_2.c	/^int	is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens)$/;"	f	typeref:typename:int
+is_quoted	srcs/tokenizer_1.c	/^int	is_quoted(t_token **tok_list, char c)$/;"	f	typeref:typename:int
+len_ll_list	srcs/tokenizer_1.c	/^int	len_ll_list(t_token *tok_list)$/;"	f	typeref:typename:int
+length	include/minishell.h	/^	int					length;$/;"	m	struct:s_big_token	typeref:typename:int
+length	include/minishell.h	/^	int 	length;$/;"	m	struct:s_token	typeref:typename:int
+main	srcs/main.c	/^int	main(int ac, char **av, char **envp)$/;"	f	typeref:typename:int
+main_agent_O	srcs/main_O.c	/^int main_agent_O(t_info *info)$/;"	f	typeref:typename:int
+makefile.extensionOutputFolder	.vscode/settings.json	/^	"makefile.extensionOutputFolder": ".\/.vscode"$/;"	s
+max	libft/libft.h	/^	int				max;$/;"	m	struct:s_chunk	typeref:typename:int
+min	libft/libft.h	/^	int				min;$/;"	m	struct:s_chunk	typeref:typename:int
+move_tok_2_ind	srcs/big_tokenizer_1.c	/^void move_tok_2_ind(t_token **tokens, int ind)$/;"	f	typeref:typename:void
+moves	libft/libft.h	/^	int				moves;$/;"	m	struct:s_begin	typeref:typename:int
+name	include/minishell.h	/^	char			*name;$/;"	m	struct:s_env	typeref:typename:char *
+nb_cmd	include/minishell.h	/^	int			nb_cmd;$/;"	m	struct:s_info	typeref:typename:int
+next	include/minishell.h	/^	struct s_env	*next;$/;"	m	struct:s_env	typeref:struct:s_env *
+next	include/minishell.h	/^	struct s_fd			*next;$/;"	m	struct:s_fd	typeref:struct:s_fd *
+next	include/minishell.h	/^	struct s_token *next;$/;"	m	struct:s_token	typeref:struct:s_token *
+next	libft/libft.h	/^	struct s_chunk	*next;$/;"	m	struct:s_chunk	typeref:struct:s_chunk *
+next	libft/libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list *
+next	libft/libft.h	/^	struct s_pile	*next;$/;"	m	struct:s_pile	typeref:struct:s_pile *
+next	libft/libft.h	/^	struct s_roll	*next;$/;"	m	struct:s_roll	typeref:struct:s_roll *
+no_red	srcs/parser.c	/^int no_red(t_big_token **tmp_b, t_token **tokens)$/;"	f	typeref:typename:int
+no_sib_has_child	srcs/executer.c	/^int no_sib_has_child(t_big_token *b_tokens)$/;"	f	typeref:typename:int
+num	libft/libft.h	/^	int				num;$/;"	m	struct:s_pile	typeref:typename:int
+objets	Makefile	/^objets = $(addprefix $(OBJ_DIR), $(sources:%.c=%.o))$/;"	m
+op_cl_par_succeeding	srcs/syntax_errorinizer_2.c	/^int	op_cl_par_succeeding(t_token **tokens)$/;"	f	typeref:typename:int
+par	include/minishell.h	/^	int					par;$/;"	m	struct:s_big_token	typeref:typename:int
+parent	include/minishell.h	/^	struct s_big_token	*parent;$/;"	m	struct:s_big_token	typeref:struct:s_big_token *
+parse	include/minishell.h	/^	t_big_token	*parse;$/;"	m	struct:s_info	typeref:typename:t_big_token *
+parse	srcs/parser.c	/^void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)$/;"	f	typeref:typename:void
+pdes	include/minishell.h	/^	int			pdes[2];$/;"	m	struct:s_info	typeref:typename:int[2]
+pile	libft/libft.h	/^	t_pile	*pile;$/;"	m	struct:s_global	typeref:typename:t_pile *
+pile_a	libft/libft.h	/^	t_pile			*pile_a;$/;"	m	struct:s_begin	typeref:typename:t_pile *
+pile_b	libft/libft.h	/^	t_pile			*pile_b;$/;"	m	struct:s_begin	typeref:typename:t_pile *
+piped	srcs/big_tokenizer_2.c	/^int	piped(t_token **tokens, int start, int length)$/;"	f	typeref:typename:int
+prev	include/minishell.h	/^	struct s_token *prev;$/;"	m	struct:s_token	typeref:struct:s_token *
+print	libft/libft.h	/^	int				print;$/;"	m	struct:s_begin	typeref:typename:int
+print_all_child	srcs/printer.c	/^void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j)$/;"	f	typeref:typename:void
+print_all_everything	srcs/printer.c	/^void	print_all_everything(t_big_token **b_tokens, t_token **tokens)$/;"	f	typeref:typename:void
+print_all_fd	srcs/printer.c	/^void	print_all_fd(t_fd *fd)$/;"	f	typeref:typename:void
+print_b_tokens	srcs/printer.c	/^void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)$/;"	f	typeref:typename:void
+print_s_tokens	srcs/printer.c	/^void	print_s_tokens(t_token **tokens, int start, int length)$/;"	f	typeref:typename:void
+print_tab	srcs/printer.c	/^void	print_tab(char **tab)$/;"	f	typeref:typename:void
+quoted	include/minishell.h	/^	int 	quoted;$/;"	m	struct:s_token	typeref:typename:int
+r_2_op_succeding	srcs/syntax_errorinizer_2.c	/^int	r_2_op_succeding(t_token **tokens)$/;"	f	typeref:typename:int
+r_dir_op_succeding	srcs/syntax_errorinizer_2.c	/^int	r_dir_op_succeding(t_token **tokens)$/;"	f	typeref:typename:int
+r_quotes_impair	srcs/syntax_errorinizer_1.c	/^int	r_quotes_impair(t_token **tokens)$/;"	f	typeref:typename:int
+ra	libft/libft.h	/^	int				ra;$/;"	m	struct:s_roll	typeref:typename:int
+rb	libft/libft.h	/^	int				rb;$/;"	m	struct:s_roll	typeref:typename:int
+rd_inout_type	srcs/big_tokenizer_4.c	/^void rd_inout_type(char *str, int *type_red)$/;"	f	typeref:typename:void
+rdline	include/minishell.h	/^	char		*rdline;$/;"	m	struct:s_info	typeref:typename:char *
+re	Makefile	/^re: fclean all$/;"	t
+re	libft/Makefile	/^re: fclean all$/;"	t
+rec_exec	srcs/executer.c	/^int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)$/;"	f	typeref:typename:int
+red	include/minishell.h	/^	int					red; \/\/ if 1 >> if 0 >. Si fd_in && 1, heredoc$/;"	m	struct:s_fd	typeref:typename:int
+rra	libft/libft.h	/^	int				rra;$/;"	m	struct:s_roll	typeref:typename:int
+rrb	libft/libft.h	/^	int				rrb;$/;"	m	struct:s_roll	typeref:typename:int
+s_begin	libft/libft.h	/^typedef struct s_begin$/;"	s
+s_big_tok_type	include/minishell.h	/^typedef enum s_big_tok_type$/;"	g
+s_big_token	include/minishell.h	/^typedef struct s_big_token$/;"	s
+s_char_type	include/minishell.h	/^typedef enum s_char_type$/;"	g
+s_chunk	libft/libft.h	/^typedef struct s_chunk$/;"	s
+s_env	include/minishell.h	/^typedef struct s_env$/;"	s
+s_fd	include/minishell.h	/^typedef struct s_fd$/;"	s
+s_global	libft/libft.h	/^typedef struct s_global$/;"	s
+s_info	include/minishell.h	/^typedef struct s_info$/;"	s
+s_list	libft/libft.h	/^typedef struct s_list$/;"	s
+s_par_left_right	include/minishell.h	/^typedef enum	s_par_left_right$/;"	g
+s_pile	libft/libft.h	/^typedef struct s_pile$/;"	s
+s_roll	libft/libft.h	/^typedef struct s_roll$/;"	s
+s_tok_type	include/minishell.h	/^typedef enum s_tok_type$/;"	g
+s_token	include/minishell.h	/^typedef struct s_token$/;"	s
+sc	include/minishell.h	/^	int					sc;$/;"	m	struct:s_big_token	typeref:typename:int
+sc	srcs/executer.c	/^int	sc;$/;"	v	typeref:typename:int
+sibling	include/minishell.h	/^	struct s_big_token	*sibling;$/;"	m	struct:s_big_token	typeref:struct:s_big_token *
+size	libft/libft.h	/^	int				size;$/;"	m	struct:s_chunk	typeref:typename:int
+sources	Makefile	/^sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\\$/;"	m
+start	include/minishell.h	/^	int 	start;$/;"	m	struct:s_token	typeref:typename:int
+status	include/minishell.h	/^	int			status;$/;"	m	struct:s_info	typeref:typename:int
+sub_parse_1	srcs/parser.c	/^void sub_parse_1(t_big_token **tmp_b, t_token **tokens, int b_start, int b_length)$/;"	f	typeref:typename:void
+sub_parse_2	srcs/parser.c	/^void sub_parse_2(t_big_token **tmp, t_big_token **tmp_b, t_token **tokens)$/;"	f	typeref:typename:void
+syntax_err_handler	srcs/syntax_errorinizer_2.c	/^int	syntax_err_handler(t_token **tokens)$/;"	f	typeref:typename:int
+t_begin	libft/libft.h	/^}	t_begin;$/;"	t	typeref:struct:s_begin
+t_big_tok_type	include/minishell.h	/^} 			t_big_tok_type;$/;"	t	typeref:enum:s_big_tok_type
+t_big_token	include/minishell.h	/^} 	t_big_token;$/;"	t	typeref:struct:s_big_token
+t_char_type	include/minishell.h	/^} 			t_char_type;$/;"	t	typeref:enum:s_char_type
+t_chunk	libft/libft.h	/^}	t_chunk;$/;"	t	typeref:struct:s_chunk
+t_env	include/minishell.h	/^}	t_env;$/;"	t	typeref:struct:s_env
+t_fd	include/minishell.h	/^}	t_fd;$/;"	t	typeref:struct:s_fd
+t_global	libft/libft.h	/^}	t_global;$/;"	t	typeref:struct:s_global
+t_info	include/minishell.h	/^}	t_info;$/;"	t	typeref:struct:s_info
+t_list	libft/libft.h	/^}	t_list;$/;"	t	typeref:struct:s_list
+t_par_left_right	include/minishell.h	/^}				t_par_left_right;$/;"	t	typeref:enum:s_par_left_right
+t_pile	libft/libft.h	/^}	t_pile;$/;"	t	typeref:struct:s_pile
+t_roll	libft/libft.h	/^}	t_roll;$/;"	t	typeref:struct:s_roll
+t_tok_type	include/minishell.h	/^} 			t_tok_type;$/;"	t	typeref:enum:s_tok_type
+t_token	include/minishell.h	/^} 			t_token;$/;"	t	typeref:struct:s_token
+tmp	include/minishell.h	/^	int			tmp[2];$/;"	m	struct:s_info	typeref:typename:int[2]
+token	include/minishell.h	/^	t_tok_type token;$/;"	m	struct:s_token	typeref:typename:t_tok_type
+tokens	include/minishell.h	/^	t_token		*tokens;$/;"	m	struct:s_info	typeref:typename:t_token *
+type	include/minishell.h	/^	t_big_tok_type		type;$/;"	m	struct:s_big_token	typeref:typename:t_big_tok_type
+value	include/minishell.h	/^	char			*value;$/;"	m	struct:s_env	typeref:typename:char *
+value	include/minishell.h	/^	char	*value;$/;"	m	struct:s_token	typeref:typename:char *

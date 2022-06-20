@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:20:05 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/16 15:13:39 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 22:21:14 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*ft_strdup(const char *src)
 		*str++ = *src++;
 	return (str - len);
 }
+
+
 
 char	*ft_strdup_free(char *src)
 {

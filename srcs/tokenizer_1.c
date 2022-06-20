@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 14:26:03 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/20 22:48:24 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,17 @@ int	is_quoted(t_token **tok_list, char c)
 	t_token	*tmp;
 	int		dq;
 	int		sq;
-	int		i;
 
 	dq = 1;
 	sq = 1;
 	tmp = *tok_list;
-		while (tmp->prev)
+		while (tmp)
 		{
-			tmp = tmp->prev;
-			if (tmp->token == TOK_QUOTER && ft_strlen(tmp->value) && !ft_strncmp('\'', tmp->value, 1))
+			if (tmp->token == TOK_QUOTER && ft_strlen(tmp->value) && !ft_strncmp("\'", tmp->value, 1))
 				sq *= -1;
-			else if (tmp->token == TOK_QUOTER && ft_strlen(tmp->value) && !ft_strncmp('\"', tmp->value, 1))
+			else if (tmp->token == TOK_QUOTER && ft_strlen(tmp->value) && !ft_strncmp("\"", tmp->value, 1))
 				dq *= -1;
+			tmp = tmp->prev;
 		}
 		if (sq < 0 && dq > 0 && c != '\'')
 			return (1);
@@ -58,19 +57,17 @@ unsigned int	get_real_tok_type(char c, t_token **tok_list)
 	t_token	*last_tok;
 
 	len = len_ll_list(*tok_list);
-	while (last_tok)
-		last_tok = last_tok->next;
 	if (len == 0)
 		return (get_tok_type[get_char_class[(int)c]]);
+	last_tok = *tok_list;
+	while (last_tok->next)
+		last_tok = last_tok->next;
+	if (is_quoted(&last_tok, c) == 1)
+		return (TOK_WORD_S_QUOTED);
+	else if (is_quoted(&last_tok, c) == 2)
+		return (TOK_WORD_D_QUOTED);
 	else
-	{
-		if (is_quoted(&last_tok, c) == 1)
-			return (TOK_WORD_S_QUOTED);
-		else if (is_quoted(&last_tok, c) == 2)
-			return (TOK_WORD_D_QUOTED);
-		else
-			return (get_tok_type[get_char_class[(int)c]]);
-	}
+		return (get_tok_type[get_char_class[(int)c]]);
 	return (-1);
 }
 
@@ -85,6 +82,7 @@ t_token	*ft_create_token(t_tok_type tok_type, int length, int i)
 	tok->length = length;
 	tok->start = i;
 	tok->next = NULL;
+	tok->prev = NULL;
 	return (tok);
 }
 
