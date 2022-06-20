@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 15:53:34 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 17:44:37 by nflan            ###   ########.fr       */
 /*   Updated: 2022/06/17 14:24:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -48,6 +48,22 @@ static void handle_par_3(t_big_token **tmp_b, int to_reduce, int adv_steps, t_to
 	}
 }
 
+static void handle_piped(t_big_token **tmp_b, t_token **tokens)
+{
+	int		i;
+	t_token	*tmp_s;
+
+	i = 0;
+	tmp_s = *tokens;
+	(*tmp_b)->cmd_args_num = 1;
+	(*tmp_b)->cmd_args = ft_calloc(2, sizeof(char *));
+	while (i < (*tmp_b)->length)
+	{
+		move_tok_2_ind(&tmp_s, (*tmp_b)->ind_tok_start + i);
+		((*tmp_b)->cmd_args)[0] = ft_strjoin_free(((*tmp_b)->cmd_args)[0], tmp_s->value, 1);
+		i++;
+	}
+}
 static void init_params(int *adv_steps, int *to_reduce)
 {
 	(*adv_steps) = 0;
@@ -244,6 +260,7 @@ void handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_token **tokens, int 
 	len = 0;
 	to_reduce = 0;
 	to_start = 0;
+	handle_piped(tmp_b, tokens);
 	move_tok_2_ind(&tmp, (*tmp_b)->ind_tok_start);
 	if (tmp->token == TOK_SEP)
 	{
@@ -414,6 +431,8 @@ void handle_par(t_big_token **b_tokens, t_token **tokens)
 			handle_dir(&tmp_b, tokens);
 			// tmp_b->par = 0;
 		}
+		else
+			handle_piped(&tmp_b, tokens);
 		tmp_b = tmp_b->sibling;
 	}
 }

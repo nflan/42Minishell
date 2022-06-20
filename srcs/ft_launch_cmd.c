@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 18:11:09 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 18:37:18 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	ft_check_builtins(t_info *info, t_big_token *b_tokens)
 //	print_tab(b_tokens->cmd_args);
 //	ft_putstr_fd(b_tokens->cmd_args[0], 1);
 //	printf("b_tokens->cmd_args[0] = %s\n", b_tokens->cmd_args[0]);
+	if (!b_tokens->cmd_args)
+		return (1);
 	len = ft_strlen(b_tokens->cmd_args[0]) + 1;
 	if (!ft_strncmp(b_tokens->cmd_args[0], "unset", len))
 		return (0);
@@ -216,6 +218,7 @@ int	ft_fork_par(t_info *info, t_big_token *b_tokens)
 	pid_t	pid;
 
 	pid = -1;
+//	printf("fork_par\n");
 	pid = fork();
 	if ((int) pid == -1)
 		return (ft_error(2, info, NULL));

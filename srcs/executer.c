@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 11:52:42 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 18:37:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,11 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 
 void	give_parent_sc(t_big_token **child, t_big_token **parent)
 {
+//	printf("tmpb parent 1 [0] = %s\n", child[0]->parent->cmd_args[0]);
 	(*parent)->sc = (*child)->sc;
+//	printf("tmpb parent 1 SC = %d\n", child[0]->parent->sc);
+	if ((*parent)->parent && (*parent)->par)
+		give_parent_sc(parent, &(*parent)->parent);
 }
 
 int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
@@ -240,6 +244,7 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 //	printf("b_tokens->type = %d\n", (*b_tokens)->type);
 	while (tmp_b)
 	{
+	//	printf("tmpb [0] = %s\n",tmp_b->cmd_args[0]);
 		if (tmp_b->child && tmp_b->sc == -1)
 		{
 			if (!tmp_b->par)
@@ -267,18 +272,18 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 			fc = 1;
 		else if (tmp_b->type == TOK_LEFT_OR && i == and_or)
 			fc = 2;
-		else if (tmp_b->type == TOK_LAST || tmp_b->type == TOK_CLEAN)
+		else if (tmp_b->type == TOK_LAST || tmp_b->type == TOK_CLEAN || tmp_b->type == TOK_CLEAN_PIPED)
 			fc = 3;
 		if (fc)
 			break ;
 		tmp_b = tmp_b->sibling;
 		i++;
 	}
-	if (tmp_b && tmp_b->sc == -1)// && !tmp_b->child) //execute le bloc tmp_b tout seul and get the sc;
+	if (tmp_b && tmp_b->sc == -1 && (!tmp_b->child || tmp_b->par)) //execute le bloc tmp_b tout seul and get the sc;
 	{
-//		printf("value b_token (commande solo) \n");
-//		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-//		printf("\n");
+	//	printf("value b_token (commande solo) && tmp_b->sc = %d\n", tmp_b->sc);
+	//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+	//	printf("\n");
 		if (exec_the_bulk(info, 1, tmp_b))
 			return (1);
 		if (tmp_b->parent)
@@ -286,9 +291,9 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 	}
 	if (tmp_b && fc > 0 && fc < 3)
 	{
-		//printf("value b_token dans le FC (%d)\n", fc);
-		//print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-		//printf("\nb_tok->sc = %d\n", tmp_b->sc);
+	//	printf("value b_token dans le FC (%d)\n", fc);
+	//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+	//	printf("\nb_tok->sc = %d\n", tmp_b->sc);
 		if ((fc == 1 && sc == 0) || (fc == 2 && sc))
 		{
 			rec_exec(info, b_tokens, and_or + 1);
