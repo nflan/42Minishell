@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/20 15:41:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 22:46:15 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,7 @@ t_env	*ft_envnew(char *line);
 //-----------ft_launch_cmd----------------------------------------
 int	ft_exit_cmd(t_info *info, char *str, int err);
 int	ft_wash_btoken(t_info *info, t_big_token *b_tokens);
-int	ft_check_builtins(t_info *info, t_big_token *b_tokens);
+int	ft_check_builtins(t_big_token *b_tokens);
 int	ft_builtins(t_info *info, t_big_token *b_tokens);
 int	ft_launch_sibling(t_info *info, t_big_token *b_tokens);
 void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child);
@@ -359,7 +359,6 @@ char			*get_next_line(int fd);
 // AGENT O
 //----------main_O.c-------------------------------------------------------------------
 int				main_agent_O(t_info *info);
-void			free_all_tokens(t_token **tokens);
 char			*concat_argvs(int argc, char **argv);
 
 //----------parser.c-------------------------------------------------------------------
@@ -367,7 +366,7 @@ char			*concat_argvs(int argc, char **argv);
 void			give_parent(t_big_token **b_child, t_big_token **parent);
 void			sub_parse_1(t_big_token **tmp_b, t_token **tokens, int b_start, int b_length);
 void			sub_parse_2(t_big_token **b_child, t_big_token **tmp_b, t_token **tokens);
-void			parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+int				parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
 void			extract_fds(t_big_token **tmp_b, t_token **tokens);
 
 //----------executer.c-------------------------------------------------------------------
@@ -392,11 +391,11 @@ void 			init_tok_struct(t_token **tok_list, int rank_in_list);
 
 //----------tokenizer_2.c-------------------------------------------------------------------
 
-void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
-void 			detect_tokens(t_token **tok_list, char *str);
-void 			fill_tok_value(t_token **tok, char *str);
-char 			*ft_strncpy(char *str, int n);
-void 			index_toks(t_token **tokens, int start, int length);
+int				add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
+int				detect_tokens(t_token **tok_list, char *str);
+int				fill_tok_value(t_token **tok, char *str);
+char			*ft_strncpy(char *str, int n);
+void			index_toks(t_token **tokens);
 
 //-----------syntax_errorinizer_1.c----------------------------------------------------------------------
 
@@ -416,7 +415,7 @@ int				is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens);
 //-----------big_tokenizer_1.c---------------------------------------------------------------------------
 
 t_big_token		*ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length);
-void			add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length);
+int				add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length);
 int				check_divider_type(char *tmp_value);
 // int				is_cl_2_op(char *value_tok_op, char *value_tok_cl);
 void			move_tok_2_ind(t_token **tokens, int ind);
@@ -424,17 +423,17 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 //-----------big_tokenizer_2.c---------------------------------------------------------------------------
 
 int				cl_par_ind(t_token **tokens, int ind_tok);
-void			divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
+int				divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
 int	piped(t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------------------------
 
-void			handle_par(t_big_token **b_tokens, t_token **tokens);
+int			handle_par(t_big_token **b_tokens, t_token **tokens);
 
 //-----------big_tokenizer_3.c---------------------------------------------------------------------------
 
 // void		divide_by_or_and(t_big_token **b_tokens, t_token **tokens);
-void		divide_by_pipe(t_big_token **b_tokens, t_token **tokens);
+int			divide_by_pipe(t_big_token **b_tokens, t_token **tokens);
 
 
 void print_b_tokens(t_big_token **b_token, t_token **tokens, int i, int j);

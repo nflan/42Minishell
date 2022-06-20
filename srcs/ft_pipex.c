@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 18:11:42 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 22:47:18 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void    ft_signal_dfl(int sig)
 
 int	ft_do_pipex(t_info *info, t_big_token *b_tokens)
 {
-	if (!ft_check_builtins(info, b_tokens))
+	if (!ft_check_builtins(b_tokens))
 	{
 		info->status = ft_builtins(info, b_tokens);
 		if (info)

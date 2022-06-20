@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/14 20:21:09 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 21:51:00 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,12 @@ t_token	*ft_create_token(t_tok_type tok_type, int length, int i)
 {
 	t_token	*tok;
 
-	tok = (t_token *)malloc(sizeof(t_token));
+	tok = ft_calloc(sizeof(t_token), 1);
 	if (!tok)
 		return (NULL);
 	tok->token = tok_type;
 	tok->length = length;
 	tok->start = i;
-	tok->next = NULL;
 	return (tok);
 }
 

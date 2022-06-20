@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 17:43:25 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 22:37:41 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,14 @@ t_env	*ft_envnew(char *line)
 		return (NULL);
 	new->next = NULL;
 	if (ft_fill_envnew(new, line))
-		return (NULL);
+		return (free(new), NULL);
 	if (!ft_strncmp(new->name, "SHLVL", 6))
 	{
 		tmp = ft_itoa(ft_atoi(new->value) + 1);
 		free(new->value);
 		new->value = ft_strdup_free(tmp);
+		if (!new->value)
+			return (ft_free_env(new), NULL);
 	}
 	return (new);
 }
@@ -133,6 +135,8 @@ t_env	*ft_without_env(int i)
 		new->name = ft_strdup("_");
 		new->value = ft_strdup("./minishell");
 	}
+	if (!new->name || !new->value)
+		return (NULL);
 	return (new);
 }
 
@@ -151,7 +155,7 @@ int	ft_init_env(t_info *info, char **envp)
 		{
 			ptr = ft_envnew(envp[i]);
 			if (!ptr)
-				return (1);
+				return (ft_free_env(ptr), 1);
 			ft_envadd_back(&new, ptr);
 		}
 	}
@@ -161,7 +165,7 @@ int	ft_init_env(t_info *info, char **envp)
 		{
 			ptr = ft_without_env(i);
 			if (!ptr)
-				return (1);
+				return (ft_free_env(ptr), 1);
 			ft_envadd_back(&new, ptr);
 		}
 	}
@@ -171,8 +175,14 @@ int	ft_init_env(t_info *info, char **envp)
 
 int	ft_init_info(t_info *info, int ret)
 {
-	if (main_agent_O(info))
+	int	err;
+
+	err = main_agent_O(info);
+	if (err)
+	{
+		ft_free_all(info, NULL);
 		return (1);
+	}
 	info->status = ret;
 //	info->nb_cmd = 0;
 	return (0);
@@ -199,6 +209,15 @@ char	*ft_rdline_word(t_info *info)
 	return (word);
 }
 
+void	ft_init_first(t_info *info)
+{
+	info->nb_cmd = 0;
+	info->rdline = NULL;
+	info->parse = NULL;
+	info->tokens = NULL;
+	info->env = NULL;
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_info		info;
@@ -206,8 +225,7 @@ int	main(int ac, char **av, char **envp)
 	static int	ret = 0;
 
 	(void) av;
-	info.nb_cmd = 0;
-	info.rdline = NULL;
+	ft_init_first(&info);
 	if (ac > 1)
 		info.nb_cmd = 10;
 	if (ft_init_env(&info, envp))
@@ -218,23 +236,20 @@ int	main(int ac, char **av, char **envp)
 	{
 		word = ft_rdline_word(&info);
 		if (!word)
-			return (1);
+			return (ft_free_all(&info, info.env), ft_putstr_error("Word Error\n"));
 		info.rdline = readline(word);
 		free(word);
 		if (ft_keep_history(info.rdline))
 			add_history(info.rdline);
-		if (ft_strlen(info.rdline) > 1)
-		{
-			if (!ft_init_info(&info, ret))
-			{
-				if (info.nb_cmd != 10)
-					rec_exec(&info, &info.parse, 0);
-				ret = info.status;
-				ft_free_all(&info, NULL);
-			}
-		}
-		else
+		if (!info.rdline)
 			break ;
+		if (!ft_init_info(&info, ret))
+		{
+			if (info.nb_cmd != 10)
+				rec_exec(&info, &info.parse, 0);
+			ret = info.status;
+			ft_free_all(&info, NULL);
+		}
 	}
 	ft_free_env(info.env);
 	ft_exit(&info, NULL);

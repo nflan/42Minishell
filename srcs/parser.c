@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:11:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 16:52:06 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 21:53:52 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,17 +112,18 @@ int no_red(t_big_token **tmp_b, t_token **tokens)
 	}
 }*/
 
-void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
+int parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 {
 	t_big_token *tmp_b;
 //	t_big_token *b_child;
 
-	divide_by_or_and(b_tokens, tokens, start, length);
+	if (divide_by_or_and(b_tokens, tokens, start, length))
+		return (ft_putstr_error("in parse "));
 	tmp_b = *b_tokens;
 	if (!tmp_b || (!tmp_b->par && tmp_b->type == TOK_CLEAN))
 	{
 		// handle_redirections(&tmp_b, tokens);
-		return;
+		return (0);
 	}
 	while (tmp_b)
 	{
@@ -130,10 +131,12 @@ void parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 			sub_parse_1(&tmp_b, tokens, tmp_b->ind_tok_start, tmp_b->length);
 		else if (piped(tokens, tmp_b->ind_tok_start, tmp_b->length))
 		{
-			divide_by_pipe(&tmp_b, tokens);
+			if (divide_by_pipe(&tmp_b, tokens))
+				return (ft_putstr_error("in parse "));
 			if (tmp_b->child)
 				sub_parse_2(&tmp_b->child, &tmp_b, tokens);
 		}
 		tmp_b = tmp_b->sibling;
 	}
+	return (0);
 }

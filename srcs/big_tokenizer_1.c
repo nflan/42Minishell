@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:18:51 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 10:56:04 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 22:03:10 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,31 @@ t_big_token *ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length
 	tok->type = type;
 	tok->ind_tok_start = ind_tok_start;
 	tok->length = length;
-	tok->par = 0;
-	tok->fdin = 0;
 	tok->fdout = 1;
 	tok->sc = -1;
-	tok->cmd_args_num = 0;
 	return (tok);
 }
 
-void add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length)
+int	add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length)
 {
 	t_big_token *tmp;
-	t_big_token *bef_last;
 
 	if (!*b_tok_list)
+	{
 		*b_tok_list = ft_create_btoken(type, start, length);
+		if (!*b_tok_list)
+			return (ft_putstr_error("Malloc error in ft_create_btoken in add_b_tok_sib_last "));
+	}
 	else
 	{
 		tmp = *b_tok_list;
 		while (tmp->sibling)
 			tmp = tmp->sibling;
-		bef_last = tmp;
-		bef_last->sibling = ft_create_btoken(type, start, length);
+		tmp->sibling = ft_create_btoken(type, start, length);
+		if (!tmp->sibling)
+			return (ft_putstr_error("Malloc error in ft_create_btoken in add_b_tok_sib_last "));
 	}
+	return (0);
 }
 
 int check_divider_type(char *tmp_value)

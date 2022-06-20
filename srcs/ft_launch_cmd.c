@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/20 20:06:52 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 22:46:24 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,10 @@ int	ft_wash_btoken(t_info *info, t_big_token *b_tokens)
 	return (tmp);
 }*/
 
-int	ft_check_builtins(t_info *info, t_big_token *b_tokens)
+int	ft_check_builtins(t_big_token *b_tokens)
 {
 	int	len;
 
-	(void)info;
-//	print_tab(b_tokens->cmd_args);
-//	ft_putstr_fd(b_tokens->cmd_args[0], 1);
-//	printf("b_tokens->cmd_args[0] = %s\n", b_tokens->cmd_args[0]);
 	if (!b_tokens->cmd_args)
 		return (1);
 	len = ft_strlen(b_tokens->cmd_args[0]) + 1;
@@ -127,6 +123,8 @@ int	ft_builtins(t_info *info, t_big_token *b_tokens)
 {
 	int	len;
 
+	if (!b_tokens->cmd_args)
+		return (1);
 	len = ft_strlen(b_tokens->cmd_args[0]) + 1;
 	if (!ft_strncmp(b_tokens->cmd_args[0], "unset", len))
 	{
@@ -284,7 +282,7 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 	if (b_tokens->par == 1)
 		return (ft_fork_par(info, b_tokens));
 	b_tokens->envp = ft_env_to_tab(info->env);
-	if (!ft_check_builtins(info, b_tokens))
+	if (!ft_check_builtins(b_tokens))
 		info->status = ft_builtins(info, b_tokens);
 	else
 		ft_do_solo(info, b_tokens);

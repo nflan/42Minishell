@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 17:43:26 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 22:16:03 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,8 @@ void	print_all_fd(t_fd *fd)
 void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 {
 	t_big_token	*tmp_b;
-	t_token		*tmp_s;
 
 	tmp_b = *b_tokens;
-	tmp_s = *tokens;
 	int	k;
 	k =0;
 	while (tmp_b)

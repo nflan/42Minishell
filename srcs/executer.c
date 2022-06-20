@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 20:04:50 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 23:16:32 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int no_sib_has_child(t_big_token *b_tokens)
 	return (0);
 }
 
-void	ft_open_all_fdout(t_big_token *b_tokens)
+int	ft_open_all_fdout(t_big_token *b_tokens, t_fd *tmp_fd)
 {
-	t_fd	*tmp_fd;
+	char	*err;
 
-	tmp_fd = b_tokens->fd_out;
+	err = NULL;
 	if (tmp_fd)
 	{
 		while (tmp_fd)
@@ -49,20 +49,23 @@ void	ft_open_all_fdout(t_big_token *b_tokens)
 		//	printf("file = %s\n", tmp_fd->file);
 		//	printf("red = %d\n", tmp_fd->red);
 			if (!tmp_fd->red)
-			{
-		//		printf("allo\n");
 				tmp_fd->fd = open(tmp_fd->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		//		printf("tmp_fd->fd = %d\n", tmp_fd->fd);
-			}
 			else
 				tmp_fd->fd = open(tmp_fd->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (tmp_fd->fd < 0)
 			{
-				ft_putstr_error("Open error\n");
 				b_tokens->sc = 1;
 				tmp_fd->fd = 1;
+				sc = 1;
+				err = ft_strjoin("minishell: ", tmp_fd->file);
+				if (!err)
+					return (1);
+				perror(err);
+				free(err);
+				return (1);
 			}
-			b_tokens->fdout = tmp_fd->fd;
+			else
+				b_tokens->fdout = tmp_fd->fd;
 			if (tmp_fd->next)
 			{
 				close(tmp_fd->fd);
@@ -71,25 +74,30 @@ void	ft_open_all_fdout(t_big_token *b_tokens)
 			tmp_fd = tmp_fd->next;
 		}
 	}
+	return (0);
 }
 
-void	ft_open_all_fdin(t_big_token *b_tokens)
+int	ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd)
 {
-	t_fd	*tmp_fd;
+	char	*err;
 
-	tmp_fd = b_tokens->fd_in;
+	err = NULL;
 	if (tmp_fd)
 	{
 		while (tmp_fd)
 		{
-//			printf("file = %s\n", tmp_fd->file);
-//			printf("red = %d\n", tmp_fd->red);
 			tmp_fd->fd = open(tmp_fd->file, O_RDONLY);
 			if (tmp_fd->fd < 0)
 			{
-				ft_putstr_error("Open error\n");
 				b_tokens->sc = 1;
 				tmp_fd->fd = 0;
+				sc = 1;
+				err = ft_strjoin("minishell: ", tmp_fd->file);
+				if (err)
+					return (1);
+				perror(err);
+				free(err);
+				return (1);
 			}
 			b_tokens->fdin = tmp_fd->fd;
 			if (tmp_fd->next)
@@ -102,21 +110,26 @@ void	ft_open_all_fdin(t_big_token *b_tokens)
 			tmp_fd = tmp_fd->next;
 		}
 	}
+	return (0);
 }
 
-void	ft_open_fd(t_big_token *b_tokens)
+int	ft_open_fd(t_big_token *b_tokens)
 {
+	int	err;
+
+	err = 0;
 	if (b_tokens)
 	{
 		while (b_tokens)
 		{
 			if (b_tokens->fd_out)
-				ft_open_all_fdout(b_tokens);
+				err += ft_open_all_fdout(b_tokens, b_tokens->fd_out);
 			if (b_tokens->fd_in)
-				ft_open_all_fdin(b_tokens);
+				err += ft_open_all_fdin(b_tokens, b_tokens->fd_in);
 			b_tokens = b_tokens->sibling;
 		}
 	}
+	return (err);
 }
 
 void	ft_close_all_fd(t_fd *fd, int fd_type)
@@ -126,7 +139,7 @@ void	ft_close_all_fd(t_fd *fd, int fd_type)
 			fd = fd->next;
 	if (fd)
 	{
-		if (fd->fd > 0)
+		if (fd->fd > 2)
 			close(fd->fd);
 		if (!fd_type && fd->red)
 			unlink(fd->file);
@@ -212,11 +225,13 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 {
 	info->nb_cmd = 0;
-	ft_open_fd(b_tokens);
+	if (!ft_open_fd(b_tokens))
+	{
 	if (sib_child >= 1 && sib_child <= 3)
 		ft_exec_simple(info, b_tokens);
 	else if (sib_child == 4)
 		ft_init_pipex(info, b_tokens);
+	}
 	ft_close_fd(b_tokens);
 	return (0);
 }
@@ -233,14 +248,12 @@ void	give_parent_sc(t_big_token **child, t_big_token **parent)
 int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 {
 	t_big_token *tmp_b;
-	t_token *tmp_s;
 	int i;
 	int fc;
 
 	fc = 0;
 	i = 0;
 	tmp_b = *b_tokens;
-	tmp_s = info->tokens;
 //	printf("b_tokens->type = %d\n", (*b_tokens)->type);
 	while (tmp_b)
 	{
