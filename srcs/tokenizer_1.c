@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/14 20:21:09 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 13:33:08 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ int	len_ll_list(t_token *tok_list)
 int	is_quoted(t_token **tok_list, int rank_in_list)
 {
 	t_token	*tmp;
-	int		res;
+	int		dq;
+	int		sq;
 
-	res = 1;
+	dq = 1;
+	sq = 1;
 	tmp = *tok_list;
 	if (!rank_in_list)
 		return (0);
@@ -41,11 +43,17 @@ int	is_quoted(t_token **tok_list, int rank_in_list)
 		while (tmp->prev)
 		{
 			tmp = tmp->prev;
-			if (tmp->token == TOK_QUOTER)
-				res *= -1;
+			if (tmp->token == TOK_QUOTER && ft_strlen(tmp->value) && !ft_strncmp('\'', tmp->value, 1))
+				sq *= -1;
+			else if (tmp->token == TOK_QUOTER && ft_strlen(tmp->value) && !ft_strncmp('\"', tmp->value, 1))
+				dq *= -1;
 		}
-		if (res < 0)
+		if (sq < 0 && dq > 0)
 			return (1);
+		if (dq < 0 && sq > 0)
+			return (2);
+		if (dq < 0 && sq < 0)
+			return (3);
 	}
 	return (0);
 }
@@ -60,7 +68,7 @@ unsigned int	get_real_tok_type(char c, t_token **tok_list)
 		return (get_tok_type[get_char_class[(int)c]]);
 	else
 	{
-		if (is_quoted(tok_list, 1))
+		if (c != '\'' && c != '\"' && is_quoted(tok_list, 1))
 			return (TOK_WORD);
 		else
 			return (get_tok_type[get_char_class[(int)c]]);

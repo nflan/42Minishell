@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/16 16:58:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/19 18:46:33 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	detect_tokens(t_token **tok_list, char *str)
 			length++;
 			i++;
 		}
-		if (tok_type != TOK_QUOTER)
+		// if (tok_type != TOK_QUOTER)
 			add_tok_last(tok_list, tok_type, length, start);
 	}
 }
