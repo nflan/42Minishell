@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/03 15:00:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/20 11:07:46 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 	int		i;
 	i = 0;
 	b_length = 0;
-	// printf("\nI entered here with this token()\n");
-	// print_s_tokens(tokens, start_tok, length);
+	printf("\nI entered here with this token()\n");
+	print_s_tokens(tokens, start_tok, length);
 
 	tmp = *tokens;
 	move_tok_2_ind(&tmp, start_tok);
@@ -101,10 +101,7 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 	{
 		b_length++;
 		if (tmp->token == TOK_EXPANDER_OP)
-		{
 			divide_by_or_and_1(&tmp, tokens, &b_length, &i);
-
-		}
 		else if (tmp->token == TOK_OPERATOR && check_divider_type(tmp->value))
 			divide_by_or_and_2(tmp, b_tokens, &start_tok, &b_length);
 		tmp = tmp->next;
