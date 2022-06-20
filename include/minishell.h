@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 18:09:10 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 15:41:31 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,8 @@ typedef struct s_fd
 {
 	int					fd; // fd in ou out (que je rempli a l'exec SI PAS HEREDOC)
 	int					red; // if 1 >> if 0 >. Si fd_in && 1, heredoc
-	char				*file; // nom du ficher infile ou outfile ou delimiteur
+	char				*file; // nom du ficher infile ou outfile ou heredoc
+	char				*delimitator; // delimitateur si heredoc sinon NULL
 	struct s_fd			*next;
 }	t_fd;
 
@@ -169,6 +170,7 @@ typedef struct s_big_token
 	int					par;
 	int					fdin;
 	int					fdout;
+	int					nb_hd;
 	int					cmd_args_num;
 	char				**cmd_args;
 	char				**envp;
@@ -326,7 +328,7 @@ int				ft_pipex(t_info *info, t_big_token *b_tokens);
 
 //---------ft_pipex_tools.c----------------------------
 //int				ft_fdout_me(t_info *info);
-//int				ft_here(t_info *info, int i);
+int				ft_here(t_fd *fd, int ret);
 //int				close_pipex_heredoc(t_info *info);
 //int				ft_do_heredoc(t_info *info);
 //int				ft_pipex_heredoc(t_info *g);
@@ -346,6 +348,13 @@ void	ft_free_b_tokens(t_big_token *b_tokens);
 void	ft_free_cmd(t_big_token *b_tokens);
 void	ft_free_tokens(t_token *tokens);
 void	ft_free_env(t_env *env);
+
+//-----------------ft_get_next_line_bonus.c---------------------------
+void			ft_print(t_fd *fd, char *buf, char c);
+unsigned int	ft_test_line(char *str);
+char			*ft_fill_str(char *str, char *buf);
+char			*get_line(char *str, int fd);
+char			*get_next_line(int fd);
 
 // AGENT O
 //----------main_O.c-------------------------------------------------------------------

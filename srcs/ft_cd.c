@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 17:48:32 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 11:30:47 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_is_tilde_or_home(char *home, char *dir)
 {
 	if (!dir || !ft_strncmp(dir, "", 1))
 		return (1);
-	if (dir[1] == ' ' || !dir[1] || (!home && dir[1] == '/'))
+	if (!home && dir[1] == '/')
 		return (1);
 	if (dir[1] == '/' || dir[1] == '+' || dir[1] == '-')
 		return (0);

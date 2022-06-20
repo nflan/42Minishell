@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 21:19:16 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 15:51:36 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 15:55:47 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	ft_free_fd(t_fd *fd)
 			ft_free_fd(fd->next);
 		if (fd->file)
 			free(fd->file);
+		if (fd->delimitator)
+			free(fd->delimitator);
 		free(fd);
 		fd = NULL;
 	}

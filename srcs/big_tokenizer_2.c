@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 11:07:46 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 11:18:38 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 	int		i;
 	i = 0;
 	b_length = 0;
-	printf("\nI entered here with this token()\n");
-	print_s_tokens(tokens, start_tok, length);
+//	printf("\nI entered here with this token()\n");
+//	print_s_tokens(tokens, start_tok, length);
 
 	tmp = *tokens;
 	move_tok_2_ind(&tmp, start_tok);

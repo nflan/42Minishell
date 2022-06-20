@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/17 17:45:43 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 11:52:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ void	ft_open_all_fdout(t_big_token *b_tokens)
 				tmp_fd->fd = 1;
 			}
 			b_tokens->fdout = tmp_fd->fd;
+			if (tmp_fd->next)
+			{
+				close(tmp_fd->fd);
+				tmp_fd->fd = 0;
+			}
 			tmp_fd = tmp_fd->next;
 		}
 	}
@@ -79,8 +84,7 @@ void	ft_open_all_fdin(t_big_token *b_tokens)
 		{
 			printf("file = %s\n", tmp_fd->file);
 			printf("red = %d\n", tmp_fd->red);
-			if (!tmp_fd->red)
-				tmp_fd->fd = open(tmp_fd->file, O_RDONLY);
+			tmp_fd->fd = open(tmp_fd->file, O_RDONLY);
 			if (tmp_fd->fd < 0)
 			{
 				ft_putstr_error("Open error\n");
@@ -88,6 +92,13 @@ void	ft_open_all_fdin(t_big_token *b_tokens)
 				tmp_fd->fd = 0;
 			}
 			b_tokens->fdin = tmp_fd->fd;
+			if (tmp_fd->next)
+			{	
+				close(tmp_fd->fd);
+				tmp_fd->fd = 1;
+				if (tmp_fd->red)
+					unlink(tmp_fd->file);
+			}
 			tmp_fd = tmp_fd->next;
 		}
 	}
@@ -110,15 +121,15 @@ void	ft_open_fd(t_big_token *b_tokens)
 
 void	ft_close_all_fd(t_fd *fd, int fd_type)
 {
+	if (fd->next)
+		while (fd->next)
+			fd = fd->next;
 	if (fd)
 	{
-		while (fd)
-		{
-			if (fd_type || (!fd_type && !fd->red))
-				if (fd->fd > 0)
-					close(fd->fd);
-			fd = fd->next;
-		}
+		if (fd->fd > 0)
+			close(fd->fd);
+		if (!fd_type && fd->red)
+			unlink(fd->file);
 	}
 }
 

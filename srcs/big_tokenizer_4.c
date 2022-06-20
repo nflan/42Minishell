@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 11:10:09 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 15:53:34 by nflan            ###   ########.fr       */
 /*   Updated: 2022/06/17 14:24:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -42,9 +42,9 @@ static void handle_par_3(t_big_token **tmp_b, int to_reduce, int adv_steps, t_to
 	(*tmp_b)->cmd_args = ft_calloc(2, sizeof(char *));
 	while (i < (*tmp_b)->length)
 	{
-	move_tok_2_ind(&tmp_s, (*tmp_b)->ind_tok_start + i);
-	((*tmp_b)->cmd_args)[0] = ft_strjoin_free(((*tmp_b)->cmd_args)[0], tmp_s->value, 1);
-	i++;
+		move_tok_2_ind(&tmp_s, (*tmp_b)->ind_tok_start + i);
+		((*tmp_b)->cmd_args)[0] = ft_strjoin_free(((*tmp_b)->cmd_args)[0], tmp_s->value, 1);
+		i++;
 	}
 }
 
@@ -92,25 +92,57 @@ void	ft_fdadd_back(t_fd **alst, t_fd *new)
 	}
 }
 
-int	ft_fill_fdnew(t_fd *fd, char *file, int red)
+int	ft_create_tmp(t_fd *fd, int hd)
 {
-	fd->red = red;
+	int	i;
+
+	i = 0;
+	if (hd)
+	{
+		fd->file = ft_strdup("/tmp/.tmp_hd_");
+		if (!fd->file)
+			return (1);
+		while (--hd)
+			i++;
+		fd->file = ft_strjoin_free(fd->file, ft_itoa(i), 4);
+		if (!fd->file)
+			return (1);
+	}
+	return (0);
+}
+
+int	ft_fill_fdnew(t_fd *fd, char *file, int red, int *hd)
+{
+	if (red == 1 || red == 2)
+		fd->red = red - 1;
+	else
+		fd->red = red - 3;
 	if (!file)
 		return (1);
-	fd->file = ft_strdup(file);
+	if (red == 2)
+	{
+		*hd += 1;
+		fd->delimitator = ft_strdup(file);
+		if (ft_create_tmp(fd, *hd))
+			return (1);
+		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		ft_here(fd, 1);
+	}
+	else
+		fd->file = ft_strdup(file);
 	if (!fd->file)
 		return (1);
 	return (0);
 }
 
-int	ft_fdnew(t_fd **fd, char *file, int red)
+int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, char *file, int red)
 {
 	t_fd	*new;
 
 	new = ft_calloc(sizeof(t_fd), 1);
 	if (!new)
 		return (1);
-	if (ft_fill_fdnew(new, file, red))
+	if (ft_fill_fdnew(new, file, red, &(b_tokens)->nb_hd))
 		return (1);
 	ft_fdadd_back(fd, new);
 	return (0);
@@ -139,7 +171,7 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 		}
 		if (tmp->token == TOK_WORD)
 		{
-			printf("%s ", tmp->value);
+		//	printf("%s ", tmp->value);
 			if (!red)
 				count++;
 			else if (red && j == 2)
@@ -154,6 +186,7 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 		tmp = tmp->next;
 		i++;
 	}
+	count++;
 	(*tmp_b)->cmd_args = ft_calloc(count + 1, sizeof(char *));
 	(*tmp_b)->cmd_args_num = count;
 }
@@ -265,9 +298,9 @@ void handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_token **tokens, int 
 		if (tmp->token == TOK_WORD && (i % 2))
 		{
 			if (type_red == 1 || type_red == 2)
-				ft_fdnew(&(*tmp_b)->fd_in, tmp->value, type_red - 1);
+				ft_fdnew(*(tmp_b), &(*tmp_b)->fd_in, tmp->value, type_red);
 			else
-				ft_fdnew(&(*tmp_b)->fd_out, tmp->value, type_red - 3);
+				ft_fdnew(*(tmp_b), &(*tmp_b)->fd_out, tmp->value, type_red);
 			i++;
 		}
 		tmp = tmp->next;
@@ -310,26 +343,26 @@ void handle_dir(t_big_token **tmp_b, t_token **tokens)
 	{
 		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(i % 2))
 		{
-			printf("I entered in rd\n");
-			printf("%s\n", tmp->value);
+	//		printf("I entered in rd\n");
+	//		printf("%s\n", tmp->value);
 			rd_inout_type(tmp->value, &type_red);
 			i++;
 			save_word = 1;
 		}
 		else if ((tmp->token == TOK_WORD) && !save_word)
 		{
-			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
+//			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
 			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);
 			cmd_args_num--;
 		}
 		else if (tmp->token == TOK_WORD && (i % 2) && save_word)
 		{
-	printf("I entered red files\n");
-			printf("%s\n", tmp->value);
+//	printf("I entered red files\n");
+//			printf("%s\n", tmp->value);
 			if (type_red == 1 || type_red == 2)
-				ft_fdnew(&(*tmp_b)->fd_in, tmp->value, type_red - 1);
+				ft_fdnew(*tmp_b, &(*tmp_b)->fd_in, tmp->value, type_red);
 			else
-				ft_fdnew(&(*tmp_b)->fd_out, tmp->value, type_red - 3);
+				ft_fdnew(*tmp_b, &(*tmp_b)->fd_out, tmp->value, type_red);
 			save_word = 0;
 //	handle_red_files(tmp_b, tmp->value, &inouthd, type_red);
 			i++;
