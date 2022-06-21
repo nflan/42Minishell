@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/21 11:12:46 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/21 16:15:48 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,13 @@ typedef enum s_big_tok_type
 	// TOK_PIPE_LEFT,
 	// TOK_PIPE_RIGHT,
 } 			t_big_tok_type;
+
+typedef	struct	s_wildcards
+{
+	DIR					*fd;
+	struct dirent		*dir;
+	struct s_wildcards	*next;
+}	t_wildcards;
 
 typedef enum	s_par_left_right
 {
