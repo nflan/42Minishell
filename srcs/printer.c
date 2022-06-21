@@ -146,7 +146,6 @@ void	print_s_tokens(t_token **tokens, int start, int length)
 	while (i < length && tmp_s)
 	{
 		printf("%s", tmp_s->value);
-		// printf("%d\n", tmp_s->token);
 		tmp_s = tmp_s->next;
 		i++;
 	}

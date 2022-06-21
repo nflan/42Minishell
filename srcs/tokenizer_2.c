@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 23:08:20 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 22:42:51 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 		bef_last->prev = tmp;
 		rank_in_list = 1;
 	}
-	init_tok_struct(tok_list, rank_in_list);
+//	init_tok_struct(tok_list, rank_in_list);
 	return (0);
 }
 
@@ -64,7 +64,7 @@ int	detect_tokens(t_token **tok_list, char *str)
 			length++;
 			i++;
 		}
-		if (tok_type != TOK_QUOTER)
+	//	if (tok_type != TOK_QUOTER)
 			if (add_tok_last(tok_list, tok_type, length, start))
 				return (ft_putstr_error("detect_tokens "));
 	}

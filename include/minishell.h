@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/21 12:13:10 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/21 11:12:46 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ typedef enum s_tok_type
 {
 	TOK_IDK,
 	TOK_SEP,
+	TOK_D_QUOTER,
 	TOK_QUOTER,
+	TOK_S_QUOTER,
 	TOK_EXPANDER_OP,
 	TOK_EXPANDER_CL,
 	TOK_OPERATOR,
@@ -40,6 +42,8 @@ typedef enum s_tok_type
 	TOK_REDIRECTOR_LEFT,
 	TOK_REDIRECTOR_RIGHT,
 	TOK_WORD,
+	TOK_WORD_S_QUOTED,
+	TOK_WORD_D_QUOTED,
 	TOK_EXPANDER,
 } 			t_tok_type;
 
@@ -188,7 +192,7 @@ static const t_char_type get_char_class[255] =
 		['\t'] = CHR_SPACE,
 		[' '] = CHR_SPACE,
 		['!'] = CHR_EXCLAM,
-		['"'] = CHR_D_QUOTE,
+		['\"'] = CHR_D_QUOTE,
 		['#'] = CHR_COMMENT,
 		['$'] = CHR_DOL,
 		['%'] = CHR_PER,
@@ -228,12 +232,12 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_NULL] = TOK_IDK,
 		[CHR_SPACE] = TOK_SEP,
 		[CHR_EXCLAM] = TOK_IDK,
-		[CHR_D_QUOTE] = TOK_QUOTER,
+		[CHR_D_QUOTE] = TOK_D_QUOTER,
 		[CHR_COMMENT] = TOK_IDK,
 		[CHR_DOL] = TOK_WORD,
 		[CHR_PER] = TOK_IDK,
 		[CHR_AND] = TOK_OPERATOR,
-		[CHR_S_QUOTE] = TOK_QUOTER,
+		[CHR_S_QUOTE] = TOK_S_QUOTER,
 		[CHR_OP_PAREN] = TOK_EXPANDER_OP,
 		[CHR_CL_PAREN] = TOK_EXPANDER_CL,
 		[CHR_AST] = TOK_WORD,
@@ -384,7 +388,7 @@ void			print_s_tokens(t_token **tokens, int start, int length);
 //----------tokenizer_1.c-------------------------------------------------------------------
 
 int 			len_ll_list(t_token *tok_list);
-int 			is_quoted(t_token **tok_list, int rank_in_list);
+int 			is_quoted(t_token **tok_list, char c);
 unsigned int	get_real_tok_type(char c, t_token **tok_list);
 t_token 		*ft_create_token(t_tok_type tok_type, int length, int i);
 void 			init_tok_struct(t_token **tok_list, int rank_in_list);
@@ -435,11 +439,18 @@ int			handle_par(t_big_token **b_tokens, t_token **tokens);
 // void		divide_by_or_and(t_big_token **b_tokens, t_token **tokens);
 int			divide_by_pipe(t_big_token **b_tokens, t_token **tokens);
 
+//------------printer.c------------------------------------------------------------------------------------
 
 void print_b_tokens(t_big_token **b_token, t_token **tokens, int i, int j);
 void print_s_tokens(t_token **tokens, int start, int length);
 int	depth_b_token(t_big_token **b_token);
 void	print_all_everything(t_big_token **b_tokens, t_token **tokens);
 void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
+
+//---------------dollar_expander.c-----------------------------------------------------------------------
+char			*expand_join(char *s1, char *s2, char *s3);
+void			expand_1(char **str, int *i, t_info *info);
+void			expand(char **str, t_info *info);
+void			dol_expand(t_token **old_tokens, t_info *info);
 
 #endif
