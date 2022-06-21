@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 23:31:18 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/21 12:09:30 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void expand_1(char **str, int *i, t_info *info)
 	s = *str;
 	ind_dol = *i;
 	add_shit = 0;
+	to_look_up = NULL;
 	tmp = ft_calloc(4 , sizeof(char *));
 	if (!tmp)
 		return;
@@ -98,14 +99,14 @@ void expand_1(char **str, int *i, t_info *info)
 			(*i)++;
 		to_look_up = ft_strndup(&(s[ind_dol + 1]), ((*i) - ind_dol - 1));
 		tmp[1] = ft_get_env_value(info, to_look_up);
-		free(to_look_up);
 		if (tmp[1])
 			add_shit = ft_strlen(tmp[1]);
 	}
-	if (!s[((*i)) + 1])
+	if (!s[((*i))])
 		tmp[2] = NULL;
 	else
-		tmp[2] = ft_strndup(&(s[ind_dol + 1]), (ft_strlen(s) - ind_dol - 1));
+		tmp[2] = ft_strndup(&(s[ind_dol + ft_strlen(to_look_up) + 1]), (ft_strlen(s) - ind_dol - ft_strlen(to_look_up) - 1));
+	free(to_look_up);
 	free(*str);
 	(*str) = expand_join(tmp[0], tmp[1], tmp[2]);
 	free(tmp);
@@ -140,9 +141,15 @@ void dol_expand(t_token **old_tokens, t_info *info)
 	while (tmp_o)
 	{
 		if (tmp_o->token == TOK_WORD_D_QUOTED)
+		{
+			printf("I entered here because a d_quoted word: %s\n", tmp_o->value );
 			expand(&tmp_o->value, info);
+		}
 		else if (tmp_o->token == TOK_WORD)
+		{
+			printf("I entered here because a normal word: %s\n", tmp_o->value );
 			expand(&tmp_o->value, info);
+		}
 		tmp_o = tmp_o->next;
 	}
 }

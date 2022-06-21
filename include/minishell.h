@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/20 22:50:58 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/21 11:12:46 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ typedef enum s_tok_type
 {
 	TOK_IDK,
 	TOK_SEP,
+	TOK_D_QUOTER,
 	TOK_QUOTER,
+	TOK_S_QUOTER,
 	TOK_EXPANDER_OP,
 	TOK_EXPANDER_CL,
 	TOK_OPERATOR,
@@ -228,12 +230,12 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_NULL] = TOK_IDK,
 		[CHR_SPACE] = TOK_SEP,
 		[CHR_EXCLAM] = TOK_IDK,
-		[CHR_D_QUOTE] = TOK_QUOTER,
+		[CHR_D_QUOTE] = TOK_D_QUOTER,
 		[CHR_COMMENT] = TOK_IDK,
 		[CHR_DOL] = TOK_WORD,
 		[CHR_PER] = TOK_IDK,
 		[CHR_AND] = TOK_OPERATOR,
-		[CHR_S_QUOTE] = TOK_QUOTER,
+		[CHR_S_QUOTE] = TOK_S_QUOTER,
 		[CHR_OP_PAREN] = TOK_EXPANDER_OP,
 		[CHR_CL_PAREN] = TOK_EXPANDER_CL,
 		[CHR_AST] = TOK_EXPANDER,
