@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/21 12:09:30 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/21 17:43:07 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void expand(char **str, t_info *info)
 	}
 }
 
-void dol_expand(t_token **old_tokens, t_info *info)
+void dol_expand(t_token **old_tokenss, t_info *info)
 {
 	t_token *tmp_o;
 
@@ -151,5 +151,47 @@ void dol_expand(t_token **old_tokens, t_info *info)
 			expand(&tmp_o->value, info);
 		}
 		tmp_o = tmp_o->next;
+	}
+	tmp_o = *old_tokens;
+}
+
+int		expanded_toks_check1(tmp **tokens)
+{
+	t_token	*tmp;
+
+	tmp = *tokens;
+	if ((tmp->token == TOK_WORD && ft_strlen(tmp->value) ==1 && !ft_strncmp("$", tmp->value, 1))
+			&& (tmp->next && ft_strlen(tmp->value) == 1 && tmp->token == TOK_D_QUOTER)
+				&& (tmp->next->next && tmp->token == TOK_WORD) )
+}
+
+void	expanded_toks(t_token **old_tokens, t_token **new_tokens)
+{
+	t_token	*tmp_o;
+	int		ind_join;
+	char	*new_value;
+
+	tmp_o = *old_tokens;
+	while (tmp_o)
+	{
+		if (tmp_o->token == TOK_WORD && ft_strlen(tmp_o->value) == 1 && !ft_strncmp("$", tmp_o, 1))
+		{
+			ind_join = tmp_o->index;
+			if (tmp_o->next && ft_strlen(tmp_o->value) == 1 && tmp_o->token == TOK_D_QUOTER)
+				{
+					tmp_o = tmp_o->next;
+					if (tmp_o->next && tmp_o->token == TOK_WORD)
+					{
+						new_value = ft_strjoin_d(old_tokens, ind_join);
+
+						move_tok_2_ind(&tmp_o, ind_join + 4);
+					}
+				}
+		}
+		else
+		{
+
+			tmp_o = tmp_o->next;
+		}
 	}
 }

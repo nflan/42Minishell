@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/21 11:12:46 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/21 17:15:30 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_token
 	int 	length;
 	char	*value;
 	t_tok_type token;
-	int 	quoted;
+	int 	quoted; //1- dol quoted 2- d quoted 3- s quoted
 	struct s_token *prev;
 	struct s_token *next;
 } 			t_token;
@@ -382,6 +382,7 @@ int 			len_ll_list(t_token *tok_list);
 int 			is_quoted(t_token **tok_list, char c);
 unsigned int	get_real_tok_type(char c, t_token **tok_list);
 t_token 		*ft_create_token(t_tok_type tok_type, int length, int i);
+t_token			*create_tok_bis(t_tok_type tok_type, int quoted, char *value);
 void 			init_tok_struct(t_token **tok_list, int rank_in_list);
 
 //----------tokenizer_2.c-------------------------------------------------------------------
