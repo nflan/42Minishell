@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 23:16:32 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/21 12:13:30 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,49 @@ int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 	return (0);
 }
 
+int	ft_do_wildcards(t_info *info, t_big_token *b_tokens, int i)
+{
+	(void)info;
+	(void)b_tokens;
+	(void)i;
+	return (0);
+}
+
+int	ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i)
+{
+	int		j;
+	t_token	*tmp_s;
+
+	j = i;
+	tmp_s = info->tokens;
+	if (!info || !b_tokens || !tmp_s)
+		return (1);
+	move_tok_2_ind(&tmp_s, b_tokens->ind_tok_start);
+	while (tmp_s && j--)
+		tmp_s = tmp_s->next->next;
+	if (ft_strchr(b_tokens->cmd_args[i], '*') && tmp_s->token != TOK_QUOTER)
+		return (0);
+	return (1);
+}
+
+int	ft_add_wildcards(t_info *info, t_big_token *b_tokens)
+{
+	int	i;
+
+	i = 0;
+	if (b_tokens->cmd_args)
+	{
+		while (b_tokens->cmd_args[i])
+		{
+			if (!ft_check_wildcards(info, b_tokens, i))
+				if (ft_do_wildcards(info, b_tokens, i))
+					return (1);
+			i++;
+		}
+	}
+	return (0);
+}
+
 int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 {
 	t_big_token	*tmp_b;
@@ -216,6 +259,8 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 		return (2147483647);
 	if (tmp_b->sc == -1)
 	{
+		if (ft_add_wildcards(info, b_tokens))
+			return (1);
 		ft_launch_cmd(info, tmp_b);
 		tmp_b->sc = info->status;
 	}
@@ -227,10 +272,10 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	info->nb_cmd = 0;
 	if (!ft_open_fd(b_tokens))
 	{
-	if (sib_child >= 1 && sib_child <= 3)
-		ft_exec_simple(info, b_tokens);
-	else if (sib_child == 4)
-		ft_init_pipex(info, b_tokens);
+		if (sib_child >= 1 && sib_child <= 3)
+			ft_exec_simple(info, b_tokens);
+		else if (sib_child == 4)
+			ft_init_pipex(info, b_tokens);
 	}
 	ft_close_fd(b_tokens);
 	return (0);

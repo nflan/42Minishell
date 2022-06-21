@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:29:38 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/20 22:44:24 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/21 12:10:33 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_path(t_info *info, t_big_token *b_tokens)
 		b_tokens->cmd_args[0] = ft_strdup_free(tofree);
 	}
 	if (!path[i] || !b_tokens->cmd_args[0])
-		return (ft_free_split(path), free(tofree), ft_putstr_error("Error in ft_path\n"));
+		return (ft_free_split(path), free(tofree), 1);
 	ft_free_split(path);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/20 22:46:15 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/21 12:13:10 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_S_QUOTE] = TOK_QUOTER,
 		[CHR_OP_PAREN] = TOK_EXPANDER_OP,
 		[CHR_CL_PAREN] = TOK_EXPANDER_CL,
-		[CHR_AST] = TOK_EXPANDER,
+		[CHR_AST] = TOK_WORD,
 		[CHR_PLUS] = TOK_OPERATOR,
 		[CHR_DASH_MINES] = TOK_WORD, // j'ai change c'etait operator
 		[CHR_POINT] = TOK_WORD,
