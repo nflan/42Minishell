@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/17 19:04:21 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/22 20:04:31 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,6 +349,11 @@ void handle_par(t_big_token **b_tokens, t_token **tokens)
 
 	tmp_b = *b_tokens;
 	tmp_s = *tokens;
+	if (is_pipe_in_st_end(tmp_b, tmp_s) || is_red_st_par(tmp_b, tmp_s))
+	{
+		printf("Erreur syntaxique 2\n");
+		return ;
+	}
 	while (tmp_b)
 	{
 		init_params(&(params[0]), &(params[1]));

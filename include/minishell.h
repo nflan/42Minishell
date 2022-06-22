@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/22 15:23:55 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/22 19:58:34 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_MINES] = TOK_REDIRECTOR_LEFT,
 		[CHR_EQUAL] = TOK_OPERATOR,
 		[CHR_SUPERIOR] = TOK_REDIRECTOR_RIGHT,
-		[CHR_INTEROG] = TOK_OPERATOR,
+		[CHR_INTEROG] = TOK_WORD,
 		[CHR_AT] = TOK_WORD,
 		[CHR_ALPHA] = TOK_WORD,
 		[CHR_OP_BRACKET] = TOK_IDK,
@@ -409,6 +409,7 @@ int				r_2_op_succeding(t_token **tokens);
 int				op_cl_par_succeeding(t_token **tokens);
 int				syntax_err_handler(t_token **tokens);
 int				is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens);
+int				is_red_st_par(t_big_token *b_tokens, t_token *tokens);
 
 //-----------big_tokenizer_1.c---------------------------------------------------------------------------
 
@@ -423,6 +424,7 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 int				cl_par_ind(t_token **tokens, int ind_tok);
 void			divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
 int	piped(t_token **tokens, int start, int length);
+int				sophisticated_piped(t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------------------------
 

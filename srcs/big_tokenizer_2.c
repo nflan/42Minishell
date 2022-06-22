@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/03 15:00:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/22 19:44:58 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,36 @@ int	piped(t_token **tokens, int start, int length)
 			return (1);
 		tmp = tmp->next;
 		i++;
+	}
+	return (0);
+}
+
+int	sophisticated_piped(t_token **tokens, int start, int length)
+{
+	t_token	*tmp;
+	int		i;
+	int		st_par;
+	int		end_par;
+
+	tmp = *tokens;
+	i = 0;
+	move_tok_2_ind(&tmp, start);
+	while (i < length && tmp)
+	{
+		if (tmp->token == TOK_EXPANDER_OP)
+			{
+			st_par = tmp->index;
+			end_par = cl_par_ind(&tmp, tmp->index);
+			move_tok_2_ind(&tmp, end_par);
+			i += (end_par - st_par);
+			}
+		else if (tmp->token == TOK_OPERATOR && ft_strlen(tmp->value) == 1 && !ft_strncmp(tmp->value, "|", 1))
+			return (1);
+		else
+		{
+		tmp = tmp->next;
+		i++;
+		}
 	}
 	return (0);
 }

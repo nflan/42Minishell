@@ -34,16 +34,20 @@ int main_agent_O(t_info *info)
 	detect_tokens(&info->tokens, info->rdline);
 	fill_tok_value(&info->tokens, info->rdline);
 	index_toks(&info->tokens, 0, len_ll_list(info->tokens));
-	print_s_tokens(&(info->tokens), 0, len_ll_list(info->tokens));
-	printf("\n----------------------\n");
-	dol_expand(&(info->tokens), info);
-	print_s_tokens(&(info->tokens), 0, len_ll_list(info->tokens));
-	printf("\n----------------------\n");
-	expanded_toks(&(info->tokens), &(info->new_tokens));
-	index_toks(&info->new_tokens, 0, len_ll_list(info->new_tokens));
-	print_s_tokens(&(info->new_tokens), 0, len_ll_list(info->new_tokens));
-	printf("\n----------------------\n");
-	exit(0);
+	if (syntax_err_handler(&info->tokens))
+		printf("erreur syntaxique\n");
+
+	// print_s_tokens(&(info->tokens), 0, len_ll_list(info->tokens));
+	// printf("\n----------------------\n");
+	// dol_expand(&(info->tokens), info);
+	// print_s_tokens(&(info->tokens), 0, len_ll_list(info->tokens));
+	// printf("\n----------------------\n");
+	// expanded_toks(&(info->tokens), &(info->new_tokens));
+	// index_toks(&info->new_tokens, 0, len_ll_list(info->new_tokens));
+	// print_s_tokens(&(info->new_tokens), 0, len_ll_list(info->new_tokens));
+	// printf("\n----------------------\n");
+	// exit(0);
+
 //	if (syntax_err_handler(&info->tokens))
 //	{
 //		printf("Error number: %d\n", syntax_err_handler(&info->tokens));
@@ -52,6 +56,7 @@ int main_agent_O(t_info *info)
 //		return (1);
 //	}
 	parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens));
+	exit (0);
 	tmp_b = info->parse;
 //	print_tab(tmp_b->cmd_args);
 	if (info->nb_cmd == 10)
