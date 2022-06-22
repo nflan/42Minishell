@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/21 18:00:43 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/22 12:15:55 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,8 +282,6 @@ int	ft_get_wildcards(t_wildcards **wd)
 	if (!dir)
 		return (free(tofree), perror("minishell"), 1);
 	send = readdir(dir);
-	send = readdir(dir);
-	send = readdir(dir);
 	while (send)
 	{
 		if (send)
@@ -292,6 +290,17 @@ int	ft_get_wildcards(t_wildcards **wd)
 		send = readdir(dir);
 	}
 	free(tofree);
+	return (0);
+}
+
+int	ft_keep(char *str, char *dir, int *i)
+{
+	if (!str || !dir)
+		return (1);
+	while (dir[*i] && *str != dir[*i])
+		*i += 1;
+	if (!dir[*i])
+		return (1);
 	return (0);
 }
 
@@ -304,22 +313,22 @@ int	ft_do_keep(char *str, char *dir)
 		return (1);
 	if (str && dir)
 	{
-		while (*str && *dir)
+		while (*str && dir[i])
 		{
-			while (*str && *dir && *str != '*')
+			if (!ft_keep(str, dir, &i) || *str == '*' || *str == '/')
 			{
-				if (*str != *dir)
-					return (1);
 				str++;
-				dir++;
+				if (*str == '*' || *str == '/')
+					while (*str == '*' || *str == '/')
+						str++;
 			}
-			if (*str && !*dir)
+			else
 				return (1);
-			if (*str == '*')
-				str++;
 		}
+		if (*str && !dir[i])
+			return (1);
 	}
-	printf("str %s && dir = %s\n", str, dir);
+//	printf("str %s && dir = %s\n", str, dir);
 	return (0);
 }
 
@@ -332,7 +341,7 @@ int	ft_wd_nb_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type)
 	{
 		while (wd)
 		{
-			if (wd->dir->d_type == type)
+			if (wd->dir->d_type == type || (ft_strlen(b_tokens->cmd_args[i]) == 1 && b_tokens->cmd_args[i][0] == '*'))
 				if (!ft_do_keep(b_tokens->cmd_args[i], wd->dir->d_name))
 					count++;
 			wd = wd->next;
@@ -350,7 +359,6 @@ char	**ft_fill_old_args(t_big_token *b_tokens, char **tmp, int j, int list)
 		i = 0;
 		while (i < j)
 		{
-			printf("j = %d\n", j);
 			tmp[i] = ft_strdup(b_tokens->cmd_args[i]);
 			if (!*tmp[i])
 				return (NULL);
@@ -359,16 +367,14 @@ char	**ft_fill_old_args(t_big_token *b_tokens, char **tmp, int j, int list)
 	}
 	else
 	{
-		while (j < b_tokens->cmd_args_num)
+		while (j < b_tokens->cmd_args_num - 1)
 		{
-			printf("j = %d && cmd args = %d\n", j, b_tokens->cmd_args_num);
+			i++;
 			tmp[j] = ft_strdup(b_tokens->cmd_args[i]);
 			if (!tmp[j])
 				return (NULL);
 			j++;
-			i++;
 		}
-	printf("tmp[0] %s tmp[1] %s tmp[2] %s tmp[3] %s\n", tmp[0], tmp[1], tmp[2], tmp[3]);
 	}
 	return (tmp);
 }
@@ -381,32 +387,39 @@ int	ft_realloc_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type)
 
 	j = 0;
 	count = ft_wd_nb_args(wd, b_tokens, i, type);
+	if (!count)
+		return (0);
+//	printf("count = %d && type = %d\n", count, type);
+//	printf("cmd_args_num au debut = %d\n", b_tokens->cmd_args_num);
 	tmp = ft_calloc(sizeof(char *), b_tokens->cmd_args_num + count);
 	if (!tmp)
 		return (1);
 	tmp = ft_fill_old_args(b_tokens, tmp, i, 0);
 	if (!tmp)
 		return (1);
-	while (j < count)
+	while (wd && j < count)
 	{
-		while (wd && wd->dir->d_type != type && ft_do_keep(b_tokens->cmd_args[i], wd->dir->d_name))
+		while (wd->next && wd->dir->d_type != type && ft_strlen(b_tokens->cmd_args[i]) != 1 && b_tokens->cmd_args[i][0] != '*')
 			wd = wd->next;
-		printf("i + j = %d\n", i + j);
-		printf("wd->dir->name = %s\n", wd->dir->d_name);
-		tmp[i + j] = ft_strdup(wd->dir->d_name);
-	//	printf("tmp[%d] = %s\n", i+j, tmp[i + j]);
-		if (!tmp[i + j])
-			return (1);
-		j++;
+		if (wd && !ft_do_keep(b_tokens->cmd_args[i], wd->dir->d_name) && wd->dir->d_type == type)
+		{
+			if (wd->dir->d_type == 4)
+				tmp[i + j] = ft_strjoin(wd->dir->d_name, "/");
+			else
+				tmp[i + j] = ft_strdup(wd->dir->d_name);
+			if (!tmp[i + j])
+				return (1);
+			j++;
+		}
 		wd = wd->next;
 	}
 	b_tokens->cmd_args_num += count;
-	print_tab(tmp);
+//	print_tab(tmp);
 	tmp = ft_fill_old_args(b_tokens, tmp, j + i, 1);
 	if (!tmp)
 		return (1);
 	ft_free_split(b_tokens->cmd_args);
-	print_tab(tmp);
+//	print_tab(tmp);
 	b_tokens->cmd_args = tmp;
 	return (0);
 }
@@ -420,7 +433,7 @@ int	ft_do_wildcards(t_big_token *b_tokens, int i)
 	wd = NULL;
 	if (ft_get_wildcards(&wd))
 		return (ft_free_wildcards(wd), 1);
-	ft_print_wildcards(wd);
+//	ft_print_wildcards(wd);
 	if (b_tokens->cmd_args[i][ft_strlen(b_tokens->cmd_args[i]) - 1] == '/')
 		type = 4;
 	if (ft_realloc_args(wd, b_tokens, i, type))
