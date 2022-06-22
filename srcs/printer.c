@@ -6,11 +6,27 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 22:16:03 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/22 18:32:25 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	ft_print_wildcards(t_wildcards *wd)
+{
+	int	i;
+
+	i = 0;
+	if (wd)
+	{
+		while (wd)
+		{
+			printf("Fichier/Dossier %d: ", i++);
+			printf("%s (type = %u)\n", wd->dir->d_name, wd->dir->d_type);
+			wd = wd->next;
+		}
+	}
+}
 
 void	print_tab(char **tab)
 {

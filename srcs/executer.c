@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/22 12:15:55 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/22 18:50:35 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,8 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 			return (2147483647);
 		else if (b_tokens->sc == -1 || b_tokens->sc == 1)
 		{
+			if (ft_add_wildcards(info, b_tokens))
+				return (ft_putstr_error("Wildcards error\n"));
 			ft_launch_cmd_pipex(info, b_tokens, pid[i]);
 			info->nb_cmd++;
 			b_tokens->sc = info->status;
@@ -207,273 +209,6 @@ int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 	return (0);
 }
 
-void	ft_wdadd_back(t_wildcards **alst, t_wildcards *new)
-{
-	t_wildcards	*tmp;
-
-	tmp = NULL;
-	tmp = *alst;
-	if (alst && new)
-	{
-		if (*alst == NULL)
-			*alst = new;
-		else
-		{
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new;
-		}
-	}
-}
-
-int	ft_wildcardsnew(t_wildcards **wd, struct dirent *dir, DIR *fd)
-{
-	t_wildcards	*new;
-
-	new = ft_calloc(sizeof(t_wildcards), 1);
-	if (!new)
-		return (ft_putstr_error("Malloc error in get_wildcards\n"));
-	new->fd = fd;
-	new->dir = dir;
-	ft_wdadd_back(wd, new);
-	return (0);
-}
-
-void	ft_print_wildcards(t_wildcards *wd)
-{
-	int	i;
-
-	i = 0;
-	if (wd)
-	{
-		while (wd)
-		{
-			printf("Fichier/Dossier %d: ", i++);
-			printf("%s (type = %u)\n", wd->dir->d_name, wd->dir->d_type);
-			wd = wd->next;
-		}
-	}
-}
-
-void	ft_free_wildcards(t_wildcards *wd)
-{
-	if (!wd)
-		return ;
-	else if (wd->next)
-		ft_free_wildcards(wd->next);
-	else
-		closedir(wd->fd);
-	if (wd)
-		free(wd);
-}
-
-int	ft_get_wildcards(t_wildcards **wd)
-{
-	DIR				*dir;
-	struct dirent	*send;
-	char			*tofree;
-
-	dir = NULL;
-	tofree = NULL;
-	tofree = getcwd(tofree, 0);
-	if (!tofree)
-		return (1);
-	dir = opendir(tofree);
-	if (!dir)
-		return (free(tofree), perror("minishell"), 1);
-	send = readdir(dir);
-	while (send)
-	{
-		if (send)
-			if (ft_wildcardsnew(wd, send, dir))
-				return (closedir(dir), 1);
-		send = readdir(dir);
-	}
-	free(tofree);
-	return (0);
-}
-
-int	ft_keep(char *str, char *dir, int *i)
-{
-	if (!str || !dir)
-		return (1);
-	while (dir[*i] && *str != dir[*i])
-		*i += 1;
-	if (!dir[*i])
-		return (1);
-	return (0);
-}
-
-int	ft_do_keep(char *str, char *dir)
-{
-	int		i;
-
-	i = 0;
-	if (!str || !dir || (str[0] == '.' && dir[0] != '.') || (str[0] != '.' && dir[0] == '.'))
-		return (1);
-	if (str && dir)
-	{
-		while (*str && dir[i])
-		{
-			if (!ft_keep(str, dir, &i) || *str == '*' || *str == '/')
-			{
-				str++;
-				if (*str == '*' || *str == '/')
-					while (*str == '*' || *str == '/')
-						str++;
-			}
-			else
-				return (1);
-		}
-		if (*str && !dir[i])
-			return (1);
-	}
-//	printf("str %s && dir = %s\n", str, dir);
-	return (0);
-}
-
-int	ft_wd_nb_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type)
-{
-	int			count;
-
-	count = 0;
-	if (wd)
-	{
-		while (wd)
-		{
-			if (wd->dir->d_type == type || (ft_strlen(b_tokens->cmd_args[i]) == 1 && b_tokens->cmd_args[i][0] == '*'))
-				if (!ft_do_keep(b_tokens->cmd_args[i], wd->dir->d_name))
-					count++;
-			wd = wd->next;
-		}
-	}
-	return (count);
-}
-
-char	**ft_fill_old_args(t_big_token *b_tokens, char **tmp, int j, int list)
-{
-	static	int	i = 0;
-
-	if (!list)
-	{
-		i = 0;
-		while (i < j)
-		{
-			tmp[i] = ft_strdup(b_tokens->cmd_args[i]);
-			if (!*tmp[i])
-				return (NULL);
-			i++;
-		}
-	}
-	else
-	{
-		while (j < b_tokens->cmd_args_num - 1)
-		{
-			i++;
-			tmp[j] = ft_strdup(b_tokens->cmd_args[i]);
-			if (!tmp[j])
-				return (NULL);
-			j++;
-		}
-	}
-	return (tmp);
-}
-
-int	ft_realloc_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type)
-{
-	char	**tmp;
-	int		count;
-	int		j;
-
-	j = 0;
-	count = ft_wd_nb_args(wd, b_tokens, i, type);
-	if (!count)
-		return (0);
-//	printf("count = %d && type = %d\n", count, type);
-//	printf("cmd_args_num au debut = %d\n", b_tokens->cmd_args_num);
-	tmp = ft_calloc(sizeof(char *), b_tokens->cmd_args_num + count);
-	if (!tmp)
-		return (1);
-	tmp = ft_fill_old_args(b_tokens, tmp, i, 0);
-	if (!tmp)
-		return (1);
-	while (wd && j < count)
-	{
-		while (wd->next && wd->dir->d_type != type && ft_strlen(b_tokens->cmd_args[i]) != 1 && b_tokens->cmd_args[i][0] != '*')
-			wd = wd->next;
-		if (wd && !ft_do_keep(b_tokens->cmd_args[i], wd->dir->d_name) && wd->dir->d_type == type)
-		{
-			if (wd->dir->d_type == 4)
-				tmp[i + j] = ft_strjoin(wd->dir->d_name, "/");
-			else
-				tmp[i + j] = ft_strdup(wd->dir->d_name);
-			if (!tmp[i + j])
-				return (1);
-			j++;
-		}
-		wd = wd->next;
-	}
-	b_tokens->cmd_args_num += count;
-//	print_tab(tmp);
-	tmp = ft_fill_old_args(b_tokens, tmp, j + i, 1);
-	if (!tmp)
-		return (1);
-	ft_free_split(b_tokens->cmd_args);
-//	print_tab(tmp);
-	b_tokens->cmd_args = tmp;
-	return (0);
-}
-
-int	ft_do_wildcards(t_big_token *b_tokens, int i)
-{
-	t_wildcards	*wd;
-	int			type;
-
-	type = 8;
-	wd = NULL;
-	if (ft_get_wildcards(&wd))
-		return (ft_free_wildcards(wd), 1);
-//	ft_print_wildcards(wd);
-	if (b_tokens->cmd_args[i][ft_strlen(b_tokens->cmd_args[i]) - 1] == '/')
-		type = 4;
-	if (ft_realloc_args(wd, b_tokens, i, type))
-		return (ft_free_wildcards(wd), 1);
-	ft_free_wildcards(wd);
-	return (0);
-}
-
-int	ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i)
-{
-	t_token	*tmp_s;
-
-	tmp_s = info->tokens;
-	if (!info || !b_tokens || !tmp_s)
-		return (1);
-	move_tok_2_ind(&tmp_s, b_tokens->ind_tok_start + (i * 2));
-	if (tmp_s && ft_strchr(b_tokens->cmd_args[i], '*') && tmp_s->token != TOK_QUOTER && tmp_s->token != TOK_D_QUOTER && tmp_s->token != TOK_WORD_S_QUOTED && tmp_s->token != TOK_WORD_D_QUOTED)
-		return (0);
-	return (1);
-}
-
-int	ft_add_wildcards(t_info *info, t_big_token *b_tokens)
-{
-	int	i;
-
-	i = 0;
-	if (b_tokens->cmd_args)
-	{
-		while (b_tokens->cmd_args[i])
-		{
-			if (!ft_check_wildcards(info, b_tokens, i))
-				if (ft_do_wildcards(b_tokens, i))
-					return (1);
-			i++;
-		}
-	}
-	print_tab(b_tokens->cmd_args);
-	return (0);
-}
-
 int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 {
 	t_big_token	*tmp_b;
@@ -484,7 +219,7 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 	if (tmp_b->sc == -1)
 	{
 		if (ft_add_wildcards(info, b_tokens))
-			return (1);
+			return (ft_putstr_error("Wildcards error\n"));
 		ft_launch_cmd(info, tmp_b);
 		tmp_b->sc = info->status;
 	}

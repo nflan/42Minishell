@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 17:27:46 by nflan             #+#    #+#              #
-#    Updated: 2022/06/20 22:52:49 by omoudni          ###   ########.fr        #
+#    Updated: 2022/06/22 18:44:43 by nflan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  syntax_errorinizer_1.c syntax_errorinizer_2.c\
 		  tree_manipulator.c ft_launch_cmd.c ft_echo.c main_O.c\
 		  printer.c executer.c ft_free.c get_next_line_bonus.c\
-		  dollar_expander.c
+		  dollar_expander.c ft_wildcards_check.c ft_wildcards_tools.c\
+		  ft_wildcards_do.c
 
 INC = include/minishell.h
 

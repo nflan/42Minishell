@@ -1,0 +1,107 @@
+			info->nb_cmd++;
+			b_tokens->sc = info->status;
+	if (pipe(info->pdes) == -1)
+	while (++i < info->nb_cmd - 1)
+	tmp_s = info->tokens;
+		tmp_b->sc = info->status;
+	info->nb_cmd = 0;
+//			printf("value b_token si sibling pas child: "); print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length); printf("\n"); printf("je lance sibling sans child !! (start = %d && length = %d)\n", tmp_b->ind_tok_start, tmp_b->length);
+//				printf("value b_token dans le pipe last\n"); print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length); printf("\nFC == 1 && b_tok->sc = %d\n", tmp_b->sc);
+	//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+	//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+		ft_free_all(info, info->env);
+	print = info->env;
+	tmp = info->env;
+	return (info->env);
+			if (ft_handle_ret(b_tokens, ft_itoa(info->status), i))
+	tmp = info->env;
+		ft_export_new(info->env, tmp, b_tokens->cmd_args[1]);
+		if (info->rdline)
+			free(info->rdline);
+		info->rdline = NULL;
+	//	if (info->pdes[0] != -1)
+	//		close(info->pdes[0]);
+	//	if (info->pdes[1] != -1)
+	//		close(info->pdes[1]);
+		if (info->tokens)
+			ft_free_tokens(info->tokens);
+			info->tokens = NULL;
+		if (info->parse)
+			ft_free_b_tokens(info->parse);
+			info->parse = NULL;
+	tokens = info->tokens;
+//	print_s_tokens(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+		if (b_tokens->ind_tok_start == len_ll_list(info->tokens))
+	tokens = info->tokens;
+	tmp->envp = ft_env_to_tab(info->env);
+	info->status = err;
+		ft_free_all(info, info->env);
+	exit (info->status);
+	if (!info->nb_cmd) 
+		close(info->pdes[1]);
+//		if (info->pdes[0] != 0)
+		close(info->pdes[0]);
+		info->pdes[0] = info->tmp[0];
+//		if (info->pdes[1] != 1 && info->pdes[1] != 2)
+		close(info->pdes[1]);
+	//	if (info->pdes[0] != 0)
+		close(info->pdes[1]);
+		close(info->pdes[0]);
+		info->status = WEXITSTATUS(child);
+	sc = info->status;
+	if (info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
+		if (pipe(info->tmp) == -1)
+		info->pdes[1] = info->tmp[1];
+		info->pdes[0] = b_tokens->fdin;
+		info->pdes[1] = b_tokens->fdout;
+		info->status = WEXITSTATUS(pid);
+	sc = info->status;
+	return (info->status);
+	b_tokens->envp = ft_env_to_tab(info->env);
+	return (info->status);
+		info->status = WEXITSTATUS(pid);
+	sc = info->status;
+	return (info->status);
+	b_tokens->envp = ft_env_to_tab(info->env);
+		info->status = ft_builtins(info, b_tokens);
+	return (info->status);
+		info->status = ft_builtins(info, b_tokens);
+			ft_free_all(info, info->env);
+		exit(info->status);
+	return (info->status);
+	if (!info->nb_cmd)
+		close(info->pdes[0]);
+		dup2(info->pdes[1], STDOUT_FILENO);
+	else if (info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
+		dup2(info->pdes[0], STDIN_FILENO);
+		dup2(info->pdes[1], STDOUT_FILENO);
+		close(info->tmp[0]);
+		dup2(info->pdes[0], STDIN_FILENO);
+	info->status = ft_do_pipex(info, b_tokens);
+	dup2(b_tokens->fdin, info->pdes[0]);
+	info->status = 1;
+		ft_free_all(info, info->env);
+		info->status = 127;
+		ft_free_all(info, info->env);
+	return (info->status);
+	if (!info->env || !name)
+	env = info->env;
+	tmp_s = info->tokens;
+	info->env = new;
+	info->status = ret;
+//	info->nb_cmd = 0;
+	info->nb_cmd = 0;
+	info->rdline = NULL;
+	info->parse = NULL;
+	info->tokens = NULL;
+	info->env = NULL;
+	info->tokens = NULL;
+	info->parse = NULL;
+	if (detect_tokens(&info->tokens, info->rdline))
+	if (fill_tok_value(&info->tokens, info->rdline))
+	index_toks(&info->tokens);
+	if (syntax_err_handler(&info->tokens))
+		printf("Error number: %d\n", syntax_err_handler(&info->tokens));
+	if (parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens)))
+	if (info->nb_cmd == 10)
+		print_all_everything(&info->parse, &info->tokens);
