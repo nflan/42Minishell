@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun 21 16:27:32 2022
+# Make data base, printed on Wed Jun 22 12:05:42 2022
 
 # Variables
 
@@ -29,7 +29,6 @@ VSCODE_LOG_NATIVE = false
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
- 
 XAUTHORITY = /mnt/nfs/homes/omoudni/.Xauthority
 # environment
 GDMSESSION = ubuntu
@@ -42,8 +41,6 @@ SHELL = /bin/sh
 # makefile (from 'libft/Makefile', line 29)
 RM = rm -fr
 # environment
-GDM_LANG = en
-# environment
 VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
@@ -52,7 +49,7 @@ _ = /usr/bin/code
 # makefile (from 'libft/Makefile', line 31)
 CFLAGS = -Wall -Wextra -Werror -g
 # environment
-JOURNAL_STREAM = 9:57643
+JOURNAL_STREAM = 9:60347
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'libft/Makefile', line 1)
@@ -76,15 +73,15 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101608/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 3864
+MANAGERPID = 5608
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-2cdc6359-4814-4529-a6ae-ea43aec4ee64.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-33c8dc86-a57b-4aa5-b4a0-05cb387b6932.sock
 # environment
 VSCODE_CWD = /mnt/nfs/homes/omoudni/minishell
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101608_tG5S8a
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_aLIQjA
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -94,7 +91,7 @@ GPG_AGENT_INFO = /run/user/101608/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/e3r11p15.42.fr:@/tmp/.ICE-unix/4357,unix/e3r11p15.42.fr:/tmp/.ICE-unix/4357
+SESSION_MANAGER = local/e3r11p13.clusters.42paris.fr:@/tmp/.ICE-unix/6074,unix/e3r11p13.clusters.42paris.fr:/tmp/.ICE-unix/6074
 # environment
 XDG_RUNTIME_DIR = /run/user/101608
 # environment
@@ -104,7 +101,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 9f22928d69bf4685a02738205f29e833
+INVOCATION_ID = b93aac0a56734f46b00e82cd378da65d
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -128,7 +125,7 @@ PWD = /mnt/nfs/homes/omoudni/minishell
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 4321
+SSH_AGENT_PID = 6037
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # makefile (from 'Makefile', line 19)
@@ -200,8 +197,6 @@ OLDPWD = /mnt/nfs/homes/omoudni
 # automatic
 *F = $(notdir $*)
 # environment
-LANGUAGE = en
-# environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
 VSCODE_IPC_HOOK = /run/user/101608/vscode-6e3f0dc7-1.68.1-main.sock
@@ -244,11 +239,11 @@ HEADER = libft.h
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/628f453a_c447_472c_8cf9_f69265333c61
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/8184ca46_ce86_406a_830a_aac99ddc62a1
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.198
+GNOME_TERMINAL_SERVICE = :1.110
 # default
 SUFFIXES := 
 # environment
@@ -270,9 +265,9 @@ TERM = xterm-256color
 # environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # environment
-VSCODE_PID = 21781
+VSCODE_PID = 9044
 # variable set hash-table stats:
-# Load=130/1024=13%, Rehash=0, Collisions=26/181=14%
+# Load=128/1024=12%, Rehash=0, Collisions=26/183=14%
 
 # Pattern-specific Variable Values
 
@@ -280,12 +275,13 @@ VSCODE_PID = 21781
 
 # Directories
 
-# . (device 59, inode 194015554): 14 files, no impossibilities.
-# bin (device 59, inode 199960395): No files, no impossibilities so far.
-# srcs (device 59, inode 217188507): 30 files, no impossibilities so far.
-# libft (device 59, inode 171187366): 94 files, no impossibilities so far.
+# . (device 59, inode 194015554): 11 files, no impossibilities.
+# bin: could not be stat'd.
+# srcs (device 59, inode 217188507): 10 files, no impossibilities so far.
+ 
+# libft (device 59, inode 171187366): No files, no impossibilities so far.
 
-# 138 files, no impossibilities in 4 directories.
+# 21 files, no impossibilities in 4 directories.
 
 # Implicit Rules
 
@@ -298,48 +294,73 @@ bin/%.o: srcs/%.c | bin/
 # Files
 
 # Not a target:
-srcs/tokenizer_1.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-21 11:18:10.360614957
-#  File has been updated.
-#  Successfully updated.
+ft_strncmp.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+ft_isalnum.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 bin/:
- 
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-21 12:09:33.169440038
+#  Implicit/static pattern stem: ''
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := bin/
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := 
+# automatic
+# | := 
+# automatic
+# < := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/12=8%
 #  recipe to execute (from 'Makefile', line 55):
 	@mkdir -p $(OBJ_DIR)
 
 # Not a target:
-libft/ft_strlcpy.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.8136368
-#  File has been updated.
-#  Successfully updated.
+ft_lstadd_front.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_strncmp.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.837636952
-#  File has been updated.
-#  Successfully updated.
+ft_strdup.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/parser.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 13:11:02.037047488
-#  File has been updated.
-#  Successfully updated.
+ft_lstdelone.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/big_tokenizer_1.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 17:53:45.871734829
-#  File has been updated.
-#  Successfully updated.
+ft_memmove.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+ft_strchr.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 all: minishell
 #  Phony target (prerequisite of .PHONY).
@@ -347,161 +368,102 @@ all: minishell
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
 
 # Not a target:
 include/minishell.h:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-21 11:12:46.504516298
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-bin/ft_launch_cmd.o: srcs/ft_launch_cmd.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_launch_cmd'
-#  Last modified 2022-06-21 11:12:50.192518182
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/ft_launch_cmd.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-# Not a target:
-libft/ft_lstadd_front.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.661635842
-#  File has been updated.
-#  Successfully updated.
-
-bin/ft_builtins.o: srcs/ft_builtins.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_builtins'
-#  Last modified 2022-06-21 11:12:48.900517525
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/ft_builtins.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_strdup.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-20 22:21:14.675892616
-#  File has been updated.
-#  Successfully updated.
+ft_toupper.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 .PHONY: all clean fclean re
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-bin/ft_global.o: srcs/ft_global.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_global'
-#  Last modified 2022-06-21 11:12:49.136517644
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/ft_global.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-bin/ft_echo.o: srcs/ft_echo.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_echo'
-#  Last modified 2022-06-21 11:12:50.272518223
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/ft_echo.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/ft_free.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 17:52:08.027767788
-#  File has been updated.
-#  Successfully updated.
+ft_strnstr.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_bzero.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.613635539
-#  File has been updated.
-#  Successfully updated.
+ft_putstr_fd.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-bin/main_O.o: srcs/main_O.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'main_O'
-#  Last modified 2022-06-21 11:20:09.128625544
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/main_O.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-# Not a target:
-libft/ft_toupper.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.869637153
-#  File has been updated.
-#  Successfully updated.
+bin/ft_export.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-bin/ft_export.o: srcs/ft_export.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_export'
-#  Last modified 2022-06-21 11:12:48.712517429
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/big_tokenizer_3.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-bin/big_tokenizer_3.o: srcs/big_tokenizer_3.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'big_tokenizer_3'
-#  Last modified 2022-06-21 11:12:49.492517826
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/dollar_expander.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_strnstr.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.440735293
-#  File has been updated.
-#  Successfully updated.
+ft_putchar_fd.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/main_O.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-21 11:20:06.672625427
-#  File has been updated.
-#  Successfully updated.
+ft_atoi.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_putstr_fd.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.769636523
-#  File has been updated.
-#  Successfully updated.
-
-bin/dollar_expander.o: srcs/dollar_expander.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'dollar_expander'
-#  Last modified 2022-06-21 12:09:33.161440047
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/syntax_errorinizer_1.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.556735242
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-libft/ft_strjoin.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.436735295
-#  File has been updated.
-#  Successfully updated.
+ft_strtrim.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 Makefile:
@@ -518,93 +480,56 @@ srcs/main.c:
 #  Successfully updated.
 
 # Not a target:
-srcs/big_tokenizer_2.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.464735283
-#  File has been updated.
-#  Successfully updated.
+ft_strlen.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/executer.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_lstdelone.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.677635943
-#  File has been updated.
-#  Successfully updated.
+ft_lstadd_back.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/printer.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_putchar_fd.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.757636447
-#  File has been updated.
-#  Successfully updated.
-
-bin/executer.o: srcs/executer.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'executer'
-#  Last modified 2022-06-21 11:12:50.560518369
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+ft_putendl_fd.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_atoi.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.420735301
-#  File has been updated.
-#  Successfully updated.
-
-bin/printer.o: srcs/printer.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'printer'
-#  Last modified 2022-06-21 11:20:29.896626367
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+ft_strmapi.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_strtrim.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.444735291
-#  File has been updated.
-#  Successfully updated.
+ft_lstiter.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_lstiter.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.685635993
-#  File has been updated.
-#  Successfully updated.
+ft_memcpy.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/ft_pipex_tools.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.524735256
-#  File has been updated.
-#  Successfully updated.
-
- 
-# Not a target:
-libft/ft_lstadd_back.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.4247353
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-srcs/ft_cd.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 13:11:01.985047571
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-srcs/big_tokenizer_4.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 19:04:21.325658976
-#  File has been updated.
-#  Successfully updated.
+ft_itoa.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 libft/Makefile:
@@ -614,64 +539,51 @@ libft/Makefile:
 #  Successfully updated.
 
 # Not a target:
-libft/ft_putendl_fd.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.761636473
-#  File has been updated.
-#  Successfully updated.
+ft_memcmp.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-# Not a target:
-libft/ft_strmapi.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.825636876
-#  File has been updated.
-#  Successfully updated.
-
-bin/ft_tools2.o: srcs/ft_tools2.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_tools2'
-#  Last modified 2022-06-21 11:12:49.216517686
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/ft_tools2.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 minishell: bin/main.o bin/ft_cd.o bin/ft_export.o bin/ft_tools.o bin/ft_builtins.o bin/ft_pipex_tools.o bin/ft_pipex.o bin/ft_global.o bin/ft_tools2.o bin/big_tokenizer_1.o bin/big_tokenizer_2.o bin/big_tokenizer_3.o bin/big_tokenizer_4.o bin/parser.o bin/tokenizer_1.o bin/tokenizer_2.o bin/syntax_errorinizer_1.o bin/syntax_errorinizer_2.o bin/tree_manipulator.o bin/ft_launch_cmd.o bin/ft_echo.o bin/main_O.o bin/printer.o bin/executer.o bin/ft_free.o bin/dollar_expander.o include/minishell.h libft/libft.a
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-21 12:09:33.249439935
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
 #  recipe to execute (from 'Makefile', line 47):
+ 
 	${CC} ${CFLAGS} ${objets} ${LIBFT} -I ${INC} -lreadline -o ${NAME}
 
 # Not a target:
-srcs/ft_tools.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.528735255
-#  File has been updated.
-#  Successfully updated.
-
-libft/libft.a: libft/ft_atoi.c libft/ft_bzero.c libft/ft_calloc.c libft/ft_isalnum.c libft/ft_isalpha.c libft/ft_isascii.c libft/ft_isdigit.c libft/ft_isprint.c libft/ft_memchr.c libft/ft_memcmp.c libft/ft_memcpy.c libft/ft_memmove.c libft/ft_memset.c libft/ft_strchr.c libft/ft_strdup.c libft/ft_strlcat.c libft/ft_strlcpy.c libft/ft_strlen.c libft/ft_strncmp.c libft/ft_strnstr.c libft/ft_strrchr.c libft/ft_tolower.c libft/ft_toupper.c libft/ft_substr.c libft/ft_strjoin.c libft/ft_strtrim.c libft/ft_split.c libft/ft_itoa.c libft/ft_strmapi.c libft/ft_striteri.c libft/ft_putchar_fd.c libft/ft_putstr_fd.c libft/ft_putendl_fd.c libft/ft_putnbr_fd.c libft/ft_lstnew.c libft/ft_lstadd_front.c libft/ft_lstsize.c libft/ft_lstlast.c libft/ft_lstadd_back.c libft/ft_lstdelone.c libft/ft_lstclear.c libft/ft_lstiter.c libft/ft_printf.c libft/ft_printf_tools.c libft/libft.h
+ft_isdigit.c:
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-21 10:18:27.971845415
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
+
+libft/libft.a: ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_strchr.c ft_strdup.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_tolower.c ft_toupper.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_printf.c ft_printf_tools.c libft.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 58):
 	${MAKE} -C libft/
 
 # Not a target:
-srcs/tree_manipulator.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.576735234
-#  File has been updated.
-#  Successfully updated.
+ft_lstlast.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/syntax_errorinizer_2.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.564735239
-#  File has been updated.
-#  Successfully updated.
+ft_memchr.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 .c.o:
 #  Implicit rule search has not been done.
@@ -679,20 +591,6 @@ srcs/syntax_errorinizer_2.c:
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 42):
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
-
-# Not a target:
-libft/ft_memcpy.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.733636296
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-libft/ft_itoa.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.645635742
-#  File has been updated.
-#  Successfully updated.
 
 fclean:
 #  Phony target (prerequisite of .PHONY).
@@ -705,106 +603,56 @@ fclean:
 	${RM} ${NAME}
 
 # Not a target:
-libft/ft_memcmp.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.72963627
-#  File has been updated.
-#  Successfully updated.
+ft_memset.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_strlen.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-20 21:10:29.988813789
-#  File has been updated.
-#  Successfully updated.
+ft_tolower.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_isascii.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.633635666
-#  File has been updated.
-#  Successfully updated.
+ft_strrchr.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_isdigit.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.63763569
-#  File has been updated.
-#  Successfully updated.
+ft_strjoin.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/tokenizer_2.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-20 22:42:51.759127483
-#  File has been updated.
-#  Successfully updated.
+ft_split.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_lstlast.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.689636019
-#  File has been updated.
-#  Successfully updated.
+ft_lstclear.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_memchr.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.72163622
-#  File has been updated.
-#  Successfully updated.
+ft_printf.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-# Not a target:
-srcs/ft_pipex.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 17:52:08.035767785
-#  File has been updated.
-#  Successfully updated.
+bin/tokenizer_1.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-# Not a target:
-libft/ft_memset.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.741636346
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-libft/ft_strlcat.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.809636775
-#  File has been updated.
-#  Successfully updated.
-
-bin/tokenizer_1.o: srcs/tokenizer_1.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'tokenizer_1'
-#  Last modified 2022-06-21 11:18:15.052615583
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-# Not a target:
-srcs/ft_builtins.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 13:11:01.981047578
-#  File has been updated.
-#  Successfully updated.
-
-bin/ft_pipex.o: srcs/ft_pipex.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_pipex'
-#  Last modified 2022-06-21 11:12:49.060517606
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-# Not a target:
-libft/ft_tolower.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.861637103
-#  File has been updated.
-#  Successfully updated.
+bin/ft_pipex.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 .DEFAULT:
@@ -813,72 +661,38 @@ libft/ft_tolower.c:
 #  File has not been updated.
 
 # Not a target:
-srcs/ft_global.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 13:11:02.001047545
-#  File has been updated.
-#  Successfully updated.
+ft_strlcat.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/ft_echo.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 17:52:08.027767788
-#  File has been updated.
-#  Successfully updated.
+ft_bzero.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/parser.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/big_tokenizer_1.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_split.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.428735298
-#  File has been updated.
-#  Successfully updated.
+ft_isprint.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_lstclear.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.665635867
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-libft/ft_printf.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.745636372
-#  File has been updated.
-#  Successfully updated.
-
-bin/parser.o: srcs/parser.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'parser'
-#  Last modified 2022-06-21 11:12:49.672517918
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-bin/big_tokenizer_1.o: srcs/big_tokenizer_1.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'big_tokenizer_1'
-#  Last modified 2022-06-21 11:12:49.324517741
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
-
- 
-# Not a target:
-srcs/ft_export.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 13:11:01.993047558
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-srcs/big_tokenizer_3.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 13:11:01.965047604
-#  File has been updated.
-#  Successfully updated.
+ft_isascii.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 re: fclean all
 #  Phony target (prerequisite of .PHONY).
@@ -895,257 +709,146 @@ clean:
 	$(MAKE) clean -C $(LIB_DIR)
 	${RM} ${OBJ_DIR}
 
-# Not a target:
-srcs/dollar_expander.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-21 12:09:30.661443255
-#  File has been updated.
-#  Successfully updated.
-
-bin/ft_free.o: srcs/ft_free.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_free'
-#  Last modified 2022-06-21 11:12:50.632518405
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/ft_free.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_isprint.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.641635716
-#  File has been updated.
-#  Successfully updated.
+ft_striteri.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_striteri.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.797636699
-#  File has been updated.
-#  Successfully updated.
-
-bin/tokenizer_2.o: srcs/tokenizer_2.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'tokenizer_2'
-#  Last modified 2022-06-21 11:12:49.848518007
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+libft.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/executer.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 17:52:08.023767789
-#  File has been updated.
-#  Successfully updated.
+ft_lstnew.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/tokenizer_2.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/syntax_errorinizer_1.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/printer.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-21 11:20:26.784626262
-#  File has been updated.
-#  Successfully updated.
-
-bin/syntax_errorinizer_1.o: srcs/syntax_errorinizer_1.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'syntax_errorinizer_1'
-#  Last modified 2022-06-21 11:12:49.928518048
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-# Not a target:
-libft/ft_lstnew.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.705636119
-#  File has been updated.
-#  Successfully updated.
+ft_putnbr_fd.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 bin/main.o: srcs/main.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-06-21 11:12:48.54051734
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
 #  recipe to execute (from 'Makefile', line 52):
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-bin/big_tokenizer_2.o: srcs/big_tokenizer_2.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'big_tokenizer_2'
-#  Last modified 2022-06-21 11:12:49.400517779
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/big_tokenizer_2.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_isalnum.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.625635615
-#  File has been updated.
-#  Successfully updated.
+ft_calloc.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/libft.h:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.452735288
-#  File has been updated.
-#  Successfully updated.
+ft_substr.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-srcs/ft_tools2.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 17:52:08.035767785
-#  File has been updated.
-#  Successfully updated.
+ft_printf_tools.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_putnbr_fd.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.765636497
-#  File has been updated.
-#  Successfully updated.
+ft_isalpha.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_strrchr.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-16 17:21:55.440735293
-#  File has been updated.
-#  Successfully updated.
+ft_lstsize.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-bin/ft_pipex_tools.o: srcs/ft_pipex_tools.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_pipex_tools'
-#  Last modified 2022-06-21 11:12:48.976517564
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/ft_pipex_tools.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-# Not a target:
-srcs/ft_launch_cmd.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 17:52:08.031767786
-#  File has been updated.
-#  Successfully updated.
+bin/ft_cd.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-# Not a target:
-libft/ft_substr.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 13:11:01.957047616
-#  File has been updated.
-#  Successfully updated.
+bin/big_tokenizer_4.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-bin/ft_cd.o: srcs/ft_cd.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_cd'
-#  Last modified 2022-06-21 11:12:48.628517386
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-bin/big_tokenizer_4.o: srcs/big_tokenizer_4.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'big_tokenizer_4'
-#  Last modified 2022-06-21 11:12:49.576517869
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
+bin/ft_tools.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-libft/ft_calloc.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-17 13:11:01.94904763
-#  File has been updated.
-#  Successfully updated.
+ft_strlcpy.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-# Not a target:
-libft/ft_printf_tools.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.753636422
-#  File has been updated.
-#  Successfully updated.
+bin/tree_manipulator.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-bin/ft_tools.o: srcs/ft_tools.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ft_tools'
-#  Last modified 2022-06-21 11:12:48.808517478
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-# Not a target:
-libft/ft_isalpha.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.62963564
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-libft/ft_memmove.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.737636322
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-libft/ft_lstsize.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.717636195
-#  File has been updated.
-#  Successfully updated.
-
-bin/tree_manipulator.o: srcs/tree_manipulator.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'tree_manipulator'
-#  Last modified 2022-06-21 11:12:50.104518137
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-bin/syntax_errorinizer_2.o: srcs/syntax_errorinizer_2.c include/minishell.h | bin/
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'syntax_errorinizer_2'
-#  Last modified 2022-06-21 11:12:50.020518095
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 52):
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-# Not a target:
-libft/ft_strchr.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-24 14:08:26.789636649
-#  File has been updated.
-#  Successfully updated.
+bin/syntax_errorinizer_2.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # files hash-table stats:
-# Load=111/1024=11%, Rehash=0, Collisions=53/542=10%
+# Load=86/1024=8%, Rehash=0, Collisions=10/213=5%
 # VPATH Search Paths
 
 vpath %.h libft
 vpath ft_%.c libft
 vpath ft_%.o libft
+ 
 
 # 3 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 274 / storage = 3936 B / avg = 14 B
-# current buf: size = 8162 B / used = 3936 B / count = 274 / avg = 14 B
+# strcache buffers: 1 (0) / strings = 113 / storage = 1432 B / avg = 12 B
+# current buf: size = 8162 B / used = 1432 B / count = 113 / avg = 12 B
 
-# strcache performance: lookups = 487 / hit rate = 43%
+# strcache performance: lookups = 201 / hit rate = 43%
 # hash-table stats:
-# Load=274/8192=3%, Rehash=0, Collisions=15/487=3%
-# Finished Make data base on Tue Jun 21 16:27:32 2022
- 
+# Load=113/8192=1%, Rehash=0, Collisions=5/201=2%
+# Finished Make data base on Wed Jun 22 12:05:42 2022
 
  
