@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/21 17:15:30 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/22 15:23:55 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,7 @@ typedef struct s_info
 	t_env		*env;
 	t_big_token	*parse;
 	t_token		*tokens;
+	t_token		*new_tokens;
 	int			pdes[2];
 	int			tmp[2];
 }	t_info;
@@ -388,6 +389,7 @@ void 			init_tok_struct(t_token **tok_list, int rank_in_list);
 //----------tokenizer_2.c-------------------------------------------------------------------
 
 void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
+void			add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char *value);
 void 			detect_tokens(t_token **tok_list, char *str);
 void 			fill_tok_value(t_token **tok, char *str);
 char 			*ft_strncpy(char *str, int n);
@@ -441,8 +443,14 @@ void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
 
 //---------------dollar_expander.c-----------------------------------------------------------------------
 char			*expand_join(char *s1, char *s2, char *s3);
+char			*expand_join_nf(char *s1, char *s2, char *s3);
+char			*strjoin_4(char *str1, char *str2);
+char			*str_join_exp(t_token **tokens, int ind, int type);
+char			*ft_strndup(char *str, int len);
 void			expand_1(char **str, int *i, t_info *info);
 void			expand(char **str, t_info *info);
 void			dol_expand(t_token **old_tokens, t_info *info);
+int				expanded_toks_check(t_token **tokens);
+void			expanded_toks(t_token **old_tokens, t_token **new_tokens);
 
 #endif

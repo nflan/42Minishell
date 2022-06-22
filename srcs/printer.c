@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/21 11:20:26 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/22 15:28:00 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	print_s_tokens(t_token **tokens, int start, int length)
 	move_tok_2_ind(&tmp_s, start);
 	while (i < length && tmp_s)
 	{
-		printf("%s", tmp_s->value);
+		printf("%s(%d)", tmp_s->value, tmp_s->index);
 		tmp_s = tmp_s->next;
 		i++;
 	}

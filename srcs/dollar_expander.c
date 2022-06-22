@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/22 13:34:10 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/22 16:07:56 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,35 +93,35 @@ char *strjoin_4(char *str1, char *str2)
 
 	ret = ft_strjoin(str1, str2);
 	free(str1);
+	return (ret);
 }
 
 char *str_join_exp(t_token **tokens, int ind, int type)
 {
 	t_token *tmp;
-	char *ret;
 
 	tmp = *tokens;
 	if (type == 1)
 	{
 		move_tok_2_ind(&tmp, ind + 2);
-		ret == ft_strjoin("$", tmp->value);
+		return (ft_strjoin("$", tmp->value));
 	}
 	if (type == 2)
 	{
 		move_tok_2_ind(&tmp, ind + 2);
-		ret = ft_strdup(tmp->value);
+		return (ft_strdup(tmp->value));
 	}
 	if (type == 3)
 	{
 		move_tok_2_ind(&tmp, ind + 1);
-		ret = ft_strjoin(tmp->prev->value, tmp->next->value);
+		return (ft_strjoin(tmp->prev->value, tmp->next->value));
 	}
 	if (type == 4 || type == 5)
 	{
 		move_tok_2_ind(&tmp, ind + 1);
-		ret = ft_strdup(tmp->value);
+		return (ft_strdup(tmp->value));
 	}
-	return (ret);
+	return (NULL);
 }
 
 char *ft_strndup(char *str, int len)
@@ -161,7 +161,6 @@ void expand_1(char **str, int *i, t_info *info)
 		return;
 	tmp[0] = ft_strndup(s, (*i));
 	(*i)++;
-	printf("%d\n", (*i));
 	if (!s[(*i)] || (!ft_isalpha((int)s[(*i)]) && !ft_isdigit((int)s[(*i)])))
 		tmp[1] = ft_strdup("$");
 	else
@@ -195,10 +194,7 @@ void expand(char **str, t_info *info)
 		// if (str[i] == *)
 		// ft_wildcard(&(str[i]));
 		if ((*str)[i] == '$')
-		{
-			printf("I entered here\n");
 			expand_1(str, &i, info);
-		}
 		else
 			i++;
 	}
@@ -212,18 +208,9 @@ void dol_expand(t_token **old_tokens, t_info *info)
 	while (tmp_o)
 	{
 		if (tmp_o->token == TOK_WORD_D_QUOTED)
-		{
-			printf("I entered here because a d_quoted word: %s\n", tmp_o->value);
 			expand(&tmp_o->value, info);
-		}
-		else if (tmp_o->token == TOK_WORD)
-		{
-			printf("I entered here because a normal word: %s\n", tmp_o->value);
-			expand(&tmp_o->value, info);
-		}
 		tmp_o = tmp_o->next;
 	}
-	tmp_o = *old_tokens;
 }
 
 int expanded_toks_check(t_token **tokens)
@@ -231,13 +218,13 @@ int expanded_toks_check(t_token **tokens)
 	t_token *tmp;
 
 	tmp = *tokens;
-	if ((tmp->token == TOK_WORD && ft_strlen(tmp->value) == 1 && !ft_strncmp("$", tmp->value, 1)) && (tmp->next && ft_strlen(tmp->value) == 1 && tmp->token == TOK_D_QUOTER) && (tmp->next->next && tmp->token == TOK_WORD))
+	if ((tmp->token == TOK_WORD && ft_strlen(tmp->value) == 1 && !ft_strncmp("$", tmp->value, 1)) && (tmp->next && ft_strlen(tmp->next->value) == 1 && tmp->next->token == TOK_D_QUOTER) && (tmp->next->next && tmp->next->next->token == TOK_WORD_D_QUOTED))
 		return (1);
-	if ((tmp->token == TOK_WORD && ft_strlen(tmp->value) == 1 && !ft_strncmp("$", tmp->value, 1)) && (tmp->next && ft_strlen(tmp->value) == 1 && tmp->token == TOK_S_QUOTER) && (tmp->next->next && tmp->token == TOK_WORD))
+	if ((tmp->token == TOK_WORD && ft_strlen(tmp->value) == 1 && !ft_strncmp("$", tmp->value, 1)) && (tmp->next && ft_strlen(tmp->next->value) == 1 && tmp->next->token == TOK_S_QUOTER) && (tmp->next->next && tmp->next->next->token == TOK_WORD_S_QUOTED))
 		return (2);
-	if (tmp->token == TOK_WORD && (tmp->next && ft_strlen(tmp->value) == 1 && (tmp->token == TOK_D_QUOTER || tmp->token == TOK_S_QUOTER)) && (tmp->next->next && tmp->token == TOK_WORD))
+	if (tmp->token == TOK_WORD && (tmp->next && ft_strlen(tmp->next->value) == 1 && (tmp->next->token == TOK_D_QUOTER || tmp->next->token == TOK_S_QUOTER)) && (tmp->next->next && (tmp->next->next->token == TOK_WORD_S_QUOTED || tmp->next->next->token == TOK_WORD_D_QUOTED)))
 		return (3);
-	if (((tmp->token == TOK_D_QUOTER || tmp->token == TOK_S_QUOTER) && ft_strlen(tmp->value) == 1) && (tmp->next && tmp->token == TOK_WORD))
+	if (((tmp->token == TOK_D_QUOTER || tmp->token == TOK_S_QUOTER) && ft_strlen(tmp->value) == 1) && (tmp->next && (tmp->next->token == TOK_WORD_S_QUOTED || tmp->next->token == TOK_WORD_D_QUOTED)))
 	{
 		if (tmp->token == TOK_D_QUOTER)
 			return (4);
@@ -250,45 +237,45 @@ int expanded_toks_check(t_token **tokens)
 void expanded_toks(t_token **old_tokens, t_token **new_tokens)
 {
 	t_token *tmp_o;
-	int ind_join;
 	char *new_value;
 
 	tmp_o = *old_tokens;
 	while (tmp_o)
 	{
-		if (expanded_toks_check(old_tokens) == 1)
+		if (expanded_toks_check(&tmp_o) == 1)
 		{
 			new_value = str_join_exp(&tmp_o, tmp_o->index, 1);
-			add_b_tok_sib_last_bis(new_tokens, TOK_WORD, 1, new_value);
+			add_tok_last_bis(new_tokens, TOK_WORD, 1, new_value);
 			move_tok_2_ind(&tmp_o, tmp_o->index + 4);
 		}
-		else if (expanded_toks_check(old_tokens) == 2)
+		else if (expanded_toks_check(&tmp_o) == 2)
 		{
 			new_value = str_join_exp(&tmp_o, tmp_o->index, 2);
-			add_b_tok_sib_last_bis(new_tokens, TOK_WORD, 1, new_value);
+			add_tok_last_bis(new_tokens, TOK_WORD, 1, new_value);
 			move_tok_2_ind(&tmp_o, tmp_o->index + 4);
 		}
-		else if (expanded_toks_check(old_tokens) == 3)
+		else if (expanded_toks_check(&tmp_o) == 3)
 		{
 			new_value = str_join_exp(&tmp_o, tmp_o->index, 3);
 			if (!ft_strncmp(tmp_o->next->value, "\"", 1))
-				add_b_tok_sib_last_bis(new_tokens, TOK_WORD, 2, new_value);
+				add_tok_last_bis(new_tokens, TOK_WORD, 2, new_value);
 			else
-				add_b_tok_sib_last_bis(new_tokens, TOK_WORD, 3, new_value);
+				add_tok_last_bis(new_tokens, TOK_WORD, 3, new_value);
 			move_tok_2_ind(&tmp_o, tmp_o->index + 4);
 		}
-		else if (expanded_toks_check(old_tokens) > 3)
+		else if (expanded_toks_check(&tmp_o) > 3)
 		{
 			new_value = str_join_exp(&tmp_o, tmp_o->index, 4);
-			if (expanded_toks_check(old_tokens) == 4)
-				add_b_tok_sib_last_bis(new_tokens, TOK_WORD, 2, new_value);
+			if (expanded_toks_check(&tmp_o) == 4)
+				add_tok_last_bis(new_tokens, TOK_WORD, 2, new_value);
 			else
-				add_b_tok_sib_last_bis(new_tokens, TOK_WORD, 3, new_value);
+				add_tok_last_bis(new_tokens, TOK_WORD, 3, new_value);
 			move_tok_2_ind(&tmp_o, tmp_o->index + 3);
 		}
 		else
 		{
-			add_b_tok_sib_last_bis(new_tokens, tmp_o->token, 0, ft_strdup(tmp_o->value));
+			add_tok_last_bis(new_tokens, tmp_o->token, 0, ft_strdup(tmp_o->value));
 			tmp_o = tmp_o->next;
 		}
 	}
+}
