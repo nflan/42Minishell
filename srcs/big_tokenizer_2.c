@@ -6,11 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/06/23 15:13:49 by omoudni          ###   ########.fr       */
-=======
-/*   Updated: 2022/06/23 12:23:04 by nflan            ###   ########.fr       */
->>>>>>> parse
+/*   Updated: 2022/06/23 15:19:40 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +132,6 @@ int divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, in
 		b_length++;
 		if (tmp->token == TOK_EXPANDER_OP)
 			divide_by_or_and_1(&tmp, tokens, &b_length, &i);
-<<<<<<< HEAD
-		}
-=======
->>>>>>> parse
 		else if (tmp->token == TOK_OPERATOR && check_divider_type(tmp->value))
 			divide_by_or_and_2(tmp, b_tokens, &start_tok, &b_length);
 		tmp = tmp->next;
@@ -150,17 +142,10 @@ int divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, in
 	else if (!*b_tokens && piped(tokens, start_tok, length))
 		i = add_b_tok_sib_last(b_tokens, TOK_CLEAN_PIPED, start_tok, length);
 	else
-<<<<<<< HEAD
-		add_b_tok_sib_last(b_tokens, TOK_LAST, start_tok, b_length);
-	t_big_token *tmp_b;
-	tmp_b = *b_tokens;
-	handle_par(b_tokens, tokens);
-=======
 		i = add_b_tok_sib_last(b_tokens, TOK_LAST, start_tok, b_length);
 	if (i)
 		return (ft_putstr_error("in divide by or and "));
 	if (handle_par(b_tokens, tokens))
 		return (ft_putstr_error("in divide by or and "));
 	return (0);
->>>>>>> parse
 }
