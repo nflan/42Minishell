@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 15:48:58 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 17:45:00 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_option_echo(t_big_token *b_tokens, int i)
 	while (b_tokens->cmd_args[i])
 	{
 		y = -1;
-		if ((b_tokens->cmd_args[i][++y] == '-' && b_tokens->cmd_args[i][++y] == 'n'))
+		if ((b_tokens->cmd_args[i][++y] == '-'
+			&& b_tokens->cmd_args[i][++y] == 'n'))
 		{
 			while (b_tokens->cmd_args[i][y] && b_tokens->cmd_args[i][y] == 'n')
 				y++;
@@ -49,7 +50,8 @@ int	ft_handle_ret(t_big_token *b_tokens, char *ret, int i)
 		if (tofree[y + 1] && tofree[y] == '$' && tofree[y + 1] == '?')
 		{
 			b_tokens->cmd_args[i] = ft_substr(tofree, 0, y);
-			b_tokens->cmd_args[i] = ft_strjoiiin_free(b_tokens->cmd_args[i], ret, tofree + y + 2, 1);
+			b_tokens->cmd_args[i] = ft_strjoiiin_free(b_tokens->cmd_args[i],
+					ret, tofree + y + 2, 1);
 		}
 		y++;
 	}
@@ -69,7 +71,8 @@ char	*ft_create_echo(t_info *info, t_big_token *b_tokens, char *tmp, int i)
 {
 	while (b_tokens->cmd_args[i])
 	{
-		if (ft_strnstr(b_tokens->cmd_args[i], "$?", ft_strlen(b_tokens->cmd_args[i])))
+		if (ft_strnstr(b_tokens->cmd_args[i], "$?",
+				ft_strlen(b_tokens->cmd_args[i])))
 			if (ft_handle_ret(b_tokens, ft_itoa(info->status), i))
 				return (NULL);
 		if (!tmp)

@@ -6,13 +6,11 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 12:16:34 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 18:04:57 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	sc;
 
 int no_sib_has_child(t_big_token *b_tokens)
 {
@@ -56,7 +54,6 @@ int	ft_open_all_fdout(t_big_token *b_tokens, t_fd *tmp_fd)
 			{
 				b_tokens->sc = 1;
 				tmp_fd->fd = 1;
-				sc = 1;
 				err = ft_strjoin("minishell: ", tmp_fd->file);
 				if (!err)
 					return (1);
@@ -91,7 +88,6 @@ int	ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd)
 			{
 				b_tokens->sc = 1;
 				tmp_fd->fd = 0;
-				sc = 1;
 				err = ft_strjoin("minishell: ", tmp_fd->file);
 				if (err)
 					return (1);
@@ -168,9 +164,9 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 	i = 0;
 	while (b_tokens)
 	{
-		if (ft_wash_btoken(info, b_tokens))
-			return (2147483647);
-		else if (b_tokens->sc == -1 || b_tokens->sc == 1)
+	//	if (ft_wash_btoken(info, b_tokens))
+	//		return (2147483647);
+		if (b_tokens->sc == -1 || b_tokens->sc == 1)
 		{
 			if (ft_add_wildcards(info, b_tokens))
 				return (ft_putstr_error("Wildcards error\n"));
@@ -311,12 +307,12 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 	//	printf("value b_token dans le FC (%d)\n", fc);
 	//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
 	//	printf("\nb_tok->sc = %d\n", tmp_b->sc);
-		if ((fc == 1 && sc == 0) || (fc == 2 && sc))
+		if ((fc == 1 && tmp_b->sc == 0) || (fc == 2 && tmp_b->sc))
 		{
 			rec_exec(info, b_tokens, and_or + 1);
 			return (0);
 		}
-		else if (fc == 2 && !sc)
+		else if (fc == 2 && !tmp_b->sc)
 		{
 			while (tmp_b && tmp_b->type != TOK_LEFT_AND)
 			{
@@ -324,7 +320,7 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 				and_or++;
 			}
 		}
-		else if (fc == 1 && sc)
+		else if (fc == 1 && tmp_b->sc)
 		{
 			while (tmp_b && tmp_b->type != TOK_LEFT_OR)
 			{

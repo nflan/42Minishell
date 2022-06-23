@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 21:19:16 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 14:27:30 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 17:46:52 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ void	ft_free_all(t_info *info, t_env *env)
 		if (info->rdline)
 			free(info->rdline);
 		info->rdline = NULL;
-	//	if (info->pdes[0] != -1)
-	//		close(info->pdes[0]);
-	//	if (info->pdes[1] != -1)
-	//		close(info->pdes[1]);
 		if (info->tokens)
 		{
 			ft_free_tokens(info->tokens);
@@ -104,41 +100,4 @@ void	ft_free_cmd(t_big_token *b_tokens)
 	if (b_tokens->fd_in)
 		ft_free_fd(b_tokens->fd_in);
 	b_tokens = NULL;
-}
-
-void	ft_free_tokens(t_token *tokens)
-{
-	if (!tokens)
-		return ;
-	if (tokens->next)
-		ft_free_tokens(tokens->next);
-	if (tokens->value)
-	{
-		free(tokens->value);
-		tokens->value = NULL;
-	}
-	free(tokens);
-	tokens = NULL;
-}
-
-void	ft_free_env(t_env *env)
-{
-	t_env *tmp;
-
-	tmp = NULL;
-	if (!env)
-		return ;
-	while (env)
-	{
-		tmp = env;
-		env = tmp->next;
-		if (tmp->name)
-			free(tmp->name);
-		tmp->name = NULL;
-			if (tmp->value)
-		free(tmp->value);
-		tmp->value = NULL;
-		free(tmp);
-		tmp = NULL;
-	}
 }

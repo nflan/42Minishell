@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 14:14:35 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 17:56:03 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_OP_PAREN] = TOK_EXPANDER_OP,
 		[CHR_CL_PAREN] = TOK_EXPANDER_CL,
 		[CHR_AST] = TOK_WORD,
-		[CHR_PLUS] = TOK_OPERATOR,
+		[CHR_PLUS] = TOK_WORD, // j'ai change c'etait operator
 		[CHR_DASH_MINES] = TOK_WORD, // j'ai change c'etait operator
 		[CHR_POINT] = TOK_WORD,
 		[CHR_SLASH] = TOK_WORD,
@@ -269,7 +269,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_OP_BRACE] = TOK_IDK,
 		[CHR_PIPE] = TOK_OPERATOR,
 		[CHR_CL_BRACE] = TOK_IDK,
-		[CHR_TILDA] = TOK_PATH,
+		[CHR_TILDA] = TOK_WORD, // j'ai change c'etait PATH
 		[CHR_BACKTICK] = TOK_IDK,
 };
 
@@ -297,6 +297,8 @@ typedef struct s_info
 void	ft_envadd_back(t_env **alst, t_env *new);
 int		ft_fill_envnew(t_env *env, char *line);
 t_env	*ft_envnew(char *line);
+void	ft_cmd_signal(int sig);
+void	ft_signal(int sig);
 
 //-----------ft_launch_cmd----------------------------------------
 int	ft_exit_cmd(t_info *info, char *str, int err);
@@ -338,12 +340,9 @@ char	*ft_get_env_value(t_info *info, char *name);
 int				ft_do_pipex(t_info *info, t_big_token *b_tokens);
 int				ft_pipex(t_info *info, t_big_token *b_tokens);
 
-//---------ft_pipex_tools.c----------------------------
-//int				ft_fdout_me(t_info *info);
-int				ft_here(t_fd *fd, int ret);
-//int				close_pipex_heredoc(t_info *info);
-//int				ft_do_heredoc(t_info *info);
-//int				ft_pipex_heredoc(t_info *g);
+//---------ft_here_doc.c----------------------------
+void			ft_write_here(t_fd *fd, char *str, int i);
+int				ft_here(t_fd *fd);
 char			**ft_env_to_tab(t_env *env);
 
 //---------ft_pipex_utils.c----------------------------
@@ -351,14 +350,21 @@ int			ft_cmd_path(t_info *info, t_big_token *b_tokens);
 int			ft_command(t_info *info, t_big_token *b_tokens);
 
 //---------ft_pipex_tools2.c---------------------------
-void	ft_error_2(t_info *info, t_big_token *b_tokens);
+void	ft_error_2(int i, t_info *info, t_big_token *b_tokens);
 int		ft_error(int i, t_info *info, t_big_token *b_tokens);
+
+//-----------------ft_free.c---------------------------
+void	ft_signal(int sig);
+void	ft_cmd_signal(int sig);
+void	ft_manage_sig(int sig);
 
 //-----------------ft_free.c---------------------------
 void	ft_free_wildcards(t_wildcards *wd);
 void	ft_free_all(t_info *info, t_env *env);
 void	ft_free_b_tokens(t_big_token *b_tokens);
+void	ft_free_fd(t_fd *fd);
 void	ft_free_cmd(t_big_token *b_tokens);
+//-----------------ft_free2.c--------------------------
 void	ft_free_tokens(t_token *tokens);
 void	ft_free_env(t_env *env);
 
@@ -381,14 +387,6 @@ int		ft_get_wildcards(t_wildcards **wd);
 char	**ft_fill_old_args(t_big_token *b_tokens, char **tmp, int j, int list);
 int		ft_realloc_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type);
 int		ft_do_wildcards(t_big_token *b_tokens, int i);
-
-// GET_NEXT_LINE
-//-----------------ft_get_next_line_bonus.c---------------------------
-void			ft_print(t_fd *fd, char *buf, char c);
-unsigned int	ft_test_line(char *str);
-char			*ft_fill_str(char *str, char *buf);
-char			*get_line(char *str, int fd);
-char			*get_next_line(int fd);
 
 // AGENT O
 //----------main_O.c-------------------------------------------------------------------

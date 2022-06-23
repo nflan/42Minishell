@@ -1,38 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex_tools.c                                   :+:      :+:    :+:   */
+/*   ft_here_doc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/20 16:06:48 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 17:50:48 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_here(t_fd *fd, int ret)
+void	ft_write_here(t_fd *fd, char *str, int i)
+{
+	if (i == 1)
+	{	
+		ft_putstr_fd("That's not a good way to do things but EOF (wanted ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(")\n", 2);
+	}
+	else if (i == 2)
+	{
+		write(fd->fd, str, ft_strlen(str));
+		write(fd->fd, "\n", 1);
+	}
+}
+
+int	ft_here(t_fd *fd)
 {
 	char	*buf;
+	char	*to_free;
 
 	buf = NULL;
-	while (ret > 0)
+	to_free = ft_strjoiiin("heredoc \"", fd->delimitator, "\" > ");
+	if (!to_free)
+		return (1);
+	while (1)
 	{
-		ft_print(fd, buf, '\n');
-		buf = get_next_line(0);
+		buf = readline(to_free);
 		if (!buf)
-			return (1);
-		if (ft_strlen(buf) - 1 == ft_strlen(fd->delimitator) && !ft_strncmp(buf, fd->delimitator, ft_strlen(fd->delimitator)))
-			ret = 0;
+			ft_write_here(fd, fd->delimitator, 1);
+		if (!buf || !ft_strncmp(buf, fd->delimitator,
+				ft_strlen(fd->delimitator) + 1))
+			break ;
 		else
-			write(fd->fd, buf, ft_strlen(buf));
+			ft_write_here(fd, buf, 2);
 		free(buf);
 		buf = NULL;
 	}
+	if (buf)
+		free(buf);
 	close(fd->fd);
 	fd->fd = 0;
-	return (0);
+	return (free(to_free), 0);
 }
 
 char	**ft_env_to_tab(t_env *env)

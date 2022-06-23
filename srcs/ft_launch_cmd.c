@@ -6,13 +6,11 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 14:38:26 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 17:56:50 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-extern int	sc;
 
 int	ft_deeper_bt(t_big_token *b_tokens, t_big_token **tmp_b)
 {
@@ -99,8 +97,8 @@ int	ft_check_builtins(t_big_token *b_tokens)
 {
 	int	len;
 
-	if (!b_tokens->cmd_args)
-		return (1);
+	if (!b_tokens->cmd_args || !b_tokens->cmd_args[0])
+		return (2);
 	len = ft_strlen(b_tokens->cmd_args[0]) + 1;
 	if (!ft_strncmp(b_tokens->cmd_args[0], "unset", len))
 		return (0);
@@ -123,8 +121,8 @@ int	ft_builtins(t_info *info, t_big_token *b_tokens)
 {
 	int	len;
 
-	if (!b_tokens->cmd_args)
-		return (1);
+	if (!b_tokens->cmd_args || !b_tokens->cmd_args[0])
+		return (2);
 	len = ft_strlen(b_tokens->cmd_args[0]) + 1;
 	if (!ft_strncmp(b_tokens->cmd_args[0], "unset", len))
 	{
@@ -186,7 +184,6 @@ void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
 	}
 	if (WIFEXITED(child))
 		info->status = WEXITSTATUS(child);
-	sc = info->status;
 }
 
 int	ft_lead_fd(t_info *info, t_big_token *b_tokens)
@@ -218,14 +215,17 @@ int	ft_fork_par(t_info *info, t_big_token *b_tokens)
 	pid = -1;
 //	printf("fork_par\n");
 	pid = fork();
+	ft_manage_sig(0);
 	if ((int) pid == -1)
 		return (ft_error(2, info, NULL));
 	else if ((int) pid == 0)
 	{
+		ft_manage_sig(1);
 		rec_exec(info, &(b_tokens)->child, 0);
 		ft_exit_cmd(info, NULL, 0);
 	}
 	waitpid(pid, &pid, 0);
+	ft_manage_sig(2);
 	if (WIFEXITED(pid))
 		info->status = WEXITSTATUS(pid);
 	return (info->status);
@@ -238,14 +238,17 @@ int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid)
 		return (ft_putstr_error("FD problem\n"));
 	b_tokens->envp = ft_env_to_tab(info->env);
 	pid = fork();
+	ft_manage_sig(0);
 	if ((int) pid == -1)
 		return (ft_error(2, info, NULL));
 	else if ((int) pid == 0)
 	{
+		ft_manage_sig(1);
 		if (ft_pipex(info, b_tokens))
 			return (ft_free_cmd(b_tokens), 1);
 		ft_exit_cmd(info, NULL, 0);
 	}
+	ft_manage_sig(2);
 	ft_close_cmd(info, b_tokens, pid);
 	return (info->status);
 }
@@ -256,10 +259,12 @@ int	ft_do_solo(t_info *info, t_big_token *b_tokens)
 
 	pid = -1;
 	pid = fork();
+	ft_manage_sig(0);
 	if ((int) pid == -1)
 		return (ft_error(2, info, NULL));
 	else if ((int) pid == 0)
 	{
+		ft_manage_sig(1);
 		dup2(b_tokens->fdin, STDIN_FILENO);
 		dup2(b_tokens->fdout, STDOUT_FILENO);
 //		printf("b_tokens->fdout[b_tokens->rd_inouthd[1]] = %d\n", b_tokens->fdout[b_tokens->rd_inouthd[1 - 1]]);
@@ -270,6 +275,7 @@ int	ft_do_solo(t_info *info, t_big_token *b_tokens)
 				exit (ft_error(4, info, b_tokens));
 	}
 	waitpid(pid, &pid, 0);
+	ft_manage_sig(2);
 	if (WIFEXITED(pid))
 		info->status = WEXITSTATUS(pid);
 	return (info->status);
@@ -282,7 +288,7 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 	b_tokens->envp = ft_env_to_tab(info->env);
 	if (!ft_check_builtins(b_tokens))
 		info->status = ft_builtins(info, b_tokens);
-	else
+	else if (ft_check_builtins(b_tokens) == 1)
 		ft_do_solo(info, b_tokens);
 	return (info->status);
 }

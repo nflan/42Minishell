@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 12:23:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 16:54:37 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int	ft_fill_fdnew(t_fd *fd, char *file, int red, int *hd)
 		if (ft_create_tmp(fd, *hd))
 			return (1);
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		ft_here(fd, 1);
+		ft_here(fd);
 	}
 	else
 		fd->file = ft_strdup(file);

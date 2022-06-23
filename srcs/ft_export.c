@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/10 10:10:29 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 17:45:23 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	ft_do_export(char *line)
 	tmp = NULL;
 	if (!line)
 		return (0);
-	if (ft_isdigit(*line) || (*line == '\\' && line[1] == '\\') || *line == '\'' || *line == '-')
+	if (ft_isdigit(*line) || (*line == '\\' && line[1] == '\\')
+		|| *line == '\'' || *line == '-')
 	{
 		tmp = ft_strjoin("minishell: export: `", line);
 		ft_putstr_frror(tmp, "': not a valid identifier", 1);
@@ -65,7 +66,6 @@ int	ft_export(t_info *info, t_big_token *b_tokens)
 		return (1);
 	if (*b_tokens->cmd_args[1] == '\\')
 		b_tokens->cmd_args[1] = b_tokens->cmd_args[1] + 1;
-//	printf("line = %s\n", line);
 	while (b_tokens->cmd_args[1][1] && b_tokens->cmd_args[1][i] != '=')
 		i++;
 	j = i + 1;

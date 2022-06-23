@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 17:27:46 by nflan             #+#    #+#              #
-#    Updated: 2022/06/22 18:44:43 by nflan            ###   ########.fr        #
+#    Updated: 2022/06/23 17:52:12 by nflan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,14 +20,13 @@ INC_DIR = include/
 LIB_DIR = libft/
 
 sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
-		  ft_pipex_tools.c ft_pipex.c ft_global.c ft_tools2.c\
+		  ft_here_doc.c ft_pipex.c ft_global.c ft_tools2.c\
 		  big_tokenizer_1.c big_tokenizer_2.c big_tokenizer_3.c\
 		  big_tokenizer_4.c parser.c tokenizer_1.c tokenizer_2.c\
 		  syntax_errorinizer_1.c syntax_errorinizer_2.c\
 		  tree_manipulator.c ft_launch_cmd.c ft_echo.c main_O.c\
-		  printer.c executer.c ft_free.c get_next_line_bonus.c\
-		  dollar_expander.c ft_wildcards_check.c ft_wildcards_tools.c\
-		  ft_wildcards_do.c
+		  printer.c executer.c ft_free.c ft_free2.c dollar_expander.c\
+		  ft_wildcards_check.c ft_wildcards_tools.c ft_wildcards_do.c ft_signal.c
 
 INC = include/minishell.h
 
