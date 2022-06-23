@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 12:23:04 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 15:19:40 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ static void divide_by_or_and_2(t_token *tmp, t_big_token **b_tokens, int *start,
 	(*length) = 0;
 }
 
-int	piped(t_token **tokens, int start, int length)
+int piped(t_token **tokens, int start, int length)
 {
-	t_token	*tmp;
-	int		i;
+	t_token *tmp;
+	int i;
 
 	tmp = *tokens;
 	i = 0;
@@ -85,12 +85,12 @@ int	piped(t_token **tokens, int start, int length)
 	return (0);
 }
 
-int	sophisticated_piped(t_token **tokens, int start, int length)
+int sophisticated_piped(t_token **tokens, int start, int length)
 {
-	t_token	*tmp;
-	int		i;
-	int		st_par;
-	int		end_par;
+	t_token *tmp;
+	int i;
+	int st_par;
+	int end_par;
 
 	tmp = *tokens;
 	i = 0;
@@ -98,18 +98,18 @@ int	sophisticated_piped(t_token **tokens, int start, int length)
 	while (i < length && tmp)
 	{
 		if (tmp->token == TOK_EXPANDER_OP)
-			{
+		{
 			st_par = tmp->index;
 			end_par = cl_par_ind(&tmp, tmp->index);
 			move_tok_2_ind(&tmp, end_par);
 			i += (end_par - st_par);
-			}
+		}
 		else if (tmp->token == TOK_OPERATOR && ft_strlen(tmp->value) == 1 && !ft_strncmp(tmp->value, "|", 1))
 			return (1);
 		else
 		{
-		tmp = tmp->next;
-		i++;
+			tmp = tmp->next;
+			i++;
 		}
 	}
 	return (0);
@@ -117,9 +117,9 @@ int	sophisticated_piped(t_token **tokens, int start, int length)
 
 int divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, int length)
 {
-	t_token	*tmp;
-	int		b_length;
-	int		i;
+	t_token *tmp;
+	int b_length;
+	int i;
 	i = 0;
 	b_length = 0;
 //	printf("\nI entered here with this token()\n");
