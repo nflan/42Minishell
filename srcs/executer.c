@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/22 18:50:35 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 12:16:16 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 		waitpid(pid[i], &pid[i], 0);
 	free(pid);
 	return (0);
+
 }
 
 int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
