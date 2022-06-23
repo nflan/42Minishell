@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/20 22:46:24 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 14:38:26 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,6 @@ int	ft_fork_par(t_info *info, t_big_token *b_tokens)
 	waitpid(pid, &pid, 0);
 	if (WIFEXITED(pid))
 		info->status = WEXITSTATUS(pid);
-	sc = info->status;
 	return (info->status);
 }
 
@@ -273,7 +272,6 @@ int	ft_do_solo(t_info *info, t_big_token *b_tokens)
 	waitpid(pid, &pid, 0);
 	if (WIFEXITED(pid))
 		info->status = WEXITSTATUS(pid);
-	sc = info->status;
 	return (info->status);
 }
 

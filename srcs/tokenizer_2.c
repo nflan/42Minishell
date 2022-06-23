@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/22 12:05:40 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/23 12:25:03 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char 
 	// init_tok_struct(tok_list, rank_in_list);
 }
 
-void	detect_tokens(t_token **tok_list, char *str)
+int	detect_tokens(t_token **tok_list, char *str)
 {
 	int				i;
 	unsigned int	tok_type;

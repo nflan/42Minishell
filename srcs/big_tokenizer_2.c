@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/22 19:44:58 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/23 12:23:04 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	sophisticated_piped(t_token **tokens, int start, int length)
 	return (0);
 }
 
-void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, int length)
+int divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, int length)
 {
 	t_token	*tmp;
 	int		b_length;

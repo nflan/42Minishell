@@ -26,14 +26,17 @@ char *concat_argvs(int argc, char **argv)
 
 int main_agent_O(t_info *info)
 {
-	info->tokens = NULL;
-	info->new_tokens = NULL;
-	info->parse = NULL;
-	if (detect_tokens(&info->tokens, info->rdline))
+	if (detect_tokens(&info->old_tokens, info->rdline))
 		return (ft_putstr_error("in main_agent_O\nDetect_tokens error\n"));
-	if (fill_tok_value(&info->tokens, info->rdline))
+	if (fill_tok_value(&info->old_tokens, info->rdline))
 		return (ft_putstr_error("in main_agent_O\nFill_tok_value error\n"));
+	index_toks(&info->old_tokens);
+	dol_expand(&info->old_tokens, info);
+	expanded_toks(&info->old_tokens, &info->tokens);
 	index_toks(&info->tokens);
+	print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
+	printf("\n");
+//	exit (0);
 	if (syntax_err_handler(&info->tokens))
 	{
 		printf("Error number: %d\n", syntax_err_handler(&info->tokens));

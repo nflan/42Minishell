@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/22 19:58:34 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:14:35 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,8 +287,8 @@ typedef struct s_info
 	int			nb_cmd;
 	t_env		*env;
 	t_big_token	*parse;
+	t_token		*old_tokens;
 	t_token		*tokens;
-	t_token		*new_tokens;
 	int			pdes[2];
 	int			tmp[2];
 }	t_info;
@@ -427,12 +427,12 @@ void 			init_tok_struct(t_token **tok_list, int rank_in_list);
 
 //----------tokenizer_2.c----------------------------------------------------
 
-void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
+int				add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
 void			add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char *value);
-void 			detect_tokens(t_token **tok_list, char *str);
-void 			fill_tok_value(t_token **tok, char *str);
+int				detect_tokens(t_token **tok_list, char *str);
+int				fill_tok_value(t_token **tok, char *str);
 char 			*ft_strncpy(char *str, int n);
-void 			index_toks(t_token **tokens, int start, int length);
+void			index_toks(t_token **tokens);
 
 //-----------syntax_errorinizer_1.c--------------------------------------------------
 
