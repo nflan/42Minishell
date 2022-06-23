@@ -1,6 +1,8 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/mnt/nfs/homes/omoudni/minishell'
+ 
 mkdir -p bin/
+ 
 cc -Wall -Wextra -Werror -g -o bin/main.o -c srcs/main.c
 cc -Wall -Wextra -Werror -g -o bin/ft_cd.o -c srcs/ft_cd.c
 cc -Wall -Wextra -Werror -g -o bin/ft_export.o -c srcs/ft_export.c
@@ -24,13 +26,13 @@ cc -Wall -Wextra -Werror -g -o bin/ft_launch_cmd.o -c srcs/ft_launch_cmd.c
 cc -Wall -Wextra -Werror -g -o bin/ft_echo.o -c srcs/ft_echo.c
 cc -Wall -Wextra -Werror -g -o bin/main_O.o -c srcs/main_O.c
 cc -Wall -Wextra -Werror -g -o bin/printer.o -c srcs/printer.c
+ 
 cc -Wall -Wextra -Werror -g -o bin/executer.o -c srcs/executer.c
 cc -Wall -Wextra -Werror -g -o bin/ft_free.o -c srcs/ft_free.c
 cc -Wall -Wextra -Werror -g -o bin/dollar_expander.o -c srcs/dollar_expander.c
  
 make -C libft/
 make[1]: Entering directory '/mnt/nfs/homes/omoudni/minishell/libft'
- 
 cc -Wall -Wextra -Werror -g -c ft_atoi.c -o ft_atoi.o
 cc -Wall -Wextra -Werror -g -c ft_bzero.c -o ft_bzero.o
 cc -Wall -Wextra -Werror -g -c ft_calloc.c -o ft_calloc.o

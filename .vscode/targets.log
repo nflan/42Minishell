@@ -5,8 +5,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Wed Jun 22 12:05:42 2022
+# Make data base, printed on Thu Jun 23 15:13:51 2022
 
 # Variables
 
@@ -41,15 +42,15 @@ SHELL = /bin/sh
 # makefile (from 'libft/Makefile', line 29)
 RM = rm -fr
 # environment
+GDM_LANG = en
+# environment
 VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-_ = /usr/bin/code
+JOURNAL_STREAM = 9:584580
 # makefile (from 'libft/Makefile', line 31)
 CFLAGS = -Wall -Wextra -Werror -g
-# environment
-JOURNAL_STREAM = 9:60347
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'libft/Makefile', line 1)
@@ -73,15 +74,17 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101608/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 5608
+_ = /usr/bin/code
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-33c8dc86-a57b-4aa5-b4a0-05cb387b6932.sock
+MANAGERPID = 115756
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-57c86eee-191f-492c-9b5a-f4f0a9524512.sock
 # environment
 VSCODE_CWD = /mnt/nfs/homes/omoudni/minishell
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session2
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101608_aLIQjA
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_oQBoqX
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -91,7 +94,7 @@ GPG_AGENT_INFO = /run/user/101608/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/e3r11p13.clusters.42paris.fr:@/tmp/.ICE-unix/6074,unix/e3r11p13.clusters.42paris.fr:/tmp/.ICE-unix/6074
+SESSION_MANAGER = local/e3r11p15.42.fr:@/tmp/.ICE-unix/116240,unix/e3r11p15.42.fr:/tmp/.ICE-unix/116240
 # environment
 XDG_RUNTIME_DIR = /run/user/101608
 # environment
@@ -101,7 +104,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = b93aac0a56734f46b00e82cd378da65d
+INVOCATION_ID = 5d72d34282c84680a4758015e1b8f26c
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -125,7 +128,7 @@ PWD = /mnt/nfs/homes/omoudni/minishell
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 6037
+SSH_AGENT_PID = 116204
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # makefile (from 'Makefile', line 19)
@@ -165,7 +168,7 @@ QT_IM_MODULE = ibus
 # makefile (from 'libft/Makefile', line 17)
 SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_strchr.c ft_strdup.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_tolower.c ft_toupper.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_printf.c ft_printf_tools.c
 # environment
-SHLVL = 1
+SHLVL = 2
 # makefile (from 'Makefile', line 34)
 LIBFT = libft/libft.a
 # makefile (from 'libft/Makefile', line 27)
@@ -196,6 +199,8 @@ OLDPWD = /mnt/nfs/homes/omoudni
 .VARIABLES := 
 # automatic
 *F = $(notdir $*)
+# environment
+LANGUAGE = en
 # environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
@@ -239,11 +244,11 @@ HEADER = libft.h
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/8184ca46_ce86_406a_830a_aac99ddc62a1
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/f6240d8d_1b81_45d8_bbcb_dcfccb52be28
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.110
+GNOME_TERMINAL_SERVICE = :1.98
 # default
 SUFFIXES := 
 # environment
@@ -265,9 +270,9 @@ TERM = xterm-256color
 # environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # environment
-VSCODE_PID = 9044
+VSCODE_PID = 119658
 # variable set hash-table stats:
-# Load=128/1024=12%, Rehash=0, Collisions=26/183=14%
+# Load=130/1024=13%, Rehash=0, Collisions=26/185=14%
 
 # Pattern-specific Variable Values
 
@@ -275,19 +280,19 @@ VSCODE_PID = 9044
 
 # Directories
 
-# . (device 59, inode 194015554): 11 files, no impossibilities.
+# . (device 59, inode 194015554): 14 files, no impossibilities.
 # bin: could not be stat'd.
 # srcs (device 59, inode 217188507): 10 files, no impossibilities so far.
- 
 # libft (device 59, inode 171187366): No files, no impossibilities so far.
 
-# 21 files, no impossibilities in 4 directories.
+# 24 files, no impossibilities in 4 directories.
 
 # Implicit Rules
 
 bin/%.o: srcs/%.c | bin/
 #  recipe to execute (from 'Makefile', line 52):
 	$(CC) $(CFLAGS) -o $@ -c $<
+ 
 
 # 1 implicit rules, 0 (0.0%) terminal.
 
@@ -475,7 +480,7 @@ Makefile:
 # Not a target:
 srcs/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-20 22:45:33.919060236
+#  Last modified 2022-06-22 18:33:18.443859262
 #  File has been updated.
 #  Successfully updated.
 
@@ -557,7 +562,6 @@ minishell: bin/main.o bin/ft_cd.o bin/ft_export.o bin/ft_tools.o bin/ft_builtins
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/4=0%
 #  recipe to execute (from 'Makefile', line 47):
- 
 	${CC} ${CFLAGS} ${objets} ${LIBFT} -I ${INC} -lreadline -o ${NAME}
 
 # Not a target:
@@ -566,6 +570,7 @@ ft_isdigit.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 libft/libft.a: ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_strchr.c ft_strdup.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_tolower.c ft_toupper.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_printf.c ft_printf_tools.c libft.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -837,18 +842,18 @@ bin/syntax_errorinizer_2.o: include/minishell.h
 vpath %.h libft
 vpath ft_%.c libft
 vpath ft_%.o libft
- 
 
 # 3 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 113 / storage = 1432 B / avg = 12 B
-# current buf: size = 8162 B / used = 1432 B / count = 113 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 116 / storage = 1445 B / avg = 12 B
+# current buf: size = 8162 B / used = 1445 B / count = 116 / avg = 12 B
 
-# strcache performance: lookups = 201 / hit rate = 43%
+# strcache performance: lookups = 204 / hit rate = 43%
 # hash-table stats:
-# Load=113/8192=1%, Rehash=0, Collisions=5/201=2%
-# Finished Make data base on Wed Jun 22 12:05:42 2022
+ 
+# Load=116/8192=1%, Rehash=0, Collisions=6/204=3%
+# Finished Make data base on Thu Jun 23 15:13:51 2022
 
  
