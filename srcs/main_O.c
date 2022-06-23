@@ -27,6 +27,7 @@ char *concat_argvs(int argc, char **argv)
 int main_agent_O(t_info *info)
 {
 	info->tokens = NULL;
+	info->new_tokens = NULL;
 	info->parse = NULL;
 	if (detect_tokens(&info->tokens, info->rdline))
 		return (ft_putstr_error("in main_agent_O\nDetect_tokens error\n"));

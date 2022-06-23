@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 22:42:51 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/22 12:05:40 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,30 @@ int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 	return (0);
 }
 
-int	detect_tokens(t_token **tok_list, char *str)
+void	add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char *value)
+{
+	t_token	*tmp;
+	t_token	*bef_last;
+
+	if (!*tok_list)
+	{
+		*tok_list = create_tok_bis(tok_type, quoted, value);
+		(*tok_list)->prev = NULL;
+	}
+	else
+	{
+		tmp = *tok_list;
+		while (tmp->next)
+			tmp = tmp->next;
+		bef_last = tmp;
+		bef_last->next = create_tok_bis(tok_type, quoted, value);
+		bef_last = bef_last->next;
+		bef_last->prev = tmp;
+	}
+	// init_tok_struct(tok_list, rank_in_list);
+}
+
+void	detect_tokens(t_token **tok_list, char *str)
 {
 	int				i;
 	unsigned int	tok_type;

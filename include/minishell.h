@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/22 18:48:11 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/22 19:58:34 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_token
 	int 	length;
 	char	*value;
 	t_tok_type token;
-	int 	quoted;
+	int 	quoted; //1- dol quoted 2- d quoted 3- s quoted
 	struct s_token *prev;
 	struct s_token *next;
 } 			t_token;
@@ -258,7 +258,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_MINES] = TOK_REDIRECTOR_LEFT,
 		[CHR_EQUAL] = TOK_OPERATOR,
 		[CHR_SUPERIOR] = TOK_REDIRECTOR_RIGHT,
-		[CHR_INTEROG] = TOK_OPERATOR,
+		[CHR_INTEROG] = TOK_WORD,
 		[CHR_AT] = TOK_WORD,
 		[CHR_ALPHA] = TOK_WORD,
 		[CHR_OP_BRACKET] = TOK_IDK,
@@ -288,6 +288,7 @@ typedef struct s_info
 	t_env		*env;
 	t_big_token	*parse;
 	t_token		*tokens;
+	t_token		*new_tokens;
 	int			pdes[2];
 	int			tmp[2];
 }	t_info;
@@ -421,15 +422,17 @@ int 			len_ll_list(t_token *tok_list);
 int 			is_quoted(t_token **tok_list, char c);
 unsigned int	get_real_tok_type(char c, t_token **tok_list);
 t_token 		*ft_create_token(t_tok_type tok_type, int length, int i);
+t_token			*create_tok_bis(t_tok_type tok_type, int quoted, char *value);
 void 			init_tok_struct(t_token **tok_list, int rank_in_list);
 
 //----------tokenizer_2.c----------------------------------------------------
 
-int				add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
-int				detect_tokens(t_token **tok_list, char *str);
-int				fill_tok_value(t_token **tok, char *str);
-char			*ft_strncpy(char *str, int n);
-void			index_toks(t_token **tokens);
+void 			add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
+void			add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char *value);
+void 			detect_tokens(t_token **tok_list, char *str);
+void 			fill_tok_value(t_token **tok, char *str);
+char 			*ft_strncpy(char *str, int n);
+void 			index_toks(t_token **tokens, int start, int length);
 
 //-----------syntax_errorinizer_1.c--------------------------------------------------
 
@@ -445,6 +448,7 @@ int				r_2_op_succeding(t_token **tokens);
 int				op_cl_par_succeeding(t_token **tokens);
 int				syntax_err_handler(t_token **tokens);
 int				is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens);
+int				is_red_st_par(t_big_token *b_tokens, t_token *tokens);
 
 //-----------big_tokenizer_1.c-------------------------------------------------
 
@@ -459,6 +463,7 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 int				cl_par_ind(t_token **tokens, int ind_tok);
 int				divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
 int	piped(t_token **tokens, int start, int length);
+int				sophisticated_piped(t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------
 
@@ -479,8 +484,14 @@ void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
 
 //---------------dollar_expander.c------------------------------------------
 char			*expand_join(char *s1, char *s2, char *s3);
+char			*expand_join_nf(char *s1, char *s2, char *s3);
+char			*strjoin_4(char *str1, char *str2);
+char			*str_join_exp(t_token **tokens, int ind, int type);
+char			*ft_strndup(char *str, int len);
 void			expand_1(char **str, int *i, t_info *info);
 void			expand(char **str, t_info *info);
 void			dol_expand(t_token **old_tokens, t_info *info);
+int				expanded_toks_check(t_token **tokens);
+void			expanded_toks(t_token **old_tokens, t_token **new_tokens);
 
 #endif

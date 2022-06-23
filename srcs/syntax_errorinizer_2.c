@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/10 16:33:43 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/22 20:04:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,46 @@ int	is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens)
 		if ((tmp2->token == TOK_OPERATOR && ft_strlen(tmp2->value) == 1 && !ft_strncmp(tmp2->value, "|", 1)) || (tmp2->token == TOK_REDIRECTOR_LEFT || tmp2->token == TOK_REDIRECTOR_RIGHT))
 			return (2);
 		tmp1 = tmp1->sibling;
+	}
+	return (0);
+}
+
+int	is_red_st_par(t_big_token *b_tokens, t_token *tokens)
+{
+	t_big_token	*tmp_b;
+	t_token		*tmp;
+	int			i;
+
+	tmp_b = b_tokens;
+	tmp = tokens;
+	i = 0;
+	while (tmp_b)
+	{
+		move_tok_2_ind(&tmp, tmp_b->ind_tok_start + tmp_b->length - 1);
+		if (tmp->token == TOK_SEP)
+		{
+			tmp = tokens;
+			move_tok_2_ind(&tmp, tmp_b->ind_tok_start + tmp_b->length - 2);
+		}
+		if (tmp->token == TOK_EXPANDER_CL)
+			{
+				tmp = tokens;
+				if (sophisticated_piped(&tmp, tmp_b->ind_tok_start, tmp_b->length))
+					return (0);
+				else
+				{
+					while (tmp && i < tmp_b->length)
+					{
+						if (tmp->token == TOK_EXPANDER_OP)
+							return (0);
+						else if (tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT)
+							return (1);
+						tmp = tmp->next;
+						i++;
+					}
+				}
+			}
+		tmp_b = tmp_b->sibling;
 	}
 	return (0);
 }

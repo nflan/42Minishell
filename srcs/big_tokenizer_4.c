@@ -6,8 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 22:04:01 by nflan            ###   ########.fr       */
-/*   Updated: 2022/06/17 14:24:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/22 20:04:31 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -402,7 +401,12 @@ int	handle_par(t_big_token **b_tokens, t_token **tokens)
 
 	tmp_b = *b_tokens;
 	tmp_s = *tokens;
-	while (tmp_b && tmp_s)
+	if (is_pipe_in_st_end(tmp_b, tmp_s) || is_red_st_par(tmp_b, tmp_s))
+	{
+		ft_putstr_fd("Erreur syntaxique 2\n", 2);
+		return ;
+	}
+	while (tmp_b)
 	{
 		init_params(&(params[0]), &(params[1]));
 		tmp_s = *tokens;
