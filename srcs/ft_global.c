@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:29:38 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/06 18:52:16 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/21 12:10:33 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	ft_path(t_info *info, t_big_token *b_tokens)
 	path = ft_split(ft_get_env_value(info, "PATH"), ':');
 	tofree = ft_strjoiiin(path[i], "/", b_tokens->cmd_args[0]);
 	if (!tofree)
-		return (1);
+		return (ft_free_split(path), ft_putstr_error("Malloc error ft_strjoiiin in ft_path\n"));
 	while (path[i] && access(tofree, X_OK) != 0)
 	{
 		free(tofree);
 		tofree = ft_strjoiiin(path[i], "/", b_tokens->cmd_args[0]);
 		if (!tofree)
-			return (1);
+			return (ft_free_split(path), ft_putstr_error("Malloc error ft_strjoiiin in ft_path\n"));
 		i++;
 	}
 	if (path[i])
@@ -44,7 +44,7 @@ int	ft_path(t_info *info, t_big_token *b_tokens)
 
 int	ft_command(t_info *info, t_big_token *b_tokens)
 {
-	if (!b_tokens->cmd_args[0])
+	if (!b_tokens->cmd_args)
 		return (1);
 	if (access(b_tokens->cmd_args[0], X_OK) == 0)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 15:39:17 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/20 21:10:29 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/20 17:03:25 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_strlen(const char *str)
 
 	i = 0;
 	if (!str)
-		return (i);
+		return (0);
 	if (str)
 		while (str[i])
 			i++;

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/21 17:14:08 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:25:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,12 @@ t_token *ft_create_token(t_tok_type tok_type, int length, int i)
 {
 	t_token *tok;
 
-	tok = (t_token *)malloc(sizeof(t_token));
+	tok = ft_calloc(sizeof(t_token), 1);
 	if (!tok)
 		return (NULL);
 	tok->token = tok_type;
 	tok->length = length;
 	tok->start = i;
-	tok->next = NULL;
-	tok->prev = NULL;
 	return (tok);
 }
 
@@ -91,7 +89,7 @@ t_token *create_tok_bis(t_tok_type tok_type, int quoted, char *value)
 {
 	t_token *tok;
 
-	tok = (t_token *)malloc(sizeof(t_token));
+	tok = ft_calloc(sizeof(t_token), 1);
 	if (!tok)
 		return (NULL);
 	tok->token = tok_type;

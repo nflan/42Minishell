@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/22 16:07:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/23 13:06:55 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,8 @@ void expand_1(char **str, int *i, t_info *info)
 	free(to_look_up);
 	free(*str);
 	(*str) = expand_join(tmp[0], tmp[1], tmp[2]);
+	if (!(*str))
+		return ;
 	free(tmp);
 	if (add_shit)
 		(*i) = ind_dol + add_shit;
@@ -189,7 +191,7 @@ void expand(char **str, t_info *info)
 	int i;
 
 	i = 0;
-	while (str[i])
+	while ((*str)[i])
 	{
 		// if (str[i] == *)
 		// ft_wildcard(&(str[i]));
@@ -219,9 +221,21 @@ int expanded_toks_check(t_token **tokens)
 
 	tmp = *tokens;
 	if ((tmp->token == TOK_WORD && ft_strlen(tmp->value) == 1 && !ft_strncmp("$", tmp->value, 1)) && (tmp->next && ft_strlen(tmp->next->value) == 1 && tmp->next->token == TOK_D_QUOTER) && (tmp->next->next && tmp->next->next->token == TOK_WORD_D_QUOTED))
-		return (1);
+	{
+		move_tok_2_ind(&tmp, tmp->index + 4);
+		if (tmp && tmp->token == TOK_WORD)
+			return (6);
+		else
+			return (1);
+	}
 	if ((tmp->token == TOK_WORD && ft_strlen(tmp->value) == 1 && !ft_strncmp("$", tmp->value, 1)) && (tmp->next && ft_strlen(tmp->next->value) == 1 && tmp->next->token == TOK_S_QUOTER) && (tmp->next->next && tmp->next->next->token == TOK_WORD_S_QUOTED))
+	{
+		move_tok_2_ind(&tmp, tmp->index + 4);
+		if (tmp && tmp->token == TOK_WORD)
+			return (7);
+		else
 		return (2);
+	}
 	if (tmp->token == TOK_WORD && (tmp->next && ft_strlen(tmp->next->value) == 1 && (tmp->next->token == TOK_D_QUOTER || tmp->next->token == TOK_S_QUOTER)) && (tmp->next->next && (tmp->next->next->token == TOK_WORD_S_QUOTED || tmp->next->next->token == TOK_WORD_D_QUOTED)))
 		return (3);
 	if (((tmp->token == TOK_D_QUOTER || tmp->token == TOK_S_QUOTER) && ft_strlen(tmp->value) == 1) && (tmp->next && (tmp->next->token == TOK_WORD_S_QUOTED || tmp->next->token == TOK_WORD_D_QUOTED)))
@@ -271,6 +285,10 @@ void expanded_toks(t_token **old_tokens, t_token **new_tokens)
 			else
 				add_tok_last_bis(new_tokens, TOK_WORD, 3, new_value);
 			move_tok_2_ind(&tmp_o, tmp_o->index + 3);
+		}
+		else if (expanded_toks_check(&tmp_o) > 5)
+		{
+
 		}
 		else
 		{

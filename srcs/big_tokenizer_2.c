@@ -6,7 +6,11 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/23 15:13:49 by omoudni          ###   ########.fr       */
+=======
+/*   Updated: 2022/06/23 12:23:04 by nflan            ###   ########.fr       */
+>>>>>>> parse
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +119,15 @@ int sophisticated_piped(t_token **tokens, int start, int length)
 	return (0);
 }
 
-void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, int length)
+int divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, int length)
 {
 	t_token *tmp;
 	int b_length;
 	int i;
 	i = 0;
 	b_length = 0;
-	// printf("\nI entered here with this token()\n");
-	// print_s_tokens(tokens, start_tok, length);
+//	printf("\nI entered here with this token()\n");
+//	print_s_tokens(tokens, start_tok, length);
 
 	tmp = *tokens;
 	move_tok_2_ind(&tmp, start_tok);
@@ -131,21 +135,32 @@ void divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, i
 	{
 		b_length++;
 		if (tmp->token == TOK_EXPANDER_OP)
-		{
 			divide_by_or_and_1(&tmp, tokens, &b_length, &i);
+<<<<<<< HEAD
 		}
+=======
+>>>>>>> parse
 		else if (tmp->token == TOK_OPERATOR && check_divider_type(tmp->value))
 			divide_by_or_and_2(tmp, b_tokens, &start_tok, &b_length);
 		tmp = tmp->next;
 		i++;
 	}
 	if (!*b_tokens && !piped(tokens, start_tok, length))
-		add_b_tok_sib_last(b_tokens, TOK_CLEAN, start_tok, length);
+		i = add_b_tok_sib_last(b_tokens, TOK_CLEAN, start_tok, length);
 	else if (!*b_tokens && piped(tokens, start_tok, length))
-		add_b_tok_sib_last(b_tokens, TOK_CLEAN_PIPED, start_tok, length);
+		i = add_b_tok_sib_last(b_tokens, TOK_CLEAN_PIPED, start_tok, length);
 	else
+<<<<<<< HEAD
 		add_b_tok_sib_last(b_tokens, TOK_LAST, start_tok, b_length);
 	t_big_token *tmp_b;
 	tmp_b = *b_tokens;
 	handle_par(b_tokens, tokens);
+=======
+		i = add_b_tok_sib_last(b_tokens, TOK_LAST, start_tok, b_length);
+	if (i)
+		return (ft_putstr_error("in divide by or and "));
+	if (handle_par(b_tokens, tokens))
+		return (ft_putstr_error("in divide by or and "));
+	return (0);
+>>>>>>> parse
 }

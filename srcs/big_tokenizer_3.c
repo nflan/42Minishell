@@ -6,13 +6,13 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:57:08 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/15 14:53:44 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/20 22:02:16 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
+int	divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
 {
 	t_token *tmp_s;
 	t_big_token *tmp_b;
@@ -44,7 +44,8 @@ void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
 		}
 		else if (tmp_s->token == TOK_OPERATOR && ft_strlen(tmp_s->value) == 1 && !ft_strncmp(tmp_s->value, "|", 1))
 		{
-			add_b_tok_sib_last(&((tmp_b)->child), TOK_LEFT_PIPE, start, length_piped - 1);
+			if (add_b_tok_sib_last(&((tmp_b)->child), TOK_LEFT_PIPE, start, length_piped - 1))
+				return (ft_putstr_error("in divide by pipe "));
 			start = tmp_s->index + 1;
 			length_piped = 0;
 			i++;
@@ -57,8 +58,14 @@ void divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
 		}
 	}
 	if (!((tmp_b)->child))
-		add_b_tok_sib_last(&((tmp_b)->child), TOK_CLEAN, start, length_piped);
+	{
+		if (add_b_tok_sib_last(&((tmp_b)->child), TOK_CLEAN, start, length_piped))
+				return (ft_putstr_error("in divide by pipe "));
+	}
 	else
-		add_b_tok_sib_last(&((tmp_b)->child), TOK_PIPE_LAST, start, length_piped);
-	handle_par(&(tmp_b->child), tokens);
+		if (add_b_tok_sib_last(&((tmp_b)->child), TOK_PIPE_LAST, start, length_piped))
+				return (ft_putstr_error("in divide by pipe "));
+	if (handle_par(&(tmp_b->child), tokens))
+		return (ft_putstr_error("in divie by pipe "));
+	return (0);
 }

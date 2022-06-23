@@ -6,11 +6,24 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 21:19:16 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 15:51:36 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 14:27:30 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	ft_free_wildcards(t_wildcards *wd)
+{
+	if (wd)
+	{
+		if (wd->next)
+			ft_free_wildcards(wd->next);
+		else
+			closedir(wd->fd);
+		if (wd)
+			free(wd);
+	}
+}
 
 void	ft_free_all(t_info *info, t_env *env)
 {
@@ -27,6 +40,11 @@ void	ft_free_all(t_info *info, t_env *env)
 		{
 			ft_free_tokens(info->tokens);
 			info->tokens = NULL;
+		}
+		if (info->old_tokens)
+		{
+			ft_free_tokens(info->old_tokens);
+			info->old_tokens = NULL;
 		}
 		if (info->parse)
 		{
@@ -68,6 +86,8 @@ void	ft_free_fd(t_fd *fd)
 			ft_free_fd(fd->next);
 		if (fd->file)
 			free(fd->file);
+		if (fd->delimitator)
+			free(fd->delimitator);
 		free(fd);
 		fd = NULL;
 	}

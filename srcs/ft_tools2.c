@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:30:47 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/17 15:47:32 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/17 18:10:04 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ int	ft_error(int i, t_info *info, t_big_token *b_tokens)
 	else if (i == 4)
 	{
 		perror("Exec error");
+		ft_close_fd(b_tokens);
 		ft_free_all(info, info->env);
+		rl_clear_history();
 	}
 	else if (i == 6)
 		perror("Malloc error");
