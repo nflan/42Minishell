@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/24 16:19:00 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 19:39:45 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,36 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 	return (0);
 }
 
+int	ft_recreate_cmd(t_big_token *b_tokens, t_info *info)
+{
+	t_token	*tmp_s;
+	int		i;
+
+	i = 0;
+	tmp_s = info->tokens;
+	ft_free_split(b_tokens->cmd_args);
+	b_tokens->cmd_args = ft_calloc(sizeof(char *), b_tokens->cmd_args_num + 1);
+//	printf("args = %d\n", b_tokens->cmd_args_num);
+//	printf("length = %d\n", b_tokens->length);
+//	printf("start = %d\n", b_tokens->ind_tok_start);
+//	print_s_tokens(&tmp_s, 0, len_ll_list(tmp_s));
+//	printf("\n");
+	move_tok_2_ind(&tmp_s, b_tokens->ind_tok_start);
+	while (tmp_s && i < b_tokens->cmd_args_num)
+	{
+//		printf("value = %s && type = %d\n", tmp_s->value, tmp_s->token);
+		if (tmp_s->token == TOK_WORD)
+		{
+			b_tokens->cmd_args[i] = ft_strdup(tmp_s->value);
+			if (!b_tokens->cmd_args[i])
+				return (1);
+			i++;
+		}
+		tmp_s = tmp_s->next;
+	}
+	return (0);
+}
+
 int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 {
 	info->nb_cmd = 0;
@@ -233,11 +263,11 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 		dol_expand(&info->tokens, info, b_tokens->ind_tok_start, b_tokens->length);
 		expanded_toks(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
 		index_toks(&info->tokens);
-		ft_free_b_tokens(info->parse);
-		parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens));
-		printf("valeurs tokens apres expand = ");
-		print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
-		printf("\n");
+	//	printf("valeurs tokens apres expand = ");
+	//	print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
+	//	printf("\n");
+		if (ft_recreate_cmd(b_tokens, info))
+			return (1);
 		if (sib_child >= 1 && sib_child <= 3)
 			ft_exec_simple(info, b_tokens);
 		else if (sib_child == 4)
@@ -305,9 +335,9 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 	}
 	if (tmp_b && tmp_b->sc == -1 && (!tmp_b->child || tmp_b->par)) //execute le bloc tmp_b tout seul and get the sc;
 	{
-	//	printf("value b_token (commande solo) && tmp_b->sc = %d\n", tmp_b->sc);
-	//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-	//	printf("\n");
+		printf("value b_token (commande solo) && tmp_b->sc = %d\n", tmp_b->sc);
+		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+		printf("\n");
 		if (exec_the_bulk(info, 1, tmp_b))
 			return (1);
 		if (tmp_b->parent)
@@ -315,9 +345,9 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 	}
 	if (tmp_b && fc > 0 && fc < 3)
 	{
-	//	printf("value b_token dans le FC (%d)\n", fc);
-	//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
-	//	printf("\nb_tok->sc = %d\n", tmp_b->sc);
+		printf("value b_token dans le FC (%d)\n", fc);
+		print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
+		printf("\nb_tok->sc = %d\n", tmp_b->sc);
 		if ((fc == 1 && tmp_b->sc == 0) || (fc == 2 && tmp_b->sc))
 		{
 			rec_exec(info, b_tokens, and_or + 1);

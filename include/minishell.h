@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/24 16:09:55 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 19:17:44 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,9 +261,9 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_INTEROG] = TOK_WORD,
 		[CHR_AT] = TOK_WORD,
 		[CHR_ALPHA] = TOK_WORD,
-		[CHR_OP_BRACKET] = TOK_IDK,
-		[CHR_ANTI_SLASH] = TOK_QUOTER,
-		[CHR_CL_BRACKET] = TOK_IDK,
+		[CHR_OP_BRACKET] = TOK_WORD, // j'ai change c'etait IDK
+		[CHR_ANTI_SLASH] = TOK_WORD, // on doit pas gerer les '\' donc j'ai mis en WORD (ancien quoter)
+		[CHR_CL_BRACKET] = TOK_WORD, // j'ai change c'etait IDK
 		[CHR_CIRCUM] = TOK_IDK,
 		[CHR_UNDERSCORE] = TOK_WORD,
 		[CHR_OP_BRACE] = TOK_IDK,

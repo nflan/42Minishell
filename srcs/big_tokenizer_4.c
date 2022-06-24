@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 16:54:37 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 17:43:25 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 	{
 		if (tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT)
 			red = 1;
-		if (tmp->token == TOK_WORD)
+		if (tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) // ajout des mots quoted comme args
 		{
 			if (!red)
 				count++;
@@ -360,7 +360,7 @@ int	handle_dir(t_big_token **tmp_b, t_token **tokens)
 			i++;
 			save_word = 1;
 		}
-		else if ((tmp->token == TOK_WORD) && !save_word)
+		else if ((tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) && !save_word) // ajout des mots quoted comme args
 		{
 //			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
 			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);
