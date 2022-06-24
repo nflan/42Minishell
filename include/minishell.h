@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:56:03 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 12:16:35 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -488,8 +488,8 @@ char			*str_join_exp(t_token **tokens, int ind, int type);
 char			*ft_strndup(char *str, int len);
 void			expand_1(char **str, int *i, t_info *info);
 void			expand(char **str, t_info *info);
-void			dol_expand(t_token **old_tokens, t_info *info);
+void			dol_expand(t_token **old_tokens, t_info *info, int start, int length);
 int				expanded_toks_check(t_token **tokens);
-void			expanded_toks(t_token **old_tokens, t_token **new_tokens);
+void			expanded_toks(t_token **old_tokens, t_token **new_tokens, int start, int length);
 
 #endif

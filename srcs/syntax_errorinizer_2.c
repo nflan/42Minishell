@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/22 20:04:04 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/24 11:56:33 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ int	is_red_st_par(t_big_token *b_tokens, t_token *tokens)
 			tmp = tokens;
 			move_tok_2_ind(&tmp, tmp_b->ind_tok_start + tmp_b->length - 2);
 		}
-		if (tmp->token == TOK_EXPANDER_CL)
+		if (tmp && tmp->token == TOK_EXPANDER_CL)
 			{
 				tmp = tokens;
 				if (sophisticated_piped(&tmp, tmp_b->ind_tok_start, tmp_b->length))

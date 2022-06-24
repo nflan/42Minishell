@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 18:04:57 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 12:15:03 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,8 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 	i = 0;
 	while (b_tokens)
 	{
-	//	if (ft_wash_btoken(info, b_tokens))
-	//		return (2147483647);
+		if (ft_wash_btoken(info, b_tokens))
+			return (2147483647);
 		if (b_tokens->sc == -1 || b_tokens->sc == 1)
 		{
 			if (ft_add_wildcards(info, b_tokens))
@@ -227,6 +227,9 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	info->nb_cmd = 0;
 	if (!ft_open_fd(b_tokens))
 	{
+		dol_expand(&info->old_tokens, info, b_tokens->ind_tok_start, b_tokens->length);
+		expanded_toks(&info->old_tokens, &info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+		index_toks(&info->tokens);
 		if (sib_child >= 1 && sib_child <= 3)
 			ft_exec_simple(info, b_tokens);
 		else if (sib_child == 4)
