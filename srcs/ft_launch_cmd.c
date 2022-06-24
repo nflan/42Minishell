@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:56:50 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 16:06:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ int	ft_wash_btoken(t_info *info, t_big_token *b_tokens)
 //	printf("WASH: Start = %d && length = %d\n", b_tokens->ind_tok_start, b_tokens->length);
 //	printf("value = ");
 //	print_s_tokens(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+//	print_s_tokens(&info->tokens, 0, b_tokens->length);
 //	printf("\n");
+//	printf("tokens->index = %d\n", tokens->index);
 	while (tokens && i--)
 	{
-	//	printf("tokens->start = %d\n", tokens->start);
-	//	printf("tokens->value = %s\n", tokens->value);
+//		printf("tokens->start = %d\n", tokens->start);
+//		printf("tokens->value = %s\n", tokens->value);
 		tokens = tokens->next;
 	}
 	if (!tokens)

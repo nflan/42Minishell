@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/24 11:56:33 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 15:23:26 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	r_2_op_succeding(t_token **tokens)
 	t_tok_type	op_next;
 
 	tmp = *tokens;
+	op_next = -1;
+	op_prev = -1;
 //	printf("%s\n", tmp->value);
 	while (tmp)
 	{
@@ -28,15 +30,15 @@ int	r_2_op_succeding(t_token **tokens)
 			if (!tmp->next || (tmp->next && tmp->next->token == TOK_SEP && !tmp->next->next))
 				return (2);
 			op_prev = tmp->token;
-		if (tmp->next)
-		{
-			if (tmp->next->token == TOK_OPERATOR)
-				op_next = tmp->next->token;
-			else if (tmp->next->token == TOK_SEP && tmp->next->next)
-				op_next = tmp->next->next->token;
-			if (op_prev == op_next)
-				return (1);
-		}
+			if (tmp->next)
+			{
+				if (tmp->next->token == TOK_OPERATOR)
+					op_next = tmp->next->token;
+				else if (tmp->next->token == TOK_SEP && tmp->next->next)
+					op_next = tmp->next->next->token;
+				if (op_next != (t_tok_type)-1 && op_prev == op_next)
+					return (1);
+			}
 		}
 		tmp = tmp->next;
 	}

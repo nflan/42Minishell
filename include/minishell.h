@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/24 12:16:35 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 16:09:55 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_COLON] = TOK_PATH,
 		[CHR_SEMI_COLON] = TOK_WORD,
 		[CHR_MINES] = TOK_REDIRECTOR_LEFT,
-		[CHR_EQUAL] = TOK_OPERATOR,
+		[CHR_EQUAL] = TOK_WORD, // j'ai change c'etait operator
 		[CHR_SUPERIOR] = TOK_REDIRECTOR_RIGHT,
 		[CHR_INTEROG] = TOK_WORD,
 		[CHR_AT] = TOK_WORD,
@@ -289,6 +289,7 @@ typedef struct s_info
 	t_big_token	*parse;
 	t_token		*old_tokens;
 	t_token		*tokens;
+	int			*pid;
 	int			pdes[2];
 	int			tmp[2];
 }	t_info;
@@ -490,6 +491,6 @@ void			expand_1(char **str, int *i, t_info *info);
 void			expand(char **str, t_info *info);
 void			dol_expand(t_token **old_tokens, t_info *info, int start, int length);
 int				expanded_toks_check(t_token **tokens);
-void			expanded_toks(t_token **old_tokens, t_token **new_tokens, int start, int length);
+void			expanded_toks(t_token **old_tokens, int start, int length);
 
 #endif

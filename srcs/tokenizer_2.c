@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 15:53:13 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 15:32:20 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char 
 	if (!*tok_list)
 	{
 		*tok_list = create_tok_bis(tok_type, quoted, value);
-		(*tok_list)->prev = NULL;
+	//	(*tok_list)->prev = NULL;
 	}
 	else
 	{

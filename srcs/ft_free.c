@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 21:19:16 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:46:52 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 16:34:07 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ void	ft_free_all(t_info *info, t_env *env)
 			ft_free_b_tokens(info->parse);
 			info->parse = NULL;
 		}
+		if (info->pid)
+		{
+			free(info->pid);
+			info->pid = NULL;
+		}
 	}
 	if (env)
 		ft_free_env(env);
@@ -72,6 +77,7 @@ void	ft_free_b_tokens(t_big_token *b_tokens)
 		free(tmp);
 		tmp = NULL;
 	}
+	b_tokens = NULL;
 }
 
 void	ft_free_fd(t_fd *fd)

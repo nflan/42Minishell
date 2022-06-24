@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/24 12:15:03 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 16:19:00 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,25 +183,28 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 {
 	t_big_token	*tmp_b;
-	int	*pid;
 	int	i;
 
 	tmp_b = b_tokens;
 	i = 0;
 	while (tmp_b && ++i)
 		tmp_b = tmp_b->sibling;
-	pid = ft_calloc(sizeof(int), i);
-		if (!pid)
+	info->pid = ft_calloc(sizeof(int), i);
+		if (!info->pid)
 			return (1);
 	tmp_b = b_tokens;
 	if (pipe(info->pdes) == -1)
 		return (ft_error(5, info, NULL));
-	if (ft_exec_pipex(info, b_tokens, pid) == 2147483647)
+	if (ft_exec_pipex(info, b_tokens, info->pid) == 2147483647)
 		return (2147483647);
 	i = -1;
 	while (++i < info->nb_cmd - 1)
-		waitpid(pid[i], &pid[i], 0);
-	free(pid);
+		waitpid(info->pid[i], &info->pid[i], 0);
+	if (info->pid)
+	{
+		free(info->pid);
+		info->pid = NULL;
+	}
 	return (0);
 }
 
@@ -227,9 +230,14 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	info->nb_cmd = 0;
 	if (!ft_open_fd(b_tokens))
 	{
-		dol_expand(&info->old_tokens, info, b_tokens->ind_tok_start, b_tokens->length);
-		expanded_toks(&info->old_tokens, &info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+		dol_expand(&info->tokens, info, b_tokens->ind_tok_start, b_tokens->length);
+		expanded_toks(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
 		index_toks(&info->tokens);
+		ft_free_b_tokens(info->parse);
+		parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens));
+		printf("valeurs tokens apres expand = ");
+		print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
+		printf("\n");
 		if (sib_child >= 1 && sib_child <= 3)
 			ft_exec_simple(info, b_tokens);
 		else if (sib_child == 4)

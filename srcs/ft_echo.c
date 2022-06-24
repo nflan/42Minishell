@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:45:00 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 16:14:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int	ft_echo(t_info *info, t_big_token *b_tokens)
 
 	tmp = NULL;
 	option = 0;
+	printf("allo\n");
+	print_tab(b_tokens->cmd_args);
 	i = ft_option_echo(b_tokens, 1);
 	if (i > 1)
 		option = 1;

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 14:25:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 15:14:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ t_token *create_tok_bis(t_tok_type tok_type, int quoted, char *value)
 	tok->token = tok_type;
 	tok->quoted = quoted;
 	tok->value = value;
-	tok->next = NULL;
-	tok->prev = NULL;
 	return (tok);
 }
 
