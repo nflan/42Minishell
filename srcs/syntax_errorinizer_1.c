@@ -60,35 +60,24 @@ int	check_count_errors(t_token **tokens)
 	return (0);
 }
 
-/*int	r_quotes_impair2(char *token, int tok)
-{
-
-}*/
-
 int	r_quotes_impair(t_token **tokens)
 {
 	t_token	*tmp;
-	int		q_num;
+	int		s_num;
+	int		d_num;
 
-	q_num = 0;
-	tmp = *tokens;
-	while (tmp)
-	{
-		if (tmp->token == TOK_S_QUOTER)
-			q_num++;
-		tmp = tmp->next;
-	}
-	if (q_num && q_num % 2)
-		return (1);
-	q_num = 0;
+	s_num = 0;
+	d_num = 0;
 	tmp = *tokens;
 	while (tmp)
 	{
 		if (tmp->token == TOK_D_QUOTER)
-			q_num++;
+			d_num++;
+		else if (tmp->token == TOK_S_QUOTER)
+			s_num++;
 		tmp = tmp->next;
 	}
-	if (q_num && q_num % 2)
+	if (s_num % 2 || d_num % 2)
 		return (1);
 	return (0);
 }

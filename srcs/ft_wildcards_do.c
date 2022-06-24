@@ -50,7 +50,7 @@ int	ft_realloc_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type)
 
 	j = 0;
 	count = ft_wd_nb_args(wd, b_tokens, i, type);
-	printf("count = %d\n", count);
+//	printf("count = %d\n", count);
 	if (!count)
 		return (0);
 	tmp = ft_calloc(sizeof(char *), b_tokens->cmd_args_num + count);
@@ -91,7 +91,7 @@ int	ft_do_wildcards(t_big_token *b_tokens, int i)
 	wd = NULL;
 	if (ft_get_wildcards(&wd))
 		return (ft_free_wildcards(wd), 1);
-	ft_print_wildcards(wd);
+//	ft_print_wildcards(wd);
 	if (b_tokens->cmd_args[i][ft_strlen(b_tokens->cmd_args[i]) - 1] == '/')
 		type = 4;
 	if (ft_realloc_args(wd, b_tokens, i, type))

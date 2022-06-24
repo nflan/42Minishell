@@ -285,6 +285,7 @@ typedef struct s_info
 	char		*rdline;
 	int			status;
 	int			nb_cmd;
+	int			tmp_start;
 	t_env		*env;
 	t_big_token	*parse;
 	t_token		*old_tokens;

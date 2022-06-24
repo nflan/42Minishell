@@ -402,7 +402,7 @@ int	handle_par(t_big_token **b_tokens, t_token **tokens)
 	tmp_b = *b_tokens;
 	tmp_s = *tokens;
 	if (is_pipe_in_st_end(tmp_b, tmp_s) || is_red_st_par(tmp_b, tmp_s))
-		return (ft_putstr_error("Erreur syntaxique 2\n"));
+		return (ft_putstr_error("Syntax error 2\n"), 2);
 	while (tmp_b)
 	{
 		init_params(&(params[0]), &(params[1]));

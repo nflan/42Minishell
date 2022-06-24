@@ -16,14 +16,10 @@ int	ft_exit(t_info *info, t_big_token *b_tokens)
 {
 	int	ret;
 
+	ret = 0;
 	if (b_tokens)
-	{
 		ret = ft_atoi(b_tokens->cmd_args[1]);
-		ft_free_cmd(b_tokens);
-	}
-	else
-		ret = 0;
-	printf("exit\n");
+	ft_putstr_fd("exit\n", 1);
 	if (b_tokens)
 		ft_free_all(info, info->env);
 	rl_clear_history();

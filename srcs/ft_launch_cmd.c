@@ -198,15 +198,9 @@ int	ft_lead_fd(t_info *info, t_big_token *b_tokens)
 		info->pdes[1] = info->tmp[1];
 	}
 	if (b_tokens->fdin != 0)
-	{
-//		printf("je suis utile pour rien !\n");
 		info->pdes[0] = b_tokens->fdin;
-	}
 	if (b_tokens->fdout != 1)
-	{
-//		printf("je suis utile pour rien !\n");
 		info->pdes[1] = b_tokens->fdout;
-	}
 	return (0);
 }
 
@@ -223,6 +217,8 @@ int	ft_fork_par(t_info *info, t_big_token *b_tokens)
 	else if ((int) pid == 0)
 	{
 		ft_manage_sig(1);
+		dup2(b_tokens->fdin, STDIN_FILENO);
+		dup2(b_tokens->fdout, STDOUT_FILENO);
 		rec_exec(info, &(b_tokens)->child, 0);
 		ft_exit_cmd(info, NULL, 0);
 	}

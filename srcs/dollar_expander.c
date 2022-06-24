@@ -294,6 +294,7 @@ void expanded_toks(t_token **old_tokens, int start, int length)
 			}
 			else if (exp_check == 3 || exp_check == 8)
 			{
+				printf("oscour\n");
 				new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
 				if (!ft_strncmp(tmp_o->next->value, "\"", 1))
 					add_tok_last_bis(&new_tokens, TOK_WORD, 2, new_value);

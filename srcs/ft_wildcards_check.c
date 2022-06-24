@@ -30,6 +30,7 @@ int	ft_add_wildcards(t_info *info, t_big_token *b_tokens)
 	int	i;
 
 	i = 0;
+//	print_tab(b_tokens->cmd_args);
 	if (b_tokens->cmd_args)
 	{
 		while (b_tokens->cmd_args[i])

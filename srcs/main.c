@@ -166,6 +166,7 @@ int	ft_init_info(t_info *info)
 {
 	int	err;
 	
+	info->tmp_start = 0;
 	err = main_agent_O(info);
 	if (err)
 	{

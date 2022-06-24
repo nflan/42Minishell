@@ -58,14 +58,14 @@ int	r_dir_op_succeding(t_token **tokens)
 		{
 			if (!tmp->next || (tmp->next && tmp->next->token == TOK_SEP && !tmp->next->next))
 				return (2);
-		if (tmp->next)
-		{
+			if (tmp->next)
+			{
 
-			if (tmp->next->token == TOK_OPERATOR || tmp->next->token == TOK_REDIRECTOR_LEFT || tmp->next->token == TOK_REDIRECTOR_RIGHT)
-				return (1);
-			else if (tmp->next->token == TOK_SEP && tmp->next->next && (tmp->next->next->token == TOK_OPERATOR || tmp->next->next->token == TOK_REDIRECTOR_LEFT || tmp->next->next->token == TOK_REDIRECTOR_RIGHT))
-				return (1);
-		}
+				if (tmp->next->token == TOK_OPERATOR || tmp->next->token == TOK_REDIRECTOR_LEFT || tmp->next->token == TOK_REDIRECTOR_RIGHT)
+					return (1);
+				else if (tmp->next->token == TOK_SEP && tmp->next->next && (tmp->next->next->token == TOK_OPERATOR || tmp->next->next->token == TOK_REDIRECTOR_LEFT || tmp->next->next->token == TOK_REDIRECTOR_RIGHT))
+					return (1);
+			}
 		}
 		tmp = tmp->next;
 	}
