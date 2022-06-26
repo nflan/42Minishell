@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:50:48 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 19:57:23 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_write_here(t_fd *fd, char *str, int i)
 	}
 	else if (i == 2)
 	{
+		expand(&str, fd->info);
 		write(fd->fd, str, ft_strlen(str));
 		write(fd->fd, "\n", 1);
 	}

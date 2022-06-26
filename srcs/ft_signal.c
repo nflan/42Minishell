@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:10:34 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:53:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 15:39:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_cmd_signal(int sig)
 	if (sig == SIGINT)
 		write(1, "\n", 1);
 	if (sig == SIGQUIT)
-		ft_putstr_fd("leaving command\n", 2);
+		ft_putstr_fd("Quit (core dumped)\n", 2);
 }
 
 void	ft_signal(int sig)

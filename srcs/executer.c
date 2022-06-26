@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/24 19:39:45 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 17:31:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,27 +306,18 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	info->nb_cmd = 0;
 	if (!ft_open_fd(b_tokens))
 	{
-//		printf("b_tokens->par = %d\n", b_tokens->par);
-	//	printf("b_tokens->fdout = %d\n", b_tokens->fdout);
+	//	print_tab(b_tokens->cmd_args);
 		if (!b_tokens->par)
 		{
-	//	printf("valeurs tokens avant expand = ");
-	//	print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
-	//	printf("\n");
-		if (ft_check_expand(info->tokens, b_tokens->ind_tok_start, b_tokens->length))
+			if (ft_check_expand(info->tokens, b_tokens->ind_tok_start, b_tokens->length))
 		{
-	//		printf("oui\n");
-			dol_expand(&info->tokens, info, b_tokens->ind_tok_start, b_tokens->length);
-			expanded_toks(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
-			index_toks(&info->tokens);
-	//	printf("valeurs tokens apres expand = ");
-	//	print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
-	//	printf("\n");
-			if (ft_recreate_cmd(b_tokens, info))
-				return (1);
+				dol_expand(&info->tokens, info, b_tokens->ind_tok_start, b_tokens->length);
+				expanded_toks(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+				index_toks(&info->tokens);
+				if (ft_recreate_cmd(b_tokens, info))
+					return (1);
+			}
 		}
-		}
-//		printf("b_tokens->cmd_args[0] = %s\n", b_tokens->cmd_args[0]);
 		if (sib_child >= 1 && sib_child <= 3)
 			ft_exec_simple(info, b_tokens);
 		else if (sib_child == 4)

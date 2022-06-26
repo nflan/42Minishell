@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:08:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/26 13:50:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/26 18:36:20 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char *concat_argvs(int argc, char **argv)
 
 int main_agent_O(t_info *info)
 {
+	int	btok_info[2];
+
 	if (detect_tokens(&info->tokens, info->rdline))
 		return (ft_putstr_error("in main_agent_O\nDetect_tokens error\n"));
 	if (fill_tok_value(&info->tokens, info->rdline))
@@ -56,7 +58,9 @@ int main_agent_O(t_info *info)
 		printf("Error number: %d\n", syntax_err_handler(&info->tokens));
 		return (ft_putstr_error("Syntax error\n"));
 	}
-	if (parse(&info->parse, &info->tokens, 0, len_ll_list(info->tokens)))
+	btok_info[0] = 0;
+	btok_info[1] = len_ll_list(info->tokens);
+	if (parse(&info->parse, info, btok_info))
 		return (ft_putstr_error("in main_agent_O\nParse error\n"));
 //	print_tab(tmp_b->cmd_args);
 	if (info->nb_cmd == 10)
