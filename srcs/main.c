@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/24 15:39:52 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 13:50:28 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int	ft_init_env(t_info *info, char **envp)
 int	ft_init_info(t_info *info)
 {
 	int	err;
-	
+
 	info->tmp_start = 0;
 	err = main_agent_O(info);
 	if (err)

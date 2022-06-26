@@ -6,22 +6,22 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/24 15:23:26 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 14:47:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	r_2_op_succeding(t_token **tokens)
+int r_2_op_succeding(t_token **tokens)
 {
-	t_token		*tmp;
-	t_tok_type	op_prev;
-	t_tok_type	op_next;
+	t_token *tmp;
+	t_tok_type op_prev;
+	t_tok_type op_next;
 
 	tmp = *tokens;
 	op_next = -1;
 	op_prev = -1;
-//	printf("%s\n", tmp->value);
+	//	printf("%s\n", tmp->value);
 	while (tmp)
 	{
 		if (tmp->token == TOK_OPERATOR)
@@ -45,11 +45,11 @@ int	r_2_op_succeding(t_token **tokens)
 	return (0);
 }
 
-int	r_dir_op_succeding(t_token **tokens)
+int r_dir_op_succeding(t_token **tokens)
 {
-	t_token		*tmp;
-//	t_tok_type	op_prev;
-//	t_tok_type	op_next;
+	t_token *tmp;
+	//	t_tok_type	op_prev;
+	//	t_tok_type	op_next;
 
 	tmp = *tokens;
 	while (tmp)
@@ -72,9 +72,9 @@ int	r_dir_op_succeding(t_token **tokens)
 	return (0);
 }
 
-int	op_cl_par_succeeding(t_token **tokens)
+int op_cl_par_succeeding(t_token **tokens)
 {
-	t_token	*tmp;
+	t_token *tmp;
 
 	tmp = *tokens;
 	while (tmp)
@@ -98,10 +98,10 @@ int	op_cl_par_succeeding(t_token **tokens)
 	return (0);
 }
 
-int	syntax_err_handler(t_token **tokens)
+int syntax_err_handler(t_token **tokens)
 {
-	int	nb_optok;
-	int	nb_cltok;
+	int nb_optok;
+	int nb_cltok;
 
 	if (!*tokens)
 		return (-1);
@@ -126,10 +126,10 @@ int	syntax_err_handler(t_token **tokens)
 	return (0);
 }
 
-int	is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens)
+int is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens)
 {
-	t_big_token	*tmp1;
-	t_token		*tmp2;
+	t_big_token *tmp1;
+	t_token *tmp2;
 
 	tmp1 = b_tokens;
 	tmp2 = tokens;
@@ -153,42 +153,96 @@ int	is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens)
 	return (0);
 }
 
-int	is_red_st_par(t_big_token *b_tokens, t_token *tokens)
+int is_there_par(t_big_token *b_tokens, t_token *tokens)
 {
-	t_big_token	*tmp_b;
-	t_token		*tmp;
-	int			i;
+	t_big_token *tmp_b;
+	t_token *tmp;
+	int cl_par;
+	int st_par;
 
 	tmp_b = b_tokens;
 	tmp = tokens;
-	i = 0;
+	move_tok_2_ind(&tmp, tmp_b->ind_tok_start);
+	while (tmp)
+	{
+		if (tmp->token == TOK_EXPANDER_OP)
+		{
+			st_par = tmp->index;
+			cl_par = cl_par_ind(&tmp, st_par);
+			if (cl_par < tmp_b->ind_tok_start + tmp_b->length)
+				return (st_par);
+		}
+		tmp = tmp->next;
+	}
+	return (-1);
+}
+
+int is_red_st_par(t_big_token *b_tokens, t_token *tokens)
+{
+	t_big_token *tmp_b;
+	t_token *tmp;
+	int i;
+	int st_par;
+
+	tmp_b = b_tokens;
 	while (tmp_b)
 	{
-		move_tok_2_ind(&tmp, tmp_b->ind_tok_start + tmp_b->length - 1);
-		if (tmp->token == TOK_SEP)
+		tmp = tokens;
+		st_par = is_there_par(tmp_b, tmp);
+		i = tmp_b->ind_tok_start;
+		if (st_par == -1)
+			return (0);
+		if (sophisticated_piped(&tmp, i, tmp_b->length))
+			return (0);
+		move_tok_2_ind(&tmp, i);
+		while (i < st_par)
 		{
-			tmp = tokens;
-			move_tok_2_ind(&tmp, tmp_b->ind_tok_start + tmp_b->length - 2);
+			if (tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT)
+				return (1);
+			tmp = tmp->next;
+			i++;
 		}
-		if (tmp && tmp->token == TOK_EXPANDER_CL)
-			{
-				tmp = tokens;
-				if (sophisticated_piped(&tmp, tmp_b->ind_tok_start, tmp_b->length))
-					return (0);
-				else
-				{
-					while (tmp && i < tmp_b->length)
-					{
-						if (tmp->token == TOK_EXPANDER_OP)
-							return (0);
-						else if (tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT)
-							return (1);
-						tmp = tmp->next;
-						i++;
-					}
-				}
-			}
 		tmp_b = tmp_b->sibling;
 	}
 	return (0);
 }
+
+// int is_red_st_par(t_big_token *b_tokens, t_token *tokens)
+// {
+// 	t_big_token *tmp_b;
+// 	t_token *tmp;
+// 	int i;
+
+// 	tmp_b = b_tokens;
+// 	tmp = tokens;
+// 	i = 0;
+// 	while (tmp_b)
+// 	{
+// 		move_tok_2_ind(&tmp, tmp_b->ind_tok_start + tmp_b->length - 1);
+// 		if (tmp->token == TOK_SEP)
+// 		{
+// 			tmp = tokens;
+// 			move_tok_2_ind(&tmp, tmp_b->ind_tok_start + tmp_b->length - 2);
+// 		}
+// 		if (tmp && tmp->token == TOK_EXPANDER_CL)
+// 		{
+// 			tmp = tokens;
+// 			if (sophisticated_piped(&tmp, tmp_b->ind_tok_start, tmp_b->length))
+// 				return (0);
+// 			else
+// 			{
+// 				while (tmp && i < tmp_b->length)
+// 				{
+// 					if (tmp->token == TOK_EXPANDER_OP)
+// 						return (0);
+// 					else if (tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT)
+// 						return (1);
+// 					tmp = tmp->next;
+// 					i++;
+// 				}
+// 			}
+// 		}
+// 		tmp_b = tmp_b->sibling;
+// 	}
+// 	return (0);
+// }

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/24 19:17:44 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 14:43:44 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -448,6 +448,7 @@ int				r_2_op_succeding(t_token **tokens);
 int				op_cl_par_succeeding(t_token **tokens);
 int				syntax_err_handler(t_token **tokens);
 int				is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens);
+int				is_there_par(t_big_token *b_tokens, t_token *tokens);
 int				is_red_st_par(t_big_token *b_tokens, t_token *tokens);
 
 //-----------big_tokenizer_1.c-------------------------------------------------
