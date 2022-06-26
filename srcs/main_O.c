@@ -65,5 +65,6 @@ int main_agent_O(t_info *info)
 //	print_tab(tmp_b->cmd_args);
 	if (info->nb_cmd == 10)
 		print_all_everything(&info->parse, &info->tokens);
+	exit(0);
 	return (0);
 }
