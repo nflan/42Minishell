@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:26:26 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 14:20:48 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_exit(t_info *info, t_big_token *b_tokens)
 	int	ret;
 
 	ret = 0;
-	if (b_tokens)
+	if (b_tokens && b_tokens->cmd_args[1])
 		ret = ft_atoi(b_tokens->cmd_args[1]);
 	ft_putstr_fd("exit\n", 1);
 	if (b_tokens)

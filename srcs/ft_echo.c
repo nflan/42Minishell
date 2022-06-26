@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/24 17:32:19 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 14:47:28 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_option_echo(t_big_token *b_tokens, int i)
 	return (option);
 }
 
-int	ft_handle_ret(t_big_token *b_tokens, char *ret, int i)
+/*int	ft_handle_ret(t_big_token *b_tokens, char *ret, int i)
 {
 	char	*tofree;
 	int		y;
@@ -58,7 +58,7 @@ int	ft_handle_ret(t_big_token *b_tokens, char *ret, int i)
 	free(ret);
 	free(tofree);
 	return (0);
-}
+}*/
 
 int	ft_echo_none(t_big_token *b_tokens, int i)
 {
@@ -69,12 +69,13 @@ int	ft_echo_none(t_big_token *b_tokens, int i)
 
 char	*ft_create_echo(t_info *info, t_big_token *b_tokens, char *tmp, int i)
 {
+	(void)info;
 	while (b_tokens->cmd_args[i])
 	{
-		if (ft_strnstr(b_tokens->cmd_args[i], "$?",
-				ft_strlen(b_tokens->cmd_args[i])))
-			if (ft_handle_ret(b_tokens, ft_itoa(info->status), i))
-				return (NULL);
+//		if (ft_strnstr(b_tokens->cmd_args[i], "$?",
+//				ft_strlen(b_tokens->cmd_args[i])))
+//			if (ft_handle_ret(b_tokens, ft_itoa(info->status), i))
+//				return (NULL);
 		if (!tmp)
 			tmp = ft_strdup(b_tokens->cmd_args[i]);
 		else

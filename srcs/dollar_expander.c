@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/24 17:45:25 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 15:25:11 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char *expand_join(char *s1, char *s2, char *s3)
 	char *ret;
 
 	len = ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3);
-	ret = malloc((len + 1) * sizeof(char));
+	ret = ft_calloc((len + 1), sizeof(char));
 	if (!ret)
 		return (NULL);
 	i = 0;
@@ -43,13 +43,6 @@ char *expand_join(char *s1, char *s2, char *s3)
 		ret[i + j + k] = s3[k];
 		k++;
 	}
-	ret[i + j + k] = '\0';
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
-	if (s3)
-		free(s3);
 	return (ret);
 }
 
@@ -158,14 +151,21 @@ void expand_1(char **str, int *i, t_info *info)
 	to_look_up = NULL;
 	tmp[0] = ft_strndup(s, *i);
 	(*i)++;
-	if (!s[*i] || (!ft_isalpha((int)s[*i]) && !ft_isdigit((int)s[*i])))
+	if (!s[*i] || (!ft_isalpha((int)s[*i]) && !ft_isdigit((int)s[*i]) && s[*i] != '?'))
 		tmp[1] = ft_strdup("$");
 	else
 	{
-		while (s[(*i)] && (ft_isdigit((int)s[*i]) || ft_isalpha((int)s[*i])))
+		if (s[(*i)] && (ft_isdigit((int)s[*i]) || ft_isalpha((int)s[*i])))
+			while (s[(*i)] && (ft_isdigit((int)s[*i]) || ft_isalpha((int)s[*i])))
+				(*i)++;
+		else if (s[*i] && s[*i] == '?')
+		{
+			tmp[1] = ft_itoa(info->status);
 			(*i)++;
+		}
 		to_look_up = ft_strndup(&(s[ind_dol + 1]), ((*i) - ind_dol - 1));
-		tmp[1] = ft_strdup(ft_get_env_value(info, to_look_up));
+		if (s[*i - 1] != '?')
+			tmp[1] = ft_strdup(ft_get_env_value(info, to_look_up));
 		if (tmp[1])
 			add_shit = ft_strlen(tmp[1]);
 	}
@@ -176,6 +176,9 @@ void expand_1(char **str, int *i, t_info *info)
 	free(to_look_up);
 	free(*str);
 	(*str) = expand_join(tmp[0], tmp[1], tmp[2]);
+	free(tmp[0]);
+	free(tmp[1]);
+	free(tmp[2]);
 	if (!(*str))
 		return ;
 	if (add_shit)
@@ -187,7 +190,7 @@ void expand(char **str, t_info *info)
 	int i;
 
 	i = 0;
-	while ((*str)[i])
+	while (*str && (*str)[i])
 	{
 		// if (str[i] == *)
 		// ft_wildcard(&(str[i]));
@@ -294,7 +297,7 @@ void expanded_toks(t_token **old_tokens, int start, int length)
 			}
 			else if (exp_check == 3 || exp_check == 8)
 			{
-				printf("oscour\n");
+		//		printf("oscour\n");
 				new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
 				if (!ft_strncmp(tmp_o->next->value, "\"", 1))
 					add_tok_last_bis(&new_tokens, TOK_WORD, 2, new_value);
@@ -334,7 +337,8 @@ void expanded_toks(t_token **old_tokens, int start, int length)
 	}
 	if (new_tokens)
 	{
-		ft_free_tokens(*old_tokens);
+		if (old_tokens)
+			ft_free_tokens(*old_tokens);
 		*old_tokens = new_tokens;
 	}
 }
