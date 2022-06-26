@@ -6,17 +6,17 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/24 15:32:20 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 19:29:07 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
+int add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 {
-	t_token	*tmp;
-	t_token	*bef_last;
-//	int		rank_in_list;
+	t_token *tmp;
+	t_token *bef_last;
+	//	int		rank_in_list;
 
 	if (!*tok_list)
 	{
@@ -24,7 +24,7 @@ int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 		if (!*tok_list)
 			return (ft_putstr_error("Error in create_token in add_tok_last in "));
 		(*tok_list)->prev = NULL;
-//		rank_in_list = 0;
+		//		rank_in_list = 0;
 	}
 	else
 	{
@@ -37,21 +37,21 @@ int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 			return (ft_putstr_error("Error in create_token in add_tok_last in "));
 		bef_last = bef_last->next;
 		bef_last->prev = tmp;
-//		rank_in_list = 1;
+		//		rank_in_list = 1;
 	}
-//	init_tok_struct(tok_list, rank_in_list);
+	//	init_tok_struct(tok_list, rank_in_list);
 	return (0);
 }
 
-void	add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char *value)
+void add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char *value)
 {
-	t_token	*tmp;
-	t_token	*bef_last;
+	t_token *tmp;
+	t_token *bef_last;
 
 	if (!*tok_list)
 	{
 		*tok_list = create_tok_bis(tok_type, quoted, value);
-	//	(*tok_list)->prev = NULL;
+		//	(*tok_list)->prev = NULL;
 	}
 	else
 	{
@@ -66,12 +66,12 @@ void	add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char 
 	// init_tok_struct(tok_list, rank_in_list);
 }
 
-int	detect_tokens(t_token **tok_list, char *str)
+int detect_tokens(t_token **tok_list, char *str)
 {
-	int				i;
-	unsigned int	tok_type;
-	int				length;
-	int				start;
+	int i;
+	unsigned int tok_type;
+	int length;
+	int start;
 
 	i = 0;
 	if (!str)
@@ -82,39 +82,59 @@ int	detect_tokens(t_token **tok_list, char *str)
 		start = i;
 		tok_type = get_real_tok_type(str[i], tok_list);
 		i++;
-		while (str[i] && tok_type != TOK_EXPANDER_OP && tok_type != TOK_EXPANDER_CL && (get_real_tok_type(str[i], tok_list) == tok_type))
+		while (str[i] && tok_type != TOK_EXPANDER_OP && tok_type != TOK_EXPANDER_CL && tok_type != TOK_S_QUOTER && tok_type != TOK_D_QUOTER && (get_real_tok_type(str[i], tok_list) == tok_type))
 		{
-			if (tok_type == TOK_S_QUOTER || tok_type == TOK_D_QUOTER)
-				break ;
 			length++;
 			i++;
 		}
-	//	if (tok_type != TOK_QUOTER)
+		if (tok_type == TOK_WORD_NULL_S || tok_type == TOK_WORD_NULL_D)
+		{
 			if (add_tok_last(tok_list, tok_type, length, start))
 				return (ft_putstr_error("detect_tokens "));
+			if (tok_type == TOK_WORD_NULL_S)
+			{
+				if (add_tok_last(tok_list, TOK_S_QUOTER, length, start))
+					return (ft_putstr_error("detect_tokens "));
+			}
+			else
+			{
+				if (add_tok_last(tok_list, TOK_D_QUOTER, length, start))
+					return (ft_putstr_error("detect_tokens "));
+			}
+		}
+		else
+		{
+		if (add_tok_last(tok_list, tok_type, length, start))
+			return (ft_putstr_error("detect_tokens "));
+		}
 	}
 	return (0);
 }
 
-int	fill_tok_value(t_token **tok, char *str)
+int fill_tok_value(t_token **tok, char *str)
 {
-	t_token	*tmp;
+	t_token *tmp;
 
-//	printf("(*tok) %p && str = %s\n", (*tok), str);
+	//	printf("(*tok) %p && str = %s\n", (*tok), str);
 	if (!*tok || !str)
 		return (1);
 	tmp = *tok;
 	while (tmp)
 	{
+		if (tmp->token == TOK_WORD_NULL_D || tmp->token == TOK_WORD_NULL_S)
+			tmp->value = ft_strndup("\0", 1);
+		else
+		{
 		tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
 		if (!tmp->value)
 			return (ft_putstr_error("Error in ft_strncpy in fill_tok_value"));
+		}
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
-char	*ft_strncpy(char *str, int n)
+char *ft_strncpy(char *str, int n)
 {
 	int i;
 	char *ret;
@@ -133,7 +153,7 @@ char	*ft_strncpy(char *str, int n)
 	return (ret);
 }
 
-void	index_toks(t_token **tokens)
+void index_toks(t_token **tokens)
 {
 	int i;
 	t_token *tmp;

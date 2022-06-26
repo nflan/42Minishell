@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/24 15:14:56 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 19:27:11 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ int is_quoted(t_token **tok_list, char c)
 			dq *= -1;
 		tmp = tmp->prev;
 	}
+	tmp = *tok_list;
+	if (sq > 0 && dq > 0 && c == '\'' && tmp->prev && tmp->prev->token == TOK_S_QUOTER)
+		return (3);
+	if (sq > 0 && dq > 0 && c == '\"' && tmp->prev && tmp->prev->token == TOK_D_QUOTER)
+		return (4);
 	if (sq < 0 && dq > 0 && c != '\'')
 		return (1);
 	else if (dq < 0 && sq > 0 && c != '\"')
@@ -67,6 +72,10 @@ unsigned int get_real_tok_type(char c, t_token **tok_list)
 		return (TOK_WORD_S_QUOTED);
 	else if (is_quoted(&last_tok, c) == 2)
 		return (TOK_WORD_D_QUOTED);
+	else if (is_quoted(&last_tok, c) == 3)
+		return (TOK_WORD_NULL_S);
+	else if (is_quoted(&last_tok, c) == 4)
+		return (TOK_WORD_NULL_D);
 	else
 		return (get_tok_type[get_char_class[(int)c]]);
 	return (-1);

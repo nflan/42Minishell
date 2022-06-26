@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/26 14:43:44 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/26 19:18:35 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef enum s_tok_type
 	TOK_REDIRECTOR_LEFT,
 	TOK_REDIRECTOR_RIGHT,
 	TOK_WORD,
+	TOK_WORD_NULL_S,
+	TOK_WORD_NULL_D,
 	TOK_WORD_S_QUOTED,
 	TOK_WORD_D_QUOTED,
 	TOK_EXPANDER,
