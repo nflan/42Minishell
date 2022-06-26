@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/22 20:04:04 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/24 15:23:26 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	r_2_op_succeding(t_token **tokens)
 	t_tok_type	op_next;
 
 	tmp = *tokens;
+	op_next = -1;
+	op_prev = -1;
 //	printf("%s\n", tmp->value);
 	while (tmp)
 	{
@@ -28,15 +30,15 @@ int	r_2_op_succeding(t_token **tokens)
 			if (!tmp->next || (tmp->next && tmp->next->token == TOK_SEP && !tmp->next->next))
 				return (2);
 			op_prev = tmp->token;
-		if (tmp->next)
-		{
-			if (tmp->next->token == TOK_OPERATOR)
-				op_next = tmp->next->token;
-			else if (tmp->next->token == TOK_SEP && tmp->next->next)
-				op_next = tmp->next->next->token;
-			if (op_prev == op_next)
-				return (1);
-		}
+			if (tmp->next)
+			{
+				if (tmp->next->token == TOK_OPERATOR)
+					op_next = tmp->next->token;
+				else if (tmp->next->token == TOK_SEP && tmp->next->next)
+					op_next = tmp->next->next->token;
+				if (op_next != (t_tok_type)-1 && op_prev == op_next)
+					return (1);
+			}
 		}
 		tmp = tmp->next;
 	}
@@ -56,14 +58,14 @@ int	r_dir_op_succeding(t_token **tokens)
 		{
 			if (!tmp->next || (tmp->next && tmp->next->token == TOK_SEP && !tmp->next->next))
 				return (2);
-		if (tmp->next)
-		{
+			if (tmp->next)
+			{
 
-			if (tmp->next->token == TOK_OPERATOR || tmp->next->token == TOK_REDIRECTOR_LEFT || tmp->next->token == TOK_REDIRECTOR_RIGHT)
-				return (1);
-			else if (tmp->next->token == TOK_SEP && tmp->next->next && (tmp->next->next->token == TOK_OPERATOR || tmp->next->next->token == TOK_REDIRECTOR_LEFT || tmp->next->next->token == TOK_REDIRECTOR_RIGHT))
-				return (1);
-		}
+				if (tmp->next->token == TOK_OPERATOR || tmp->next->token == TOK_REDIRECTOR_LEFT || tmp->next->token == TOK_REDIRECTOR_RIGHT)
+					return (1);
+				else if (tmp->next->token == TOK_SEP && tmp->next->next && (tmp->next->next->token == TOK_OPERATOR || tmp->next->next->token == TOK_REDIRECTOR_LEFT || tmp->next->next->token == TOK_REDIRECTOR_RIGHT))
+					return (1);
+			}
 		}
 		tmp = tmp->next;
 	}
@@ -168,7 +170,7 @@ int	is_red_st_par(t_big_token *b_tokens, t_token *tokens)
 			tmp = tokens;
 			move_tok_2_ind(&tmp, tmp_b->ind_tok_start + tmp_b->length - 2);
 		}
-		if (tmp->token == TOK_EXPANDER_CL)
+		if (tmp && tmp->token == TOK_EXPANDER_CL)
 			{
 				tmp = tokens;
 				if (sophisticated_piped(&tmp, tmp_b->ind_tok_start, tmp_b->length))

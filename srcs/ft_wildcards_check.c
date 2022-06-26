@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:31:10 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/22 18:34:10 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 18:37:59 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	ft_add_wildcards(t_info *info, t_big_token *b_tokens)
 	int	i;
 
 	i = 0;
+//	print_tab(b_tokens->cmd_args);
 	if (b_tokens->cmd_args)
 	{
 		while (b_tokens->cmd_args[i])
@@ -40,7 +41,6 @@ int	ft_add_wildcards(t_info *info, t_big_token *b_tokens)
 			i++;
 		}
 	}
-//	print_tab(b_tokens->cmd_args);
 	return (0);
 }
 
@@ -66,6 +66,10 @@ int	ft_keep(char *str, char *dir, int *i, int j)
 	return (0);
 }
 
+//int	ft_do_keep_bis(char **str)
+//{
+//}
+
 int	ft_do_keep(char *str, t_wildcards *wd, int type)
 {
 	int		i;
@@ -86,9 +90,9 @@ int	ft_do_keep(char *str, t_wildcards *wd, int type)
 			{
 				while (*str == '*' || *str == '/')
 					str++;
-				if (!*str)
-					return (0);
 			}
+			if (!*str)
+				return (0);
 		}
 		else
 			return (1);

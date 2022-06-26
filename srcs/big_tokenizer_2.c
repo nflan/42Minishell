@@ -145,7 +145,7 @@ int divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start_tok, in
 		i = add_b_tok_sib_last(b_tokens, TOK_LAST, start_tok, b_length);
 	if (i)
 		return (ft_putstr_error("in divide by or and "));
-	if (handle_par(b_tokens, tokens))
+	if (handle_par(b_tokens, tokens) == 1)
 		return (ft_putstr_error("in divide by or and "));
 	return (0);
 }

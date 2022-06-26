@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:08:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 18:52:16 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/26 13:50:32 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ char *concat_argvs(int argc, char **argv)
 
 int main_agent_O(t_info *info)
 {
-	if (detect_tokens(&info->old_tokens, info->rdline))
+	if (detect_tokens(&info->tokens, info->rdline))
 		return (ft_putstr_error("in main_agent_O\nDetect_tokens error\n"));
-	if (fill_tok_value(&info->old_tokens, info->rdline))
-		return (ft_putstr_error("in main_agent_O\nFill_tok_value error\n"));
-	index_toks(&info->old_tokens);
-	dol_expand(&info->old_tokens, info);
-	expanded_toks(&info->old_tokens, &info->tokens);
+	if (fill_tok_value(&info->tokens, info->rdline))
+		return (1);
 	index_toks(&info->tokens);
+//	dol_expand(&info->old_tokens, info);
+//	expanded_toks(&info->old_tokens, &info->tokens);
+//	index_toks(&info->tokens);
 //	print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
 //	printf("\n");
 //	exit (0);

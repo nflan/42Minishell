@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 17:48:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 17:26:26 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,10 @@ int	ft_exit(t_info *info, t_big_token *b_tokens)
 {
 	int	ret;
 
+	ret = 0;
 	if (b_tokens)
-	{
 		ret = ft_atoi(b_tokens->cmd_args[1]);
-		ft_free_cmd(b_tokens);
-	}
-	else
-		ret = 0;
-	printf("exit\n");
+	ft_putstr_fd("exit\n", 1);
 	if (b_tokens)
 		ft_free_all(info, info->env);
 	rl_clear_history();
@@ -49,26 +45,6 @@ int	ft_env(t_info *info)
 		}
 	}
 	return (0);
-}
-
-void	ft_print_tokens(t_token *tokens)
-{
-	t_token *tmp;
-
-	tmp = tokens;
-	if (tmp)
-	{
-		while (tmp)
-		{
-			printf("index = %d\n", tmp->index);
-			printf("value = %s\n", tmp->value);
-			printf("quoted = %d\n", tmp->quoted);
-			printf("lenght = %d\n", tmp->length);
-			printf("type = %d\n", tmp->token);
-			printf("start = %d\n\n", tmp->start);
-			tmp = tmp->next;
-		}
-	}
 }
 
 int	ft_pwd(void)
@@ -98,9 +74,11 @@ int	ft_unset_name(t_env **tmp, char *name)
 	while ((*tmp)->next)
 	{
 		i = 0;
-		while (name[i] && (*tmp)->next->name[i] && name[i] == (*tmp)->next->name[i])
+		while (name[i] && (*tmp)->next->name[i]
+			&& name[i] == (*tmp)->next->name[i])
 			i++;
-		if ((size_t)i == ft_strlen(name) && ft_strlen(name) == ft_strlen((*tmp)->next->name))
+		if ((size_t)i == ft_strlen(name)
+			&& ft_strlen(name) == ft_strlen((*tmp)->next->name))
 			return (0);
 		else
 			*tmp = (*tmp)->next;

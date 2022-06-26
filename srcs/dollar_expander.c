@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 17:30:55 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:45:25 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ char *ft_strndup(char *str, int len)
 	i = 0;
 	if (!str)
 		return (NULL);
-	ret = malloc(len + 1);
+	ret = ft_calloc(sizeof(char), len + 1);
 	if (!ret)
 		return (NULL);
 	while (i < len && str[i])
@@ -141,14 +141,13 @@ char *ft_strndup(char *str, int len)
 		ret[i] = str[i];
 		i++;
 	}
-	ret[i] = '\0';
 	return (ret);
 }
 
 void expand_1(char **str, int *i, t_info *info)
 {
 	char *s;
-	char **tmp;
+	char *tmp[4];
 	char *to_look_up;
 	int ind_dol;
 	int add_shit;
@@ -157,23 +156,20 @@ void expand_1(char **str, int *i, t_info *info)
 	ind_dol = *i;
 	add_shit = 0;
 	to_look_up = NULL;
-	tmp = ft_calloc(4, sizeof(char *));
-	if (!tmp)
-		return;
-	tmp[0] = ft_strndup(s, (*i));
+	tmp[0] = ft_strndup(s, *i);
 	(*i)++;
-	if (!s[(*i)] || (!ft_isalpha((int)s[(*i)]) && !ft_isdigit((int)s[(*i)])))
+	if (!s[*i] || (!ft_isalpha((int)s[*i]) && !ft_isdigit((int)s[*i])))
 		tmp[1] = ft_strdup("$");
 	else
 	{
-		while (s[(*i)] && (ft_isdigit((int)s[(*i)]) || ft_isalpha((int)s[(*i)])))
+		while (s[(*i)] && (ft_isdigit((int)s[*i]) || ft_isalpha((int)s[*i])))
 			(*i)++;
 		to_look_up = ft_strndup(&(s[ind_dol + 1]), ((*i) - ind_dol - 1));
-		tmp[1] = ft_get_env_value(info, to_look_up);
+		tmp[1] = ft_strdup(ft_get_env_value(info, to_look_up));
 		if (tmp[1])
 			add_shit = ft_strlen(tmp[1]);
 	}
-	if (!s[((*i))])
+	if (!s[*i])
 		tmp[2] = NULL;
 	else
 		tmp[2] = ft_strndup(&(s[ind_dol + ft_strlen(to_look_up) + 1]), (ft_strlen(s) - ind_dol - ft_strlen(to_look_up) - 1));
@@ -182,7 +178,6 @@ void expand_1(char **str, int *i, t_info *info)
 	(*str) = expand_join(tmp[0], tmp[1], tmp[2]);
 	if (!(*str))
 		return ;
-	free(tmp);
 	if (add_shit)
 		(*i) = ind_dol + add_shit;
 }
@@ -203,12 +198,13 @@ void expand(char **str, t_info *info)
 	}
 }
 
-void dol_expand(t_token **old_tokens, t_info *info)
+void dol_expand(t_token **old_tokens, t_info *info, int start, int length)
 {
 	t_token *tmp_o;
 
 	tmp_o = *old_tokens;
-	while (tmp_o)
+	move_tok_2_ind(&tmp_o, start);
+	while (tmp_o && length--)
 	{
 		if (tmp_o->token == TOK_WORD || tmp_o->token == TOK_WORD_D_QUOTED)
 			expand(&tmp_o->value, info);
@@ -263,56 +259,82 @@ int expanded_toks_check(t_token **tokens)
 	return (0);
 }
 
-void expanded_toks(t_token **old_tokens, t_token **new_tokens)
+void expanded_toks(t_token **old_tokens, int start, int length)
 {
-	t_token *tmp_o;
-	char *new_value;
+	t_token	*new_tokens;
+	t_token	*tmp_o;
+	char	*new_value;
 	int		exp_check;
+	int		i;
 
+	i = 0;
+	new_tokens = NULL;
 	tmp_o = *old_tokens;
-	while (tmp_o)
+	while (tmp_o && i < start)
 	{
-		exp_check = expanded_toks_check(&tmp_o);
-		if (exp_check == 1 || exp_check == 2)
+		add_tok_last_bis(&new_tokens, tmp_o->token, tmp_o->quoted, ft_strdup(tmp_o->value));
+		tmp_o = tmp_o->next;
+	}
+	if (tmp_o)
+	{
+		while (tmp_o && length--)
 		{
-			new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
-			add_tok_last_bis(new_tokens, TOK_WORD, 1, new_value);
-			move_tok_2_ind(&tmp_o, tmp_o->index + 4);
-		}
-		else if (exp_check == 6 || exp_check == 7)
-		{
-			new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
-			add_tok_last_bis(new_tokens, TOK_WORD, 1, new_value);
-			move_tok_2_ind(&tmp_o, tmp_o->index + 5);
-		}
-		else if (exp_check == 3 || exp_check == 8)
-		{
-			new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
-			if (!ft_strncmp(tmp_o->next->value, "\"", 1))
-				add_tok_last_bis(new_tokens, TOK_WORD, 2, new_value);
-			else
-				add_tok_last_bis(new_tokens, TOK_WORD, 3, new_value);
-			if (exp_check == 3)
+			exp_check = expanded_toks_check(&tmp_o);
+			if (exp_check == 1 || exp_check == 2)
+			{
+				new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
+				add_tok_last_bis(&new_tokens, TOK_WORD, 1, new_value);
 				move_tok_2_ind(&tmp_o, tmp_o->index + 4);
-			else
+			}
+			else if (exp_check == 6 || exp_check == 7)
+			{
+				new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
+				add_tok_last_bis(&new_tokens, TOK_WORD, 1, new_value);
 				move_tok_2_ind(&tmp_o, tmp_o->index + 5);
-		}
-		else if (exp_check == 4 || exp_check == 5 || exp_check == 9 || exp_check == 10)
-		{
-			new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
-			if (exp_check == 4 || exp_check == 9)
-				add_tok_last_bis(new_tokens, TOK_WORD, 2, new_value);
+			}
+			else if (exp_check == 3 || exp_check == 8)
+			{
+				printf("oscour\n");
+				new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
+				if (!ft_strncmp(tmp_o->next->value, "\"", 1))
+					add_tok_last_bis(&new_tokens, TOK_WORD, 2, new_value);
+				else
+					add_tok_last_bis(&new_tokens, TOK_WORD, 3, new_value);
+				if (exp_check == 3)
+					move_tok_2_ind(&tmp_o, tmp_o->index + 4);
+				else
+					move_tok_2_ind(&tmp_o, tmp_o->index + 5);
+			}
+			else if (exp_check == 4 || exp_check == 5 || exp_check == 9 || exp_check == 10)
+			{
+				new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
+				if (exp_check == 4 || exp_check == 9)
+					add_tok_last_bis(&new_tokens, TOK_WORD, 2, new_value);
+				else
+					add_tok_last_bis(&new_tokens, TOK_WORD, 3, new_value);
+				if (exp_check == 4 || exp_check == 5)
+					move_tok_2_ind(&tmp_o, tmp_o->index + 3);
+				else
+					move_tok_2_ind(&tmp_o, tmp_o->index + 4);
+			}
 			else
-				add_tok_last_bis(new_tokens, TOK_WORD, 3, new_value);
-			if (exp_check == 4 || exp_check == 5)
-				move_tok_2_ind(&tmp_o, tmp_o->index + 3);
-			else
-				move_tok_2_ind(&tmp_o, tmp_o->index + 4);
+			{
+				add_tok_last_bis(&new_tokens, tmp_o->token, 0, ft_strdup(tmp_o->value));
+				tmp_o = tmp_o->next;
+			}
 		}
-		else
+	}
+	if (tmp_o)
+	{
+		while (tmp_o)
 		{
-			add_tok_last_bis(new_tokens, tmp_o->token, 0, ft_strdup(tmp_o->value));
+			add_tok_last_bis(&new_tokens, tmp_o->token, tmp_o->quoted, ft_strdup(tmp_o->value));
 			tmp_o = tmp_o->next;
 		}
+	}
+	if (new_tokens)
+	{
+		ft_free_tokens(*old_tokens);
+		*old_tokens = new_tokens;
 	}
 }

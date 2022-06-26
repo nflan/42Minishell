@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 12:25:03 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 15:32:20 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 {
 	t_token	*tmp;
 	t_token	*bef_last;
-	int		rank_in_list;
+//	int		rank_in_list;
 
 	if (!*tok_list)
 	{
@@ -24,7 +24,7 @@ int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 		if (!*tok_list)
 			return (ft_putstr_error("Error in create_token in add_tok_last in "));
 		(*tok_list)->prev = NULL;
-		rank_in_list = 0;
+//		rank_in_list = 0;
 	}
 	else
 	{
@@ -37,7 +37,7 @@ int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 			return (ft_putstr_error("Error in create_token in add_tok_last in "));
 		bef_last = bef_last->next;
 		bef_last->prev = tmp;
-		rank_in_list = 1;
+//		rank_in_list = 1;
 	}
 //	init_tok_struct(tok_list, rank_in_list);
 	return (0);
@@ -51,7 +51,7 @@ void	add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char 
 	if (!*tok_list)
 	{
 		*tok_list = create_tok_bis(tok_type, quoted, value);
-		(*tok_list)->prev = NULL;
+	//	(*tok_list)->prev = NULL;
 	}
 	else
 	{
@@ -84,6 +84,8 @@ int	detect_tokens(t_token **tok_list, char *str)
 		i++;
 		while (str[i] && tok_type != TOK_EXPANDER_OP && tok_type != TOK_EXPANDER_CL && (get_real_tok_type(str[i], tok_list) == tok_type))
 		{
+			if (tok_type == TOK_S_QUOTER || tok_type == TOK_D_QUOTER)
+				break ;
 			length++;
 			i++;
 		}

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 12:23:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 17:43:25 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int	ft_fill_fdnew(t_fd *fd, char *file, int red, int *hd)
 		if (ft_create_tmp(fd, *hd))
 			return (1);
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		ft_here(fd, 1);
+		ft_here(fd);
 	}
 	else
 		fd->file = ft_strdup(file);
@@ -183,7 +183,7 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 	{
 		if (tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT)
 			red = 1;
-		if (tmp->token == TOK_WORD)
+		if (tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) // ajout des mots quoted comme args
 		{
 			if (!red)
 				count++;
@@ -360,7 +360,7 @@ int	handle_dir(t_big_token **tmp_b, t_token **tokens)
 			i++;
 			save_word = 1;
 		}
-		else if ((tmp->token == TOK_WORD) && !save_word)
+		else if ((tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) && !save_word) // ajout des mots quoted comme args
 		{
 //			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
 			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);
@@ -402,7 +402,7 @@ int	handle_par(t_big_token **b_tokens, t_token **tokens)
 	tmp_b = *b_tokens;
 	tmp_s = *tokens;
 	if (is_pipe_in_st_end(tmp_b, tmp_s) || is_red_st_par(tmp_b, tmp_s))
-		return (ft_putstr_error("Erreur syntaxique 2\n"));
+		return (ft_putstr_error("Syntax error 2\n"), 2);
 	while (tmp_b)
 	{
 		init_params(&(params[0]), &(params[1]));

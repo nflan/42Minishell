@@ -6,13 +6,13 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 18:50:55 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/26 13:50:28 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-extern int sc;
+int g_sc;
 
 int	ft_keep_history(char *str)
 {
@@ -26,26 +26,6 @@ int	ft_keep_history(char *str)
 		while (*str++)
 			i++;
 	return (i);
-}
-
-void	ft_cmd_signal(int sig)
-{
-	if (sig == SIGINT)
-		write(1, "\n", 1);
-	if (sig == SIGQUIT)
-		ft_putstr_fd("Leaving without freeing, core dump\n", 2);
-}
-
-void	ft_signal(int sig)
-{
-	if (sig == SIGINT)
-	{
-		sc = 130;
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
 }
 
 void	ft_envadd_back(t_env **alst, t_env *new)
@@ -186,15 +166,13 @@ int	ft_init_info(t_info *info)
 {
 	int	err;
 
+	info->tmp_start = 0;
 	err = main_agent_O(info);
 	if (err)
 	{
-		ft_free_all(info, NULL);
-		return (1);
+		info->status = err;
+		return (ft_free_all(info, NULL), 1);
 	}
-//	if (!info->status)
-//		info->status = 0;
-//	info->nb_cmd = 0;
 	return (0);
 }
 
@@ -227,6 +205,7 @@ int	ft_init_first(t_info *info, char **envp)
 	info->parse = NULL;
 	info->old_tokens = NULL;
 	info->tokens = NULL;
+	info->pid = NULL;
 	if (ft_init_env(info, envp))
 		return (ft_putstr_error("Error create env\n"));
 	signal(SIGINT, &ft_signal);
@@ -240,21 +219,21 @@ int	main(int ac, char **av, char **envp)
 	char		*word;
 
 	(void) av;
-	sc = 0;
+	g_sc = 0;
 	if (ft_init_first(&info, envp))
 		return (1);
 	if (ac > 1)
 		info.nb_cmd = 10;
-	rl_outstream = stderr;
+//	rl_outstream = stderr;
 	while (1)
 	{
-		if (sc)
-			info.status = sc;
 		word = ft_rdline_word(&info);
 		if (!word)
 			return (ft_free_all(&info, info.env), ft_putstr_error("Word Error\n"));
 		info.rdline = readline(word);
 		free(word);
+		if (g_sc)
+			info.status = g_sc;
 		if (ft_keep_history(info.rdline))
 			add_history(info.rdline);
 		if (!info.rdline)
@@ -265,7 +244,7 @@ int	main(int ac, char **av, char **envp)
 				rec_exec(&info, &info.parse, 0);
 			ft_free_all(&info, NULL);
 		}
-		sc = 0;
+		g_sc = 0;
 	}
 	ft_free_env(info.env);
 	ft_exit(&info, NULL);

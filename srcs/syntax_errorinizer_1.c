@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/10 16:33:58 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 19:40:00 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,21 @@ int	check_count_errors(t_token **tokens)
 int	r_quotes_impair(t_token **tokens)
 {
 	t_token	*tmp;
-	int		q_num;
+	int		s_num;
+	int		d_num;
 
-	q_num = 0;
+	s_num = 0;
+	d_num = 0;
 	tmp = *tokens;
 	while (tmp)
 	{
-		if (tmp->token == TOK_QUOTER)
-		{
-			printf("tmp's index: %d\n", tmp->index);
-			q_num++;
-		}
+		if (tmp->token == TOK_D_QUOTER)
+			d_num++;
+		else if (tmp->token == TOK_S_QUOTER)
+			s_num++;
 		tmp = tmp->next;
 	}
-//	printf("q_num: %d\n", q_num);
-	if (q_num % 2)
+	if (s_num % 2 || d_num % 2)
 		return (1);
 	return (0);
 }

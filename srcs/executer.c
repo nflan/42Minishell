@@ -6,13 +6,11 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 12:16:34 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/24 19:39:45 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	sc;
 
 int no_sib_has_child(t_big_token *b_tokens)
 {
@@ -56,7 +54,6 @@ int	ft_open_all_fdout(t_big_token *b_tokens, t_fd *tmp_fd)
 			{
 				b_tokens->sc = 1;
 				tmp_fd->fd = 1;
-				sc = 1;
 				err = ft_strjoin("minishell: ", tmp_fd->file);
 				if (!err)
 					return (1);
@@ -91,7 +88,6 @@ int	ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd)
 			{
 				b_tokens->sc = 1;
 				tmp_fd->fd = 0;
-				sc = 1;
 				err = ft_strjoin("minishell: ", tmp_fd->file);
 				if (err)
 					return (1);
@@ -170,7 +166,7 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 	{
 		if (ft_wash_btoken(info, b_tokens))
 			return (2147483647);
-		else if (b_tokens->sc == -1 || b_tokens->sc == 1)
+		if (b_tokens->sc == -1 || b_tokens->sc == 1)
 		{
 			if (ft_add_wildcards(info, b_tokens))
 				return (ft_putstr_error("Wildcards error\n"));
@@ -187,25 +183,28 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 {
 	t_big_token	*tmp_b;
-	int	*pid;
 	int	i;
 
 	tmp_b = b_tokens;
 	i = 0;
 	while (tmp_b && ++i)
 		tmp_b = tmp_b->sibling;
-	pid = ft_calloc(sizeof(int), i);
-		if (!pid)
+	info->pid = ft_calloc(sizeof(int), i);
+		if (!info->pid)
 			return (1);
 	tmp_b = b_tokens;
 	if (pipe(info->pdes) == -1)
 		return (ft_error(5, info, NULL));
-	if (ft_exec_pipex(info, b_tokens, pid) == 2147483647)
+	if (ft_exec_pipex(info, b_tokens, info->pid) == 2147483647)
 		return (2147483647);
 	i = -1;
 	while (++i < info->nb_cmd - 1)
-		waitpid(pid[i], &pid[i], 0);
-	free(pid);
+		waitpid(info->pid[i], &info->pid[i], 0);
+	if (info->pid)
+	{
+		free(info->pid);
+		info->pid = NULL;
+	}
 	return (0);
 }
 
@@ -220,8 +219,84 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 	{
 		if (ft_add_wildcards(info, b_tokens))
 			return (ft_putstr_error("Wildcards error\n"));
+	//	print_tab(b_tokens->cmd_args);
 		ft_launch_cmd(info, tmp_b);
 		tmp_b->sc = info->status;
+	}
+	return (0);
+}
+
+int	ft_recreate_cmd(t_big_token *b_tokens, t_info *info)
+{
+	t_token	*tmp_s;
+	int		i;
+
+	i = 0;
+	b_tokens->ind_tok_start = info->tmp_start;
+	tmp_s = info->tokens;
+	ft_free_split(b_tokens->cmd_args);
+//	printf("cmd_nums = %d\n", b_tokens->cmd_args_num);
+	b_tokens->cmd_args = ft_calloc(sizeof(char *), b_tokens->cmd_args_num + 1);
+//	printf("args = %d\n", b_tokens->cmd_args_num);
+//	printf("length = %d\n", b_tokens->length);
+//	printf("start = %d\n", b_tokens->ind_tok_start);
+//	print_s_tokens(&tmp_s, 0, len_ll_list(tmp_s));
+//	printf("\n");
+	move_tok_2_ind(&tmp_s, b_tokens->ind_tok_start);
+	while (tmp_s && i < b_tokens->cmd_args_num)
+	{
+//		printf("value = %s && type = %d\n", tmp_s->value, tmp_s->token);
+		if (tmp_s->token == TOK_WORD)
+		{
+	//		printf("tmp_s->value = %s\n", tmp_s->value);
+			b_tokens->cmd_args[i] = ft_strdup(tmp_s->value);
+			if (!b_tokens->cmd_args[i])
+				return (1);
+			i++;
+		}
+		tmp_s = tmp_s->next;
+	}
+//	printf("start = %d\n", start);
+	if (tmp_s)
+	{
+		b_tokens->length = tmp_s->index - b_tokens->ind_tok_start;
+		info->tmp_start = tmp_s->index + 1;
+	}
+	else
+		b_tokens->length = len_ll_list(info->tokens) - b_tokens->ind_tok_start;
+//	printf("length %d\n", b_tokens->length);
+	return (0);
+}
+
+int	ft_check_dol(char *str)
+{
+	int	i;
+
+	i = -1;
+	if (str)
+		while (str[++i])
+			if (str[i] == '$')
+				return (1);
+	return (0);
+}
+
+int	ft_check_expand(t_token *token, int start, int length)
+{
+	t_token *tmp;
+
+	tmp = token;
+	move_tok_2_ind(&tmp, start);
+	if (tmp)
+	{
+		while (tmp && length--)
+		{
+			if (tmp->token == TOK_S_QUOTER || tmp->token == TOK_D_QUOTER)
+				return (1);
+			else if (tmp->token == TOK_WORD)
+				if (ft_check_dol(tmp->value))
+					return (1);
+			tmp = tmp->next;
+		}
 	}
 	return (0);
 }
@@ -231,6 +306,27 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	info->nb_cmd = 0;
 	if (!ft_open_fd(b_tokens))
 	{
+//		printf("b_tokens->par = %d\n", b_tokens->par);
+	//	printf("b_tokens->fdout = %d\n", b_tokens->fdout);
+		if (!b_tokens->par)
+		{
+	//	printf("valeurs tokens avant expand = ");
+	//	print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
+	//	printf("\n");
+		if (ft_check_expand(info->tokens, b_tokens->ind_tok_start, b_tokens->length))
+		{
+	//		printf("oui\n");
+			dol_expand(&info->tokens, info, b_tokens->ind_tok_start, b_tokens->length);
+			expanded_toks(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+			index_toks(&info->tokens);
+	//	printf("valeurs tokens apres expand = ");
+	//	print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
+	//	printf("\n");
+			if (ft_recreate_cmd(b_tokens, info))
+				return (1);
+		}
+		}
+//		printf("b_tokens->cmd_args[0] = %s\n", b_tokens->cmd_args[0]);
 		if (sib_child >= 1 && sib_child <= 3)
 			ft_exec_simple(info, b_tokens);
 		else if (sib_child == 4)
@@ -311,12 +407,12 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 	//	printf("value b_token dans le FC (%d)\n", fc);
 	//	print_s_tokens(&info->tokens, tmp_b->ind_tok_start, tmp_b->length);
 	//	printf("\nb_tok->sc = %d\n", tmp_b->sc);
-		if ((fc == 1 && sc == 0) || (fc == 2 && sc))
+		if ((fc == 1 && tmp_b->sc == 0) || (fc == 2 && tmp_b->sc))
 		{
 			rec_exec(info, b_tokens, and_or + 1);
 			return (0);
 		}
-		else if (fc == 2 && !sc)
+		else if (fc == 2 && !tmp_b->sc)
 		{
 			while (tmp_b && tmp_b->type != TOK_LEFT_AND)
 			{
@@ -324,7 +420,7 @@ int	rec_exec(t_info *info, t_big_token **b_tokens, int and_or)
 				and_or++;
 			}
 		}
-		else if (fc == 1 && sc)
+		else if (fc == 1 && tmp_b->sc)
 		{
 			while (tmp_b && tmp_b->type != TOK_LEFT_OR)
 			{
