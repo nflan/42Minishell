@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:08:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/22 20:08:38 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/23 18:52:16 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int main_agent_O(t_info *info)
 	dol_expand(&info->old_tokens, info);
 	expanded_toks(&info->old_tokens, &info->tokens);
 	index_toks(&info->tokens);
-	print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
-	printf("\n");
+//	print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
+//	printf("\n");
 //	exit (0);
 	if (syntax_err_handler(&info->tokens))
 	{

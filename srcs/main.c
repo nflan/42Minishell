@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 14:46:37 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/23 18:50:55 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	if (ac > 1)
 		info.nb_cmd = 10;
+	rl_outstream = stderr;
 	while (1)
 	{
 		if (sc)
