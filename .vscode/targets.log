@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Jun 27 15:01:24 2022
+# Make data base, printed on Mon Jun 27 18:04:46 2022
 
 # Variables
 
@@ -19,7 +19,6 @@ DESKTOP_SESSION = ubuntu
 # default
 .SHELLFLAGS := -c
 # environment
- 
 XDG_SESSION_CLASS = user
 # environment
 XDG_SESSION_TYPE = x11
@@ -36,6 +35,7 @@ GDMSESSION = ubuntu
 # environment
 XMODIFIERS = @im=ibus
 # makefile
+ 
 CURDIR := /mnt/nfs/homes/omoudni/minishell
 # makefile
 SHELL = /bin/sh
@@ -52,7 +52,7 @@ _ = /usr/bin/code
 # makefile (from 'libft/Makefile', line 31)
 CFLAGS = -Wall -Wextra -Werror -g
 # environment
-JOURNAL_STREAM = 9:380427
+JOURNAL_STREAM = 9:51534
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'libft/Makefile', line 1)
@@ -76,15 +76,15 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101608/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 85015
+MANAGERPID = 2459
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-d8943aec-6d0c-49ad-a2c1-c4012f02556e.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-75922a64-2bc7-401c-8527-bbf6c971e341.sock
 # environment
 VSCODE_CWD = /mnt/nfs/homes/omoudni/minishell
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101608_q8cSG5
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_s3pVav
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -94,7 +94,7 @@ GPG_AGENT_INFO = /run/user/101608/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/e3r11p15.42.fr:@/tmp/.ICE-unix/85478,unix/e3r11p15.42.fr:/tmp/.ICE-unix/85478
+SESSION_MANAGER = local/e3r11p15.42.fr:@/tmp/.ICE-unix/2944,unix/e3r11p15.42.fr:/tmp/.ICE-unix/2944
 # environment
 XDG_RUNTIME_DIR = /run/user/101608
 # environment
@@ -104,7 +104,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 0ae84a71a6c8486caa676fa6e54cdf64
+INVOCATION_ID = 64e55c32d9274bc6ba9fef572e4aeb5b
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -128,7 +128,7 @@ PWD = /mnt/nfs/homes/omoudni/minishell
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 85442
+SSH_AGENT_PID = 2908
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # makefile (from 'Makefile', line 19)
@@ -244,11 +244,11 @@ HEADER = libft.h
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/44e56492_533b_44b5_8f35_910345e2e850
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/fb847b17_29f8_4b59_9cc7_dd0564a49b43
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.81
+GNOME_TERMINAL_SERVICE = :1.80
 # default
 SUFFIXES := 
 # environment
@@ -270,7 +270,7 @@ TERM = xterm-256color
 # environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # environment
-VSCODE_PID = 91655
+VSCODE_PID = 3392
 # variable set hash-table stats:
 # Load=130/1024=13%, Rehash=0, Collisions=26/186=14%
 
@@ -280,12 +280,12 @@ VSCODE_PID = 91655
 
 # Directories
 
-# . (device 58, inode 194015554): 13 files, no impossibilities.
-# bin (device 58, inode 286007716): No files, no impossibilities so far.
-# srcs (device 58, inode 217188507): 36 files, no impossibilities so far.
-# libft (device 58, inode 171187366): No files, no impossibilities so far.
+# . (device 59, inode 194015554): 12 files, no impossibilities.
+# bin (device 59, inode 219320050): No files, no impossibilities so far.
+# srcs (device 59, inode 217188507): 35 files, 1 impossibilities.
+# libft (device 59, inode 171187366): No files, no impossibilities so far.
 
-# 49 files, no impossibilities in 4 directories.
+# 47 files, 1 impossibilities in 4 directories.
 
 # Implicit Rules
 
@@ -304,22 +304,14 @@ ft_strncmp.c:
 #  File has not been updated.
 
 # Not a target:
- 
 ft_isalnum.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-srcs/tokenizer_1.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-27 13:11:12.301322544
-#  File has been updated.
-#  Successfully updated.
-
 bin/:
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-27 11:39:29.180687462
+#  Last modified 2022-06-27 16:05:41.715023491
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 56):
@@ -330,6 +322,7 @@ ft_lstadd_front.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 # Not a target:
 ft_strdup.c:
@@ -398,7 +391,7 @@ bin/ft_launch_cmd.o: include/minishell.h
 bin/ft_builtins.o: srcs/ft_builtins.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'ft_builtins'
-#  Last modified 2022-06-27 11:37:55.704739497
+#  Last modified 2022-06-27 16:05:33.93902815
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -418,7 +411,7 @@ ft_toupper.c:
 bin/ft_global.o: srcs/ft_global.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'ft_global'
-#  Last modified 2022-06-27 11:37:55.93273937
+#  Last modified 2022-06-27 16:05:34.135028032
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -460,7 +453,7 @@ bin/main_O.o: include/minishell.h
 bin/ft_export.o: srcs/ft_export.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'ft_export'
-#  Last modified 2022-06-27 11:37:55.560739576
+#  Last modified 2022-06-27 16:05:33.747028265
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -469,7 +462,7 @@ bin/ft_export.o: srcs/ft_export.c include/minishell.h | bin/
 bin/big_tokenizer_3.o: srcs/big_tokenizer_3.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'big_tokenizer_3'
-#  Last modified 2022-06-27 11:37:56.20473922
+#  Last modified 2022-06-27 16:05:41.347023711
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -594,7 +587,6 @@ ft_memcpy.c:
 # Not a target:
 ft_itoa.c:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -614,7 +606,8 @@ ft_memcmp.c:
 bin/ft_tools2.o: srcs/ft_tools2.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'ft_tools2'
-#  Last modified 2022-06-27 11:37:56.000739333
+ 
+#  Last modified 2022-06-27 16:05:34.199027994
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -622,7 +615,7 @@ bin/ft_tools2.o: srcs/ft_tools2.c include/minishell.h | bin/
 
 minishell: bin/main.o bin/ft_cd.o bin/ft_export.o bin/ft_tools.o bin/ft_builtins.o bin/ft_here_doc.o bin/ft_pipex.o bin/ft_global.o bin/ft_tools2.o bin/big_tokenizer_1.o bin/big_tokenizer_2.o bin/big_tokenizer_3.o bin/big_tokenizer_4.o bin/parser.o bin/tokenizer_1.o bin/tokenizer_2.o bin/syntax_errorinizer_1.o bin/syntax_errorinizer_2.o bin/tree_manipulator.o bin/ft_launch_cmd.o bin/ft_echo.o bin/main_O.o bin/printer.o bin/executer.o bin/ft_free.o bin/ft_free2.o bin/dollar_expander.o bin/ft_wildcards_check.o bin/ft_wildcards_tools.o bin/ft_wildcards_do.o bin/ft_signal.o include/minishell.h libft/libft.a
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-27 11:39:29.288687402
+#  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
@@ -686,6 +679,13 @@ ft_memset.c:
 #  File has not been updated.
 
 # Not a target:
+srcs/tokenizer_2.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-27 15:32:41.484268313
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
 ft_tolower.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -728,32 +728,11 @@ ft_printf.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-bin/tokenizer_1.o: srcs/tokenizer_1.c include/minishell.h | bin/
+bin/tokenizer_1.o: include/minishell.h
 #  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'tokenizer_1'
-#  Last modified 2022-06-27 11:37:56.444739087
+#  Last modified 2022-06-27 16:05:41.643023534
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := bin/tokenizer_1.o
-# automatic
-# % := 
-# automatic
-# * := tokenizer_1
-# automatic
-# + := srcs/tokenizer_1.c include/minishell.h
-# automatic
-# | := bin/
-# automatic
-# < := srcs/tokenizer_1.c
-# automatic
-# ^ := srcs/tokenizer_1.c include/minishell.h
-# automatic
-# ? := srcs/tokenizer_1.c
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/15=7%
-#  recipe to execute (from 'Makefile', line 53):
-	$(CC) $(CFLAGS) -o $@ -c $<
+#  Successfully updated.
 
 # Not a target:
 srcs/ft_builtins.c:
@@ -765,7 +744,7 @@ srcs/ft_builtins.c:
 bin/ft_pipex.o: srcs/ft_pipex.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'ft_pipex'
-#  Last modified 2022-06-27 11:37:55.864739408
+#  Last modified 2022-06-27 16:05:34.063028076
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -799,7 +778,7 @@ ft_bzero.c:
 bin/parser.o: srcs/parser.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'parser'
-#  Last modified 2022-06-27 11:37:56.372739127
+#  Last modified 2022-06-27 16:05:41.551023589
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -808,7 +787,7 @@ bin/parser.o: srcs/parser.c include/minishell.h | bin/
 bin/big_tokenizer_1.o: srcs/big_tokenizer_1.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'big_tokenizer_1'
-#  Last modified 2022-06-27 11:37:56.068739295
+#  Last modified 2022-06-27 16:05:39.507024813
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -872,17 +851,38 @@ libft.h:
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 # Not a target:
 ft_lstnew.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-bin/tokenizer_2.o: include/minishell.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+bin/tokenizer_2.o: srcs/tokenizer_2.c include/minishell.h | bin/
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'tokenizer_2'
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := bin/tokenizer_2.o
+# automatic
+# % := 
+# automatic
+# * := tokenizer_2
+# automatic
+# + := srcs/tokenizer_2.c include/minishell.h
+# automatic
+# | := bin/
+# automatic
+# < := srcs/tokenizer_2.c
+# automatic
+# ^ := srcs/tokenizer_2.c include/minishell.h
+# automatic
+# ? := srcs/tokenizer_2.c include/minishell.h
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/15=7%
+#  recipe to execute (from 'Makefile', line 53):
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 bin/syntax_errorinizer_1.o: include/minishell.h
 #  Implicit rule search has not been done.
@@ -894,11 +894,12 @@ ft_putnbr_fd.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 bin/main.o: srcs/main.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-06-27 11:37:55.416739656
+#  Last modified 2022-06-27 16:05:33.559028378
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -907,7 +908,7 @@ bin/main.o: srcs/main.c include/minishell.h | bin/
 bin/big_tokenizer_2.o: srcs/big_tokenizer_2.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'big_tokenizer_2'
-#  Last modified 2022-06-27 11:37:56.136739257
+#  Last modified 2022-06-27 16:05:41.127023843
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -953,7 +954,7 @@ ft_lstsize.c:
 bin/ft_cd.o: srcs/ft_cd.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'ft_cd'
-#  Last modified 2022-06-27 11:37:55.488739616
+#  Last modified 2022-06-27 16:05:33.687028301
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -962,7 +963,7 @@ bin/ft_cd.o: srcs/ft_cd.c include/minishell.h | bin/
 bin/big_tokenizer_4.o: srcs/big_tokenizer_4.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'big_tokenizer_4'
-#  Last modified 2022-06-27 11:37:56.296739169
+#  Last modified 2022-06-27 16:05:41.435023658
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -976,7 +977,7 @@ bin/ft_wildcards_tools.o: include/minishell.h
 bin/ft_here_doc.o: srcs/ft_here_doc.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'ft_here_doc'
-#  Last modified 2022-06-27 11:37:55.796739446
+#  Last modified 2022-06-27 16:05:34.003028112
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -985,7 +986,7 @@ bin/ft_here_doc.o: srcs/ft_here_doc.c include/minishell.h | bin/
 bin/ft_tools.o: srcs/ft_tools.c include/minishell.h | bin/
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'ft_tools'
-#  Last modified 2022-06-27 11:37:55.628739539
+#  Last modified 2022-06-27 16:05:33.815028224
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 53):
@@ -1008,7 +1009,7 @@ bin/syntax_errorinizer_2.o: include/minishell.h
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=105/1024=10%, Rehash=0, Collisions=21/311=7%
+# Load=105/1024=10%, Rehash=0, Collisions=24/313=8%
 # VPATH Search Paths
 
 vpath %.h libft
@@ -1019,12 +1020,12 @@ vpath ft_%.o libft
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 172 / storage = 2306 B / avg = 13 B
-# current buf: size = 8162 B / used = 2306 B / count = 172 / avg = 13 B
+# strcache buffers: 1 (0) / strings = 173 / storage = 2325 B / avg = 13 B
+# current buf: size = 8162 B / used = 2325 B / count = 173 / avg = 13 B
 
-# strcache performance: lookups = 313 / hit rate = 45%
+# strcache performance: lookups = 314 / hit rate = 44%
 # hash-table stats:
-# Load=172/8192=2%, Rehash=0, Collisions=6/313=2%
-# Finished Make data base on Mon Jun 27 15:01:24 2022
+# Load=173/8192=2%, Rehash=0, Collisions=6/314=2%
+# Finished Make data base on Mon Jun 27 18:04:46 2022
 
  

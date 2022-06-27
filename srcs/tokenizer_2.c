@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 18:40:27 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:26:14 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,14 @@ int detect_tokens(t_token **tok_list, char *str)
 		return (ft_putstr_error("Command error in detect_tokens "));
 	while (str[i])
 	{
+		printf("i: %d\n", i);
 		length = 1;
 		start = i;
 		tok_type = get_real_tok_type(str[i], tok_list);
 		i++;
 		while (str[i] && check_tok_type(tok_type) && (get_real_tok_type(str[i], tok_list) == tok_type))
 		{
+			printf("I'm filling the bulk with this i: %d\n", i);
 			if (tok_type == TOK_OPERATOR && ft_strncmp(&(str[i]), &(str[i - 1]), 1))
 				break ;
 			length++;
@@ -98,6 +100,7 @@ int detect_tokens(t_token **tok_list, char *str)
 		}
 		if (tok_type == TOK_WORD_NULL_S || tok_type == TOK_WORD_NULL_D)
 		{
+			printf("I'm here\n");
 			if (tok_type == TOK_WORD_NULL_S)
 			{
 			if (add_tok_last(tok_list, TOK_WORD_S_QUOTED, 0, start))

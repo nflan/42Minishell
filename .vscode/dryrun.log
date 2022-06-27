@@ -16,7 +16,6 @@ cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_2.o -c srcs/big_tokenizer_2.c
 cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_3.o -c srcs/big_tokenizer_3.c
 cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_4.o -c srcs/big_tokenizer_4.c
 cc -Wall -Wextra -Werror -g -o bin/parser.o -c srcs/parser.c
-cc -Wall -Wextra -Werror -g -o bin/tokenizer_1.o -c srcs/tokenizer_1.c
 cc -Wall -Wextra -Werror -g -o bin/tokenizer_2.o -c srcs/tokenizer_2.c
 cc -Wall -Wextra -Werror -g -o bin/syntax_errorinizer_1.o -c srcs/syntax_errorinizer_1.c
 cc -Wall -Wextra -Werror -g -o bin/syntax_errorinizer_2.o -c srcs/syntax_errorinizer_2.c
