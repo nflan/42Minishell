@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 15:32:41 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/27 18:40:27 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int detect_tokens(t_token **tok_list, char *str)
 		i++;
 		while (str[i] && check_tok_type(tok_type) && (get_real_tok_type(str[i], tok_list) == tok_type))
 		{
+			if (tok_type == TOK_OPERATOR && ft_strncmp(&(str[i]), &(str[i - 1]), 1))
+				break ;
 			length++;
 			i++;
 		}
@@ -100,15 +102,15 @@ int detect_tokens(t_token **tok_list, char *str)
 			{
 			if (add_tok_last(tok_list, TOK_WORD_S_QUOTED, 0, start))
 				return (ft_putstr_error("detect_tokens "));
-				if (add_tok_last(tok_list, TOK_S_QUOTER, length, start))
-					return (ft_putstr_error("detect_tokens "));
+			if (add_tok_last(tok_list, TOK_S_QUOTER, length, start))
+				return (ft_putstr_error("detect_tokens "));
 			}
 			else
 			{
 			if (add_tok_last(tok_list, TOK_WORD_D_QUOTED, 0, start))
 				return (ft_putstr_error("detect_tokens "));
-				if (add_tok_last(tok_list, TOK_D_QUOTER, length, start))
-					return (ft_putstr_error("detect_tokens "));
+			if (add_tok_last(tok_list, TOK_D_QUOTER, length, start))
+				return (ft_putstr_error("detect_tokens "));
 			}
 		}
 		else
