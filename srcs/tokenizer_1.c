@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 20:06:50 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/27 21:52:05 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int is_quoted(t_token **tok_list, char c)
 	return (printf("cas: 0\n"),0);
 }
 
-unsigned int get_real_tok_type(char c, t_token **tok_list)
+unsigned int get_real_tok_type(char c, t_token **tok_list, t_tok_type *tok_type_tab)
 {
 	int len;
 	t_token	*last_tok;
@@ -65,7 +65,7 @@ unsigned int get_real_tok_type(char c, t_token **tok_list)
 
 	len = len_ll_list(*tok_list);
 	if (len == 0)
-		return (get_tok_type[get_char_class[(int)c]]);
+		return (tok_type_tab[(int)c]);
 	last_tok = *tok_list;
 	while (last_tok->next)
 		last_tok = last_tok->next;
@@ -80,7 +80,7 @@ unsigned int get_real_tok_type(char c, t_token **tok_list)
 	else if (is_qted == 4)
 		return (TOK_WORD_NULL_D);
 	else
-		return (get_tok_type[get_char_class[(int)c]]);
+		return (tok_type_tab[(int)c]);
 	return (-1);
 }
 

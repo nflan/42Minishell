@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:08:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 20:04:47 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/27 21:39:54 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int main_agent_O(t_info *info)
 {
 	int	btok_info[2];
 
-	if (detect_tokens(&info->tokens, info->rdline))
+	if (detect_tokens(info))
 		return (ft_putstr_error("in main_agent_O\nDetect_tokens error\n"));
 	if (fill_tok_value(&info->tokens, info->rdline))
 		return (1);
