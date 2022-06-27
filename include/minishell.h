@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/26 19:18:35 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:01:59 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ typedef struct s_fd
 	char				*file; // nom du ficher infile ou outfile ou heredoc
 	char				*delimitator; // delimitateur si heredoc sinon NULL
 	struct s_fd			*next;
+	struct s_info		*info;
 }	t_fd;
 
 typedef struct s_big_token
@@ -193,6 +194,7 @@ typedef struct s_big_token
 	struct s_big_token	*parent;
 	struct s_big_token	*child;
 	struct s_big_token	*sibling;
+	struct s_info		*info;
 } 	t_big_token;
 
 static const t_char_type get_char_class[255] =
@@ -255,7 +257,7 @@ static const t_tok_type get_tok_type[255] =
 		[CHR_POINT] = TOK_WORD,
 		[CHR_SLASH] = TOK_WORD,
 		[CHR_NUM] = TOK_WORD,
-		[CHR_COLON] = TOK_PATH,
+		[CHR_COLON] = TOK_WORD,
 		[CHR_SEMI_COLON] = TOK_WORD,
 		[CHR_MINES] = TOK_REDIRECTOR_LEFT,
 		[CHR_EQUAL] = TOK_WORD, // j'ai change c'etait operator
@@ -345,8 +347,8 @@ int				ft_do_pipex(t_info *info, t_big_token *b_tokens);
 int				ft_pipex(t_info *info, t_big_token *b_tokens);
 
 //---------ft_here_doc.c----------------------------
-void			ft_write_here(t_fd *fd, char *str, int i);
-int				ft_here(t_fd *fd);
+void			ft_write_here(t_fd *fd, char *str, int i, int red);
+int				ft_here(t_fd *fd, int red);
 char			**ft_env_to_tab(t_env *env);
 
 //---------ft_pipex_utils.c----------------------------
@@ -401,9 +403,9 @@ char			*concat_argvs(int argc, char **argv);
 //----------parser.c------------------------------------------------------------------
 
 void			give_parent(t_big_token **b_child, t_big_token **parent);
-void			sub_parse_1(t_big_token **tmp_b, t_token **tokens, int b_start, int b_length);
-void			sub_parse_2(t_big_token **b_child, t_big_token **tmp_b, t_token **tokens);
-int				parse(t_big_token **b_tokens, t_token **tokens, int start, int length);
+void			sub_parse_1(t_big_token **tmp_b, t_info *info, int b_start, int b_length);
+void			sub_parse_2(t_big_token **b_child, t_big_token **tmp_b, t_info *info);
+int				parse(t_big_token **b_tokens, t_info *info, int btok_info[2]);
 void			extract_fds(t_big_token **tmp_b, t_token **tokens);
 
 //----------executer.c-----------------------------------------------------------------
@@ -455,8 +457,8 @@ int				is_red_st_par(t_big_token *b_tokens, t_token *tokens);
 
 //-----------big_tokenizer_1.c-------------------------------------------------
 
-t_big_token		*ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length);
-int				add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int start, int length);
+t_big_token		*ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length, t_info *info);
+int				add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int btok_info[2], t_info *info);
 int				check_divider_type(char *tmp_value);
 // int				is_cl_2_op(char *value_tok_op, char *value_tok_cl);
 void			move_tok_2_ind(t_token **tokens, int ind);
@@ -464,18 +466,18 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 //-----------big_tokenizer_2.c-----------------------------------------------------
 
 int				cl_par_ind(t_token **tokens, int ind_tok);
-int				divide_by_or_and(t_big_token **b_tokens, t_token **tokens, int start, int length);
-int	piped(t_token **tokens, int start, int length);
+int				divide_by_or_and(t_big_token **b_tokens, t_info *info, int btok_info[2]);
+int	piped(t_info *info, int start, int length);
 int				sophisticated_piped(t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------
 
-int			handle_par(t_big_token **b_tokens, t_token **tokens);
+int			handle_par(t_big_token **b_tokens, t_info *info);
 
 //-----------big_tokenizer_3.c--------------------------------------------------
 
 // void		divide_by_or_and(t_big_token **b_tokens, t_token **tokens);
-int			divide_by_pipe(t_big_token **b_tokens, t_token **tokens);
+int			divide_by_pipe(t_big_token **b_tokens, t_info *info);
 
 //------------printer.c--------------------------------------------------------
 void	ft_print_wildcards(t_wildcards *wd);
@@ -496,5 +498,6 @@ void			expand(char **str, t_info *info);
 void			dol_expand(t_token **old_tokens, t_info *info, int start, int length);
 int				expanded_toks_check(t_token **tokens);
 void			expanded_toks(t_token **old_tokens, int start, int length);
+void			expand_args(char **str, t_info *info);
 
 #endif

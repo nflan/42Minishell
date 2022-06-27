@@ -136,17 +136,17 @@ int is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens)
 	while (tmp1)
 	{
 		move_tok_2_ind(&tmp2, tmp1->ind_tok_start);
-		if (tmp2->token == TOK_SEP && tmp1->length > 2)
+		if (tmp2 && tmp2->token == TOK_SEP && tmp1->length > 2)
 			move_tok_2_ind(&tmp2, tmp1->ind_tok_start + 1);
-		if (tmp2->token == TOK_OPERATOR && ft_strlen(tmp2->value) == 1 && !ft_strncmp(tmp2->value, "|", 1))
+		if (tmp2 && tmp2->token == TOK_OPERATOR && ft_strlen(tmp2->value) == 1 && !ft_strncmp(tmp2->value, "|", 1))
 			return (1);
 		move_tok_2_ind(&tmp2, tmp1->ind_tok_start + tmp1->length - 1);
-		if (tmp2->token == TOK_SEP && tmp1->length > 2)
+		if (tmp2 && tmp2->token == TOK_SEP && tmp1->length > 2)
 		{
 			tmp2 = tokens;
 			move_tok_2_ind(&tmp2, tmp1->ind_tok_start + tmp1->length - 2);
 		}
-		if ((tmp2->token == TOK_OPERATOR && ft_strlen(tmp2->value) == 1 && !ft_strncmp(tmp2->value, "|", 1)) || (tmp2->token == TOK_REDIRECTOR_LEFT || tmp2->token == TOK_REDIRECTOR_RIGHT))
+		if (tmp2 && ((tmp2->token == TOK_OPERATOR && ft_strlen(tmp2->value) == 1 && !ft_strncmp(tmp2->value, "|", 1)) || (tmp2->token == TOK_REDIRECTOR_LEFT || tmp2->token == TOK_REDIRECTOR_RIGHT)))
 			return (2);
 		tmp1 = tmp1->sibling;
 	}

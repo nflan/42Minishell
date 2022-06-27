@@ -6,13 +6,13 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:50:48 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 11:24:43 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_write_here(t_fd *fd, char *str, int i)
+void	ft_write_here(t_fd *fd, char *str, int i, int red)
 {
 	if (i == 1)
 	{	
@@ -22,12 +22,14 @@ void	ft_write_here(t_fd *fd, char *str, int i)
 	}
 	else if (i == 2)
 	{
+		if (red == 2)
+			expand(&str, fd->info);
 		write(fd->fd, str, ft_strlen(str));
 		write(fd->fd, "\n", 1);
 	}
 }
 
-int	ft_here(t_fd *fd)
+int	ft_here(t_fd *fd, int red)
 {
 	char	*buf;
 	char	*to_free;
@@ -40,12 +42,12 @@ int	ft_here(t_fd *fd)
 	{
 		buf = readline(to_free);
 		if (!buf)
-			ft_write_here(fd, fd->delimitator, 1);
+			ft_write_here(fd, fd->delimitator, 1, red);
 		if (!buf || !ft_strncmp(buf, fd->delimitator,
 				ft_strlen(fd->delimitator) + 1))
 			break ;
 		else
-			ft_write_here(fd, buf, 2);
+			ft_write_here(fd, buf, 2, red);
 		free(buf);
 		buf = NULL;
 	}

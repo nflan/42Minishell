@@ -6,7 +6,11 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/27 19:26:14 by omoudni          ###   ########.fr       */
+=======
+/*   Updated: 2022/06/27 15:49:17 by nflan            ###   ########.fr       */
+>>>>>>> parse
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +104,11 @@ int detect_tokens(t_token **tok_list, char *str)
 		}
 		if (tok_type == TOK_WORD_NULL_S || tok_type == TOK_WORD_NULL_D)
 		{
+<<<<<<< HEAD
 			printf("I'm here\n");
+=======
+			printf("I entered here\n");
+>>>>>>> parse
 			if (tok_type == TOK_WORD_NULL_S)
 			{
 			if (add_tok_last(tok_list, TOK_WORD_S_QUOTED, 0, start))
@@ -118,8 +126,8 @@ int detect_tokens(t_token **tok_list, char *str)
 		}
 		else
 		{
-		if (add_tok_last(tok_list, tok_type, length, start))
-			return (ft_putstr_error("detect_tokens "));
+			if (add_tok_last(tok_list, tok_type, length, start))
+				return (ft_putstr_error("detect_tokens "));
 		}
 	}
 	return (0);
@@ -135,6 +143,8 @@ int fill_tok_value(t_token **tok, char *str)
 	tmp = *tok;
 	while (tmp)
 	{
+		if (tmp->length == 0)
+			printf("I 'm going to write a null word after tmp->prev: %s\n", tmp->prev->value);
 		tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
 		if (!tmp->value)
 			return (ft_putstr_error("Error in ft_strncpy in fill_tok_value"));

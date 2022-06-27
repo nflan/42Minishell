@@ -1,6 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/mnt/nfs/homes/omoudni/minishell'
- 
 mkdir -p bin/
 cc -Wall -Wextra -Werror -g -o bin/main.o -c srcs/main.c
 cc -Wall -Wextra -Werror -g -o bin/ft_cd.o -c srcs/ft_cd.c
@@ -16,6 +15,7 @@ cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_2.o -c srcs/big_tokenizer_2.c
 cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_3.o -c srcs/big_tokenizer_3.c
 cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_4.o -c srcs/big_tokenizer_4.c
 cc -Wall -Wextra -Werror -g -o bin/parser.o -c srcs/parser.c
+cc -Wall -Wextra -Werror -g -o bin/tokenizer_1.o -c srcs/tokenizer_1.c
 cc -Wall -Wextra -Werror -g -o bin/tokenizer_2.o -c srcs/tokenizer_2.c
 cc -Wall -Wextra -Werror -g -o bin/syntax_errorinizer_1.o -c srcs/syntax_errorinizer_1.c
 cc -Wall -Wextra -Werror -g -o bin/syntax_errorinizer_2.o -c srcs/syntax_errorinizer_2.c
@@ -32,9 +32,7 @@ cc -Wall -Wextra -Werror -g -o bin/ft_wildcards_check.o -c srcs/ft_wildcards_che
 cc -Wall -Wextra -Werror -g -o bin/ft_wildcards_tools.o -c srcs/ft_wildcards_tools.c
 cc -Wall -Wextra -Werror -g -o bin/ft_wildcards_do.o -c srcs/ft_wildcards_do.c
 cc -Wall -Wextra -Werror -g -o bin/ft_signal.o -c srcs/ft_signal.c
- 
 make -C libft/
- 
 make[1]: Entering directory '/mnt/nfs/homes/omoudni/minishell/libft'
  
 cc -Wall -Wextra -Werror -g -c ft_atoi.c -o ft_atoi.o

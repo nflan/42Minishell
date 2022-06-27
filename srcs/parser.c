@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:11:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 21:53:52 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 19:33:12 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@ void give_parent(t_big_token **b_child, t_big_token **parent)
 	(*b_child)->parent = *parent;
 }
 
-void sub_parse_1(t_big_token **tmp_b, t_token **tokens, int b_start, int b_length)
+void sub_parse_1(t_big_token **tmp_b, t_info *info, int b_start, int b_length)
 {
-	parse(&((*tmp_b)->child), tokens, b_start, b_length);
+	int	btok_info[2];
+
+	btok_info[0] = b_start;
+	btok_info[1] = b_length;
+	parse(&((*tmp_b)->child), info, btok_info);
 	if ((*tmp_b)->child)
 		give_parent(&((*tmp_b)->child), tmp_b);
 }
 
-void sub_parse_2(t_big_token **tmp, t_big_token **tmp_b, t_token **tokens)
+void sub_parse_2(t_big_token **tmp, t_big_token **tmp_b, t_info *info)
 {
 	t_big_token *b_child;
 
@@ -33,7 +37,7 @@ void sub_parse_2(t_big_token **tmp, t_big_token **tmp_b, t_token **tokens)
 	while (b_child)
 	{
 		if ((b_child)->par)
-			sub_parse_1(&b_child, tokens, (b_child)->ind_tok_start, (b_child)->length);
+			sub_parse_1(&b_child, info, (b_child)->ind_tok_start, (b_child)->length);
 		(b_child) = (b_child)->sibling;
 	}
 }
@@ -112,12 +116,12 @@ int no_red(t_big_token **tmp_b, t_token **tokens)
 	}
 }*/
 
-int parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
+int parse(t_big_token **b_tokens, t_info *info, int btok_info[2])
 {
 	t_big_token *tmp_b;
 //	t_big_token *b_child;
 
-	if (divide_by_or_and(b_tokens, tokens, start, length))
+	if (divide_by_or_and(b_tokens, info, btok_info))
 		return (ft_putstr_error("in parse "));
 	tmp_b = *b_tokens;
 	if (!tmp_b || (!tmp_b->par && tmp_b->type == TOK_CLEAN))
@@ -128,13 +132,13 @@ int parse(t_big_token **b_tokens, t_token **tokens, int start, int length)
 	while (tmp_b)
 	{
 		if (tmp_b->par)
-			sub_parse_1(&tmp_b, tokens, tmp_b->ind_tok_start, tmp_b->length);
-		else if (piped(tokens, tmp_b->ind_tok_start, tmp_b->length))
+			sub_parse_1(&tmp_b, info, tmp_b->ind_tok_start, tmp_b->length);
+		else if (piped(info, tmp_b->ind_tok_start, tmp_b->length))
 		{
-			if (divide_by_pipe(&tmp_b, tokens))
+			if (divide_by_pipe(&tmp_b, info))
 				return (ft_putstr_error("in parse "));
 			if (tmp_b->child)
-				sub_parse_2(&tmp_b->child, &tmp_b, tokens);
+				sub_parse_2(&tmp_b->child, &tmp_b, info);
 		}
 		tmp_b = tmp_b->sibling;
 	}

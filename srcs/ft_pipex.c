@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:51:48 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 17:35:14 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_do_pipex(t_info *info, t_big_token *b_tokens)
 	else if (ft_check_builtins(b_tokens) == 1)
 	{
 		if (ft_command(info, b_tokens))
-			ft_exit_cmd(info, b_tokens->cmd_args[0], 1);
+			ft_exit_cmd(info, b_tokens->cmd_args[0], 127);
 		else
 			if (execve(b_tokens->cmd_args[0],
 					b_tokens->cmd_args, b_tokens->envp) == -1)

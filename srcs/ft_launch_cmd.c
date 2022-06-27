@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/24 16:06:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 17:35:05 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int	ft_builtins(t_info *info, t_big_token *b_tokens)
 int	ft_exit_cmd(t_info *info, char *str, int err)
 {
 	info->status = err;
-	if (err == 1 && str)
+	if (err == 127 && str)
 		ft_putstr_frror(str, ": command not found\n", 0);
 	if (info)
 		ft_free_all(info, info->env);
@@ -267,7 +267,7 @@ int	ft_do_solo(t_info *info, t_big_token *b_tokens)
 		dup2(b_tokens->fdout, STDOUT_FILENO);
 //		printf("b_tokens->fdout[b_tokens->rd_inouthd[1]] = %d\n", b_tokens->fdout[b_tokens->rd_inouthd[1 - 1]]);
 		if (ft_command(info, b_tokens))
-			ft_exit_cmd(info, b_tokens->cmd_args[0], 1);
+			ft_exit_cmd(info, b_tokens->cmd_args[0], 127);
 		else
 			if (execve(b_tokens->cmd_args[0], b_tokens->cmd_args, b_tokens->envp) == -1)
 				exit (ft_error(4, info, b_tokens));
