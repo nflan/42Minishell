@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 18:40:28 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 23:31:37 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,6 +311,7 @@ int	ft_wash_btoken(t_info *info, t_big_token *b_tokens);
 int	ft_check_builtins(t_big_token *b_tokens);
 int	ft_builtins(t_info *info, t_big_token *b_tokens);
 int	ft_launch_sibling(t_info *info, t_big_token *b_tokens);
+void	ft_close_pdes(int fd, int pdes);
 void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child);
 int	ft_lead_fd(t_info *info, t_big_token *b_tokens);
 int	ft_launch_cmd(t_info *info, t_big_token *b_tokens);
