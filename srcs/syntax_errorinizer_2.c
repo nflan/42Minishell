@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 10:59:06 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 13:30:00 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int r_2_op_succeding(t_token **tokens)
 					op_next = tmp->next->token;
 				else if (tmp->next->token == TOK_SEP && tmp->next->next)
 					op_next = tmp->next->next->token;
-				if (op_next != (t_tok_type)-1 && op_prev == op_next)
+				if (op_next != (t_tok_type)-1 && op_prev == op_next) //je comprends pas cette ligne!! XD
 					return (1);
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/24 19:40:00 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 13:24:13 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	is_last_op(t_token **tokens)
 	{
 		tmp = tmp->next;
 	}
-	if (tmp->token == TOK_OPERATOR || tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT)
+	if (tmp->token == TOK_OPERATOR || tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT || tmp->token == TOK_EXPANDER_OP)
 		return (1);
 	return (0);
 }

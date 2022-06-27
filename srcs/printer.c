@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/23 12:25:42 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 11:38:42 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 		printf("It's start is: %d\n", tmp_b->ind_tok_start);
 		printf("It's length is: %d\n", tmp_b->length);
 		printf("It's par_pam is: %d\n", tmp_b->par);
-//		printf("It's rank is: %d\n", k);	
+//		printf("It's rank is: %d\n", k);
 		printf("\n");
 		if (tmp_b->child)
 		print_all_child(&(tmp_b->child), tokens, i, j);
