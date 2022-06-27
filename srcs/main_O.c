@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:08:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/26 18:51:01 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:39:25 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,5 @@ int main_agent_O(t_info *info)
 //	print_tab(tmp_b->cmd_args);
 	if (info->nb_cmd == 10)
 		print_all_everything(&info->parse, &info->tokens);
-	exit(0);
 	return (0);
 }

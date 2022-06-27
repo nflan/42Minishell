@@ -1,0 +1,89 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/mnt/nfs/homes/omoudni/minishell'
+ 
+mkdir -p bin/
+cc -Wall -Wextra -Werror -g -o bin/main.o -c srcs/main.c
+cc -Wall -Wextra -Werror -g -o bin/ft_cd.o -c srcs/ft_cd.c
+cc -Wall -Wextra -Werror -g -o bin/ft_export.o -c srcs/ft_export.c
+cc -Wall -Wextra -Werror -g -o bin/ft_tools.o -c srcs/ft_tools.c
+cc -Wall -Wextra -Werror -g -o bin/ft_builtins.o -c srcs/ft_builtins.c
+cc -Wall -Wextra -Werror -g -o bin/ft_here_doc.o -c srcs/ft_here_doc.c
+cc -Wall -Wextra -Werror -g -o bin/ft_pipex.o -c srcs/ft_pipex.c
+cc -Wall -Wextra -Werror -g -o bin/ft_global.o -c srcs/ft_global.c
+cc -Wall -Wextra -Werror -g -o bin/ft_tools2.o -c srcs/ft_tools2.c
+cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_1.o -c srcs/big_tokenizer_1.c
+cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_2.o -c srcs/big_tokenizer_2.c
+cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_3.o -c srcs/big_tokenizer_3.c
+cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_4.o -c srcs/big_tokenizer_4.c
+cc -Wall -Wextra -Werror -g -o bin/parser.o -c srcs/parser.c
+cc -Wall -Wextra -Werror -g -o bin/tokenizer_1.o -c srcs/tokenizer_1.c
+cc -Wall -Wextra -Werror -g -o bin/tokenizer_2.o -c srcs/tokenizer_2.c
+cc -Wall -Wextra -Werror -g -o bin/syntax_errorinizer_1.o -c srcs/syntax_errorinizer_1.c
+cc -Wall -Wextra -Werror -g -o bin/syntax_errorinizer_2.o -c srcs/syntax_errorinizer_2.c
+cc -Wall -Wextra -Werror -g -o bin/tree_manipulator.o -c srcs/tree_manipulator.c
+cc -Wall -Wextra -Werror -g -o bin/ft_launch_cmd.o -c srcs/ft_launch_cmd.c
+cc -Wall -Wextra -Werror -g -o bin/ft_echo.o -c srcs/ft_echo.c
+cc -Wall -Wextra -Werror -g -o bin/main_O.o -c srcs/main_O.c
+cc -Wall -Wextra -Werror -g -o bin/printer.o -c srcs/printer.c
+cc -Wall -Wextra -Werror -g -o bin/executer.o -c srcs/executer.c
+cc -Wall -Wextra -Werror -g -o bin/ft_free.o -c srcs/ft_free.c
+cc -Wall -Wextra -Werror -g -o bin/ft_free2.o -c srcs/ft_free2.c
+cc -Wall -Wextra -Werror -g -o bin/dollar_expander.o -c srcs/dollar_expander.c
+cc -Wall -Wextra -Werror -g -o bin/ft_wildcards_check.o -c srcs/ft_wildcards_check.c
+cc -Wall -Wextra -Werror -g -o bin/ft_wildcards_tools.o -c srcs/ft_wildcards_tools.c
+cc -Wall -Wextra -Werror -g -o bin/ft_wildcards_do.o -c srcs/ft_wildcards_do.c
+cc -Wall -Wextra -Werror -g -o bin/ft_signal.o -c srcs/ft_signal.c
+ 
+make -C libft/
+ 
+make[1]: Entering directory '/mnt/nfs/homes/omoudni/minishell/libft'
+ 
+cc -Wall -Wextra -Werror -g -c ft_atoi.c -o ft_atoi.o
+cc -Wall -Wextra -Werror -g -c ft_bzero.c -o ft_bzero.o
+cc -Wall -Wextra -Werror -g -c ft_calloc.c -o ft_calloc.o
+cc -Wall -Wextra -Werror -g -c ft_isalnum.c -o ft_isalnum.o
+cc -Wall -Wextra -Werror -g -c ft_isalpha.c -o ft_isalpha.o
+cc -Wall -Wextra -Werror -g -c ft_isascii.c -o ft_isascii.o
+cc -Wall -Wextra -Werror -g -c ft_isdigit.c -o ft_isdigit.o
+cc -Wall -Wextra -Werror -g -c ft_isprint.c -o ft_isprint.o
+cc -Wall -Wextra -Werror -g -c ft_memchr.c -o ft_memchr.o
+cc -Wall -Wextra -Werror -g -c ft_memcmp.c -o ft_memcmp.o
+cc -Wall -Wextra -Werror -g -c ft_memcpy.c -o ft_memcpy.o
+cc -Wall -Wextra -Werror -g -c ft_memmove.c -o ft_memmove.o
+cc -Wall -Wextra -Werror -g -c ft_memset.c -o ft_memset.o
+cc -Wall -Wextra -Werror -g -c ft_strchr.c -o ft_strchr.o
+cc -Wall -Wextra -Werror -g -c ft_strdup.c -o ft_strdup.o
+cc -Wall -Wextra -Werror -g -c ft_strlcat.c -o ft_strlcat.o
+cc -Wall -Wextra -Werror -g -c ft_strlcpy.c -o ft_strlcpy.o
+cc -Wall -Wextra -Werror -g -c ft_strlen.c -o ft_strlen.o
+cc -Wall -Wextra -Werror -g -c ft_strncmp.c -o ft_strncmp.o
+cc -Wall -Wextra -Werror -g -c ft_strnstr.c -o ft_strnstr.o
+cc -Wall -Wextra -Werror -g -c ft_strrchr.c -o ft_strrchr.o
+cc -Wall -Wextra -Werror -g -c ft_tolower.c -o ft_tolower.o
+cc -Wall -Wextra -Werror -g -c ft_toupper.c -o ft_toupper.o
+cc -Wall -Wextra -Werror -g -c ft_substr.c -o ft_substr.o
+cc -Wall -Wextra -Werror -g -c ft_strjoin.c -o ft_strjoin.o
+cc -Wall -Wextra -Werror -g -c ft_strtrim.c -o ft_strtrim.o
+cc -Wall -Wextra -Werror -g -c ft_split.c -o ft_split.o
+cc -Wall -Wextra -Werror -g -c ft_itoa.c -o ft_itoa.o
+cc -Wall -Wextra -Werror -g -c ft_strmapi.c -o ft_strmapi.o
+cc -Wall -Wextra -Werror -g -c ft_striteri.c -o ft_striteri.o
+cc -Wall -Wextra -Werror -g -c ft_putchar_fd.c -o ft_putchar_fd.o
+cc -Wall -Wextra -Werror -g -c ft_putstr_fd.c -o ft_putstr_fd.o
+cc -Wall -Wextra -Werror -g -c ft_putendl_fd.c -o ft_putendl_fd.o
+cc -Wall -Wextra -Werror -g -c ft_putnbr_fd.c -o ft_putnbr_fd.o
+cc -Wall -Wextra -Werror -g -c ft_lstnew.c -o ft_lstnew.o
+cc -Wall -Wextra -Werror -g -c ft_lstadd_front.c -o ft_lstadd_front.o
+cc -Wall -Wextra -Werror -g -c ft_lstsize.c -o ft_lstsize.o
+cc -Wall -Wextra -Werror -g -c ft_lstlast.c -o ft_lstlast.o
+cc -Wall -Wextra -Werror -g -c ft_lstadd_back.c -o ft_lstadd_back.o
+cc -Wall -Wextra -Werror -g -c ft_lstdelone.c -o ft_lstdelone.o
+cc -Wall -Wextra -Werror -g -c ft_lstclear.c -o ft_lstclear.o
+cc -Wall -Wextra -Werror -g -c ft_lstiter.c -o ft_lstiter.o
+cc -Wall -Wextra -Werror -g -c ft_printf.c -o ft_printf.o
+cc -Wall -Wextra -Werror -g -c ft_printf_tools.c -o ft_printf_tools.o
+ar rcs libft.a ft_atoi.o ft_bzero.o ft_calloc.o ft_isalnum.o ft_isalpha.o ft_isascii.o ft_isdigit.o ft_isprint.o ft_memchr.o ft_memcmp.o ft_memcpy.o ft_memmove.o ft_memset.o ft_strchr.o ft_strdup.o ft_strlcat.o ft_strlcpy.o ft_strlen.o ft_strncmp.o ft_strnstr.o ft_strrchr.o ft_tolower.o ft_toupper.o ft_substr.o ft_strjoin.o ft_strtrim.o ft_split.o ft_itoa.o ft_strmapi.o ft_striteri.o ft_putchar_fd.o ft_putstr_fd.o ft_putendl_fd.o ft_putnbr_fd.o ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o ft_lstadd_back.o ft_lstdelone.o ft_lstclear.o ft_lstiter.o ft_printf.o ft_printf_tools.o libft.h
+make[1]: Leaving directory '/mnt/nfs/homes/omoudni/minishell/libft'
+cc -Wall -Wextra -Werror -g bin/main.o bin/ft_cd.o bin/ft_export.o bin/ft_tools.o bin/ft_builtins.o bin/ft_here_doc.o bin/ft_pipex.o bin/ft_global.o bin/ft_tools2.o bin/big_tokenizer_1.o bin/big_tokenizer_2.o bin/big_tokenizer_3.o bin/big_tokenizer_4.o bin/parser.o bin/tokenizer_1.o bin/tokenizer_2.o bin/syntax_errorinizer_1.o bin/syntax_errorinizer_2.o bin/tree_manipulator.o bin/ft_launch_cmd.o bin/ft_echo.o bin/main_O.o bin/printer.o bin/executer.o bin/ft_free.o bin/ft_free2.o bin/dollar_expander.o bin/ft_wildcards_check.o bin/ft_wildcards_tools.o bin/ft_wildcards_do.o bin/ft_signal.o libft/libft.a -I include/minishell.h -lreadline -o minishell
+make: Leaving directory '/mnt/nfs/homes/omoudni/minishell'
+ 
