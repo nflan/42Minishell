@@ -68,10 +68,14 @@ unsigned int get_real_tok_type(char c, t_token **tok_list)
 	while (last_tok->next)
 		last_tok = last_tok->next;
 	// printf("for this char: %c, this is the last tok's type %d\n", c, last_tok->token);
-	if (is_quoted(&last_tok, c) == 1 || is_quoted(&last_tok, c) == 3)
+	if (is_quoted(&last_tok, c) == 1)
 		return (TOK_WORD_S_QUOTED);
-	else if (is_quoted(&last_tok, c) == 2 || is_quoted(&last_tok, c) == 4)
+	else if (is_quoted(&last_tok, c) == 2)
 		return (TOK_WORD_D_QUOTED);
+	else if (is_quoted(&last_tok, c) == 3)
+		return (TOK_WORD_NULL_S);
+	else if (is_quoted(&last_tok, c) == 4)
+		return (TOK_WORD_NULL_D);
 	else
 		return (get_tok_type[get_char_class[(int)c]]);
 	return (-1);
