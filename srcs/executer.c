@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 16:01:24 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 20:49:52 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,13 @@ int	ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd)
 	{
 		while (tmp_fd)
 		{
-			printf("fd->delimitor = %s\n", tmp_fd->delimitator);
 			tmp_fd->fd = open(tmp_fd->file, O_RDONLY);
 			if (tmp_fd->fd < 0)
 			{
 				b_tokens->sc = 1;
 				tmp_fd->fd = 0;
 				err = ft_strjoin("minishell: ", tmp_fd->file);
-				if (err)
+				if (!err)
 					return (1);
 				perror(err);
 				free(err);
@@ -228,7 +227,7 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 	return (0);
 }
 
-int	ft_recreate_cmd(t_big_token *b_tokens, t_info *info)
+/*int	ft_recreate_cmd(t_big_token *b_tokens, t_info *info)
 {
 	t_token	*tmp_s;
 	int		i;
@@ -268,7 +267,7 @@ int	ft_recreate_cmd(t_big_token *b_tokens, t_info *info)
 		b_tokens->length = len_ll_list(info->tokens) - b_tokens->ind_tok_start;
 //	printf("length %d\n", b_tokens->length);
 	return (0);
-}
+}*/
 
 int	ft_check_dol(char *str)
 {
@@ -308,15 +307,9 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	info->nb_cmd = 0;
 	if (!ft_open_fd(b_tokens))
 	{
-		print_tab(b_tokens->cmd_args);
 		if (!b_tokens->par)
-		{
 			if (ft_check_expand(info->tokens, b_tokens->ind_tok_start, b_tokens->length))
-			{
-				dol_expand(&info->tokens, info, b_tokens->ind_tok_start, b_tokens->length);
-				expand_args(b_tokens->cmd_args, info);
-			}
-		}
+				dol_expand(&info->tokens, info, b_tokens);
 		if (sib_child >= 1 && sib_child <= 3)
 			ft_exec_simple(info, b_tokens);
 		else if (sib_child == 4)

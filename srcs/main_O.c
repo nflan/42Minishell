@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:08:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 11:39:25 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/27 18:08:32 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int main_agent_O(t_info *info)
 //	print_s_tokens(&info->tokens, 0, len_ll_list(info->tokens));
 //	printf("\n");
 //	exit (0);
-	if (info->tokens->token == TOK_SEP && !info->tokens->next)
-		return (1);
 	if (syntax_err_handler(&info->tokens))
 	{
 		printf("Error number: %d\n", syntax_err_handler(&info->tokens));

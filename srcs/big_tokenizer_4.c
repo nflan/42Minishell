@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 12:08:10 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 20:42:01 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,17 +140,13 @@ int	ft_fill_fdnew(t_fd *fd, t_token *tmp, int red, int *hd)
 		fd->red = red - 3;
 	if (red == 2)
 	{
-		printf("red = %d\n", red);
 		*hd += 1;
 		fd->delimitator = ft_strdup(tmp->value);
 		if (ft_create_tmp(fd, *hd))
 			return (1);
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		printf("tmp->value = %s && tmp->quoted = %d\n", tmp->value, tmp->quoted);
-		printf("tmp->next->value = %s && tmp->quoted = %d\n", tmp->next->value, tmp->quoted);
 		if (tmp->quoted)
 			red = 5; 
-		printf("red = %d\n", red);
 		ft_here(fd, red);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 16:01:59 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 18:40:28 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,6 @@ typedef struct s_info
 	char		*rdline;
 	int			status;
 	int			nb_cmd;
-	int			tmp_start;
 	t_env		*env;
 	t_big_token	*parse;
 	t_token		*old_tokens;
@@ -495,9 +494,9 @@ char			*str_join_exp(t_token **tokens, int ind, int type);
 char			*ft_strndup(char *str, int len);
 void			expand_1(char **str, int *i, t_info *info);
 void			expand(char **str, t_info *info);
-void			dol_expand(t_token **old_tokens, t_info *info, int start, int length);
+void			dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens);
 int				expanded_toks_check(t_token **tokens);
 void			expanded_toks(t_token **old_tokens, int start, int length);
-void			expand_args(char **str, t_info *info);
+void			expand_args(t_big_token *b_tokens, t_info *info);
 
 #endif
