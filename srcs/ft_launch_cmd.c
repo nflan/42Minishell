@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/26 17:35:05 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 18:07:38 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int	ft_wash_btoken(t_info *info, t_big_token *b_tokens)
 		b_tokens->ind_tok_start++;
 		b_tokens->length--;
 		if (b_tokens->ind_tok_start == len_ll_list(info->tokens))
-		{
-			printf("Que des separateurs dans le bat7 (' ')\n");
 			return (1);
-		}
+	//	{
+		//	printf("Que des separateurs dans le bat7 (' ')\n");
+	//	}
 	}
 	return (0);
 }

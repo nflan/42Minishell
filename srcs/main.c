@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 20:27:09 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/27 22:08:23 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,6 @@ int	ft_init_info(t_info *info)
 {
 	int	err;
 
-	info->tmp_start = 0;
 	err = main_agent_O(info);
 	if (err)
 	{

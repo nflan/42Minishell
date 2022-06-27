@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 16:03:04 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 19:36:31 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,21 +185,24 @@ void expand_1(char **str, int *i, t_info *info)
 		(*i) = ind_dol + add_shit;
 }
 
-void expand_args(char **str, t_info *info)
+void expand_args(t_big_token *b_tokens, t_info *info)
 {
 	int	i;
 	int	j;
+	char	**str;
 
 	i = 0;
+	str = b_tokens->cmd_args;
+	j = 0;
 	if (str)
 	{
-		j = 0;
 		while (str[i])
 		{
+			j = 0;
 			while (str[i][j])
 			{
 				if (str[i][j] == '$')
-					expand_1(&str[i], &j, info);
+					expand_1(&(str[i]), &j, info);
 				j++;
 			}
 			i++;
@@ -212,27 +215,54 @@ void expand(char **str, t_info *info)
 	int i;
 
 	i = 0;
-	while (*str && (*str)[i])
+	if (str)
 	{
+		while (*str && (*str)[i])
+		{
 		// if (str[i] == *)
 		// ft_wildcard(&(str[i]));
-		if ((*str)[i] == '$')
-			expand_1(str, &i, info);
-		else
-			i++;
+			if ((*str)[i] == '$')
+				expand_1(str, &i, info);
+			else
+				i++;
+		}
 	}
 }
 
-void dol_expand(t_token **old_tokens, t_info *info, int start, int length)
+void dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens)
 {
-	t_token *tmp_o;
+	t_token	*tmp_o;
+	int		start;
+	int		length;
+	int		i;
+	int		exp;
 
+	start = b_tokens->ind_tok_start;
+	length = b_tokens->length;
 	tmp_o = *old_tokens;
+	i = 0;
+	exp = 0;
 	move_tok_2_ind(&tmp_o, start);
 	while (tmp_o && length--)
 	{
-		if (tmp_o->token == TOK_WORD || tmp_o->token == TOK_WORD_D_QUOTED)
+		if (tmp_o->token == TOK_WORD && (tmp_o->quoted == 0 || tmp_o->quoted == 2))
+		{
+			if (!ft_strncmp(tmp_o->value, b_tokens->cmd_args[i], ft_strlen(tmp_o->value)))
+			{
+			//	expand((&b_tokens->cmd_args)[i], info);
+				exp = 1;
+			}
 			expand(&tmp_o->value, info);
+			if (exp)
+			{
+				free(b_tokens->cmd_args[i]);
+				b_tokens->cmd_args[i] = ft_strdup(tmp_o->value);
+				exp = 0;
+				i++;
+			}
+		}
+		if (b_tokens->cmd_args[i] && !ft_strncmp(tmp_o->value, b_tokens->cmd_args[i], ft_strlen(tmp_o->value)))
+			i++;
 		tmp_o = tmp_o->next;
 	}
 }
@@ -320,7 +350,6 @@ void expanded_toks(t_token **old_tokens, int start, int length)
 			}
 			else if (exp_check == 3 || exp_check == 8)
 			{
-		//		printf("oscour\n");
 				new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
 				if (!ft_strncmp(tmp_o->next->value, "\"", 1))
 					add_tok_last_bis(&new_tokens, TOK_WORD, 2, new_value);
