@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 13:11:12 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/27 15:53:53 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ int is_quoted(t_token **tok_list, char c)
 	if (sq > 0 && dq > 0 && c == '\'' && tmp->prev && tmp->prev->token == TOK_S_QUOTER)
 		return (3);
 	if (sq > 0 && dq > 0 && c == '\"' && tmp->prev && tmp->prev->token == TOK_D_QUOTER)
+	{
+		printf("I entered hereherehere!\n");
 		return (4);
+	}
 	if (sq < 0 && dq > 0 && c != '\'')
 		return (1);
 	else if (dq < 0 && sq > 0 && c != '\"')

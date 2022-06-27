@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 10:53:42 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 16:01:59 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -498,5 +498,6 @@ void			expand(char **str, t_info *info);
 void			dol_expand(t_token **old_tokens, t_info *info, int start, int length);
 int				expanded_toks_check(t_token **tokens);
 void			expanded_toks(t_token **old_tokens, int start, int length);
+void			expand_args(char **str, t_info *info);
 
 #endif

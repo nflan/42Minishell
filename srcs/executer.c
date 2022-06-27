@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 12:04:47 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 16:01:24 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,13 +308,13 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	info->nb_cmd = 0;
 	if (!ft_open_fd(b_tokens))
 	{
-	//	print_tab(b_tokens->cmd_args);
+		print_tab(b_tokens->cmd_args);
 		if (!b_tokens->par)
 		{
 			if (ft_check_expand(info->tokens, b_tokens->ind_tok_start, b_tokens->length))
 			{
 				dol_expand(&info->tokens, info, b_tokens->ind_tok_start, b_tokens->length);
-				expand(b_tokens->cmd_args, info);
+				expand_args(b_tokens->cmd_args, info);
 			}
 		}
 		if (sib_child >= 1 && sib_child <= 3)

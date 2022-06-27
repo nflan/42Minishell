@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 15:28:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 16:03:04 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,8 @@ void expand_args(char **str, t_info *info)
 					expand_1(&str[i], &j, info);
 				j++;
 			}
+			i++;
 		}
-		i++;
 	}
 }
 
@@ -305,7 +305,7 @@ void expanded_toks(t_token **old_tokens, int start, int length)
 		while (tmp_o && length--)
 		{
 			exp_check = expanded_toks_check(&tmp_o);
-			printf("here is exp_check: %d for tmp: %s\n", exp_check, tmp_o->value);
+//			printf("here is exp_check: %d for tmp: %s\n", exp_check, tmp_o->value);
 			if (exp_check == 1 || exp_check == 2)
 			{
 				new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);
