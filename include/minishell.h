@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/26 19:58:36 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 10:53:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,8 +347,8 @@ int				ft_do_pipex(t_info *info, t_big_token *b_tokens);
 int				ft_pipex(t_info *info, t_big_token *b_tokens);
 
 //---------ft_here_doc.c----------------------------
-void			ft_write_here(t_fd *fd, char *str, int i);
-int				ft_here(t_fd *fd);
+void			ft_write_here(t_fd *fd, char *str, int i, int red);
+int				ft_here(t_fd *fd, int red);
 char			**ft_env_to_tab(t_env *env);
 
 //---------ft_pipex_utils.c----------------------------

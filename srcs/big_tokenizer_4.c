@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/26 20:02:20 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 12:08:10 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,31 +132,35 @@ int	ft_create_tmp(t_fd *fd, int hd)
 	return (0);
 }
 
-int	ft_fill_fdnew(t_fd *fd, char *file, int red, int *hd)
+int	ft_fill_fdnew(t_fd *fd, t_token *tmp, int red, int *hd)
 {
 	if (red == 1 || red == 2)
 		fd->red = red - 1;
 	else
 		fd->red = red - 3;
-	if (!file)
-		return (1);
 	if (red == 2)
 	{
+		printf("red = %d\n", red);
 		*hd += 1;
-		fd->delimitator = ft_strdup(file);
+		fd->delimitator = ft_strdup(tmp->value);
 		if (ft_create_tmp(fd, *hd))
 			return (1);
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		ft_here(fd);
+		printf("tmp->value = %s && tmp->quoted = %d\n", tmp->value, tmp->quoted);
+		printf("tmp->next->value = %s && tmp->quoted = %d\n", tmp->next->value, tmp->quoted);
+		if (tmp->quoted)
+			red = 5; 
+		printf("red = %d\n", red);
+		ft_here(fd, red);
 	}
 	else
-		fd->file = ft_strdup(file);
+		fd->file = ft_strdup(tmp->value);
 	if (!fd->file)
 		return (1);
 	return (0);
 }
 
-int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, char *file, int red)
+int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token *tmp, int red)
 {
 	t_fd	*new;
 
@@ -164,7 +168,7 @@ int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, char *file, int red)
 	if (!new)
 		return (ft_putstr_error("Malloc error in ft_fdnew "));
 	new->info = b_tokens->info;
-	if (ft_fill_fdnew(new, file, red, &(b_tokens)->nb_hd))
+	if (ft_fill_fdnew(new, tmp, red, &(b_tokens)->nb_hd))
 		return (ft_putstr_error("Malloc error in ft_fdnew "));
 	ft_fdadd_back(fd, new);
 	return (0);
@@ -306,11 +310,11 @@ int	handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_info *info, int ind_w
 		{
 			if (type_red == 1 || type_red == 2)
 			{
-				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_in, tmp->value, type_red))
+				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_in, tmp, type_red))
 					return (ft_putstr_error("in handle par dir "));
 			}
 			else
-				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_out, tmp->value, type_red))
+				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_out, tmp, type_red))
 					return (ft_putstr_error("in handle par dir "));
 			i++;
 		}
@@ -355,31 +359,30 @@ int	handle_dir(t_big_token **tmp_b, t_info *info)
 	{
 		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(i % 2))
 		{
-	//		printf("I entered in rd\n");
-	//		printf("%s\n", tmp->value);
+		//	printf("I entered in rd\n");
+		//	printf("%s\n", tmp->value);
 			rd_inout_type(tmp->value, &type_red);
 			i++;
 			save_word = 1;
 		}
 		else if ((tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) && !save_word) // ajout des mots quoted comme args
 		{
-//			printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
+		//	printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
 			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);
 			if (!(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num])
 				return (ft_putstr_error("Malloc error in ft_strdup in handle dir "));
 			cmd_args_num--;
 		}
-		else if (tmp->token == TOK_WORD && (i % 2) && save_word)
+		else if ((tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) && (i % 2) && save_word)
 		{
 //	printf("I entered red files\n");
-//			printf("%s\n", tmp->value);
 			if (type_red == 1 || type_red == 2)
 			{
-				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_in, tmp->value, type_red))
+				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_in, tmp, type_red))
 					return (ft_putstr_error("in handle dir "));
 			}
 			else
-				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_out, tmp->value, type_red))
+				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_out, tmp, type_red))
 					return (ft_putstr_error("in handle dir "));
 			save_word = 0;
 //	handle_red_files(tmp_b, tmp->value, &inouthd, type_red);

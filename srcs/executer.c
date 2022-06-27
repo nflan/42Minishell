@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/26 17:31:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 12:04:47 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd)
 	{
 		while (tmp_fd)
 		{
+			printf("fd->delimitor = %s\n", tmp_fd->delimitator);
 			tmp_fd->fd = open(tmp_fd->file, O_RDONLY);
 			if (tmp_fd->fd < 0)
 			{
@@ -213,6 +214,7 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 	t_big_token	*tmp_b;
 
 	tmp_b = b_tokens;
+//	print_tab(b_tokens->cmd_args);
 	if (ft_wash_btoken(info, tmp_b))
 		return (2147483647);
 	if (tmp_b->sc == -1)
@@ -248,7 +250,7 @@ int	ft_recreate_cmd(t_big_token *b_tokens, t_info *info)
 //		printf("value = %s && type = %d\n", tmp_s->value, tmp_s->token);
 		if (tmp_s->token == TOK_WORD)
 		{
-	//		printf("tmp_s->value = %s\n", tmp_s->value);
+			printf("tmp_s->value = %s\n", tmp_s->value);
 			b_tokens->cmd_args[i] = ft_strdup(tmp_s->value);
 			if (!b_tokens->cmd_args[i])
 				return (1);
@@ -310,12 +312,9 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 		if (!b_tokens->par)
 		{
 			if (ft_check_expand(info->tokens, b_tokens->ind_tok_start, b_tokens->length))
-		{
+			{
 				dol_expand(&info->tokens, info, b_tokens->ind_tok_start, b_tokens->length);
-				expanded_toks(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
-				index_toks(&info->tokens);
-				if (ft_recreate_cmd(b_tokens, info))
-					return (1);
+				expand(b_tokens->cmd_args, info);
 			}
 		}
 		if (sib_child >= 1 && sib_child <= 3)

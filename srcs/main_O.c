@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:08:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/26 18:36:20 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 11:42:52 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int main_agent_O(t_info *info)
 		printf("Error number: %d\n", syntax_err_handler(&info->tokens));
 		return (ft_putstr_error("Syntax error\n"));
 	}
+	expanded_toks(&info->tokens, 0, len_ll_list(info->tokens));
+	index_toks(&info->tokens);
 	btok_info[0] = 0;
 	btok_info[1] = len_ll_list(info->tokens);
 	if (parse(&info->parse, info, btok_info))
@@ -65,6 +67,5 @@ int main_agent_O(t_info *info)
 //	print_tab(tmp_b->cmd_args);
 	if (info->nb_cmd == 10)
 		print_all_everything(&info->parse, &info->tokens);
-	exit(0);
 	return (0);
 }

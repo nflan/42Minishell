@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/26 15:25:11 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 12:04:24 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,28 @@ void expand_1(char **str, int *i, t_info *info)
 		return ;
 	if (add_shit)
 		(*i) = ind_dol + add_shit;
+}
+
+void expand_args(char **str, t_info *info)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	if (str)
+	{
+		j = 0;
+		while (str[i])
+		{
+			while (str[i][j])
+			{
+				if (str[i][j] == '$')
+					expand_1(&str[i], &j, info);
+				j++;
+			}
+		}
+		i++;
+	}
 }
 
 void expand(char **str, t_info *info)
