@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/28 18:43:21 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/28 21:29:41 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,7 @@ int				detect_tokens(t_info *info);
 int				fill_tok_value(t_token **tok, char *str);
 char			*ft_strncpy(char *str, int n);
 void			index_toks(t_token **tokens);
+int				add_tok(t_token **tokens, int st, int len, t_tok_type type);
 
 //-----------syntax_errorinizer_1.c--------------------------------------------------
 
@@ -361,8 +362,11 @@ void			move_tok_2_ind(t_token **tokens, int ind);
 
 //-----------big_tokenizer_2.c-----------------------------------------------------
 
-int				cl_par_ind(t_token **tokens, int ind_tok);
 int				divide_by_or_and(t_big_token **b_tokens, t_info *info, int btok_info[2]);
+
+//-----------big_tokenizer_5.c-----------------------------------------------------
+
+int				cl_par_ind(t_token **tokens, int ind_tok);
 int				piped(t_info *info, int start, int length);
 int				sophisticated_piped(t_token **tokens, int start, int length);
 
@@ -399,5 +403,6 @@ void			expand_args(t_big_token *b_tokens, t_info *info);
 //---------------init_tok_type_tab.c-------------------------------------------------
 
 void			init_tok_type_tab(t_tok_type (*tok_type_tab)[127]);
+
 
 #endif

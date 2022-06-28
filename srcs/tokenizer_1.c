@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/28 11:26:07 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/28 21:07:42 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,16 @@ int is_quoted(t_token **tok_list, char c)
 			dq *= -1;
 		tmp = tmp->prev;
 	}
-//	printf("I'm checking if this is a quoted char: %c, btw his sq is : %d and his dq: %d is and his tmp->prev-type is : %d\n", c, sq, dq, tmp->prev->token);
 	tmp = *tok_list;
 	if (sq < 0 && dq > 0 && c == '\'' && tmp && tmp->token == TOK_S_QUOTER)
 		return (3);
-	//	return (printf("cas: 3\n"), 3);
 	if (sq > 0 && dq < 0 && c == '\"' && tmp && tmp->token == TOK_D_QUOTER)
 		return (4);
-	//	return (printf("cas: 4\n"),4);
 	if (sq < 0 && dq > 0 && c != '\'')
 		return (1);
-	//	return (printf("cas: 1\n"),1);
 	else if (dq < 0 && sq > 0 && c != '\"')
 		return (2);
-	//	return (printf("cas: 2\n"),2);
 	return (0);
-//	return (printf("cas: 0\n"),0);
 }
 
 unsigned int get_real_tok_type(char c, t_token **tok_list, t_tok_type *tok_type_tab)
@@ -74,7 +68,6 @@ unsigned int get_real_tok_type(char c, t_token **tok_list, t_tok_type *tok_type_
 	last_tok = *tok_list;
 	while (last_tok->next)
 		last_tok = last_tok->next;
-	// printf("for this char: %c, this is the last tok's type %d\n", c, last_tok->token);
 	is_qted = is_quoted(&last_tok, c);
 	if (is_qted == 1)
 		return (TOK_WORD_S_QUOTED);
