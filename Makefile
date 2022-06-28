@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 17:27:46 by nflan             #+#    #+#              #
-#    Updated: 2022/06/23 17:52:12 by nflan            ###   ########.fr        #
+#    Updated: 2022/06/27 21:54:52 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  syntax_errorinizer_1.c syntax_errorinizer_2.c\
 		  tree_manipulator.c ft_launch_cmd.c ft_echo.c main_O.c\
 		  printer.c executer.c ft_free.c ft_free2.c dollar_expander.c\
-		  ft_wildcards_check.c ft_wildcards_tools.c ft_wildcards_do.c ft_signal.c
+		  ft_wildcards_check.c ft_wildcards_tools.c ft_wildcards_do.c ft_signal.c\
+		  init_tok_type_tab.c\
 
 INC = include/minishell.h
 

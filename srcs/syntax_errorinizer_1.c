@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 13:24:13 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/27 18:44:54 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,15 @@ int	check_count_errors(t_token **tokens)
 	tmp = *tokens;
 	while (tmp)
 	{
-		if ((tmp->token == TOK_OPERATOR || tmp->token == TOK_REDIRECTOR_RIGHT || tmp->token == TOK_REDIRECTOR_LEFT) && ft_strlen(tmp->value) > 2)
-			return (1);
+		if (tmp->token == TOK_OPERATOR || tmp->token == TOK_REDIRECTOR_RIGHT || tmp->token == TOK_REDIRECTOR_LEFT)
+		{
+			if ((tmp->value)[0] == '&' && (ft_strlen(tmp->value) != 2))
+				return (1);
+			else if (ft_strlen(tmp->value) > 2)
+				return (2);
+		}
 		else if ((tmp->token == TOK_EXPANDER_OP || tmp->token == TOK_EXPANDER_CL) && ft_strlen(tmp->value) > 1)
-			return (1); //I'm not sure I need this anymore, since I conditioned the script to put a par and only a par in an EXPANDER_OP_TOK or EXPANDER_CL_TOK token - I'll leave it for what it's worth since it's extra security
+			return (3); //I'm not sure I need this anymore, since I conditioned the script to put a par and only a par in an EXPANDER_OP_TOK or EXPANDER_CL_TOK token - I'll leave it for what it's worth since it's extra security
 		tmp = tmp->next;
 	}
 	return (0);

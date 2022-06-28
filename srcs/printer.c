@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 15:30:46 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 20:09:31 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 		printf("\nWelcome in the parent: %d\n", i);
 		printf("\n");
 		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
-		exit (0);
 		printf("   --->>    ");
 	//	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
 		print_tab(tmp_b->cmd_args);

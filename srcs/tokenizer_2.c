@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 15:49:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 21:54:07 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ if (tok_type != TOK_EXPANDER_OP && tok_type != TOK_EXPANDER_CL && tok_type != TO
 return (0);
 }
 
-int detect_tokens(t_token **tok_list, char *str)
+int detect_tokens(t_info *info)
 {
 	int i;
 	unsigned int tok_type;
@@ -81,40 +81,42 @@ int detect_tokens(t_token **tok_list, char *str)
 	int start;
 
 	i = 0;
-	if (!str)
+	if (!info->rdline)
 		return (ft_putstr_error("Command error in detect_tokens "));
-	while (str[i])
+	while (info->rdline[i])
 	{
+		printf("i: %d\n", i);
 		length = 1;
 		start = i;
-		tok_type = get_real_tok_type(str[i], tok_list);
+		tok_type = get_real_tok_type(info->rdline[i], &(info->tokens), info->tok_type_tab);
 		i++;
-		while (str[i] && check_tok_type(tok_type) && (get_real_tok_type(str[i], tok_list) == tok_type))
+		while (info->rdline[i] && check_tok_type(tok_type) && (get_real_tok_type(info->rdline[i], &(info->tokens), info->tok_type_tab) == tok_type))
 		{
+			if (tok_type == TOK_OPERATOR && strncmp(&(info->rdline[i]), &(info->rdline[i - 1]), 1))
+				break ;
 			length++;
 			i++;
 		}
 		if (tok_type == TOK_WORD_NULL_S || tok_type == TOK_WORD_NULL_D)
 		{
-			printf("I entered here\n");
 			if (tok_type == TOK_WORD_NULL_S)
 			{
-			if (add_tok_last(tok_list, TOK_WORD_S_QUOTED, 0, start))
+			if (add_tok_last(&(info->tokens), TOK_WORD_S_QUOTED, 0, start))
 				return (ft_putstr_error("detect_tokens "));
-			if (add_tok_last(tok_list, TOK_S_QUOTER, length, start))
+			if (add_tok_last(&(info->tokens), TOK_S_QUOTER, length, start))
 				return (ft_putstr_error("detect_tokens "));
 			}
 			else
 			{
-			if (add_tok_last(tok_list, TOK_WORD_D_QUOTED, 0, start))
+			if (add_tok_last(&(info->tokens), TOK_WORD_D_QUOTED, 0, start))
 				return (ft_putstr_error("detect_tokens "));
-			if (add_tok_last(tok_list, TOK_D_QUOTER, length, start))
+			if (add_tok_last(&(info->tokens), TOK_D_QUOTER, length, start))
 				return (ft_putstr_error("detect_tokens "));
 			}
 		}
 		else
 		{
-			if (add_tok_last(tok_list, tok_type, length, start))
+			if (add_tok_last(&(info->tokens), tok_type, length, start))
 				return (ft_putstr_error("detect_tokens "));
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 17:59:28 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 22:08:23 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ int	ft_init_first(t_info *info, char **envp)
 	info->old_tokens = NULL;
 	info->tokens = NULL;
 	info->pid = NULL;
+	init_tok_type_tab(&(info->tok_type_tab));
 	if (ft_init_env(info, envp))
 		return (ft_putstr_error("Error create env\n"));
 	signal(SIGINT, &ft_signal);

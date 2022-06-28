@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 15:53:53 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/27 21:52:05 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,43 +44,43 @@ int is_quoted(t_token **tok_list, char c)
 			dq *= -1;
 		tmp = tmp->prev;
 	}
+//	printf("I'm checking if this is a quoted char: %c, btw his sq is : %d and his dq: %d is and his tmp->prev-type is : %d\n", c, sq, dq, tmp->prev->token);
 	tmp = *tok_list;
-	if (sq > 0 && dq > 0 && c == '\'' && tmp->prev && tmp->prev->token == TOK_S_QUOTER)
-		return (3);
-	if (sq > 0 && dq > 0 && c == '\"' && tmp->prev && tmp->prev->token == TOK_D_QUOTER)
-	{
-		printf("I entered hereherehere!\n");
-		return (4);
-	}
+	if (sq < 0 && dq > 0 && c == '\'' && tmp && tmp->token == TOK_S_QUOTER)
+		return (printf("cas: 3\n"), 3);
+	if (sq > 0 && dq < 0 && c == '\"' && tmp && tmp->token == TOK_D_QUOTER)
+		return (printf("cas: 4\n"),4);
 	if (sq < 0 && dq > 0 && c != '\'')
-		return (1);
+		return (printf("cas: 1\n"),1);
 	else if (dq < 0 && sq > 0 && c != '\"')
-		return (2);
-	return (0);
+		return (printf("cas: 2\n"),2);
+	return (printf("cas: 0\n"),0);
 }
 
-unsigned int get_real_tok_type(char c, t_token **tok_list)
+unsigned int get_real_tok_type(char c, t_token **tok_list, t_tok_type *tok_type_tab)
 {
 	int len;
 	t_token	*last_tok;
+	int	is_qted;
 
 	len = len_ll_list(*tok_list);
 	if (len == 0)
-		return (get_tok_type[get_char_class[(int)c]]);
+		return (tok_type_tab[(int)c]);
 	last_tok = *tok_list;
 	while (last_tok->next)
 		last_tok = last_tok->next;
 	// printf("for this char: %c, this is the last tok's type %d\n", c, last_tok->token);
-	if (is_quoted(&last_tok, c) == 1)
+	is_qted = is_quoted(&last_tok, c);
+	if (is_qted == 1)
 		return (TOK_WORD_S_QUOTED);
-	else if (is_quoted(&last_tok, c) == 2)
+	else if (is_qted == 2)
 		return (TOK_WORD_D_QUOTED);
-	else if (is_quoted(&last_tok, c) == 3)
+	else if (is_qted == 3)
 		return (TOK_WORD_NULL_S);
-	else if (is_quoted(&last_tok, c) == 4)
+	else if (is_qted == 4)
 		return (TOK_WORD_NULL_D);
 	else
-		return (get_tok_type[get_char_class[(int)c]]);
+		return (tok_type_tab[(int)c]);
 	return (-1);
 }
 
