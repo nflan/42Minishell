@@ -90,6 +90,11 @@ int	ft_export(t_info *info, t_big_token *b_tokens)
 		else
 			ft_export_replace(tmp, b_tokens->cmd_args[1], i, j);
 	}
+	if (ft_get_env_value(info, "HOME"))
+	{
+		free(info->home);
+		info->home = ft_strdup(ft_get_env_value(info, "HOME"));
+	}
 	ft_not_valid_id(b_tokens->cmd_args);
 	return (0);
 }

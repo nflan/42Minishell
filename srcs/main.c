@@ -48,5 +48,6 @@ int	main(int ac, char **av, char **envp)
 		g_sc = 0;
 	}
 	ft_free_env(info.env);
+	free(info.home);
 	ft_exit(&info, NULL);
 }

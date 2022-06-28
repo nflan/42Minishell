@@ -180,6 +180,7 @@ typedef struct s_info
 	t_token		*old_tokens;
 	t_token		*tokens;
 	int			*pid;
+	char		*home;
 	int			pdes[2];
 	int			tmp[2];
 }	t_info;

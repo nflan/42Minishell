@@ -60,6 +60,7 @@ int	ft_init_first(t_info *info, char **envp)
 	init_tok_type_tab(&(info->tok_type_tab));
 	if (ft_init_env(info, envp))
 		return (ft_putstr_error("Error create env\n"));
+	info->home = ft_strdup(ft_get_env_value(info, "HOME"));
 	signal(SIGINT, &ft_signal);
 	signal(SIGQUIT, SIG_IGN);
 	return (0);
