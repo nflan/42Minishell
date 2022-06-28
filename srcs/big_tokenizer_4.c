@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 20:42:01 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/28 18:27:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,18 +180,32 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 	count = 0;
 	red = 0;
 	move_tok_2_ind(&tmp, ind);
-	while (tmp && len--)
+	while (tmp && len)
 	{
 		if (tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT)
+		{
 			red = 1;
-		if (tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) // ajout des mots quoted comme args
+			tmp = tmp->next;
+			len--;
+		}
+		else if (tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) // ajout des mots quoted comme args
 		{
 			if (!red)
+			{
+				while (len && tmp->token != TOK_SEP)
+				{
+					tmp = tmp->next;
+					len--;
+				}
 				count++;
+			}
 			else
+			{
+				tmp = tmp->next;
+				len--;
 				red = 0;
+			}
 		}
-		tmp = tmp->next;
 	}
 	(*tmp_b)->cmd_args = ft_calloc(sizeof(char *), count + 1);
 	(*tmp_b)->cmd_args_num = count;
@@ -328,13 +342,11 @@ int	handle_dir(t_big_token **tmp_b, t_info *info)
 	t_token *tmp;
 	int i;
 	int j;
-//	int to_where_check;
 	int type_red;
 	int len;
 	int save_word;
 	int	cmd_args_num;
 
-//	printf("I'm here houbbiiiii!!!\n");
 	tmp = info->tokens;
 	i = 0;
 	j = 0;
@@ -344,34 +356,30 @@ int	handle_dir(t_big_token **tmp_b, t_info *info)
 	move_tok_2_ind(&tmp, (*tmp_b)->ind_tok_start);
 	count_cmd_args(tmp_b, (*tmp_b)->ind_tok_start, (&info->tokens), (*tmp_b)->length);
 	cmd_args_num = (*tmp_b)->cmd_args_num;
-//	printf("choufi hada: %d\n", cmd_args_num);
-//	printf("tmpb_len: %d et tmpb_start: %d\n", (*tmp_b)->length, (*tmp_b)->ind_tok_start);
-//	printf("------------\n");
-//	print_s_tokens(tokens, (*tmp_b)->ind_tok_start, (*tmp_b)->length);
-//	print_b_tokens(tmp_b, tokens, 1, 1);
-//	printf("------------\n");
 	type_red = 0;
 	while (tmp && j < len)
 	{
 		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(i % 2))
 		{
-		//	printf("I entered in rd\n");
-		//	printf("%s\n", tmp->value);
 			rd_inout_type(tmp->value, &type_red);
 			i++;
 			save_word = 1;
 		}
-		else if ((tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) && !save_word) // ajout des mots quoted comme args
+		else if ((tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) && !save_word)
 		{
-		//	printf("I entered arg avec i = %d - %d avec tmp->value = %s\n", (*tmp_b)->cmd_args_num, cmd_args_num, tmp->value);
-			(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strdup(tmp->value);
+				while (j < len && tmp->token != TOK_SEP && tmp)
+				{
+				(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strjoin_free((*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num], tmp->value, 1);
 			if (!(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num])
 				return (ft_putstr_error("Malloc error in ft_strdup in handle dir "));
+				j++;
+				tmp = tmp->next;
+				}
+				//function that fills the arg with everything before reaching the SEP)
 			cmd_args_num--;
 		}
 		else if ((tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) && (i % 2) && save_word)
 		{
-//	printf("I entered red files\n");
 			if (type_red == 1 || type_red == 2)
 			{
 				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_in, tmp, type_red))
@@ -381,7 +389,6 @@ int	handle_dir(t_big_token **tmp_b, t_info *info)
 				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_out, tmp, type_red))
 					return (ft_putstr_error("in handle dir "));
 			save_word = 0;
-//	handle_red_files(tmp_b, tmp->value, &inouthd, type_red);
 			i++;
 		}
 		tmp = tmp->next;
