@@ -91,14 +91,14 @@ typedef enum s_char_type
 typedef struct s_token
 {
 	//	int						sp_after;
-	int		index;
-	int 	start;
-	int 	length;
-	char	*value;
-	t_tok_type token;
-	int 	quoted; //1- dol quoted 2- d quoted 3- s quoted
-	struct s_token *prev;
-	struct s_token *next;
+	int				index;
+	int				start;
+	int				length;
+	char			*value;
+	t_tok_type		token;
+	int				quoted; //1- dol quoted 2- d quoted 3- s quoted
+	struct s_token	*prev;
+	struct s_token	*next;
 } 			t_token;
 
 typedef enum s_big_tok_type
@@ -185,48 +185,58 @@ typedef struct s_info
 }	t_info;
 
 //-----------main.c------------------------------------------
-void	ft_envadd_back(t_env **alst, t_env *new);
-int		ft_fill_envnew(t_env *env, char *line);
-t_env	*ft_envnew(char *line);
-void	ft_cmd_signal(int sig);
-void	ft_signal(int sig);
+
+//-----------ft_start.c------------------------------------------
+int				ft_keep_history(char *str);
+int				ft_init_info(t_info *info);
+char			*ft_rdline_word(t_info *info);
+int				ft_init_first(t_info *info, char **envp);
+
+//-----------ft_env_tools.c------------------------------------------
+void			ft_envadd_back(t_env **alst, t_env *new);
+t_env			*ft_envnew(char *line);
+t_env			*ft_without_env(int i);
+int				ft_fill_envnew(t_env *env, char *line);
+//-----------ft_env_tools2.c------------------------------------------
+int				ft_init_env(t_info *info, char **envp);
+
 
 //-----------ft_launch_cmd----------------------------------------
-int	ft_exit_cmd(t_info *info, char *str, int err);
-int	ft_wash_btoken(t_info *info, t_big_token *b_tokens);
-int	ft_check_builtins(t_big_token *b_tokens);
-int	ft_builtins(t_info *info, t_big_token *b_tokens);
-int	ft_launch_sibling(t_info *info, t_big_token *b_tokens);
-void	ft_close_pdes(int fd, int pdes);
-void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child);
-int	ft_lead_fd(t_info *info, t_big_token *b_tokens);
-int	ft_launch_cmd(t_info *info, t_big_token *b_tokens);
-int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid);
-int	ft_find_cmd(t_info *info);
+int				ft_exit_cmd(t_info *info, char *str, int err);
+int				ft_wash_btoken(t_info *info, t_big_token *b_tokens);
+int				ft_check_builtins(t_big_token *b_tokens);
+int				ft_builtins(t_info *info, t_big_token *b_tokens);
+int				ft_launch_sibling(t_info *info, t_big_token *b_tokens);
+void			ft_close_pdes(int fd, int pdes);
+void			ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child);
+int				ft_lead_fd(t_info *info, t_big_token *b_tokens);
+int				ft_launch_cmd(t_info *info, t_big_token *b_tokens);
+int				ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid);
+int				ft_find_cmd(t_info *info);
 
 //-----------builtins----------------------------------------
-int		ft_pwd(void);
-int		ft_env(t_info *info);
-//int	ft_exit(t_info *env, int ret);
-int		ft_exit(t_info *info, t_big_token *b_tokens);
-t_env	*ft_unset(t_info *info, t_big_token *b_tokens);
+int				ft_pwd(void);
+int				ft_env(t_info *info);
+//int			ft_exit(t_info *env, int ret);
+int				ft_exit(t_info *info, t_big_token *b_tokens);
+t_env			*ft_unset(t_info *info, t_big_token *b_tokens);
 //-----------ft_cd.c-----------------------------------------
-int		ft_cd(t_info *info, t_big_token *b_tokens);
+int				ft_cd(t_info *info, t_big_token *b_tokens);
 //-----------ft_export.c-------------------------------------
-int		ft_export(t_info *info, t_big_token *b_tokens);
+int				ft_export(t_info *info, t_big_token *b_tokens);
 //-----------ft_echo.c-------------------------------------
-int		ft_echo(t_info *info, t_big_token *b_tokens);
-char	*ft_create_echo(t_info *info, t_big_token *b_tokens, char *tmp, int i);
-int		ft_echo_none(t_big_token *b_tokens, int i);
-int		ft_handle_ret(t_big_token *b_tokens, char *ret, int i);
-int		ft_option_echo(t_big_token *b_tokens, int i);
+int				ft_echo(t_info *info, t_big_token *b_tokens);
+char			*ft_create_echo(t_info *info, t_big_token *b_tokens, char *tmp, int i);
+int				ft_echo_none(t_big_token *b_tokens, int i);
+int				ft_handle_ret(t_big_token *b_tokens, char *ret, int i);
+int				ft_option_echo(t_big_token *b_tokens, int i);
 
 //-----------ft_tools.c--------------------------------
-int	ft_putstr_error(char *error);
-int	ft_putstr_frror(char *error, char *str, int i);
-int	ft_perror(char *error, char *str);
-int	ft_perror_free(char *error, char *str, int i);
-char	*ft_get_env_value(t_info *info, char *name);
+int				ft_putstr_error(char *error);
+int				ft_putstr_frror(char *error, char *str, int i);
+int				ft_perror(char *error, char *str);
+int				ft_perror_free(char *error, char *str, int i);
+char			*ft_get_env_value(t_info *info, char *name);
 
 //----------ft_pipex.c---------------------------------
 int				ft_do_pipex(t_info *info, t_big_token *b_tokens);
@@ -238,47 +248,47 @@ int				ft_here(t_fd *fd, int red);
 char			**ft_env_to_tab(t_env *env);
 
 //---------ft_pipex_utils.c----------------------------
-int			ft_cmd_path(t_info *info, t_big_token *b_tokens);
-int			ft_command(t_info *info, t_big_token *b_tokens);
+int				ft_cmd_path(t_info *info, t_big_token *b_tokens);
+int				ft_command(t_info *info, t_big_token *b_tokens);
 
 //---------ft_pipex_tools2.c---------------------------
-void	ft_error_2(int i, t_info *info, t_big_token *b_tokens);
-int		ft_error(int i, t_info *info, t_big_token *b_tokens);
+void			ft_error_2(int i, t_info *info, t_big_token *b_tokens);
+int				ft_error(int i, t_info *info, t_big_token *b_tokens);
 
 //-----------------ft_free.c---------------------------
-void	ft_signal(int sig);
-void	ft_cmd_signal(int sig);
-void	ft_manage_sig(int sig);
+void			ft_signal(int sig);
+void			ft_cmd_signal(int sig);
+void			ft_manage_sig(int sig);
 
 //-----------------ft_free.c---------------------------
-void	ft_free_wildcards(t_wildcards *wd);
-void	ft_free_all(t_info *info, t_env *env);
-void	ft_free_b_tokens(t_big_token *b_tokens);
-void	ft_free_fd(t_fd *fd);
-void	ft_free_cmd(t_big_token *b_tokens);
+void			ft_free_wildcards(t_wildcards *wd);
+void			ft_free_all(t_info *info, t_env *env);
+void			ft_free_b_tokens(t_big_token *b_tokens);
+void			ft_free_fd(t_fd *fd);
+void			ft_free_cmd(t_big_token *b_tokens);
 //-----------------ft_free2.c--------------------------
-void	ft_free_tokens(t_token *tokens);
-void	ft_free_env(t_env *env);
+void			ft_free_tokens(t_token *tokens);
+void			ft_free_env(t_env *env);
 
 // WILDCARDS
 //-----------------ft_wildcards_check.c---------------------------
-int		ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i);
-int		ft_add_wildcards(t_info *info, t_big_token *b_tokens);
-int		ft_keep(char *str, char *dir, int *i, int j);
-int		ft_do_keep(char *str, t_wildcards *wd, int type);
-int		ft_wd_nb_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type);
+int				ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i);
+int				ft_add_wildcards(t_info *info, t_big_token *b_tokens);
+int				ft_keep(char *str, char *dir, int *i, int j);
+int				ft_do_keep(char *str, t_wildcards *wd, int type);
+int				ft_wd_nb_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type);
 
 //-----------------ft_wildcards_tools.c---------------------------
-void	ft_wdadd_back(t_wildcards **alst, t_wildcards *new);
-int		ft_wildcardsnew(t_wildcards **wd, struct dirent *dir, DIR *fd);
-int		ft_strlen_before_ast(char *str);
-int		ft_manage_type(char *str, char *dir, int d_type, int type);
-int		ft_get_wildcards(t_wildcards **wd);
+void			ft_wdadd_back(t_wildcards **alst, t_wildcards *new);
+int				ft_wildcardsnew(t_wildcards **wd, struct dirent *dir, DIR *fd);
+int				ft_strlen_before_ast(char *str);
+int				ft_manage_type(char *str, char *dir, int d_type, int type);
+int				ft_get_wildcards(t_wildcards **wd);
 
 //-----------------ft_wildcards_do.c---------------------------
-char	**ft_fill_old_args(t_big_token *b_tokens, char **tmp, int j, int list);
-int		ft_realloc_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type);
-int		ft_do_wildcards(t_big_token *b_tokens, int i);
+char			**ft_fill_old_args(t_big_token *b_tokens, char **tmp, int j, int list);
+int				ft_realloc_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type);
+int				ft_do_wildcards(t_big_token *b_tokens, int i);
 
 // AGENT O
 //----------main_O.c-------------------------------------------------------------------
@@ -308,8 +318,8 @@ void			print_s_tokens(t_token **tokens, int start, int length);
 
 //----------tokenizer_1.c-------------------------------------------------------------
 
-int 			len_ll_list(t_token *tok_list);
-int 			is_quoted(t_token **tok_list, char c);
+int				len_ll_list(t_token *tok_list);
+int				is_quoted(t_token **tok_list, char c);
 unsigned int	get_real_tok_type(char c, t_token **tok_list, t_tok_type *tok_type_tab);
 t_token 		*ft_create_token(t_tok_type tok_type, int length, int i);
 t_token			*create_tok_bis(t_tok_type tok_type, int quoted, char *value);
@@ -321,16 +331,16 @@ int				add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i);
 void			add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char *value);
 int				detect_tokens(t_info *info);
 int				fill_tok_value(t_token **tok, char *str);
-char 			*ft_strncpy(char *str, int n);
+char			*ft_strncpy(char *str, int n);
 void			index_toks(t_token **tokens);
 
 //-----------syntax_errorinizer_1.c--------------------------------------------------
 
-int 			count_op_tok(t_token **tokens);
-int 			count_cl_tok(t_token **tokens);
-int 			check_count_errors(t_token **tokens);
-int 			r_quotes_impair(t_token **tokens);
-int 			is_last_op(t_token **tokens);
+int				count_op_tok(t_token **tokens);
+int				count_cl_tok(t_token **tokens);
+int				check_count_errors(t_token **tokens);
+int				r_quotes_impair(t_token **tokens);
+int				is_last_op(t_token **tokens);
 
 //-----------syntax_errorinizer_2.c----------------------------------------
 
@@ -346,32 +356,32 @@ int				is_red_st_par(t_big_token *b_tokens, t_token *tokens);
 t_big_token		*ft_create_btoken(t_big_tok_type type, int ind_tok_start, int length, t_info *info);
 int				add_b_tok_sib_last(t_big_token **b_tok_list, t_big_tok_type type, int btok_info[2], t_info *info);
 int				check_divider_type(char *tmp_value);
-// int				is_cl_2_op(char *value_tok_op, char *value_tok_cl);
+// int			is_cl_2_op(char *value_tok_op, char *value_tok_cl);
 void			move_tok_2_ind(t_token **tokens, int ind);
 
 //-----------big_tokenizer_2.c-----------------------------------------------------
 
 int				cl_par_ind(t_token **tokens, int ind_tok);
 int				divide_by_or_and(t_big_token **b_tokens, t_info *info, int btok_info[2]);
-int	piped(t_info *info, int start, int length);
+int				piped(t_info *info, int start, int length);
 int				sophisticated_piped(t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c---------------------------------------------------------
 
-int			handle_par(t_big_token **b_tokens, t_info *info);
+int				handle_par(t_big_token **b_tokens, t_info *info);
 
 //-----------big_tokenizer_3.c--------------------------------------------------
 
 // void		divide_by_or_and(t_big_token **b_tokens, t_token **tokens);
-int			divide_by_pipe(t_big_token **b_tokens, t_info *info);
+int				divide_by_pipe(t_big_token **b_tokens, t_info *info);
 
 //------------printer.c--------------------------------------------------------
-void	ft_print_wildcards(t_wildcards *wd);
-void print_b_tokens(t_big_token **b_token, t_token **tokens, int i, int j);
-void print_s_tokens(t_token **tokens, int start, int length);
-int	depth_b_token(t_big_token **b_token);
-void	print_all_everything(t_big_token **b_tokens, t_token **tokens);
-void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
+void			ft_print_wildcards(t_wildcards *wd);
+void			print_b_tokens(t_big_token **b_token, t_token **tokens, int i, int j);
+void			print_s_tokens(t_token **tokens, int start, int length);
+int				depth_b_token(t_big_token **b_token);
+void			print_all_everything(t_big_token **b_tokens, t_token **tokens);
+void			print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j);
 
 //---------------dollar_expander.c------------------------------------------
 char			*expand_join(char *s1, char *s2, char *s3);
@@ -385,7 +395,7 @@ void			dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens);
 int				expanded_toks_check(t_token **tokens);
 void			expanded_toks(t_token **old_tokens, int start, int length);
 void			expand_args(t_big_token *b_tokens, t_info *info);
-
+	
 //---------------init_tok_type_tab.c-------------------------------------------------
 
 void			init_tok_type_tab(t_tok_type (*tok_type_tab)[127]);
