@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 19:36:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/28 11:50:05 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,10 @@ void expand_1(char **str, int *i, t_info *info)
 			(*i)++;
 		}
 		to_look_up = ft_strndup(&(s[ind_dol + 1]), ((*i) - ind_dol - 1));
-		if (s[*i - 1] != '?')
+		if (s[*i - 1] != '?' && ft_get_env_value(info, to_look_up))
 			tmp[1] = ft_strdup(ft_get_env_value(info, to_look_up));
+		else
+			tmp[1] = ft_strdup(to_look_up);
 		if (tmp[1])
 			add_shit = ft_strlen(tmp[1]);
 	}
@@ -175,14 +177,16 @@ void expand_1(char **str, int *i, t_info *info)
 		tmp[2] = ft_strndup(&(s[ind_dol + ft_strlen(to_look_up) + 1]), (ft_strlen(s) - ind_dol - ft_strlen(to_look_up) - 1));
 	free(to_look_up);
 	free(*str);
+	printf("tmp[0] = %s && tmp[1] = %s && tmp[2] = %s\n", tmp[0], tmp[1], tmp[2]);
 	(*str) = expand_join(tmp[0], tmp[1], tmp[2]);
+	printf("str = %s\n", *str);
 	free(tmp[0]);
 	free(tmp[1]);
 	free(tmp[2]);
 	if (!(*str))
 		return ;
 	if (add_shit)
-		(*i) = ind_dol + add_shit;
+		(*i) = ind_dol + add_shit - 1;
 }
 
 void expand_args(t_big_token *b_tokens, t_info *info)
@@ -247,11 +251,8 @@ void dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens)
 	{
 		if (tmp_o->token == TOK_WORD && (tmp_o->quoted == 0 || tmp_o->quoted == 2))
 		{
-			if (!ft_strncmp(tmp_o->value, b_tokens->cmd_args[i], ft_strlen(tmp_o->value)))
-			{
-			//	expand((&b_tokens->cmd_args)[i], info);
+			if (b_tokens->cmd_args[i] && !ft_strncmp(tmp_o->value, b_tokens->cmd_args[i], ft_strlen(tmp_o->value)))
 				exp = 1;
-			}
 			expand(&tmp_o->value, info);
 			if (exp)
 			{
@@ -261,8 +262,6 @@ void dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens)
 				i++;
 			}
 		}
-		if (b_tokens->cmd_args[i] && !ft_strncmp(tmp_o->value, b_tokens->cmd_args[i], ft_strlen(tmp_o->value)))
-			i++;
 		tmp_o = tmp_o->next;
 	}
 }

@@ -27,7 +27,7 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  tree_manipulator.c ft_launch_cmd.c ft_echo.c main_O.c\
 		  printer.c executer.c ft_free.c ft_free2.c dollar_expander.c\
 		  ft_wildcards_check.c ft_wildcards_tools.c ft_wildcards_do.c ft_signal.c\
-		  init_tok_type_tab.c\
+		  init_tok_type_tab.c ft_start.c ft_env_tools.c ft_env_tools2.c\
 
 INC = include/minishell.h
 

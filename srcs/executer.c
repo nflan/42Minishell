@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:39:38 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 20:49:52 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/28 12:22:48 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,50 +224,9 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 		ft_launch_cmd(info, tmp_b);
 		tmp_b->sc = info->status;
 	}
+	ft_close_fd(b_tokens);
 	return (0);
 }
-
-/*int	ft_recreate_cmd(t_big_token *b_tokens, t_info *info)
-{
-	t_token	*tmp_s;
-	int		i;
-
-	i = 0;
-	b_tokens->ind_tok_start = info->tmp_start;
-	tmp_s = info->tokens;
-	ft_free_split(b_tokens->cmd_args);
-//	printf("cmd_nums = %d\n", b_tokens->cmd_args_num);
-	b_tokens->cmd_args = ft_calloc(sizeof(char *), b_tokens->cmd_args_num + 1);
-//	printf("args = %d\n", b_tokens->cmd_args_num);
-//	printf("length = %d\n", b_tokens->length);
-//	printf("start = %d\n", b_tokens->ind_tok_start);
-//	print_s_tokens(&tmp_s, 0, len_ll_list(tmp_s));
-//	printf("\n");
-	move_tok_2_ind(&tmp_s, b_tokens->ind_tok_start);
-	while (tmp_s && i < b_tokens->cmd_args_num)
-	{
-//		printf("value = %s && type = %d\n", tmp_s->value, tmp_s->token);
-		if (tmp_s->token == TOK_WORD)
-		{
-			printf("tmp_s->value = %s\n", tmp_s->value);
-			b_tokens->cmd_args[i] = ft_strdup(tmp_s->value);
-			if (!b_tokens->cmd_args[i])
-				return (1);
-			i++;
-		}
-		tmp_s = tmp_s->next;
-	}
-//	printf("start = %d\n", start);
-	if (tmp_s)
-	{
-		b_tokens->length = tmp_s->index - b_tokens->ind_tok_start;
-		info->tmp_start = tmp_s->index + 1;
-	}
-	else
-		b_tokens->length = len_ll_list(info->tokens) - b_tokens->ind_tok_start;
-//	printf("length %d\n", b_tokens->length);
-	return (0);
-}*/
 
 int	ft_check_dol(char *str)
 {
@@ -309,7 +268,11 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	{
 		if (!b_tokens->par)
 			if (ft_check_expand(info->tokens, b_tokens->ind_tok_start, b_tokens->length))
+			{
 				dol_expand(&info->tokens, info, b_tokens);
+				expanded_toks(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
+				index_toks(&info->tokens);
+			}
 		if (sib_child >= 1 && sib_child <= 3)
 			ft_exec_simple(info, b_tokens);
 		else if (sib_child == 4)
