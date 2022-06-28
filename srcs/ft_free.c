@@ -33,25 +33,17 @@ void	ft_free_all(t_info *info, t_env *env)
 			free(info->rdline);
 		info->rdline = NULL;
 		if (info->tokens)
-		{
 			ft_free_tokens(info->tokens);
-			info->tokens = NULL;
-		}
+		info->tokens = NULL;
 		if (info->old_tokens)
-		{
 			ft_free_tokens(info->old_tokens);
-			info->old_tokens = NULL;
-		}
+		info->old_tokens = NULL;
 		if (info->parse)
-		{
 			ft_free_b_tokens(info->parse);
-			info->parse = NULL;
-		}
+		info->parse = NULL;
 		if (info->pid)
-		{
 			free(info->pid);
-			info->pid = NULL;
-		}
+		info->pid = NULL;
 	}
 	if (env)
 		ft_free_env(env);

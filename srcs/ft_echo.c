@@ -36,30 +36,6 @@ int	ft_option_echo(t_big_token *b_tokens, int i)
 	return (option);
 }
 
-/*int	ft_handle_ret(t_big_token *b_tokens, char *ret, int i)
-{
-	char	*tofree;
-	int		y;
-
-	tofree = b_tokens->cmd_args[i];
-	y = 0;
-	if (!tofree)
-		return (free(ret), 1);
-	while (tofree[y])
-	{
-		if (tofree[y + 1] && tofree[y] == '$' && tofree[y + 1] == '?')
-		{
-			b_tokens->cmd_args[i] = ft_substr(tofree, 0, y);
-			b_tokens->cmd_args[i] = ft_strjoiiin_free(b_tokens->cmd_args[i],
-					ret, tofree + y + 2, 1);
-		}
-		y++;
-	}
-	free(ret);
-	free(tofree);
-	return (0);
-}*/
-
 int	ft_echo_none(t_big_token *b_tokens, int i)
 {
 	if (i == 1)
@@ -67,15 +43,10 @@ int	ft_echo_none(t_big_token *b_tokens, int i)
 	return (0);
 }
 
-char	*ft_create_echo(t_info *info, t_big_token *b_tokens, char *tmp, int i)
+char	*ft_create_echo(t_big_token *b_tokens, char *tmp, int i)
 {
-	(void)info;
 	while (b_tokens->cmd_args[i])
 	{
-//		if (ft_strnstr(b_tokens->cmd_args[i], "$?",
-//				ft_strlen(b_tokens->cmd_args[i])))
-//			if (ft_handle_ret(b_tokens, ft_itoa(info->status), i))
-//				return (NULL);
 		if (!tmp)
 			tmp = ft_strdup(b_tokens->cmd_args[i]);
 		else
@@ -101,7 +72,7 @@ int	ft_echo(t_info *info, t_big_token *b_tokens)
 	if (!b_tokens->cmd_args[i])
 		return (ft_echo_none(b_tokens, i));
 	if (b_tokens->cmd_args[i])
-		tmp = ft_create_echo(info, b_tokens, tmp, i);
+		tmp = ft_create_echo(b_tokens, tmp, i);
 	if (!tmp)
 		return (1);
 	if (!option)

@@ -39,7 +39,8 @@ char	*ft_rdline_word(t_info *info)
 		return (NULL);
 	if (tmp && !strncmp(tmp, word, ft_strlen(tmp)))
 	{
-		word = ft_substr_free(word, ft_strlen(tmp), ft_strlen(word) - ft_strlen(tmp));
+		word = ft_substr_free(word, ft_strlen(tmp), ft_strlen(word)
+				- ft_strlen(tmp));
 		word = ft_strjoin_free("minishell:~", word, 2);
 	}
 	else

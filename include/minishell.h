@@ -197,7 +197,7 @@ int				ft_init_first(t_info *info, char **envp);
 void			ft_envadd_back(t_env **alst, t_env *new);
 t_env			*ft_envnew(char *line);
 t_env			*ft_without_env(int i);
-int				ft_fill_envnew(t_env *env, char *line);
+int				ft_fill_envnew(t_env *env, char *line, int i, int j);
 //-----------ft_env_tools2.c------------------------------------------
 int				ft_init_env(t_info *info, char **envp);
 
@@ -226,7 +226,7 @@ int				ft_cd(t_info *info, t_big_token *b_tokens);
 int				ft_export(t_info *info, t_big_token *b_tokens);
 //-----------ft_echo.c-------------------------------------
 int				ft_echo(t_info *info, t_big_token *b_tokens);
-char			*ft_create_echo(t_info *info, t_big_token *b_tokens, char *tmp, int i);
+char			*ft_create_echo(t_big_token *b_tokens, char *tmp, int i);
 int				ft_echo_none(t_big_token *b_tokens, int i);
 int				ft_handle_ret(t_big_token *b_tokens, char *ret, int i);
 int				ft_option_echo(t_big_token *b_tokens, int i);

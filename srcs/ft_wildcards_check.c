@@ -66,10 +66,6 @@ int	ft_keep(char *str, char *dir, int *i, int j)
 	return (0);
 }
 
-//int	ft_do_keep_bis(char **str)
-//{
-//}
-
 int	ft_do_keep(char *str, t_wildcards *wd, int type)
 {
 	int		i;
@@ -87,10 +83,8 @@ int	ft_do_keep(char *str, t_wildcards *wd, int type)
 		{
 			str++;
 			if (*str == '*' || *str == '/')
-			{
 				while (*str == '*' || *str == '/')
 					str++;
-			}
 			if (!*str)
 				return (0);
 		}

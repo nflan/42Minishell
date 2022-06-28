@@ -52,10 +52,12 @@ char	*ft_cd_tilde(char *home, char *dir)
 	return (new_dir);
 }
 
-int	ft_do_tilde(t_info *info, char *arg, char *new_dir)
+int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 {
-	if (!strncmp(arg, "~", 2))
+	if (!strncmp(arg, "~", 2) && !home)
 		new_dir = ft_strdup(info->home);
+	else if (!strncmp(arg, "~", 2) && home)
+		new_dir = ft_strdup(home);
 	else
 		new_dir = ft_cd_tilde(info->home, arg);
 	if (!new_dir)
@@ -82,7 +84,7 @@ int	ft_cd(t_info *info, t_big_token *b_tokens)
 			return (ft_perror("minishell: cd: ", home));
 	}
 	else if (!ft_is_tilde_or_home(home, b_tokens->cmd_args[1]))
-		return (ft_do_tilde(info, b_tokens->cmd_args[1], new_dir));
+		return (ft_do_tilde(info, b_tokens->cmd_args[1], home, new_dir));
 	else
 		if (chdir(b_tokens->cmd_args[1]))
 			return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
