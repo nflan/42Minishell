@@ -132,7 +132,34 @@ int	ft_create_tmp(t_fd *fd, int hd)
 	return (0);
 }
 
-int	ft_fill_fdnew(t_fd *fd, t_token *tmp, int red, int *hd)
+char	*ft_create_del(t_token **tmp, int *red)
+{
+	char *del;
+
+	del = NULL;
+	if (tmp[0])
+	{
+		while (tmp[0] && tmp[0]->token != TOK_SEP)
+		{
+			if (tmp[0]->token != TOK_S_QUOTER && tmp[0]->token != TOK_D_QUOTER)
+			{
+				del = ft_strjoin_free(del, tmp[0]->value, 1);
+				if (!del)
+					return (NULL);
+			}
+			else if (*red != 8)
+				*red += 3;
+			tmp[0] = tmp[0]->next;
+		}
+	}
+	if (*red == 8)
+		*red = 5;
+	else
+		*red = 2;
+	return (del);
+}
+
+int	ft_fill_fdnew(t_fd *fd, t_token **tmp, int red, int *hd)
 {
 	if (red == 1 || red == 2)
 		fd->red = red - 1;
@@ -141,22 +168,20 @@ int	ft_fill_fdnew(t_fd *fd, t_token *tmp, int red, int *hd)
 	if (red == 2)
 	{
 		*hd += 1;
-		fd->delimitator = ft_strdup(tmp->value);
+		fd->delimitator = ft_create_del(tmp, &red);
 		if (ft_create_tmp(fd, *hd))
 			return (1);
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (tmp->quoted)
-			red = 5; 
 		ft_here(fd, red);
 	}
 	else
-		fd->file = ft_strdup(tmp->value);
+		fd->file = ft_create_del(tmp, &red);
 	if (!fd->file)
 		return (1);
 	return (0);
 }
 
-int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token *tmp, int red)
+int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int red)
 {
 	t_fd	*new;
 
@@ -302,15 +327,15 @@ int	handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_info *info, int ind_w
 	//		printf("problem here putain!\n");
 			return (1);
 		}
-		if (tmp->token == TOK_WORD && (i % 2))
+		if (tmp->token != TOK_SEP && (i % 2))
 		{
 			if (type_red == 1 || type_red == 2)
 			{
-				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_in, tmp, type_red))
+				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_in, &tmp, type_red))
 					return (ft_putstr_error("in handle par dir "));
 			}
 			else
-				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_out, tmp, type_red))
+				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_out, &tmp, type_red))
 					return (ft_putstr_error("in handle par dir "));
 			i++;
 		}
@@ -369,22 +394,25 @@ int	handle_dir(t_big_token **tmp_b, t_info *info)
 				return (ft_putstr_error("Malloc error in ft_strdup in handle dir "));
 			cmd_args_num--;
 		}
-		else if ((tmp->token == TOK_WORD || tmp->token == TOK_WORD_D_QUOTED || tmp->token == TOK_WORD_S_QUOTED) && (i % 2) && save_word)
+		else if ((tmp->token != TOK_SEP && (i % 2) && save_word))
 		{
 //	printf("I entered red files\n");
 			if (type_red == 1 || type_red == 2)
 			{
-				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_in, tmp, type_red))
+				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_in, &tmp, type_red))
 					return (ft_putstr_error("in handle dir "));
 			}
 			else
-				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_out, tmp, type_red))
+				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_out, &tmp, type_red))
 					return (ft_putstr_error("in handle dir "));
 			save_word = 0;
 //	handle_red_files(tmp_b, tmp->value, &inouthd, type_red);
 			i++;
 		}
-		tmp = tmp->next;
+		if (tmp && tmp->next)
+			tmp = tmp->next;
+		else
+			break ;
 		j++;
 	}
 	(*tmp_b)->par = 0;

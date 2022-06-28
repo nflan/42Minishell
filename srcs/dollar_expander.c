@@ -164,8 +164,10 @@ void expand_1(char **str, int *i, t_info *info)
 			(*i)++;
 		}
 		to_look_up = ft_strndup(&(s[ind_dol + 1]), ((*i) - ind_dol - 1));
-		if (s[*i - 1] != '?')
+		if (s[*i - 1] != '?' && ft_get_env_value(info, to_look_up))
 			tmp[1] = ft_strdup(ft_get_env_value(info, to_look_up));
+		else
+			tmp[1] = ft_strdup(to_look_up);
 		if (tmp[1])
 			add_shit = ft_strlen(tmp[1]);
 	}
@@ -175,14 +177,16 @@ void expand_1(char **str, int *i, t_info *info)
 		tmp[2] = ft_strndup(&(s[ind_dol + ft_strlen(to_look_up) + 1]), (ft_strlen(s) - ind_dol - ft_strlen(to_look_up) - 1));
 	free(to_look_up);
 	free(*str);
+	printf("tmp[0] = %s && tmp[1] = %s && tmp[2] = %s\n", tmp[0], tmp[1], tmp[2]);
 	(*str) = expand_join(tmp[0], tmp[1], tmp[2]);
+	printf("str = %s\n", *str);
 	free(tmp[0]);
 	free(tmp[1]);
 	free(tmp[2]);
 	if (!(*str))
 		return ;
 	if (add_shit)
-		(*i) = ind_dol + add_shit;
+		(*i) = ind_dol + add_shit - 1;
 }
 
 void expand_args(t_big_token *b_tokens, t_info *info)

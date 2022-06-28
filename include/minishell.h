@@ -200,7 +200,6 @@ int				ft_fill_envnew(t_env *env, char *line);
 //-----------ft_env_tools2.c------------------------------------------
 int				ft_init_env(t_info *info, char **envp);
 
-
 //-----------ft_launch_cmd----------------------------------------
 int				ft_exit_cmd(t_info *info, char *str, int err);
 int				ft_wash_btoken(t_info *info, t_big_token *b_tokens);
@@ -243,7 +242,7 @@ int				ft_do_pipex(t_info *info, t_big_token *b_tokens);
 int				ft_pipex(t_info *info, t_big_token *b_tokens);
 
 //---------ft_here_doc.c----------------------------
-void			ft_write_here(t_fd *fd, char *str, int i, int red);
+void			ft_write_here(t_fd *fd, char **str, int i, int red);
 int				ft_here(t_fd *fd, int red);
 char			**ft_env_to_tab(t_env *env);
 
