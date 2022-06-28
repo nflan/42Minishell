@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 20:09:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/28 21:49:18 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 		printf("\n");
 		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
 		printf("   --->>    ");
-	//	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
+//	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
 		print_tab(tmp_b->cmd_args);
 	//	printf("\n");
 		printf("It's type is: %d\n", tmp_b->type);
