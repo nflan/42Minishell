@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 22:06:04 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:43:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ typedef struct s_fd
 typedef struct s_big_token
 {
 	t_big_tok_type		type;
+	int					j;
 	int					ind_tok_start;
 	int					length;
 	int					par;
