@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/28 21:29:41 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/28 23:54:08 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,6 +377,9 @@ int				handle_par(t_big_token **b_tokens, t_info *info);
 
 // void		divide_by_or_and(t_big_token **b_tokens, t_token **tokens);
 int				divide_by_pipe(t_big_token **b_tokens, t_info *info);
+
+//-----------big_tokenizer_6.c--------------------------------------------------
+int				is_pipe(t_token *tmp_s);
 
 //------------printer.c--------------------------------------------------------
 void			ft_print_wildcards(t_wildcards *wd);
