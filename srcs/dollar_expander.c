@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 19:36:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/28 11:50:05 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,11 +247,8 @@ void dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens)
 	{
 		if (tmp_o->token == TOK_WORD && (tmp_o->quoted == 0 || tmp_o->quoted == 2))
 		{
-			if (!ft_strncmp(tmp_o->value, b_tokens->cmd_args[i], ft_strlen(tmp_o->value)))
-			{
-			//	expand((&b_tokens->cmd_args)[i], info);
+			if (b_tokens->cmd_args[i] && !ft_strncmp(tmp_o->value, b_tokens->cmd_args[i], ft_strlen(tmp_o->value)))
 				exp = 1;
-			}
 			expand(&tmp_o->value, info);
 			if (exp)
 			{
@@ -261,8 +258,6 @@ void dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens)
 				i++;
 			}
 		}
-		if (b_tokens->cmd_args[i] && !ft_strncmp(tmp_o->value, b_tokens->cmd_args[i], ft_strlen(tmp_o->value)))
-			i++;
 		tmp_o = tmp_o->next;
 	}
 }

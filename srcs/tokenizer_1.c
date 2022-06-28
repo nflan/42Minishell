@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 21:52:05 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/28 11:26:07 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,19 @@ int is_quoted(t_token **tok_list, char c)
 //	printf("I'm checking if this is a quoted char: %c, btw his sq is : %d and his dq: %d is and his tmp->prev-type is : %d\n", c, sq, dq, tmp->prev->token);
 	tmp = *tok_list;
 	if (sq < 0 && dq > 0 && c == '\'' && tmp && tmp->token == TOK_S_QUOTER)
-		return (printf("cas: 3\n"), 3);
+		return (3);
+	//	return (printf("cas: 3\n"), 3);
 	if (sq > 0 && dq < 0 && c == '\"' && tmp && tmp->token == TOK_D_QUOTER)
-		return (printf("cas: 4\n"),4);
+		return (4);
+	//	return (printf("cas: 4\n"),4);
 	if (sq < 0 && dq > 0 && c != '\'')
-		return (printf("cas: 1\n"),1);
+		return (1);
+	//	return (printf("cas: 1\n"),1);
 	else if (dq < 0 && sq > 0 && c != '\"')
-		return (printf("cas: 2\n"),2);
-	return (printf("cas: 0\n"),0);
+		return (2);
+	//	return (printf("cas: 2\n"),2);
+	return (0);
+//	return (printf("cas: 0\n"),0);
 }
 
 unsigned int get_real_tok_type(char c, t_token **tok_list, t_tok_type *tok_type_tab)

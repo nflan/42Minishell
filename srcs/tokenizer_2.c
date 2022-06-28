@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 21:54:07 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/28 11:30:36 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int detect_tokens(t_info *info)
 		return (ft_putstr_error("Command error in detect_tokens "));
 	while (info->rdline[i])
 	{
-		printf("i: %d\n", i);
+	//	printf("i: %d\n", i);
 		length = 1;
 		start = i;
 		tok_type = get_real_tok_type(info->rdline[i], &(info->tokens), info->tok_type_tab);
@@ -133,8 +133,8 @@ int fill_tok_value(t_token **tok, char *str)
 	tmp = *tok;
 	while (tmp)
 	{
-		if (tmp->length == 0)
-			printf("I 'm going to write a null word after tmp->prev: %s\n", tmp->prev->value);
+//		if (tmp->length == 0)
+//			printf("I 'm going to write a null word after tmp->prev: %s\n", tmp->prev->value);
 		tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
 		if (!tmp->value)
 			return (ft_putstr_error("Error in ft_strncpy in fill_tok_value"));
