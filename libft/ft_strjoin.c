@@ -16,9 +16,9 @@ void	ft_free_3_str(char *s1, char *s2, char *s3, int i)
 {
 	if (s1 && i != 2 && i != 3)
 		free(s1);
-	else if (s2 && i != 1 && i != 3)
+	if (s2 && i != 1 && i != 3)
 		free(s2);
-	else if (s3 && i != 1 && i != 2)
+	if (s3 && i != 1 && i != 2)
 		free(s3);
 }
 

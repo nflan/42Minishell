@@ -189,20 +189,33 @@ void expand_1(char **str, int *i, t_info *info)
 		(*i) = ind_dol + add_shit - 1;
 }
 
+void	ft_count_q(char *str, char c, size_t *i, size_t *q)
+{
+	if (!str)
+		return ;
+	(*i)++;
+	(*q)++;
+	while (str[*i] && str[*i] != c)
+		(*i)++;
+}
+
 size_t	ft_strlen_nq(char *str)
 {
 	size_t	i;
-	
+	size_t	q;
+
 	i = 0;
+	q = 0;
 	if (!str)
 		return (0);
-	while (*str)
+	while (str[i])
 	{
-		if (*str != '\'' && *str != '\"')
+		if (str[i] == '\'' || str[i] == '\"')
+			ft_count_q(str, str[i], &i, &q);
+		else
 			i++;
-		str++;
 	}
-	return (i);
+	return (i - q);
 }
 
 char	*ft_noquote_line(char *line)
@@ -222,8 +235,16 @@ char	*ft_noquote_line(char *line)
 	if (!new)
 		return (NULL);
 	while (line[++i])
+	{
+		if (line[i] == '\'')
+			while (line[++i] != '\'')
+				new[j++] = line[i];
+		if (line[i] == '\"')
+			while (line[++i] != '\"')
+				new[j++] = line[i];
 		if (line[i] != '\'' && line[i] != '\"')
 			new[j++] = line[i];
+	}
 	free(line);
 	return (new);
 }
@@ -305,7 +326,7 @@ void	ft_type(char c, int *t)
 
 int	ft_expand_line(char **str, int *i, t_info *info)
 {
-	char	*tmp[3];
+	char	*tmp[4];
 	int		length;
 
 	length = *i;
@@ -315,10 +336,10 @@ int	ft_expand_line(char **str, int *i, t_info *info)
 	if (str[0][length])
 		while (str[0][length] && str[0][length] != '\"' && str[0][length] != '\'')
 			length++;
-	tmp[1] = ft_substr(*str, *i, length - *i);
-	if (!tmp[1])
+	tmp[3] = ft_substr(*str, *i, length - *i);
+	if (!tmp[4])
 		return (1);
-	tmp[1] = ft_strdup(ft_get_env_value(info, tmp[1]));
+	tmp[1] = ft_strdup(ft_get_env_value(info, tmp[3]));
 	if (!tmp[1])
 		return (1);
 	tmp[2] = ft_substr(*str, length, ft_strlen(*str));
@@ -326,6 +347,7 @@ int	ft_expand_line(char **str, int *i, t_info *info)
 		return (1);
 	free(*str);
 	*str = ft_strjoiiin_free(tmp[0], tmp[1], tmp[2], 4);
+	free(tmp[3]);
 	*i += length - 1;
 	return (0);
 }
