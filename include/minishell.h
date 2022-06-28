@@ -88,6 +88,28 @@ typedef enum s_char_type
 	CHR_TILDA,
 } 			t_char_type;
 
+typedef enum s_big_tok_type
+{
+	TOK_LEFT_OR,
+	TOK_LEFT_AND,
+	TOK_LEFT_PIPE,
+	TOK_CLEAN,
+	TOK_CLEAN_PIPED,
+	TOK_LAST,
+	TOK_PIPE_LAST,
+} 			t_big_tok_type;
+
+typedef enum	s_par_left_right
+{
+	NOT_A_PAR,
+	PAR_LEFT_OR,
+	PAR_RIGHT_OR,
+	PAR_LEFT_AND,
+	PAR_RIGHT_AND,
+	PAR_PIPE_LEFT,
+	PAR_PIPE_RIGHT,
+}				t_par_left_right;
+
 typedef struct s_token
 {
 	//	int						sp_after;
@@ -101,35 +123,12 @@ typedef struct s_token
 	struct s_token	*next;
 } 			t_token;
 
-typedef enum s_big_tok_type
-{
-	TOK_LEFT_OR,
-	TOK_LEFT_AND,
-	TOK_LEFT_PIPE,
-	TOK_CLEAN,
-	TOK_CLEAN_PIPED,
-	TOK_LAST,
-	TOK_PIPE_LAST,
-} 			t_big_tok_type;
-
 typedef	struct	s_wildcards
 {
 	DIR					*fd;
 	struct dirent		*dir;
 	struct s_wildcards	*next;
 }	t_wildcards;
-
-typedef enum	s_par_left_right
-{
-	NOT_A_PAR,
-	PAR_LEFT_OR,
-	PAR_RIGHT_OR,
-	PAR_LEFT_AND,
-	PAR_RIGHT_AND,
-	PAR_PIPE_LEFT,
-	PAR_PIPE_RIGHT,
-}				t_par_left_right;
-
 
 typedef struct s_fd
 {
@@ -394,7 +393,7 @@ void			expand(char **str, t_info *info);
 void			dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens);
 int				expanded_toks_check(t_token **tokens);
 void			expanded_toks(t_token **old_tokens, int start, int length);
-void			expand_args(t_big_token *b_tokens, t_info *info);
+int				ft_noquote_args(t_big_token *b_tokens);
 	
 //---------------init_tok_type_tab.c-------------------------------------------------
 

@@ -267,12 +267,17 @@ int exec_the_bulk(t_info *info, int sib_child, t_big_token *b_tokens)
 	if (!ft_open_fd(b_tokens))
 	{
 		if (!b_tokens->par)
+		{
 			if (ft_check_expand(info->tokens, b_tokens->ind_tok_start, b_tokens->length))
 			{
 				dol_expand(&info->tokens, info, b_tokens);
 				expanded_toks(&info->tokens, b_tokens->ind_tok_start, b_tokens->length);
 				index_toks(&info->tokens);
+				if (ft_noquote_args(b_tokens))
+					return (1);
 			}
+			print_tab(b_tokens->cmd_args);
+		}
 		if (sib_child >= 1 && sib_child <= 3)
 			ft_exec_simple(info, b_tokens);
 		else if (sib_child == 4)

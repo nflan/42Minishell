@@ -177,9 +177,9 @@ void expand_1(char **str, int *i, t_info *info)
 		tmp[2] = ft_strndup(&(s[ind_dol + ft_strlen(to_look_up) + 1]), (ft_strlen(s) - ind_dol - ft_strlen(to_look_up) - 1));
 	free(to_look_up);
 	free(*str);
-	printf("tmp[0] = %s && tmp[1] = %s && tmp[2] = %s\n", tmp[0], tmp[1], tmp[2]);
+	//printf("tmp[0] = %s && tmp[1] = %s && tmp[2] = %s\n", tmp[0], tmp[1], tmp[2]);
 	(*str) = expand_join(tmp[0], tmp[1], tmp[2]);
-	printf("str = %s\n", *str);
+	//printf("str = %s\n", *str);
 	free(tmp[0]);
 	free(tmp[1]);
 	free(tmp[2]);
@@ -189,29 +189,61 @@ void expand_1(char **str, int *i, t_info *info)
 		(*i) = ind_dol + add_shit - 1;
 }
 
-void expand_args(t_big_token *b_tokens, t_info *info)
+size_t	ft_strlen_nq(char *str)
+{
+	size_t	i;
+	
+	i = 0;
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		if (*str != '\'' && *str != '\"')
+			i++;
+		str++;
+	}
+	return (i);
+}
+
+char	*ft_noquote_line(char *line)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = 0;
+	new = NULL;
+	if (!line)
+		return (NULL);
+	if (ft_strlen(line) == ft_strlen_nq(line))
+		return (line);
+	new = ft_calloc(sizeof(char), ft_strlen_nq(line) + 1);
+	if (!new)
+		return (NULL);
+	while (line[++i])
+		if (line[i] != '\'' && line[i] != '\"')
+			new[j++] = line[i];
+	free(line);
+	return (new);
+}
+
+int	ft_noquote_args(t_big_token *b_tokens)
 {
 	int	i;
-	int	j;
-	char	**str;
 
 	i = 0;
-	str = b_tokens->cmd_args;
-	j = 0;
-	if (str)
+	if (b_tokens->cmd_args)
 	{
-		while (str[i])
+		while (b_tokens->cmd_args[i])
 		{
-			j = 0;
-			while (str[i][j])
-			{
-				if (str[i][j] == '$')
-					expand_1(&(str[i]), &j, info);
-				j++;
-			}
+			b_tokens->cmd_args[i] = ft_noquote_line(b_tokens->cmd_args[i]);
+			if (!b_tokens->cmd_args[i])
+				return (1);
 			i++;
 		}
 	}
+	return (0);
 }
 
 void expand(char **str, t_info *info)
@@ -233,37 +265,133 @@ void expand(char **str, t_info *info)
 	}
 }
 
+int	ft_check_exp_line(char *str)
+{
+	int	t;
+	int	count;
+
+	t = 0;
+	count = 0;
+	if (!str)
+		return (1);
+	while (*str)
+	{
+		if (*str == '\'' && !t)
+			t = 2;
+		else if (*str == '\'' && t == 2)
+			t = 0;
+		else if (*str == '\"' && !t)
+			t = 1;
+		else if (*str == '\"' && t == 1)
+			t = 0;
+		else if (*str == '$' && t < 2)
+			count++;
+		str++;
+	}
+	return (count);
+}
+
+void	ft_type(char c, int *t)
+{
+	if (c == '\'' && !*t)
+		*t = 2;
+	else if (c == '\'' && *t == 2)
+		*t = 0;
+	else if (c == '\"' && !*t)
+		*t = 1;
+	else if (c == '\"' && *t == 1)
+		*t = 0;
+}
+
+int	ft_expand_line(char **str, int *i, t_info *info)
+{
+	char	*tmp[3];
+	int		length;
+
+	length = *i;
+	tmp[0] = ft_substr(*str, 0, *i - 1);
+	if (!tmp[0])
+		return (1);
+	if (str[0][length])
+		while (str[0][length] && str[0][length] != '\"' && str[0][length] != '\'')
+			length++;
+	tmp[1] = ft_substr(*str, *i, length - *i);
+	if (!tmp[1])
+		return (1);
+	tmp[1] = ft_strdup(ft_get_env_value(info, tmp[1]));
+	if (!tmp[1])
+		return (1);
+	tmp[2] = ft_substr(*str, length, ft_strlen(*str));
+	if (!tmp[2])
+		return (1);
+	free(*str);
+	*str = ft_strjoiiin_free(tmp[0], tmp[1], tmp[2], 4);
+	*i += length - 1;
+	return (0);
+}
+
+char	*ft_expand_l(char *str, t_info *info)
+{
+	int		i;
+	int		t;
+
+	i = 0;
+	t = 0;
+	while (str[i])
+	{
+		ft_type(str[i], &t);
+		if (str[i] == '$' && t < 2)
+		{
+			i++;
+			if (ft_expand_line(&str, &i, info))
+				return (NULL);
+			if ((size_t)i > ft_strlen(str))
+				break ;
+		}
+		else
+			i++;
+	}
+	return (str);
+}
+
+int	ft_expand_args(t_big_token *b_tokens, t_info *info)
+{
+	int	i;
+
+	i = -1;
+	if (b_tokens->cmd_args)
+	{
+		while (b_tokens->cmd_args[++i])
+		{
+			if (ft_check_exp_line(b_tokens->cmd_args[1]))
+			{
+				b_tokens->cmd_args[i] = ft_expand_l(b_tokens->cmd_args[i], info);
+				if (!b_tokens->cmd_args[i])
+					return (1);
+			}
+		}
+	}
+	return (0);
+}
+
 void dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens)
 {
 	t_token	*tmp_o;
 	int		start;
 	int		length;
-	int		i;
-	int		exp;
 
 	start = b_tokens->ind_tok_start;
 	length = b_tokens->length;
 	tmp_o = *old_tokens;
-	i = 0;
-	exp = 0;
 	move_tok_2_ind(&tmp_o, start);
 	while (tmp_o && length--)
 	{
-		if (tmp_o->token == TOK_WORD && (tmp_o->quoted == 0 || tmp_o->quoted == 2))
-		{
-			if (b_tokens->cmd_args[i] && !ft_strncmp(tmp_o->value, b_tokens->cmd_args[i], ft_strlen(tmp_o->value)))
-				exp = 1;
+		if (tmp_o->token == TOK_WORD || tmp_o->token == TOK_WORD_D_QUOTED)// (tmp_o->quoted == 0 || tmp_o->quoted == 2))
 			expand(&tmp_o->value, info);
-			if (exp)
-			{
-				free(b_tokens->cmd_args[i]);
-				b_tokens->cmd_args[i] = ft_strdup(tmp_o->value);
-				exp = 0;
-				i++;
-			}
-		}
 		tmp_o = tmp_o->next;
 	}
+	if (ft_expand_args(b_tokens, info))
+		return ;
 }
 
 int expanded_toks_check(t_token **tokens)
