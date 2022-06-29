@@ -55,9 +55,9 @@ int	main(int ac, char **av, char **envp)
 	(void) av;
 	word = NULL;
 	g_sc = 0;
-	if (ft_init_first(&info, envp))
-		return (1);
 	if (ac > 1)
 		info.nb_cmd = 10;
+	if (ft_init_first(&info, envp))
+		return (1);
 	return (ft_launch_minishell(info, word));
 }

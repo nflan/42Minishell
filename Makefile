@@ -25,11 +25,12 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  big_tokenizer_4.c parser.c tokenizer_1.c tokenizer_2.c ft_exec.c\
 		  syntax_errorinizer_1.c syntax_errorinizer_2.c ft_launch_built.c\
 		  tree_manipulator.c ft_launch_cmd.c ft_launch_tools.c ft_echo.c\
-		  main_O.c printer.c executer.c executer_tools.c ft_free.c ft_free2.c\
-		  dollar_expander.c ft_expand_check.c ft_fd_open.c ft_fd_close.c\
-		  ft_wildcards_check.c ft_wildcards_tools.c ft_wildcards_do.c\
-		  ft_signal.c ft_wildcards_do2.c init_tok_type_tab.c ft_start.c\
-		  ft_env_tools.c ft_env_tools2.c big_tokenizer_5.c big_tokenizer_6.c\
+		  main_O.c printer.c ft_executer.c ft_executer_tools.c ft_free.c\
+		  ft_free2.c dollar_expander.c ft_expand_check.c ft_fd_open.c\
+		  ft_fd_close.c  ft_wildcards_check.c ft_wildcards_tools.c\
+		  ft_wildcards_do.c ft_signal.c ft_wildcards_do2.c init_tok_type_tab.c\
+		  ft_start.c ft_env_tools.c ft_env_tools2.c big_tokenizer_5.c\
+		  big_tokenizer_6.c ft_expand_tools.c ft_expand_line.c ft_expand_args.c\
 
 INC = include/minishell.h
 

@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-void	init_tok_type_tab(t_tok_type (*tok_type_tab)[127])
+void	init_tok_type_tab(t_tok_type (*tok_type_tab)[128])
 {
 	int	i;
 

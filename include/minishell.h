@@ -177,7 +177,7 @@ typedef struct s_env
 typedef struct s_info
 {
 	char		*rdline;
-	t_tok_type	tok_type_tab[127];
+	t_tok_type	tok_type_tab[128];
 	int			status;
 	int			nb_cmd;
 	t_env		*env;
@@ -207,6 +207,24 @@ t_env			*ft_without_env(int i);
 int				ft_fill_envnew(t_env *env, char *line, int i, int j);
 //-----------ft_env_tools2.c----------------------------------------------------
 int				ft_init_env(t_info *info, char **envp);
+
+// EXPAND
+//-----------ft_expand_check.c--------------------------------------------------
+int				ft_check_dol(char *str);
+int				ft_check_expand(t_token *token, int start, int length);
+int				ft_check_exp_line(char *str);
+//-----------ft_expand_args.c---------------------------------------------------
+int				ft_noquote_args(t_big_token *b_tokens);
+char			*ft_expanded_value(t_info *info, char *tmp);
+int				ft_expand_args(t_big_token *b_tokens, t_info *info);
+//-----------ft_expand_line.c---------------------------------------------------
+char			*ft_noquote_line(char *line);
+int				ft_expand_line(char **str, int *i, t_info *info);
+char			*ft_expand_l(char *str, t_info *info);
+//-----------ft_expand_tools.c--------------------------------------------------
+void			ft_count_q(char *str, char c, size_t *i, size_t *q);
+size_t			ft_strlen_nq(char *str);
+void			ft_type(char c, int *t);
 
 //-----------ft_fd_open.c-------------------------------------------------------
 int				ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd);
@@ -446,6 +464,6 @@ int				ft_check_dol(char *str);
 
 //---------------init_tok_type_tab.c--------------------------------------------
 
-void			init_tok_type_tab(t_tok_type (*tok_type_tab)[127]);
+void			init_tok_type_tab(t_tok_type (*tok_type_tab)[128]);
 
 #endif

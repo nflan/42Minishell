@@ -32,3 +32,29 @@ int	ft_check_expand(t_token *token, int start, int length)
 	}
 	return (0);
 }
+
+int	ft_check_exp_line(char *str)
+{
+	int	t;
+	int	count;
+
+	t = 0;
+	count = 0;
+	if (!str)
+		return (1);
+	while (*str)
+	{
+		if (*str == '\'' && !t)
+			t = 2;
+		else if (*str == '\'' && t == 2)
+			t = 0;
+		else if (*str == '\"' && !t)
+			t = 1;
+		else if (*str == '\"' && t == 1)
+			t = 0;
+		else if (*str == '$' && t < 2)
+			count++;
+		str++;
+	}
+	return (count);
+}

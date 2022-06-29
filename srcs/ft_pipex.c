@@ -86,8 +86,8 @@ int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid)
 
 int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 {
-	int	i;
-	t_big_token *tmp;
+	int			i;
+	t_big_token	*tmp;
 
 	i = 0;
 	tmp = b_tokens;
