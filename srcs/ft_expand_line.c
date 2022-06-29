@@ -3,11 +3,10 @@
 char	*ft_noquote_line(char *line)
 {
 	char	*new;
-	int		i;
-	int		j;
+	int		ij[2];
 
-	i = -1;
-	j = 0;
+	ij[0] = -1;
+	ij[1] = 0;
 	new = NULL;
 	if (!line)
 		return (NULL);
@@ -16,19 +15,18 @@ char	*ft_noquote_line(char *line)
 	new = ft_calloc(sizeof(char), ft_strlen_nq(line) + 1);
 	if (!new)
 		return (NULL);
-	while (line[++i])
+	while (line[++ij[0]])
 	{
-		if (line[i] == '\'')
-			while (line[++i] != '\'')
-				new[j++] = line[i];
-		if (line[i] == '\"')
-			while (line[++i] != '\"')
-				new[j++] = line[i];
-		if (line[i] != '\'' && line[i] != '\"')
-			new[j++] = line[i];
+		if (line[ij[0]] == '\'')
+			while (line[++ij[0]] != '\'')
+				new[ij[1]++] = line[ij[0]];
+		if (line[ij[0]] == '\"')
+			while (line[++ij[0]] != '\"')
+				new[ij[1]++] = line[ij[0]];
+		if (line[ij[0]] != '\'' && line[ij[0]] != '\"')
+			new[ij[1]++] = line[ij[0]];
 	}
-	free(line);
-	return (new);
+	return (free(line), new);
 }
 
 int	ft_expand_line(char **str, int *i, t_info *info)
@@ -41,7 +39,8 @@ int	ft_expand_line(char **str, int *i, t_info *info)
 	if (!tmp[0])
 		return (1);
 	if (str[0][length])
-		while (str[0][length] && str[0][length] != '\"' && str[0][length] != '\'')
+		while (str[0][length] && str[0][length] != '\"'
+			&& str[0][length] != '\'')
 			length++;
 	tmp[3] = ft_substr(*str, *i, length - *i);
 	if (!tmp[4])
@@ -54,7 +53,7 @@ int	ft_expand_line(char **str, int *i, t_info *info)
 		return (1);
 	free(*str);
 	*str = ft_strjoiiin_free(tmp[0], tmp[1], tmp[2], 4);
-	*i += length - 1;
+	*i = length - 1;
 	return (0);
 }
 

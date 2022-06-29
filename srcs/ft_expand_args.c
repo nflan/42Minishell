@@ -32,7 +32,7 @@ char	*ft_expanded_value(t_info *info, char *tmp)
 	return (free(tmp), exp);
 }
 
-int	ft_expand_args(t_big_token *b_tokens, t_info *info)
+int	ft_expand_args(t_big_token *b_tokens, t_info *inf)
 {
 	int	i;
 
@@ -43,11 +43,9 @@ int	ft_expand_args(t_big_token *b_tokens, t_info *info)
 		{
 			if (ft_check_exp_line(b_tokens->cmd_args[i]))
 			{
-				printf("b_tokens->cmd_args[%d] = %s\n", i, b_tokens->cmd_args[i]);
-				b_tokens->cmd_args[i] = ft_expand_l(b_tokens->cmd_args[i], info);
+				b_tokens->cmd_args[i] = ft_expand_l(b_tokens->cmd_args[i], inf);
 				if (!b_tokens->cmd_args[i])
 					return (1);
-				printf("b_tokens->cmd_args[%d] = %s\n", i, b_tokens->cmd_args[i]);
 			}
 		}
 	}
