@@ -1,6 +1,6 @@
 #include "../include/minishell.h"
 
-int	ft_keep_history(char *str)
+void	ft_keep_history(char *str)
 {
 	int	i;
 
@@ -8,10 +8,11 @@ int	ft_keep_history(char *str)
 	if (str)
 		while (*str && *str == '\n')
 			str++;
-	if (str)
-		while (*str++)
-			i++;
-	return (i);
+	if (!str)
+		return ;
+//		while (*str++)
+//			i++;
+	add_history(str);
 }
 
 int	ft_init_info(t_info *info)

@@ -12,37 +12,38 @@
 
 #include "../include/minishell.h"
 
-void give_parent(t_big_token **b_child, t_big_token **parent)
+void	give_parent(t_big_token **b_child, t_big_token **parent)
 {
 	(*b_child)->parent = *parent;
 }
 
-void sub_parse_1(t_big_token **tmp_b, t_info *info, int b_start, int b_length)
+void	sub_parse_1(t_big_token **tmp_b, t_info *info, int b_start, int b_len)
 {
 	int	btok_info[2];
 
 	btok_info[0] = b_start;
-	btok_info[1] = b_length;
+	btok_info[1] = b_len;
 	parse(&((*tmp_b)->child), info, btok_info);
 	if ((*tmp_b)->child)
 		give_parent(&((*tmp_b)->child), tmp_b);
 }
 
-void sub_parse_2(t_big_token **tmp, t_big_token **tmp_b, t_info *info)
+void	sub_parse_2(t_big_token **tmp, t_big_token **tmp_b, t_info *info)
 {
-	t_big_token *b_child;
+	t_big_token	*b_child;
 
 	b_child = *tmp;
 	give_parent(&b_child, tmp_b);
 	while (b_child)
 	{
 		if ((b_child)->par)
-			sub_parse_1(&b_child, info, (b_child)->ind_tok_start, (b_child)->length);
+			sub_parse_1(&b_child, info,
+				(b_child)->ind_tok_start, (b_child)->length);
 		(b_child) = (b_child)->sibling;
 	}
 }
 
-int access_file(char *file)
+int	access_file(char *file)
 {
 	if (access(file, F_OK) == 0)
 		return (1);
@@ -50,16 +51,16 @@ int access_file(char *file)
 		return (0);
 }
 
-int no_red(t_big_token **tmp_b, t_token **tokens)
+int	no_red(t_big_token **tmp_b, t_token **tokens)
 {
 	(void)tmp_b;
 	(void)tokens;
 	return (0);
 }
 
-int parse(t_big_token **b_tokens, t_info *info, int btok_info[2])
+int	parse(t_big_token **b_tokens, t_info *info, int btok_info[2])
 {
-	t_big_token *tmp_b;
+	t_big_token	*tmp_b;
 
 	if (divide_by_or_and(b_tokens, info, btok_info))
 		return (ft_putstr_error("in parse "));
