@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/29 18:28:58 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/29 18:34:56 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,7 @@ int				ft_cd(t_info *info, t_big_token *b_tokens);
 //-----------ft_export.c--------------------------------------------------------
 int				ft_export(t_info *info, t_big_token *b_tokens);
 //-----------ft_echo.c----------------------------------------------------------
-int				ft_echo(t_info *info, t_big_token *b_tokens);
+int				ft_echo(t_big_token *b_tokens);
 char			*ft_create_echo(t_big_token *b_tokens, char *tmp, int i);
 int				ft_echo_none(t_big_token *b_tokens, int i);
 int				ft_handle_ret(t_big_token *b_tokens, char *ret, int i);
