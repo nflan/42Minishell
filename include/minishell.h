@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/28 23:54:08 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/29 18:28:58 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,12 @@ typedef struct s_info
 	int			pdes[2];
 	int			tmp[2];
 }	t_info;
+
+typedef struct	s_tmp
+{
+t_token		*s;
+t_big_token	*b;
+}				t_tmp;
 
 //-----------main.c-------------------------------------------------------------
 void			ft_end(t_info *info);

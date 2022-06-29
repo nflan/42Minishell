@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:57:08 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/29 12:30:23 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/29 18:27:30 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,30 @@ static int	dbp_4(int (*btok_info)[2], int (*ij)[2], t_info *info, t_big_token **
 
 int	divide_by_pipe(t_big_token **b_tokens, t_info *info)
 {
-	t_token *tmp_s;
-	t_big_token *tmp_b;
+	t_tmp	tmp;
 	int btok_info[2];
 	int stend_par[2];
 	int ij[2];
 
-	tmp_s = info->tokens;
-	tmp_b = *b_tokens;
-	dbp_2(tmp_b, &btok_info, &ij, 1);
-	while (ij[0] < tmp_b->length)
+	tmp.s = info->tokens;
+	tmp.b = *b_tokens;
+	dbp_2(tmp.b, &btok_info, &ij, 1);
+	while (ij[0] < (tmp.b)->length)
 	{
-		move_tok_2_ind(&tmp_s, ij[1]);
+		move_tok_2_ind(&(tmp.s), ij[1]);
 		btok_info[1]++;
-		if (is_pipe(tmp_s))
+		if (is_pipe(tmp.s))
 		{
-			if (dbp_4(&btok_info, &ij, info, &tmp_b))
+			if (dbp_4(&btok_info, &ij, info, &(tmp.b)))
 				return (ft_putstr_error("in divide by pipe "));
-			btok_info[0] = tmp_s->index + 1;
+			btok_info[0] = (tmp.s)->index + 1;
 			ij[1] = btok_info[0];
 		}
-		else if (tmp_s && tmp_s->token == TOK_EXPANDER_OP)
-			dbp_3(tmp_s, &btok_info, &ij, &stend_par);
+		else if ((tmp.s) && (tmp.s)->token == TOK_EXPANDER_OP)
+			dbp_3((tmp.s), &btok_info, &ij, &stend_par);
 		else
-			dbp_2(tmp_b, &btok_info, &ij, 2);
+			dbp_2((tmp.b), &btok_info, &ij, 2);
 	}
-	return (dbp_1(&tmp_b, btok_info, info));
+	return (dbp_1(&(tmp.b), btok_info, info));
 }
 
