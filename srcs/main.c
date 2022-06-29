@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 22:08:23 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/29 18:33:20 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	ft_launch_minishell(t_info info, char *word)
 		g_sc = 0;
 	}
 	ft_end(&info);
+	return (0);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -53,6 +54,7 @@ int	main(int ac, char **av, char **envp)
 	char		*word;
 
 	(void) av;
+	word = NULL;
 	g_sc = 0;
 	if (ft_init_first(&info, envp))
 		return (1);

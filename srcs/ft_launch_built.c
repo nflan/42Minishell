@@ -46,6 +46,6 @@ int	ft_builtins(t_info *info, t_big_token *b_tokens)
 	else if (!ft_strncmp(b_tokens->cmd_args[0], "env", len))
 		return (ft_env(info));
 	else if (!ft_strncmp(b_tokens->cmd_args[0], "echo", len))
-		return (ft_echo(info, b_tokens));
+		return (ft_echo(b_tokens));
 	return (1);
 }
