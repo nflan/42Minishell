@@ -173,157 +173,131 @@ if (type_red == 3 || type_red == 4)
 }
 }*/
 
-int	handle_par_dir(t_token **tmp_s, t_big_token **tmp_b, t_info *info, int ind_word)
+// itctlt[0] = i, itctlt[1] = type_red, itctlt[2] = cl_ind,
+// itctlt[3] = to_reduce, itctlt[4] = len, itctlt[5] = to_start 
+int	handle_par_dir(t_big_token **tmp_b, t_info *info)
 {
 	t_token *tmp;
-	int i;
-	int j;
-	int cl_ind;
-	int type_red;
-	int len;
-	int to_reduce;
-	int to_start;
+	int	itctlt[6];
 
-	(void)tmp_s;
-	(void)ind_word;
 	tmp = info->tokens;
-	i = 0;
-	j = 0;
-	type_red = 0;
-	len = 0;
-	to_reduce = 0;
-	to_start = 0;
+	itctlt[0] = 0;
+	itctlt[1] = 0;
+	itctlt[3] = 0; 
+	itctlt[5] = 0;
 	handle_piped(tmp_b, info);
 	move_tok_2_ind(&tmp, (*tmp_b)->ind_tok_start);
 	if (tmp->token == TOK_SEP)
 	{
 		move_tok_2_ind(&tmp, (*tmp_b)->ind_tok_start + 1);
-		to_reduce++;
-		to_start++;
+		itctlt[3]++;
+		itctlt[5]++;
 	}
 	if (tmp->token == TOK_EXPANDER_OP)
 	{
-		to_reduce++;
-		to_start++;
-		cl_ind = cl_par_ind(&tmp, tmp->index);
-		if (cl_ind == -1)
-		{
-			//	printf("There is an error here!\n");
+		itctlt[3]++;
+		itctlt[5]++;
+		itctlt[2] = cl_par_ind(&tmp, tmp->index);
+		if (itctlt[2] == -1)
 			return (1);
-		}
 		else
 		{
-			to_reduce++;
-			move_tok_2_ind(&tmp, cl_ind + 1);
-			len = (*tmp_b)->length + (*tmp_b)->ind_tok_start - 1 - cl_ind;
-			if (check_if_piped(tmp_b, cl_ind + 1, info, len))
-			{
-				//			printf("I'm piped darling!\n");
+			itctlt[3]++;
+			move_tok_2_ind(&tmp, itctlt[2] + 1);
+			itctlt[4] = (*tmp_b)->length + (*tmp_b)->ind_tok_start - 1 - itctlt[2];
+			if (check_if_piped(tmp_b, itctlt[2] + 1, info, itctlt[4]))
 				return (0);
-			}
-			to_reduce += len;
+			itctlt[3] += itctlt[4];
 		}
 	}
-	type_red = 0;
-	while (tmp && j < len)
+	while (tmp && itctlt[4]--)
 	{
-		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && i % 2)
-		{
-			//		printf("There is a problem in redirections!\n");
+		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && itctlt[0] % 2)
 			return (1);
-		}
-		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(i % 2))
+		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(itctlt[0] % 2))
 		{
-			//		printf("I entered here with : %s\n", tmp->value);
-			rd_inout_type(tmp->value, &type_red);
-			//		printf("typered: %d\n", type_red);
-			i++;
+			rd_inout_type(tmp->value, &itctlt[1]);
+			itctlt[0]++;
 		}
-		else if (tmp->token == TOK_WORD && (!(i % 2) || !type_red))
-		{
-			//		printf("tmp_tok: %s, %d, %d\n", tmp->value, i, type_red);
-			//		printf("problem here putain!\n");
+		else if (tmp->token == TOK_WORD && (!(itctlt[0] % 2) || !itctlt[1]))
 			return (1);
-		}
-		if (tmp->token != TOK_SEP && (i % 2))
+		if (tmp->token != TOK_SEP && (itctlt[0] % 2))
 		{
-			if (type_red == 1 || type_red == 2)
+			if (itctlt[1] == 1 || itctlt[1] == 2)
 			{
-				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_in, &tmp, type_red))
+				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_in, &tmp, itctlt))
 					return (ft_putstr_error("in handle par dir "));
 			}
 			else
-				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_out, &tmp, type_red))
+				if (ft_fdnew(*(tmp_b), &(*tmp_b)->fd_out, &tmp, itctlt))
 					return (ft_putstr_error("in handle par dir "));
-			i++;
+			itctlt[0]++;
 		}
-		tmp = tmp->next;
-		j++;
+		else
+		{
+			tmp = tmp->next;
+			itctlt[4]--;
+		}
 	}
-	(*tmp_b)->ind_tok_start += to_start;
-	(*tmp_b)->length -= to_reduce;
+	(*tmp_b)->ind_tok_start += itctlt[5];
+	(*tmp_b)->length -= itctlt[3];
 	(*tmp_b)->par = 1;
 	return (0);
 }
-
+// itscl[0] = i, itscl[1] = type_red, itscl[2] = save_word, itscl[3] = cmd_args_nums
+// itscl[4] = b_length
 int	handle_dir(t_big_token **tmp_b, t_info *info)
 {
 	t_token *tmp;
-	int i;
-	int type_red;
-	int save_word;
-	int	cmd_args_num;
+	int	itscl[5];
 
 	tmp = info->tokens;
-	i = 0;
-	(*tmp_b)->j = (*tmp_b)->length;
-	type_red = 0;
-	save_word = 0;
+	itscl[0] = 0;
+	itscl[1] = 0;
+	itscl[2] = 0;
+	itscl[4] = (*tmp_b)->length;
 	move_tok_2_ind(&tmp, (*tmp_b)->ind_tok_start);
 	count_cmd_args(tmp_b, (*tmp_b)->ind_tok_start, (&info->tokens), (*tmp_b)->length);
-	cmd_args_num = (*tmp_b)->cmd_args_num;
-	type_red = 0;
-	while (tmp && (*tmp_b)->j)
+	itscl[3] = (*tmp_b)->cmd_args_num;
+	while (tmp && itscl[4])
 	{
-		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(i % 2))
+		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !(itscl[0] % 2))
 		{
-			rd_inout_type(tmp->value, &type_red);
-			i++;
-			save_word = 1;
+			rd_inout_type(tmp->value, &itscl[1]);
+			itscl[0]++;
+			itscl[2] = 1;
 			tmp = tmp->next;
-			(*tmp_b)->j--;
+			itscl[4]--;
 		}
-		else if (tmp->token != TOK_SEP && !save_word)
+		else if (tmp->token != TOK_SEP && !itscl[2])
 		{
-			while (tmp && (*tmp_b)->j && tmp->token != TOK_SEP)
+			while (tmp && itscl[4] && tmp->token != TOK_SEP)
 			{
-				(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num] = ft_strjoin_free((*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num], tmp->value, 1);
-				if (!(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - cmd_args_num])
+				(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - itscl[3]] = ft_strjoin_free((*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - itscl[3]], tmp->value, 1);
+				if (!(*tmp_b)->cmd_args[(*tmp_b)->cmd_args_num - itscl[3]])
 					return (ft_putstr_error("Malloc error in ft_strdup in handle dir "));
 				tmp = tmp->next;
-				(*tmp_b)->j--;
+				itscl[4]--;
 			}
-			cmd_args_num--;
+			itscl[3]--;
 		}
-		else if ((tmp->token != TOK_SEP && (i % 2) && save_word))
+		else if ((tmp->token != TOK_SEP && (itscl[0] % 2) && itscl[2]))
 		{
-			if (type_red == 1 || type_red == 2)
+			if (itscl[1] == 1 || itscl[1] == 2)
 			{
-				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_in, &tmp, type_red))
+				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_in, &tmp, itscl))
 					return (ft_putstr_error("in handle dir "));
 			}
 			else
-				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_out, &tmp, type_red))
+				if (ft_fdnew(*tmp_b, &(*tmp_b)->fd_out, &tmp, itscl))
 					return (ft_putstr_error("in handle dir "));
-			(*tmp_b)->j -= tmp->index - ((*tmp_b)->ind_tok_start + ((*tmp_b)->length - (*tmp_b)->j));
-			tmp = tmp->next;
-			save_word = 0;
-			i++;
+			itscl[2] = 0;
+			itscl[0]++;
 		}
 		else
 		{
 			tmp = tmp->next;
-			(*tmp_b)->j--;
+			itscl[4]--;
 		}
 	}
 	(*tmp_b)->par = 0;
@@ -365,7 +339,7 @@ int	handle_par(t_big_token **b_tokens, t_info *info)
 			{
 				//			printf("I'm here habibiiw!\n");
 				//			printf("I have this word: %s\n", tmp_s->value);
-				if (handle_par_dir(&tmp_s, &tmp_b, info, st_par))
+				if (handle_par_dir(&tmp_b, info))
 					return (ft_putstr_error("in handle par "));
 			}
 		}

@@ -148,7 +148,6 @@ typedef struct s_fd
 typedef struct s_big_token
 {
 	t_big_tok_type		type;
-	int					j;
 	int					ind_tok_start;
 	int					length;
 	int					par;
@@ -208,28 +207,10 @@ int				ft_fill_envnew(t_env *env, char *line, int i, int j);
 //-----------ft_env_tools2.c----------------------------------------------------
 int				ft_init_env(t_info *info, char **envp);
 
-// EXPAND
-//-----------ft_expand_check.c--------------------------------------------------
-int				ft_check_dol(char *str);
-int				ft_check_expand(t_token *token, int start, int length);
-int				ft_check_exp_line(char *str);
-//-----------ft_expand_args.c---------------------------------------------------
-int				ft_noquote_args(t_big_token *b_tokens);
-char			*ft_expanded_value(t_info *info, char *tmp);
-int				ft_expand_args(t_big_token *b_tokens, t_info *info);
-//-----------ft_expand_line.c---------------------------------------------------
-char			*ft_noquote_line(char *line);
-int				ft_expand_line(char **str, int *i, t_info *info);
-char			*ft_expand_l(char *str, t_info *info);
-//-----------ft_expand_tools.c--------------------------------------------------
-void			ft_count_q(char *str, char c, size_t *i, size_t *q);
-size_t			ft_strlen_nq(char *str);
-void			ft_type(char c, int *t);
-
 // FD
 //-----------ft_fd_tools.c------------------------------------------------------
-int				ft_fill_fdnew(t_fd *fd, t_token **tmp, int red, int *hd);
-int				ft_fdnew(t_big_token *b_toks, t_fd **fd, t_token **tmp, int rd);
+int				ft_fill_fdnew(t_fd *fd, t_token **tmp, int itscl[5], int *hd);
+int				ft_fdnew(t_big_token *b_toks, t_fd **fd, t_token **t, int r[5]);
 int				ft_create_tmp(t_fd *fd, int hd);
 char			*ft_create_del(t_token **tmp, int *red);
 void			ft_fdadd_back(t_fd **alst, t_fd *new);
@@ -274,10 +255,10 @@ int				ft_cd(t_info *info, t_big_token *b_tokens);
 int				ft_export(t_info *info, t_big_token *b_tokens);
 //-----------ft_echo.c----------------------------------------------------------
 int				ft_echo(t_big_token *b_tokens);
-char			*ft_create_echo(t_big_token *b_tokens, char *tmp, int i);
+void			ft_create_echo(t_big_token *b_tokens, int i);
 int				ft_echo_none(t_big_token *b_tokens, int i);
 int				ft_handle_ret(t_big_token *b_tokens, char *ret, int i);
-int				ft_option_echo(t_big_token *b_tokens, int i);
+int				ft_option_echo(t_big_token *b_tokens);
 
 //-----------ft_tools.c---------------------------------------------------------
 int				ft_putstr_error(char *error);
@@ -294,7 +275,7 @@ int				ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid);
 int				ft_init_pipex(t_info *info, t_big_token *b_tokens);
 
 //---------ft_here_doc.c--------------------------------------------------------
-void			ft_write_here(t_fd *fd, char **str, int i, int red);
+int				ft_write_here(t_fd *fd, char **str, int i, int red);
 int				ft_here(t_fd *fd, int red);
 char			**ft_env_to_tab(t_env *env);
 
@@ -390,7 +371,7 @@ void			init_tok_struct(t_token **tok_list, int rank_in_list);
 //----------tokenizer_2.c-------------------------------------------------------
 
 int				add_tok_last(t_token **tok_l, t_tok_type t_t, int l, int i);
-void			add_tok_last_bis(t_token **t_l, t_tok_type t_t, int q, char *v);
+int				add_tok_last_bis(t_token **t_l, t_tok_type t_t, int q, char *v);
 int				detect_tokens(t_info *info);
 int				fill_tok_value(t_token **tok, char *str);
 char			*ft_strncpy(char *str, int n);
@@ -434,6 +415,7 @@ int				sophisticated_piped(t_token **tokens, int start, int length);
 
 //-----------big_tokenizer_4.c--------------------------------------------------
 
+int				handle_par_dir(t_big_token **tmp_b, t_info *info);
 int				handle_par(t_big_token **b_tokens, t_info *info);
 
 //-----------big_tokenizer_3.c--------------------------------------------------
@@ -452,17 +434,34 @@ int				depth_b_token(t_big_token **b_token);
 void			print_all_everything(t_big_token **b_tokens, t_token **tokens);
 void			print_all_child(t_big_token **b, t_token **toks, int i, int j);
 
-//---------------dollar_expander.c----------------------------------------------
-char			*expand_join(char *s1, char *s2, char *s3);
-char			*expand_join_nf(char *s1, char *s2, char *s3);
-char			*strjoin_4(char *str1, char *str2);
-char			*str_join_exp(t_token **tokens, int ind, int type);
+// EXPAND
+//-----------ft_expand_check.c--------------------------------------------------
+int				ft_check_dol(char *str);
+int				ft_check_expand(t_token *token, int start, int length);
+int				ft_check_exp_line(char *str);
+//-----------ft_expand_args.c---------------------------------------------------
+int				ft_noquote_args(t_big_token *b_tokens);
+char			*ft_expanded_value(t_info *info, char *tmp);
+int				ft_expand_args(t_big_token *b_tokens, t_info *info);
+//-----------ft_expand_line.c---------------------------------------------------
+char			*ft_noquote_line(char *line);
+int				ft_get_length(char *str, int length, int i);
+char			*ft_expand_line(char *str, int *i, t_info *info, int t);
+char			*ft_expand_l(char *str, t_info *info, int hd);
+//-----------ft_expand_tools.c--------------------------------------------------
+void			ft_count_q(char *str, char c, size_t *i, size_t *q);
+size_t			ft_strlen_nq(char *str);
+void			ft_type(char c, int *t);
 char			*ft_strndup(char *str, int len);
-void			expand_1(char **str, int *i, t_info *info);
-void			expand(char **str, t_info *info);
-void			dol_expand(t_token **old_tokens, t_info *info, t_big_token *b);
+char			*strjoin_4(char *str1, char *str2);
+//-----------ft_expand_1.c------------------------------------------------------
+int				dol_expand(t_token **old_tokens, t_info *info, t_big_token *b);
+int				expand(char **str, t_info *info);
+char			*str_join_exp(t_token **tokens, int ind, int type);
+//---------------dollar_expander.c----------------------------------------------
+int				expand_1(char **str, int *i, t_info *info);
 int				expanded_toks_check(t_token **tokens);
-void			expanded_toks(t_token **old_tokens, int start, int length);
+int				expanded_toks(t_token **old_tokens, int start, int length);
 
 //---------------init_tok_type_tab.c--------------------------------------------
 

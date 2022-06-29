@@ -40,3 +40,31 @@ void	ft_type(char c, int *t)
 	else if (c == '\"' && *t == 1)
 		*t = 0;
 }
+
+char	*ft_strndup(char *str, int len)
+{
+	char	*ret;
+	int		i;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	ret = ft_calloc(sizeof(char), len + 1);
+	if (!ret)
+		return (NULL);
+	while (i < len && str[i])
+	{
+		ret[i] = str[i];
+		i++;
+	}
+	return (ret);
+}
+
+char	*strjoin_4(char *str1, char *str2)
+{
+	char	*ret;
+
+	ret = ft_strjoin(str1, str2);
+	free(str1);
+	return (ret);
+}

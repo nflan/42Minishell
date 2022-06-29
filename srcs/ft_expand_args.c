@@ -32,19 +32,19 @@ char	*ft_expanded_value(t_info *info, char *tmp)
 	return (free(tmp), exp);
 }
 
-int	ft_expand_args(t_big_token *b_tokens, t_info *inf)
+int	ft_expand_args(t_big_token *b, t_info *info)
 {
 	int	i;
 
 	i = -1;
-	if (b_tokens->cmd_args)
+	if (b->cmd_args)
 	{
-		while (b_tokens->cmd_args[++i])
+		while (b->cmd_args[++i])
 		{
-			if (ft_check_exp_line(b_tokens->cmd_args[i]))
+			if (ft_check_exp_line(b->cmd_args[i]))
 			{
-				b_tokens->cmd_args[i] = ft_expand_l(b_tokens->cmd_args[i], inf);
-				if (!b_tokens->cmd_args[i])
+				b->cmd_args[i] = ft_expand_l(b->cmd_args[i], info, 0);
+				if (!b->cmd_args[i])
 					return (1);
 			}
 		}

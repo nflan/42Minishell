@@ -43,15 +43,18 @@ int add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 	return (0);
 }
 
-void add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char *value)
+int	add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char *value)
 {
 	t_token *tmp;
 	t_token *bef_last;
 
+	if (!value)
+		return (1);
 	if (!*tok_list)
 	{
 		*tok_list = create_tok_bis(tok_type, quoted, value);
-		//	(*tok_list)->prev = NULL;
+		if (!*tok_list)
+			return (free(value), 1);
 	}
 	else
 	{
@@ -60,10 +63,12 @@ void add_tok_last_bis(t_token **tok_list, t_tok_type tok_type, int quoted, char 
 			tmp = tmp->next;
 		bef_last = tmp;
 		bef_last->next = create_tok_bis(tok_type, quoted, value);
+		if (!bef_last->next)
+			return (free(value), 1);
 		bef_last = bef_last->next;
 		bef_last->prev = tmp;
 	}
-	// init_tok_struct(tok_list, rank_in_list);
+	return (free(value), 0);
 }
 
 int	check_tok_type(t_tok_type tok_type)
@@ -168,13 +173,14 @@ void index_toks(t_token **tokens)
 	int i;
 	t_token *tmp;
 
-	tmp = *tokens;
 	i = 0;
-	while (*tokens)
+	tmp = *tokens;
+	if (!tmp)
+		return ;
+	while (tmp)
 	{
-		(*tokens)->index = i;
-		(*tokens) = (*tokens)->next;
+		tmp->index = i;
+		tmp = tmp->next;
 		i++;
 	}
-	*tokens = tmp;
 }

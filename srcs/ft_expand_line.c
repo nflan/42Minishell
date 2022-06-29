@@ -29,35 +29,47 @@ char	*ft_noquote_line(char *line)
 	return (free(line), new);
 }
 
-int	ft_expand_line(char **str, int *i, t_info *info)
+int	ft_get_length(char *str, int length, int t)
+{
+	if (str[length] && t == 1)
+		while (str[length] && str[length] != '\"' && str[length] != ' ')
+			length++;
+	else if (str[length] && t == 0)
+		while (str[length] && str[length] != '\"' && str[length] != '\''
+				&& str[length] != ' ')
+			length++;
+	else if (str[length] && t == 2)
+		while (str[length] && str[length] != '\'' && str[length] != ' ')
+			length++;
+	return (length);
+}
+
+char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 {
 	char	*tmp[4];
 	int		length;
 
 	length = *i;
-	tmp[0] = ft_substr(*str, 0, *i - 1);
+	tmp[0] = ft_substr(str, 0, *i - 1);
 	if (!tmp[0])
-		return (1);
-	if (str[0][length])
-		while (str[0][length] && str[0][length] != '\"'
-			&& str[0][length] != '\'')
-			length++;
-	tmp[3] = ft_substr(*str, *i, length - *i);
-	if (!tmp[4])
-		return (1);
+		return (NULL);
+	length = ft_get_length(str, length, t);
+	tmp[3] = ft_substr(str, *i, length - *i);
+	if (!tmp[3])
+		return (free(tmp[0]), NULL);
 	tmp[1] = ft_expanded_value(info, tmp[3]);
 	if (!tmp[1])
-		return (1);
-	tmp[2] = ft_substr(*str, length, ft_strlen(*str));
+		return (free(tmp[0]), NULL);
+	tmp[2] = ft_substr(str, length, ft_strlen(str));
 	if (!tmp[2])
-		return (1);
-	free(*str);
-	*str = ft_strjoiiin_free(tmp[0], tmp[1], tmp[2], 4);
+		return (free(tmp[0]), free(tmp[1]), NULL);
+	free(str);
 	*i = length - 1;
-	return (0);
+	return (ft_strjoiiin_free(tmp[0], tmp[1], tmp[2], 4));
 }
+//	printf("tmp[0] = '%s' && tmp[1] = '%s' && tmp[2] = '%s'\n", tmp[0], tmp[1], tmp[2]);
 
-char	*ft_expand_l(char *str, t_info *info)
+char	*ft_expand_l(char *str, t_info *info, int hd)
 {
 	int		i;
 	int		t;
@@ -67,13 +79,17 @@ char	*ft_expand_l(char *str, t_info *info)
 	while (str[i])
 	{
 		ft_type(str[i], &t);
-		if (str[i] == '$' && t < 2)
+		if (str[i] == '$')
 		{
 			i++;
-			if (ft_expand_line(&str, &i, info))
-				return (NULL);
-			if ((size_t)i > ft_strlen(str))
-				break ;
+			if (t < 2 || hd)
+			{
+				str = ft_expand_line(str, &i, info, t);
+				if (!str)
+					return (NULL);
+				if ((size_t)i > ft_strlen(str))
+					break ;
+			}
 		}
 		else
 			i++;

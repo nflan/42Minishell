@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-void	ft_write_here(t_fd *fd, char **str, int i, int red)
+int	ft_write_here(t_fd *fd, char **str, int i, int red)
 {
 	if (i == 1)
 	{	
@@ -23,10 +23,15 @@ void	ft_write_here(t_fd *fd, char **str, int i, int red)
 	else if (i == 2)
 	{
 		if (red == 2)
-			expand(str, fd->info);
+		{
+			*str = ft_expand_l(*str, fd->info, 1);
+			if (!*str)
+				return (1);
+		}
 		write(fd->fd, *str, ft_strlen(*str));
 		write(fd->fd, "\n", 1);
 	}
+	return (0);
 }
 
 int	ft_here(t_fd *fd, int red)
@@ -34,7 +39,6 @@ int	ft_here(t_fd *fd, int red)
 	char	*buf;
 	char	*to_free;
 
-	buf = NULL;
 	to_free = ft_strjoiiin("heredoc \"", fd->delimitator, "\" > ");
 	if (!to_free)
 		return (1);
@@ -47,7 +51,8 @@ int	ft_here(t_fd *fd, int red)
 				ft_strlen(fd->delimitator) + 1))
 			break ;
 		else
-			ft_write_here(fd, &buf, 2, red);
+			if (ft_write_here(fd, &buf, 2, red))
+				return (1);
 		free(buf);
 		buf = NULL;
 	}

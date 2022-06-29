@@ -27,9 +27,8 @@ int	exec_the_bulk(t_info *info, int sib_child, t_big_token *b)
 		{
 			if (ft_check_expand(info->tokens, b->ind_tok_start, b->length))
 			{
-				dol_expand(&info->tokens, info, b);
-				expanded_toks(&info->tokens, b->ind_tok_start, b->length);
-				index_toks(&info->tokens);
+				if (ft_expand_args(b, info))
+					return (1);
 				if (ft_noquote_args(b))
 					return (1);
 			}

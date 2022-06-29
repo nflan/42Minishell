@@ -1,28 +1,32 @@
 #include "../include/minishell.h"
 
-int	ft_fill_fdnew(t_fd *fd, t_token **tmp, int red, int *hd)
+// itscl[0] = i, itscl[1] = type_red, itscl[2] = save_word, 
+// itscl[3] = cmd_args_nums, itscl[4] = b_length
+int	ft_fill_fdnew(t_fd *fd, t_token **tmp, int itscl[5], int *hd)
 {
-	if (red == 1 || red == 2)
-		fd->red = red - 1;
+	if (itscl[1] == 1 || itscl[1] == 2)
+		fd->red = itscl[1] - 1;
 	else
-		fd->red = red - 3;
-	if (red == 2)
+		fd->red = itscl[1] - 3;
+	if (itscl[1] == 2)
 	{
 		*hd += 1;
-		fd->delimitator = ft_create_del(tmp, &red);
+		fd->delimitator = ft_create_del(tmp, itscl);
 		if (ft_create_tmp(fd, *hd))
 			return (1);
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		ft_here(fd, red);
+		ft_here(fd, itscl[1]);
 	}
 	else
-		fd->file = ft_create_del(tmp, &red);
+		fd->file = ft_create_del(tmp, itscl);
 	if (!fd->file)
 		return (1);
 	return (0);
 }
 
-int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int red)
+// itscl[0] = i, itscl[1] = type_red, itscl[2] = save_word
+// itscl[3] = cmd_args_nums, itscl[4] = b_length
+int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int itscl[5])
 {
 	t_fd	*new;
 
@@ -30,7 +34,7 @@ int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int red)
 	if (!new)
 		return (ft_putstr_error("Malloc error in ft_fdnew "));
 	new->info = b_tokens->info;
-	if (ft_fill_fdnew(new, tmp, red, &(b_tokens)->nb_hd))
+	if (ft_fill_fdnew(new, tmp, itscl, &(b_tokens)->nb_hd))
 		return (ft_putstr_error("Malloc error in ft_fdnew "));
 	ft_fdadd_back(fd, new);
 	return (0);
@@ -55,7 +59,9 @@ int	ft_create_tmp(t_fd *fd, int hd)
 	return (0);
 }
 
-char	*ft_create_del(t_token **tmp, int *red)
+// itscl[0] = i, itscl[1] = type_red, itscl[2] = save_word,
+// itscl[3] = cmd_args_nums, itscl[4] = b_length
+char	*ft_create_del(t_token **tmp, int itscl[5])
 {
 	char	*del;
 
@@ -70,15 +76,16 @@ char	*ft_create_del(t_token **tmp, int *red)
 				if (!del)
 					return (NULL);
 			}
-			else if (*red != 8)
-				*red += 3;
+			else if (itscl[1] != 8)
+				itscl[1] += 3;
 			tmp[0] = tmp[0]->next;
+			itscl[4]--;
 		}
 	}
-	if (*red == 8)
-		*red = 5;
+	if (itscl[1] == 8)
+		itscl[1] = 5;
 	else
-		*red = 2;
+		itscl[1] = 2;
 	return (del);
 }
 
