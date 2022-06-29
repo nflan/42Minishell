@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:57:08 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/29 12:30:23 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/29 12:13:29 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,18 @@ static void	dbp_3(t_token *tmp_s, int (*btok_info)[2], int (*ij)[2], int (*stend
 
 static int	dbp_4(int (*btok_info)[2], int (*ij)[2], t_info *info, t_big_token **tmp_b)
 {
-	t_big_token	*tmp;
+	t_big_token	tmp;
 
 	tmp = *tmp_b;
+	printf("I'm here now\n");
 	((*btok_info)[1])--;
-	if (add_b_tok_sib_last(&(tmp->child), TOK_LEFT_PIPE, *btok_info, info))
+	if (add_b_tok_sib_last(&((*tmp_b)->child), TOK_LEFT_PIPE, *btok_info, info))
 		return (ft_putstr_error("in divide by pipe "));
+	print_b_tokens(tmp_b, &info->tokens, 0, 0);
+	exit(0);
 	(*btok_info)[1] = 0;
 	(*ij)[0]++;
+	(*ij)[1] = (*btok_info)[0];
 	return (0);
 }
 
@@ -77,17 +81,23 @@ int	divide_by_pipe(t_big_token **b_tokens, t_info *info)
 
 	tmp_s = info->tokens;
 	tmp_b = *b_tokens;
+//	printf("start tmp_b: %d, length tmp_b: %d\n", tmp_b->ind_tok_start, tmp_b->length);
 	dbp_2(tmp_b, &btok_info, &ij, 1);
+	printf("start: %d, len: %d", btok_info[0], btok_info[1]);
+	print_s_tokens(&tmp_s, btok_info[0], tmp_b->length);
 	while (ij[0] < tmp_b->length)
 	{
+//		printf("j: %d\n", ij[1]);
 		move_tok_2_ind(&tmp_s, ij[1]);
 		btok_info[1]++;
+		printf("i: %d\n", ij[0]);
+//		printf("this is the value of the tok i'm checking: %s, here is its type: %d\n", tmp_s->value, tmp_s->token);
 		if (is_pipe(tmp_s))
 		{
+			printf("I entered here hamdoullah, here is my value: %s\n", tmp_s->value);
 			if (dbp_4(&btok_info, &ij, info, &tmp_b))
 				return (ft_putstr_error("in divide by pipe "));
 			btok_info[0] = tmp_s->index + 1;
-			ij[1] = btok_info[0];
 		}
 		else if (tmp_s && tmp_s->token == TOK_EXPANDER_OP)
 			dbp_3(tmp_s, &btok_info, &ij, &stend_par);
