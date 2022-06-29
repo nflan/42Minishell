@@ -13,13 +13,13 @@
 #include "../include/minishell.h"
 #include "../libft/libft.h"
 
-char *expand_join(char *s1, char *s2, char *s3)
+char	*expand_join(char *s1, char *s2, char *s3)
 {
-	int len;
-	int i;
-	int j;
-	int k;
-	char *ret;
+	char	*ret;
+	int		len;
+	int		i;
+	int		j;
+	int		k;
 
 	len = ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3);
 	ret = ft_calloc((len + 1), sizeof(char));
@@ -46,13 +46,13 @@ char *expand_join(char *s1, char *s2, char *s3)
 	return (ret);
 }
 
-char *expand_join_nf(char *s1, char *s2, char *s3)
+char	*expand_join_nf(char *s1, char *s2, char *s3)
 {
-	int len;
-	int i;
-	int j;
-	int k;
-	char *ret;
+	char	*ret;
+	int		len;
+	int		i;
+	int		j;
+	int		k;
 
 	len = ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3);
 	ret = malloc((len + 1) * sizeof(char));
@@ -80,18 +80,18 @@ char *expand_join_nf(char *s1, char *s2, char *s3)
 	return (ret);
 }
 
-char *strjoin_4(char *str1, char *str2)
+char	*strjoin_4(char *str1, char *str2)
 {
-	char *ret;
+	char	*ret;
 
 	ret = ft_strjoin(str1, str2);
 	free(str1);
 	return (ret);
 }
 
-char *str_join_exp(t_token **tokens, int ind, int type)
+char	*str_join_exp(t_token **tokens, int ind, int type)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	if (type == 1 || type == 2 || type == 6 || type == 7)
@@ -118,10 +118,10 @@ char *str_join_exp(t_token **tokens, int ind, int type)
 	return (NULL);
 }
 
-char *ft_strndup(char *str, int len)
+char	*ft_strndup(char *str, int len)
 {
-	char *ret;
-	int i;
+	char	*ret;
+	int		i;
 
 	i = 0;
 	if (!str)
@@ -137,13 +137,13 @@ char *ft_strndup(char *str, int len)
 	return (ret);
 }
 
-void expand_1(char **str, int *i, t_info *info)
+void	expand_1(char **str, int *i, t_info *info)
 {
-	char *s;
-	char *tmp[4];
-	char *to_look_up;
-	int ind_dol;
-	int add_shit;
+	char	*s;
+	char	*tmp[4];
+	char	*to_look_up;
+	int		ind_dol;
+	int		add_shit;
 
 	s = *str;
 	ind_dol = *i;
@@ -177,9 +177,7 @@ void expand_1(char **str, int *i, t_info *info)
 		tmp[2] = ft_strndup(&(s[ind_dol + ft_strlen(to_look_up) + 1]), (ft_strlen(s) - ind_dol - ft_strlen(to_look_up) - 1));
 	free(to_look_up);
 	free(*str);
-	//printf("tmp[0] = %s && tmp[1] = %s && tmp[2] = %s\n", tmp[0], tmp[1], tmp[2]);
 	(*str) = expand_join(tmp[0], tmp[1], tmp[2]);
-	//printf("str = %s\n", *str);
 	free(tmp[0]);
 	free(tmp[1]);
 	free(tmp[2]);
@@ -189,17 +187,15 @@ void expand_1(char **str, int *i, t_info *info)
 		(*i) = ind_dol + add_shit - 1;
 }
 
-void expand(char **str, t_info *info)
+void	expand(char **str, t_info *info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str)
 	{
 		while (*str && (*str)[i])
 		{
-		// if (str[i] == *)
-		// ft_wildcard(&(str[i]));
 			if ((*str)[i] == '$')
 				expand_1(str, &i, info);
 			else
@@ -208,7 +204,7 @@ void expand(char **str, t_info *info)
 	}
 }
 
-void dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens)
+void	dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens)
 {
 	t_token	*tmp_o;
 	int		start;
@@ -220,7 +216,7 @@ void dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens)
 	move_tok_2_ind(&tmp_o, start);
 	while (tmp_o && length--)
 	{
-		if (tmp_o->token == TOK_WORD || tmp_o->token == TOK_WORD_D_QUOTED)// (tmp_o->quoted == 0 || tmp_o->quoted == 2))
+		if (tmp_o->token == TOK_WORD || tmp_o->token == TOK_WORD_D_QUOTED)
 			expand(&tmp_o->value, info);
 		tmp_o = tmp_o->next;
 	}
@@ -228,9 +224,9 @@ void dol_expand(t_token **old_tokens, t_info *info, t_big_token *b_tokens)
 		return ;
 }
 
-int expanded_toks_check(t_token **tokens)
+int	expanded_toks_check(t_token **tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	if ((tmp->token == TOK_WORD && ft_strlen(tmp->value) == 1 && !ft_strncmp("$", tmp->value, 1)) && (tmp->next && ft_strlen(tmp->next->value) == 1 && tmp->next->token == TOK_D_QUOTER) && (tmp->next->next && tmp->next->next->token == TOK_WORD_D_QUOTED))
@@ -242,7 +238,6 @@ int expanded_toks_check(t_token **tokens)
 	}
 	if ((tmp->token == TOK_WORD && ft_strlen(tmp->value) == 1 && !ft_strncmp("$", tmp->value, 1)) && (tmp->next && ft_strlen(tmp->next->value) == 1 && tmp->next->token == TOK_S_QUOTER) && (tmp->next->next && tmp->next->next->token == TOK_WORD_S_QUOTED))
 	{
-
 		move_tok_2_ind(&tmp, tmp->index + 4);
 		if (tmp && tmp->token == TOK_WORD)
 			return (7);
@@ -275,7 +270,7 @@ int expanded_toks_check(t_token **tokens)
 	return (0);
 }
 
-void expanded_toks(t_token **old_tokens, int start, int length)
+void	expanded_toks(t_token **old_tokens, int start, int length)
 {
 	t_token	*new_tokens;
 	t_token	*tmp_o;
@@ -296,7 +291,6 @@ void expanded_toks(t_token **old_tokens, int start, int length)
 		while (tmp_o && length--)
 		{
 			exp_check = expanded_toks_check(&tmp_o);
-//			printf("here is exp_check: %d for tmp: %s\n", exp_check, tmp_o->value);
 			if (exp_check == 1 || exp_check == 2)
 			{
 				new_value = str_join_exp(&tmp_o, tmp_o->index, exp_check);

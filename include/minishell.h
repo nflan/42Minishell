@@ -226,11 +226,17 @@ void			ft_count_q(char *str, char c, size_t *i, size_t *q);
 size_t			ft_strlen_nq(char *str);
 void			ft_type(char c, int *t);
 
+// FD
+//-----------ft_fd_tools.c------------------------------------------------------
+int				ft_fill_fdnew(t_fd *fd, t_token **tmp, int red, int *hd);
+int				ft_fdnew(t_big_token *b_toks, t_fd **fd, t_token **tmp, int rd);
+int				ft_create_tmp(t_fd *fd, int hd);
+char			*ft_create_del(t_token **tmp, int *red);
+void			ft_fdadd_back(t_fd **alst, t_fd *new);
 //-----------ft_fd_open.c-------------------------------------------------------
 int				ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd);
 int				ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd);
 int				ft_open_fd(t_big_token *b_tokens);
-
 //-----------ft_fd_close.c------------------------------------------------------
 void			ft_close_all_fd(t_fd *fd, int fd_type);
 void			ft_close_fd(t_big_token *b_tokens);
@@ -457,10 +463,6 @@ void			expand(char **str, t_info *info);
 void			dol_expand(t_token **old_tokens, t_info *info, t_big_token *b);
 int				expanded_toks_check(t_token **tokens);
 void			expanded_toks(t_token **old_tokens, int start, int length);
-int				ft_noquote_args(t_big_token *b_tokens);
-//---------------ft_expand_check.c----------------------------------------------
-int				ft_check_expand(t_token *token, int start, int length);
-int				ft_check_dol(char *str);
 
 //---------------init_tok_type_tab.c--------------------------------------------
 
