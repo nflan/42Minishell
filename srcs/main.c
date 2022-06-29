@@ -16,8 +16,7 @@ int	g_sc;
 
 void	ft_end(t_info *info)
 {
-	ft_free_env(info->env);
-	free(info->home);
+	ft_free_all(info, info->env);
 	ft_exit(info, NULL);
 }
 
@@ -33,9 +32,9 @@ int	ft_launch_minishell(t_info info, char *word)
 		free(word);
 		if (g_sc)
 			info.status = g_sc;
-		ft_keep_history(info.rdline);
 		if (!info.rdline)
 			break ;
+		ft_keep_history(info.rdline);
 		if (!ft_init_info(&info))
 		{
 			if (info.nb_cmd != 10)
@@ -45,6 +44,7 @@ int	ft_launch_minishell(t_info info, char *word)
 		g_sc = 0;
 	}
 	ft_end(&info);
+	return (0);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -53,6 +53,7 @@ int	main(int ac, char **av, char **envp)
 	char		*word;
 
 	(void) av;
+	word = NULL;
 	g_sc = 0;
 	if (ft_init_first(&info, envp))
 		return (1);

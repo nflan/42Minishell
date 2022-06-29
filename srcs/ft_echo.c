@@ -58,7 +58,7 @@ char	*ft_create_echo(t_big_token *b_tokens, char *tmp, int i)
 	return (tmp);
 }
 
-int	ft_echo(t_info *info, t_big_token *b_tokens)
+int	ft_echo(t_big_token *b_tokens)
 {
 	char	*tmp;
 	int		i;

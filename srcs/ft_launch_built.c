@@ -42,10 +42,10 @@ int	ft_builtins(t_info *info, t_big_token *b_tokens)
 		|| !ft_strncmp(b_tokens->cmd_args[0], "exit ", 5))
 		return (ft_exit(info, b_tokens));
 	else if (!ft_strncmp(b_tokens->cmd_args[0], "pwd", len))
-		return (ft_pwd());
+		return (ft_pwd(b_tokens));
 	else if (!ft_strncmp(b_tokens->cmd_args[0], "env", len))
-		return (ft_env(info));
+		return (ft_env(info, b_tokens));
 	else if (!ft_strncmp(b_tokens->cmd_args[0], "echo", len))
-		return (ft_echo(info, b_tokens));
+		return (ft_echo(b_tokens));
 	return (1);
 }

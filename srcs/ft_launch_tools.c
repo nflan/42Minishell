@@ -51,22 +51,6 @@ int	ft_lead_fd(t_info *info, t_big_token *b_tokens)
 	return (0);
 }
 
-/*int	ft_deeper_bt(t_big_token *b_tokens, t_big_token **tmp_b)
-{
-	int	i;
-
-	i = 0;
-	*tmp_b = b_tokens;
-	if (!tmp_b)
-		return (-1);
-	while ((*tmp_b)->child)
-	{
-		*tmp_b = (*tmp_b)->child;
-		i++;
-	}
-	return (i);
-}*/
-
 int	ft_wash_btoken(t_info *info, t_big_token *b_tokens)
 {
 	t_token	*tokens;

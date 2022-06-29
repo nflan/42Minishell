@@ -20,7 +20,7 @@ int	ft_exit_cmd(t_info *info, char *str, int err)
 	if (info)
 		ft_free_all(info, info->env);
 	rl_clear_history();
-	exit (info->status);
+	exit(info->status);
 }
 
 int	ft_fork_par(t_info *info, t_big_token *b_tokens)
@@ -35,6 +35,7 @@ int	ft_fork_par(t_info *info, t_big_token *b_tokens)
 	else if ((int) pid == 0)
 	{
 		ft_manage_sig(1);
+		rl_clear_history();
 		dup2(b_tokens->fdin, STDIN_FILENO);
 		dup2(b_tokens->fdout, STDOUT_FILENO);
 		rec_exec(info, &(b_tokens)->child, 0);
@@ -61,6 +62,7 @@ int	ft_do_solo(t_info *info, t_big_token *b)
 		ft_manage_sig(1);
 		dup2(b->fdin, STDIN_FILENO);
 		dup2(b->fdout, STDOUT_FILENO);
+		rl_clear_history();
 		if (ft_command(info, b))
 			ft_exit_cmd(info, b->cmd_args[0], 127);
 		else

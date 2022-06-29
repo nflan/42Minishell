@@ -2,16 +2,11 @@
 
 void	ft_keep_history(char *str)
 {
-	int	i;
-
-	i = 0;
 	if (str)
 		while (*str && *str == '\n')
 			str++;
-	if (!str)
+	if (!*str)
 		return ;
-//		while (*str++)
-//			i++;
 	add_history(str);
 }
 
