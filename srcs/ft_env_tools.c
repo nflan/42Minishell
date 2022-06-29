@@ -29,7 +29,7 @@ t_env	*ft_envnew(char *line)
 	if (!new)
 		return (NULL);
 	new->next = NULL;
-	if (ft_fill_envnew(new, line))
+	if (ft_fill_envnew(new, line, 0, -1))
 		return (free(new), NULL);
 	if (!ft_strncmp(new->name, "SHLVL", 6))
 	{
@@ -70,13 +70,8 @@ t_env	*ft_without_env(int i)
 	return (new);
 }
 
-int	ft_fill_envnew(t_env *env, char *line)
+int	ft_fill_envnew(t_env *env, char *line, int i, int j)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = -1;
 	if (!line)
 		return (1);
 	while (line[i] && line[i] != '=')

@@ -20,7 +20,10 @@ int	ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i)
 	if (!info || !b_tokens || !tmp_s)
 		return (1);
 	move_tok_2_ind(&tmp_s, b_tokens->ind_tok_start + (i * 2));
-	if (tmp_s && ft_strchr(b_tokens->cmd_args[i], '*') && tmp_s->token != TOK_QUOTER && tmp_s->token != TOK_D_QUOTER && tmp_s->token != TOK_WORD_S_QUOTED && tmp_s->token != TOK_WORD_D_QUOTED)
+	if (tmp_s && ft_strchr(b_tokens->cmd_args[i], '*')
+		&& tmp_s->token != TOK_QUOTER && tmp_s->token != TOK_D_QUOTER
+		&& tmp_s->token != TOK_WORD_S_QUOTED
+		&& tmp_s->token != TOK_WORD_D_QUOTED)
 		return (0);
 	return (1);
 }
@@ -30,7 +33,6 @@ int	ft_add_wildcards(t_info *info, t_big_token *b_tokens)
 	int	i;
 
 	i = 0;
-//	print_tab(b_tokens->cmd_args);
 	if (b_tokens->cmd_args)
 	{
 		while (b_tokens->cmd_args[i])
@@ -66,20 +68,15 @@ int	ft_keep(char *str, char *dir, int *i, int j)
 	return (0);
 }
 
-//int	ft_do_keep_bis(char **str)
-//{
-//}
-
-int	ft_do_keep(char *str, t_wildcards *wd, int type)
+int	ft_do_keep(char *str, t_wildcards *wd, int type, int i)
 {
-	int		i;
 	int		j;
 	char	*dir;
 
 	dir = wd->dir->d_name;
 	j = ft_strlen_before_ast(str);
-	i = 0;
-	if (!str || !dir || ft_manage_type(str, wd->dir->d_name, wd->dir->d_type, type))
+	if (!str || !dir
+		|| ft_manage_type(str, wd->dir->d_name, wd->dir->d_type, type))
 		return (1);
 	while (*str)
 	{
@@ -87,10 +84,8 @@ int	ft_do_keep(char *str, t_wildcards *wd, int type)
 		{
 			str++;
 			if (*str == '*' || *str == '/')
-			{
 				while (*str == '*' || *str == '/')
 					str++;
-			}
 			if (!*str)
 				return (0);
 		}
@@ -111,7 +106,7 @@ int	ft_wd_nb_args(t_wildcards *wd, t_big_token *b_tokens, int i, int type)
 	{
 		while (wd)
 		{
-			if (!ft_do_keep(b_tokens->cmd_args[i], wd, type))
+			if (!ft_do_keep(b_tokens->cmd_args[i], wd, type, 0))
 				count++;
 			wd = wd->next;
 		}

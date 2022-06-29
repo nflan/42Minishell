@@ -86,7 +86,7 @@ int	ft_unset_name(t_env **tmp, char *name)
 	return (1);
 }
 
-t_env	*ft_unset(t_info *info, t_big_token *b_tokens)
+int	ft_unset(t_info *info, t_big_token *b_tokens)
 {
 	t_env	*tmp;
 	t_env	*ptr;
@@ -94,12 +94,12 @@ t_env	*ft_unset(t_info *info, t_big_token *b_tokens)
 	tmp = info->env;
 	ptr = NULL;
 	if (!tmp || !b_tokens->cmd_args[0])
-		return (NULL);
+		return (1);
 	if (ft_unset_name(&tmp, b_tokens->cmd_args[1]))
-		return (NULL);
+		return (1);
 	ptr = tmp->next;
 	tmp->next = ptr->next;
 	ptr->next = NULL;
 	ft_free_env(ptr);
-	return (info->env);
+	return (0);
 }

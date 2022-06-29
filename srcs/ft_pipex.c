@@ -60,3 +60,25 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens)
 	info->status = ft_do_pipex(info, b_tokens);
 	return (0);
 }
+
+int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid)
+{
+	pid = -1;
+	if (ft_lead_fd(info, b_tokens))
+		return (ft_putstr_error("FD problem\n"));
+	b_tokens->envp = ft_env_to_tab(info->env);
+	pid = fork();
+	ft_manage_sig(0);
+	if ((int) pid == -1)
+		return (ft_error(2, info, NULL));
+	else if ((int) pid == 0)
+	{
+		ft_manage_sig(1);
+		if (ft_pipex(info, b_tokens))
+			return (ft_free_cmd(b_tokens), 1);
+		ft_exit_cmd(info, NULL, 0);
+	}
+	ft_manage_sig(2);
+	ft_close_cmd(info, b_tokens, pid);
+	return (info->status);
+}

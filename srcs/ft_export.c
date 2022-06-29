@@ -56,7 +56,8 @@ void	ft_not_valid_id(char **args)
 			{
 				if (!ft_isdigit(args[i][j]) && !ft_isalpha(args[i][j]))
 				{
-					ft_putstr_fd_3("minishell: export: `", args[i],"': not a valid identifier\n", 2);
+					ft_putstr_fd_3("minishell: export: `", args[i],
+						"': not a valid identifier\n", 2);
 					break ;
 				}
 				j++;
@@ -83,7 +84,8 @@ int	ft_export(t_info *info, t_big_token *b_tokens)
 		j = i + 1;
 		while (b_tokens->cmd_args[1][j])
 			j++;
-		while (tmp && ft_strncmp(tmp->name, b_tokens->cmd_args[1], i + 1) != -61)
+		while (tmp && ft_strncmp(tmp->name, b_tokens->cmd_args[1], i + 1)
+			!= -61)
 			tmp = tmp->next;
 		if (!tmp)
 			ft_export_new(info->env, tmp, b_tokens->cmd_args[1]);
