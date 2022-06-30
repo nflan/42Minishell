@@ -6,79 +6,65 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 21:51:00 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/28 21:07:42 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	len_ll_list(t_token *tok_list)
-{
-	int	len;
-
-	len = 0;
-	if (!tok_list)
-		return (len);
-	while (tok_list)
-	{
-		len++;
-		tok_list = tok_list->next;
-	}
-	return (len);
-}
-
-int	is_quoted(t_token **tok_list, int rank_in_list)
+int	is_quoted(t_token **tok_list, char c)
 {
 	t_token	*tmp;
-	int		res;
+	int		dq;
+	int		sq;
 
-	res = 1;
+	dq = 1;
+	sq = 1;
 	tmp = *tok_list;
-	if (!rank_in_list)
-		return (0);
-	else
+	while (tmp)
 	{
-		while (tmp->prev)
-		{
-			tmp = tmp->prev;
-			if (tmp->token == TOK_QUOTER)
-				res *= -1;
-		}
-		if (res < 0)
-			return (1);
+		if (tmp->token == TOK_S_QUOTER)
+			sq *= -1;
+		else if (tmp->token == TOK_D_QUOTER)
+			dq *= -1;
+		tmp = tmp->prev;
 	}
+	tmp = *tok_list;
+	if (sq < 0 && dq > 0 && c == '\'' && tmp && tmp->token == TOK_S_QUOTER)
+		return (3);
+	if (sq > 0 && dq < 0 && c == '\"' && tmp && tmp->token == TOK_D_QUOTER)
+		return (4);
+	if (sq < 0 && dq > 0 && c != '\'')
+		return (1);
+	else if (dq < 0 && sq > 0 && c != '\"')
+		return (2);
 	return (0);
 }
 
-unsigned int	get_real_tok_type(char c, t_token **tok_list)
+unsigned int	get_real_tok_type(char c, t_token **t, t_tok_type *tok_type_tab)
 {
-	int	len;
+	t_token	*last_tok;
+	int		len;
+	int		is_qted;
 
-	len = len_ll_list(*tok_list);
-	//if (len == 0 || len == 1)
+	len = len_ll_list(*t);
 	if (len == 0)
-		return (get_tok_type[get_char_class[(int)c]]);
+		return (tok_type_tab[(int)c]);
+	last_tok = *t;
+	while (last_tok->next)
+		last_tok = last_tok->next;
+	is_qted = is_quoted(&last_tok, c);
+	if (is_qted == 1)
+		return (TOK_WORD_S_QUOTED);
+	else if (is_qted == 2)
+		return (TOK_WORD_D_QUOTED);
+	else if (is_qted == 3)
+		return (TOK_WORD_NULL_S);
+	else if (is_qted == 4)
+		return (TOK_WORD_NULL_D);
 	else
-	{
-		if (is_quoted(tok_list, 1))
-			return (TOK_WORD);
-		else
-			return (get_tok_type[get_char_class[(int)c]]);
-	}
+		return (tok_type_tab[(int)c]);
 	return (-1);
-}
-
-t_token	*ft_create_token(t_tok_type tok_type, int length, int i)
-{
-	t_token	*tok;
-
-	tok = ft_calloc(sizeof(t_token), 1);
-	if (!tok)
-		return (NULL);
-	tok->token = tok_type;
-	tok->length = length;
-	tok->start = i;
-	return (tok);
 }
 
 void	init_tok_struct(t_token **tok_list, int rank_in_list)

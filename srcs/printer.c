@@ -6,11 +6,27 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 22:16:03 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/29 00:39:24 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	ft_print_wildcards(t_wildcards *wd)
+{
+	int	i;
+
+	i = 0;
+	if (wd)
+	{
+		while (wd)
+		{
+			printf("Fichier/Dossier %d: ", i++);
+			printf("%s (type = %u)\n", wd->dir->d_name, wd->dir->d_type);
+			wd = wd->next;
+		}
+	}
+}
 
 void	print_tab(char **tab)
 {
@@ -44,14 +60,14 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 		printf("\n");
 		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
 		printf("   --->>    ");
-	//	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
+//	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
 		print_tab(tmp_b->cmd_args);
 	//	printf("\n");
 		printf("It's type is: %d\n", tmp_b->type);
 		printf("It's start is: %d\n", tmp_b->ind_tok_start);
 		printf("It's length is: %d\n", tmp_b->length);
 		printf("It's par_pam is: %d\n", tmp_b->par);
-//		printf("It's rank is: %d\n", k);	
+//		printf("It's rank is: %d\n", k);
 		printf("\n");
 		if (tmp_b->child)
 		print_all_child(&(tmp_b->child), tokens, i, j);
@@ -145,8 +161,7 @@ void	print_s_tokens(t_token **tokens, int start, int length)
 	move_tok_2_ind(&tmp_s, start);
 	while (i < length && tmp_s)
 	{
-		printf("%s", tmp_s->value);
-		// printf("%d\n", tmp_s->token);
+		printf("%s(%d)(%d)", tmp_s->value, tmp_s->index, tmp_s->token);
 		tmp_s = tmp_s->next;
 		i++;
 	}

@@ -6,120 +6,73 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 23:08:20 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/28 21:42:20 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
+int	check_tok_type(t_tok_type type, char c, t_info *i, int test)
 {
-	t_token	*tmp;
-	t_token	*bef_last;
-	int		rank_in_list;
-
-	if (!*tok_list)
+	if (test == 1)
 	{
-		*tok_list = ft_create_token(tok_type, length, i);
-		if (!*tok_list)
-			return (ft_putstr_error("Error in create_token in add_tok_last in "));
-		(*tok_list)->prev = NULL;
-		rank_in_list = 0;
+		if (type != TOK_EXPANDER_OP && type != TOK_EXPANDER_CL
+			&& type != TOK_S_QUOTER && type != TOK_D_QUOTER
+			&& (get_real_tok_type(c, &(i->tokens), i->tok_type_tab) == type))
+			return (1);
 	}
-	else
-	{
-		tmp = *tok_list;
-		while (tmp->next)
-			tmp = tmp->next;
-		bef_last = tmp;
-		bef_last->next = ft_create_token(tok_type, length, i);
-		if (!*tok_list)
-			return (ft_putstr_error("Error in create_token in add_tok_last in "));
-		bef_last = bef_last->next;
-		bef_last->prev = tmp;
-		rank_in_list = 1;
-	}
-	init_tok_struct(tok_list, rank_in_list);
 	return (0);
 }
 
-int	detect_tokens(t_token **tok_list, char *str)
+int	checko(t_tok_type tok_type)
 {
+	if (tok_type == TOK_OPERATOR)
+		return (1);
+	return (0);
+}
+
+int	detect_tokens(t_info *in)
+{
+	unsigned int	t;
 	int				i;
-	unsigned int	tok_type;
 	int				length;
 	int				start;
 
 	i = 0;
-	if (!str)
+	if (!in->rdline)
 		return (ft_putstr_error("Command error in detect_tokens "));
-	while (str[i])
+	while (in->rdline[i])
 	{
 		length = 1;
 		start = i;
-		tok_type = get_real_tok_type(str[i], tok_list);
+		t = get_real_tok_type(in->rdline[i], &(in->tokens), in->tok_type_tab);
 		i++;
-		while (str[i] && tok_type != TOK_EXPANDER_OP && tok_type != TOK_EXPANDER_CL && (get_real_tok_type(str[i], tok_list) == tok_type))
+		while (in->rdline[i] && check_tok_type(t, in->rdline[i], in, 1))
 		{
+			if (checko(t) && strncmp(&(in->rdline[i]), &(in->rdline[i - 1]), 1))
+				break ;
 			length++;
 			i++;
 		}
-		if (tok_type != TOK_QUOTER)
-			if (add_tok_last(tok_list, tok_type, length, start))
-				return (ft_putstr_error("detect_tokens "));
+		if (add_tok(&(in->tokens), start, length, t))
+			return (ft_putstr_error("detect_tokens "));
 	}
 	return (0);
-}
-
-int	fill_tok_value(t_token **tok, char *str)
-{
-	t_token	*tmp;
-
-//	printf("(*tok) %p && str = %s\n", (*tok), str);
-	if (!*tok || !str)
-		return (1);
-	tmp = *tok;
-	while (tmp)
-	{
-		tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
-		if (!tmp->value)
-			return (ft_putstr_error("Error in ft_strncpy in fill_tok_value"));
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-char	*ft_strncpy(char *str, int n)
-{
-	int i;
-	char *ret;
-
-	i = 0;
-	if (!str)
-		return (NULL);
-	ret = ft_calloc(sizeof(char), n + 1);
-	if (!ret)
-		return (NULL);
-	while (i < n)
-	{
-		ret[i] = str[i];
-		i++;
-	}
-	return (ret);
 }
 
 void	index_toks(t_token **tokens)
 {
-	int i;
-	t_token *tmp;
+	t_token	*tmp;
+	int		i;
 
-	tmp = *tokens;
 	i = 0;
-	while (*tokens)
+	tmp = *tokens;
+	if (!tmp)
+		return ;
+	while (tmp)
 	{
-		(*tokens)->index = i;
-		(*tokens) = (*tokens)->next;
+		tmp->index = i;
+		tmp = tmp->next;
 		i++;
 	}
-	*tokens = tmp;
 }

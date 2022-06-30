@@ -6,66 +6,92 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:57:08 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/20 22:02:16 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/30 17:28:34 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	divide_by_pipe(t_big_token **b_tokens, t_token **tokens)
+static int	dbp_1(t_big_token **tmp_b, int b_info[2], t_info *info)
 {
-	t_token *tmp_s;
-	t_big_token *tmp_b;
-	int length_piped;
-	int start;
-	int st_par;
-	int end_par;
-	int i;
-	int j;
-
-	tmp_s = *tokens;
-	tmp_b = *b_tokens;
-	length_piped = 0;
-	start = tmp_b->ind_tok_start;
-	i = 0;
-	j = start;
-	while (i < tmp_b->length)
+	if (!(*tmp_b)->child)
 	{
-
-		move_tok_2_ind(&tmp_s, j);
-		length_piped++;
-		if (tmp_s->token == TOK_EXPANDER_OP)
-		{
-			st_par = tmp_s->index;
-			end_par = cl_par_ind(&tmp_s, tmp_s->index);
-			length_piped += (end_par - st_par);
-			j += (end_par - st_par) + 1;
-			i += (end_par - st_par) + 1;
-		}
-		else if (tmp_s->token == TOK_OPERATOR && ft_strlen(tmp_s->value) == 1 && !ft_strncmp(tmp_s->value, "|", 1))
-		{
-			if (add_b_tok_sib_last(&((tmp_b)->child), TOK_LEFT_PIPE, start, length_piped - 1))
-				return (ft_putstr_error("in divide by pipe "));
-			start = tmp_s->index + 1;
-			length_piped = 0;
-			i++;
-			j = start;
-		}
-		else
-		{
-			j++;
-			i++;
-		}
-	}
-	if (!((tmp_b)->child))
-	{
-		if (add_b_tok_sib_last(&((tmp_b)->child), TOK_CLEAN, start, length_piped))
-				return (ft_putstr_error("in divide by pipe "));
+		if (add_b_tok_sib_last(&((*tmp_b)->child), TOK_CLEAN, b_info, info))
+			return (ft_putstr_error("in divide by pipe "));
 	}
 	else
-		if (add_b_tok_sib_last(&((tmp_b)->child), TOK_PIPE_LAST, start, length_piped))
-				return (ft_putstr_error("in divide by pipe "));
-	if (handle_par(&(tmp_b->child), tokens))
+	{
+		if (add_b_tok_sib_last(&((*tmp_b)->child), TOK_PIPE_LAST, b_info, info))
+			return (ft_putstr_error("in divide by pipe "));
+	}
+	if (handle_par(&((*tmp_b)->child), info))
 		return (ft_putstr_error("in divie by pipe "));
 	return (0);
+}
+
+static void	dbp_2(t_big_token *tmp_b, int (*btok_info)[2], int (*ij)[2], int i)
+{
+	if (i == 1)
+	{
+		(*btok_info)[0] = tmp_b->ind_tok_start;
+		(*btok_info)[1] = 0;
+		(*ij)[0] = 0;
+		(*ij)[1] = tmp_b->ind_tok_start;
+	}
+	else if (i == 2)
+	{
+		((*ij)[1])++;
+		((*ij)[0])++;
+	}
+}
+
+static void	dbp_3(t_token *tmps, int (*b)[2], int (*ij)[2], int (*stend_par)[2])
+{
+	(*stend_par)[0] = tmps->index;
+	(*stend_par)[1] = cl_par_ind(&tmps, tmps->index);
+	((*b)[1]) += ((*stend_par)[1] - (*stend_par)[0]);
+	((*ij)[1]) += (((*stend_par)[1]) - ((*stend_par)[0])) + 1;
+	((*ij)[0]) += (((*stend_par)[1]) - ((*stend_par)[0])) + 1;
+}
+
+static int	dbp_4(int (*binfo)[2], int (*ij)[2], t_info *i, t_big_token **tmp_b)
+{
+	t_big_token	*tmp;
+
+	tmp = *tmp_b;
+	((*binfo)[1])--;
+	if (add_b_tok_sib_last(&(tmp->child), TOK_LEFT_PIPE, *binfo, i))
+		return (ft_putstr_error("in divide by pipe "));
+	(*binfo)[1] = 0;
+	(*ij)[0]++;
+	return (0);
+}
+
+int	divide_by_pipe(t_big_token **b_tokens, t_info *info)
+{
+	t_tmp	tmp;
+	int		btok_info[2];
+	int		stend_par[2];
+	int		ij[2];
+
+	tmp.s = info->tokens;
+	tmp.b = *b_tokens;
+	dbp_2(tmp.b, &btok_info, &ij, 1);
+	while (ij[0] < (tmp.b)->length)
+	{
+		move_tok_2_ind(&(tmp.s), ij[1]);
+		btok_info[1]++;
+		if (is_pipe(tmp.s))
+		{
+			if (dbp_4(&btok_info, &ij, info, &(tmp.b)))
+				return (ft_putstr_error("in divide by pipe "));
+			btok_info[0] = (tmp.s)->index + 1;
+			ij[1] = btok_info[0];
+		}
+		else if ((tmp.s) && (tmp.s)->token == TOK_EXPANDER_OP)
+			dbp_3((tmp.s), &btok_info, &ij, &stend_par);
+		else
+			dbp_2((tmp.b), &btok_info, &ij, 2);
+	}
+	return (dbp_1(&(tmp.b), btok_info, info));
 }

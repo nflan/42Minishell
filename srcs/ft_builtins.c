@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/15 17:48:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/06/26 14:20:48 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,17 @@ int	ft_exit(t_info *info, t_big_token *b_tokens)
 {
 	int	ret;
 
-	if (b_tokens)
-	{
+	ret = info->status;
+	if (b_tokens && b_tokens->cmd_args[1])
 		ret = ft_atoi(b_tokens->cmd_args[1]);
-		ft_free_cmd(b_tokens);
-	}
-	else
-		ret = 0;
-	printf("exit\n");
+	ft_putstr_fd("exit\n", 1);
 	if (b_tokens)
 		ft_free_all(info, info->env);
 	rl_clear_history();
 	exit(ret);
 }
 
-int	ft_env(t_info *info)
+int	ft_env(t_info *info, t_big_token *b_tok)
 {
 	t_env	*print;
 	char	*line;
@@ -43,7 +39,7 @@ int	ft_env(t_info *info)
 		{
 			line = ft_strjoiiin(print->name, "=", print->value);
 			line = ft_strjoin_free(line, "\n", 1);
-			ft_putstr_fd(line, 1);
+			ft_putstr_fd(line, b_tok->fdout);
 			free(line);
 			print = print->next;
 		}
@@ -51,27 +47,7 @@ int	ft_env(t_info *info)
 	return (0);
 }
 
-void	ft_print_tokens(t_token *tokens)
-{
-	t_token *tmp;
-
-	tmp = tokens;
-	if (tmp)
-	{
-		while (tmp)
-		{
-			printf("index = %d\n", tmp->index);
-			printf("value = %s\n", tmp->value);
-			printf("quoted = %d\n", tmp->quoted);
-			printf("lenght = %d\n", tmp->length);
-			printf("type = %d\n", tmp->token);
-			printf("start = %d\n\n", tmp->start);
-			tmp = tmp->next;
-		}
-	}
-}
-
-int	ft_pwd(void)
+int	ft_pwd(t_big_token *b_tok)
 {
 	char	*buf;
 	char	*tofree;
@@ -82,7 +58,7 @@ int	ft_pwd(void)
 		return (1);
 	tofree = buf;
 	buf = ft_strjoin(buf, "\n");
-	ft_putstr_fd(buf, 1);
+	ft_putstr_fd(buf, b_tok->fdout);
 	free(buf);
 	free(tofree);
 	return (0);
@@ -98,9 +74,11 @@ int	ft_unset_name(t_env **tmp, char *name)
 	while ((*tmp)->next)
 	{
 		i = 0;
-		while (name[i] && (*tmp)->next->name[i] && name[i] == (*tmp)->next->name[i])
+		while (name[i] && (*tmp)->next->name[i]
+			&& name[i] == (*tmp)->next->name[i])
 			i++;
-		if ((size_t)i == ft_strlen(name) && ft_strlen(name) == ft_strlen((*tmp)->next->name))
+		if ((size_t)i == ft_strlen(name)
+			&& ft_strlen(name) == ft_strlen((*tmp)->next->name))
 			return (0);
 		else
 			*tmp = (*tmp)->next;
@@ -108,7 +86,7 @@ int	ft_unset_name(t_env **tmp, char *name)
 	return (1);
 }
 
-t_env	*ft_unset(t_info *info, t_big_token *b_tokens)
+int	ft_unset(t_info *info, t_big_token *b_tokens)
 {
 	t_env	*tmp;
 	t_env	*ptr;
@@ -116,12 +94,12 @@ t_env	*ft_unset(t_info *info, t_big_token *b_tokens)
 	tmp = info->env;
 	ptr = NULL;
 	if (!tmp || !b_tokens->cmd_args[0])
-		return (NULL);
+		return (1);
 	if (ft_unset_name(&tmp, b_tokens->cmd_args[1]))
-		return (NULL);
+		return (1);
 	ptr = tmp->next;
 	tmp->next = ptr->next;
 	ptr->next = NULL;
 	ft_free_env(ptr);
-	return (info->env);
+	return (0);
 }

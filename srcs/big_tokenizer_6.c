@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dollar_expander.c                                  :+:      :+:    :+:   */
+/*   big_tokenizer_6.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/17 17:04:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/17 17:45:42 by omoudni          ###   ########.fr       */
+/*   Created: 2022/06/28 23:40:41 by omoudni           #+#    #+#             */
+/*   Updated: 2022/06/29 11:44:58 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	dol_expand(char **str)
+int	is_pipe(t_token *tmp_s)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			{
-
-			}
-		i++;
-	}
+	if (tmp_s && tmp_s->token == TOK_OPERATOR && ft_strlen(tmp_s->value) == 1
+		&& !ft_strncmp(tmp_s->value, "|", 1))
+		return (1);
+	return (0);
 }
