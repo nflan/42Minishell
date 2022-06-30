@@ -32,7 +32,8 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  ft_wildcards_do.c ft_signal.c ft_wildcards_do2.c init_tok_type_tab.c\
 		  ft_start.c ft_env_tools.c ft_env_tools2.c big_tokenizer_5.c\
 		  big_tokenizer_6.c ft_expand_tools.c ft_expand_line.c ft_expand_args.c\
-		  ft_fd_tools.c ft_expand_1.c
+		  ft_fd_tools.c ft_expand_1.c big_tokenizer_8.c big_tokenizer_9.c\
+		  big_tokenizer_4_tool.c
 
 INC = include/minishell.h
 

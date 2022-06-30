@@ -30,7 +30,6 @@ int	ft_init_info(t_info *info)
 {
 	int	err;
 
-	printf("info->rdline = %s\n", info->rdline);
 	err = main_agent_o(info);
 	if (err)
 	{

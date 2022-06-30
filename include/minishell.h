@@ -428,6 +428,12 @@ int				sophisticated_piped(t_token **tokens, int start, int length);
 
 int				handle_par_dir(t_big_token **tmp_b, t_info *info);
 int				handle_par(t_big_token **b_tokens, t_info *info);
+//-----------big_tokenizer_4_tool.c---------------------------------------------
+void			handle_par_1(t_token **toks, t_big_token *b, int *adv, int *t);
+void			handle_par_2(t_token **t, t_big_token *b, int *to, t_token *tk);
+void			handle_par_3(t_big_token **b, int t, int adv_steps, t_info *i);
+int				check_if_piped(t_big_token **tmp_b, int ind, t_info *i, int l);
+void			rd_inout_type(char *str, int *type_red);
 
 //-----------big_tokenizer_3.c--------------------------------------------------
 
@@ -438,6 +444,13 @@ void			init_divide(t_big_token *b, t_info *i, t_big_token **o,
 
 //-----------big_tokenizer_6.c--------------------------------------------------
 int				is_pipe(t_token *tmp_s);
+
+//-----------big_tokenizer_8.c--------------------------------------------------
+void			init_params(int *adv_steps, int *to_reduce);
+void			count_cmd_args(t_big_token **tmp_b, int i, t_token **t, int l);
+
+//-----------big_tokenizer_8.c--------------------------------------------------
+int				handle_piped(t_big_token **tmp_b, t_info *info);
 
 //------------printer.c--------------------------------------------------------
 void			ft_print_wildcards(t_wildcards *wd);
