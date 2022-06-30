@@ -329,7 +329,7 @@ int				ft_realloc_args(t_wildcards *w, t_big_token *b, int *it, int j);
 // AGENT O
 //----------main_O.c------------------------------------------------------------
 
-int				main_agent_O(t_info *info);
+int				main_agent_o(t_info *info);
 char			*concat_argvs(int argc, char **argv);
 
 //----------parser.c------------------------------------------------------------
@@ -467,6 +467,7 @@ int				expanded_toks(t_token **old_tokens, int start, int length);
 
 //---------------init_tok_type_tab.c--------------------------------------------
 
+void			init_tok_type_tab_bis(t_tok_type tok_type_tab[128], int i);
 void			init_tok_type_tab(t_tok_type (*tok_type_tab)[128]);
 
 #endif

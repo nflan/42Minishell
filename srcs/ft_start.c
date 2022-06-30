@@ -14,7 +14,7 @@ int	ft_init_info(t_info *info)
 {
 	int	err;
 
-	err = main_agent_O(info);
+	err = main_agent_o(info);
 	if (err)
 	{
 		info->status = err;
