@@ -261,11 +261,7 @@ int				ft_cd(t_info *info, t_big_token *b_tokens);
 int				ft_export(t_info *info, t_big_token *b_tokens);
 //-----------ft_echo.c----------------------------------------------------------
 int				ft_echo(t_big_token *b_tokens);
-<<<<<<< HEAD
-char			*ft_create_echo(t_big_token *b_tokens, char *tmp, int i);
-=======
 void			ft_create_echo(t_big_token *b_tokens, int i);
->>>>>>> parse
 int				ft_echo_none(t_big_token *b_tokens, int i);
 int				ft_handle_ret(t_big_token *b_tokens, char *ret, int i);
 int				ft_option_echo(t_big_token *b_tokens);

@@ -14,8 +14,8 @@
 
 int	is_pipe(t_token *tmp_s)
 {
-if(tmp_s && tmp_s->token == TOK_OPERATOR && ft_strlen(tmp_s->value) == 1 
-		&& !ft_strncmp(tmp_s->value, "|",1))
-	return (1);
-return (0);
+	if (tmp_s && tmp_s->token == TOK_OPERATOR && ft_strlen(tmp_s->value) == 1
+		&& !ft_strncmp(tmp_s->value, "|", 1))
+		return (1);
+	return (0);
 }
