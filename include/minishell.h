@@ -378,22 +378,24 @@ char			*ft_strncpy(char *str, int n);
 void			index_toks(t_token **tokens);
 int				add_tok(t_token **tokens, int st, int len, t_tok_type type);
 
+// SYNTAX ERROR
 //-----------syntax_errorinizer_1.c---------------------------------------------
-
 int				count_op_tok(t_token **tokens);
 int				count_cl_tok(t_token **tokens);
 int				check_count_errors(t_token **tokens);
 int				r_quotes_impair(t_token **tokens);
 int				is_last_op(t_token **tokens);
-
 //-----------syntax_errorinizer_2.c---------------------------------------------
-
-int				r_2_op_succeding(t_token **tokens);
-int				op_cl_par_succeeding(t_token **tokens);
-int				syntax_err_handler(t_token **tokens);
+int				ft_test_pipe(t_token *tmp, int i);
 int				is_pipe_in_st_end(t_big_token *b_tokens, t_token *tokens);
 int				is_there_par(t_big_token *b_tokens, t_token *tokens);
 int				is_red_st_par(t_big_token *b_tokens, t_token *tokens);
+//-----------syntax_errorinizer_3.c---------------------------------------------
+int				r_2_op_succeding(t_token **tokens, int op_next, int op_prev);
+int				ft_test_isdir(t_token *t, int i);
+int				r_dir_op_succeding(t_token **tokens);
+int				op_cl_par_succeeding(t_token **tokens);
+int				syntax_err_handler(t_token **tokens);
 
 //-----------big_tokenizer_1.c--------------------------------------------------
 

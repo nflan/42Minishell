@@ -36,7 +36,7 @@ int	ft_get_length(char *str, int length, int t)
 			length++;
 	else if (str[length] && t == 0)
 		while (str[length] && str[length] != '\"' && str[length] != '\''
-				&& str[length] != ' ')
+			&& str[length] != ' ')
 			length++;
 	else if (str[length] && t == 2)
 		while (str[length] && str[length] != '\'' && str[length] != ' ')
@@ -67,7 +67,8 @@ char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 	*i = length - 1;
 	return (ft_strjoiiin_free(tmp[0], tmp[1], tmp[2], 4));
 }
-//	printf("tmp[0] = '%s' && tmp[1] = '%s' && tmp[2] = '%s'\n", tmp[0], tmp[1], tmp[2]);
+//	printf("tmp[0] = '%s' && tmp[1] = '%s' && tmp[2] = '%s'\n",
+//	tmp[0], tmp[1], tmp[2]);
 
 char	*ft_expand_l(char *str, t_info *info, int hd)
 {

@@ -27,9 +27,14 @@ int	ft_do_pipex(t_info *info, t_big_token *b_tokens)
 		if (ft_command(info, b_tokens))
 			ft_exit_cmd(info, b_tokens->cmd_args[0], 127);
 		else
+		{
+			if (info->nb_cmd && ft_strnstr(b_tokens->cmd_args[0],
+					"cat", ft_strlen(b_tokens->cmd_args[0])))
+				wait(NULL);
 			if (execve(b_tokens->cmd_args[0],
 					b_tokens->cmd_args, b_tokens->envp) == -1)
 				exit (ft_error(4, info, b_tokens));
+		}
 	}
 	return (info->status);
 }
@@ -128,7 +133,7 @@ int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 	if (ft_exec_pipex(info, b_tokens, info->pid) == 2147483647)
 		return (free(info->pid), 2147483647);
 	i = -1;
-	while (++i < info->nb_cmd - 1)
+	while (++i < info->nb_cmd)
 		waitpid(info->pid[i], &info->pid[i], 0);
 	if (info->pid)
 		free(info->pid);
