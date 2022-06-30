@@ -10,27 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/minishell.h"
 
-static void handle_par_1(t_token **tmp_s, t_big_token *tmp_b, int *adv_steps, int *to_reduce)
+static void	handle_par_1(t_token **tmp_s, t_big_token *tmp_b, int *adv_steps, int *to_reduce)
 {
 	move_tok_2_ind(tmp_s, tmp_b->ind_tok_start + 1);
 	(*adv_steps)++;
 	(*to_reduce)++;
 }
 
-static void handle_par_2(t_token **tmp_s, t_big_token *tmp_b, int *to_reduce, t_token *tokens)
+static void	handle_par_2(t_token **tmp_s, t_big_token *tmp_b, int *to_reduce, t_token *tokens)
 {
 	*tmp_s = tokens;
 	move_tok_2_ind(tmp_s, tmp_b->ind_tok_start + tmp_b->length - 2);
 	(*to_reduce)++;
 }
 
-static void handle_par_3(t_big_token **tmp_b, int to_reduce, int adv_steps, t_info *info)
+static void	handle_par_3(t_big_token **tmp_b, int to_reduce, int adv_steps, t_info *info)
 {
-	int		i;
 	t_token	*tmp_s;
+	int		i;
 
 	i = 0;
 	tmp_s = info->tokens;
@@ -61,24 +60,25 @@ int	handle_piped(t_big_token **tmp_b, t_info *info)
 	while (i < (*tmp_b)->length)
 	{
 		move_tok_2_ind(&tmp_s, (*tmp_b)->ind_tok_start + i);
-		((*tmp_b)->cmd_args)[0] = ft_strjoin_free(((*tmp_b)->cmd_args)[0], tmp_s->value, 1);
+		((*tmp_b)->cmd_args)[0] = ft_strjoin_free(((*tmp_b)->cmd_args)[0],
+				tmp_s->value, 1);
 		if (!(*tmp_b)->cmd_args[0])
-			return (ft_putstr_error("Malloc error in ft_strjoin_free in handle piped "));
+			return (ft_putstr_error("handle piped "));
 		i++;
 	}
 	return (0);
 }
 
-static void init_params(int *adv_steps, int *to_reduce)
+static void	init_params(int *adv_steps, int *to_reduce)
 {
 	(*adv_steps) = 0;
 	(*to_reduce) = 0;
 }
 
-int check_if_piped(t_big_token **tmp_b, int ind, t_info *info, int len)
+int	check_if_piped(t_big_token **tmp_b, int ind, t_info *info, int len)
 {
-	t_token *tmp;
-	int i;
+	t_token	*tmp;
+	int		i;
 
 	(void) tmp_b;
 	tmp = info->tokens;
@@ -96,9 +96,9 @@ int check_if_piped(t_big_token **tmp_b, int ind, t_info *info, int len)
 
 void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 {
-	t_token *tmp;
-	int count;
-	int red;
+	t_token	*tmp;
+	int		count;
+	int		red;
 
 	tmp = *tokens;
 	count = 0;
@@ -140,7 +140,7 @@ void	count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len)
 	(*tmp_b)->cmd_args_num = count;
 }
 
-void rd_inout_type(char *str, int *type_red)
+void	rd_inout_type(char *str, int *type_red)
 {
 	if (ft_strlen(str) == 1 && !ft_strncmp(str, "<", 1))
 		(*type_red) = 1;
@@ -177,8 +177,8 @@ if (type_red == 3 || type_red == 4)
 // itctlt[3] = to_reduce, itctlt[4] = len, itctlt[5] = to_start 
 int	handle_par_dir(t_big_token **tmp_b, t_info *info)
 {
-	t_token *tmp;
-	int	itctlt[6];
+	t_token	*tmp;
+	int		itctlt[6];
 
 	tmp = info->tokens;
 	itctlt[0] = 0;
@@ -248,8 +248,8 @@ int	handle_par_dir(t_big_token **tmp_b, t_info *info)
 // itscl[4] = b_length
 int	handle_dir(t_big_token **tmp_b, t_info *info)
 {
-	t_token *tmp;
-	int	itscl[5];
+	t_token	*tmp;
+	int		itscl[5];
 
 	tmp = info->tokens;
 	itscl[0] = 0;
@@ -306,11 +306,11 @@ int	handle_dir(t_big_token **tmp_b, t_info *info)
 
 int	handle_par(t_big_token **b_tokens, t_info *info)
 {
-	t_big_token *tmp_b;
-	t_token *tmp_s;
-	int params[2];
-	int st_par;
-	int end_par;
+	t_big_token	*tmp_b;
+	t_token		*tmp_s;
+	int			params[2];
+	int			st_par;
+	int			end_par;
 
 	tmp_b = *b_tokens;
 	tmp_s = info->tokens;

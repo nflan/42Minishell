@@ -200,7 +200,7 @@ void			ft_end(t_info *info);
 int				ft_launch_minishell(t_info info, char *word);
 
 //-----------ft_start.c---------------------------------------------------------
-void			ft_keep_history(char *str);
+void			ft_keep_history(t_info *info, char *str);
 int				ft_init_info(t_info *info);
 char			*ft_rdline_word(t_info *info);
 int				ft_init_first(t_info *info, char **envp);
