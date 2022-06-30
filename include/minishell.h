@@ -359,24 +359,26 @@ void			print_all_child(t_big_token **b, t_token **toks, int i, int j);
 void			print_b_tokens(t_big_token **b, t_token **tokens, int i, int j);
 void			print_s_tokens(t_token **tokens, int start, int length);
 
+// CREATE TOKENS
 //----------tokenizer_1.c-------------------------------------------------------
-
-int				len_ll_list(t_token *tok_list);
-int				is_quoted(t_token **tok_list, char c);
 unsigned int	get_real_tok_type(char c, t_token **tok_l, t_tok_type *t_t_t);
+int				is_quoted(t_token **tok_list, char c);
+void			init_tok_struct(t_token **tok_list, int rank_in_list);
+//----------tokenizer_1_tool.c--------------------------------------------------
+int				len_ll_list(t_token *tok_list);
 t_token			*ft_create_token(t_tok_type tok_type, int length, int i);
 t_token			*create_tok_bis(t_tok_type tok_type, int quoted, char *value);
-void			init_tok_struct(t_token **tok_list, int rank_in_list);
-
 //----------tokenizer_2.c-------------------------------------------------------
-
+int				check_tok_type(t_tok_type tok_t, char c, t_info *i, int check);
+int				checko(t_tok_type tok_type);
+int				detect_tokens(t_info *info);
+void			index_toks(t_token **tokens);
+//----------tokenizer_3.c-------------------------------------------------------
 int				add_tok_last(t_token **tok_l, t_tok_type t_t, int l, int i);
 int				add_tok_last_bis(t_token **t_l, t_tok_type t_t, int q, char *v);
-int				detect_tokens(t_info *info);
+int				add_tok(t_token **tokens, int st, int len, t_tok_type type);
 int				fill_tok_value(t_token **tok, char *str);
 char			*ft_strncpy(char *str, int n);
-void			index_toks(t_token **tokens);
-int				add_tok(t_token **tokens, int st, int len, t_tok_type type);
 
 // SYNTAX ERROR
 //-----------syntax_errorinizer_1.c---------------------------------------------
