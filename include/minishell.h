@@ -400,7 +400,8 @@ int				syntax_err_handler(t_token **tokens);
 //-----------big_tokenizer_1.c--------------------------------------------------
 
 t_big_token		*ft_create_btoken(t_big_tok_type t, int its, int l, t_info *i);
-int				add_b_tok_sib_last(t_big_token **b, t_big_tok_type t, int bi[2], t_info *i);
+int				add_b_tok_sib_last(t_big_token **b, t_big_tok_type t,
+					int bi[2], t_info *i);
 int				check_divider_type(char *tmp_value);
 // int			is_cl_2_op(char *value_tok_op, char *value_tok_cl);
 void			move_tok_2_ind(t_token **tokens, int ind);
@@ -424,6 +425,8 @@ int				handle_par(t_big_token **b_tokens, t_info *info);
 
 // void		divide_by_or_and(t_big_token **b_tokens, t_token **tokens);
 int				divide_by_pipe(t_big_token **b_tokens, t_info *info);
+void			init_divide(t_big_token *b, t_info *i, t_big_token **o,
+					t_token **tt);
 
 //-----------big_tokenizer_6.c--------------------------------------------------
 int				is_pipe(t_token *tmp_s);

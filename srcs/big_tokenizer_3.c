@@ -75,8 +75,7 @@ int	divide_by_pipe(t_big_token **b_tokens, t_info *info)
 	int			stend_par[2];
 	int			ij[2];
 
-	tmp_s = info->tokens;
-	tmp_b = *b_tokens;
+	init_divide(*b_tokens, info, &tmp_b, &tmp_s);
 	dbp_2(tmp_b, &btok_info, &ij, 1);
 	while (ij[0] < tmp_b->length)
 	{
