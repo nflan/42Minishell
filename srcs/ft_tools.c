@@ -74,7 +74,7 @@ char	*ft_get_env_value(t_info *info, char *name)
 	if (!info->env || !name)
 		return (NULL);
 	env = info->env;
-	while (env && ft_strncmp(env->name, name, ft_strlen(name)))
+	while (env && ft_strncmp(env->name, name, ft_strlen(env->name)))
 		env = env->next;
 	if (!env)
 		return (NULL);

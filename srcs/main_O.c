@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-int main_agent_O(t_info *info)
+int	main_agent_o(t_info *info)
 {
 	int	btok_info[2];
 

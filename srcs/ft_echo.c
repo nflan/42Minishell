@@ -12,26 +12,21 @@
 
 #include "../include/minishell.h"
 
-int	ft_option_echo(t_big_token *b_tokens, int i)
+int	ft_option_echo(t_big_token *b_toks)
 {
 	int	option;
 	int	y;
 
 	option = 1;
-	if (!b_tokens->cmd_args[i])
+	if (!b_toks->cmd_args[1])
 		return (1);
-	while (b_tokens->cmd_args[i])
+	y = -1;
+	if ((b_toks->cmd_args[1][++y] == '-' && b_toks->cmd_args[1][++y] == 'n'))
 	{
-		y = -1;
-		if ((b_tokens->cmd_args[i][++y] == '-'
-			&& b_tokens->cmd_args[i][++y] == 'n'))
-		{
-			while (b_tokens->cmd_args[i][y] && b_tokens->cmd_args[i][y] == 'n')
-				y++;
-			if (!b_tokens->cmd_args[i][y])
-				option++;
-		}
-		i++;
+		while (b_toks->cmd_args[1][y] && b_toks->cmd_args[1][y] == 'n')
+			y++;
+		if (!b_toks->cmd_args[1][y])
+			option++;
 	}
 	return (option);
 }
@@ -43,41 +38,33 @@ int	ft_echo_none(t_big_token *b_tokens, int i)
 	return (0);
 }
 
-char	*ft_create_echo(t_big_token *b_tokens, char *tmp, int i)
+void	ft_create_echo(t_big_token *b_tokens, int i)
 {
 	while (b_tokens->cmd_args[i])
 	{
-		if (!tmp)
-			tmp = ft_strdup(b_tokens->cmd_args[i]);
-		else
-			tmp = ft_strjoiiin_free(tmp, " ", b_tokens->cmd_args[i], 1);
-		if (!tmp)
-			return (NULL);
+		if (b_tokens->cmd_args[i][0])
+		{
+			ft_putstr_fd(b_tokens->cmd_args[i], b_tokens->fdout);
+			ft_putstr_fd(" ", b_tokens->fdout);
+		}
 		i++;
 	}
-	return (tmp);
 }
 
 int	ft_echo(t_big_token *b_tokens)
 {
-	char	*tmp;
 	int		i;
 	int		option;
 
-	tmp = NULL;
 	option = 0;
-	i = ft_option_echo(b_tokens, 1);
+	i = ft_option_echo(b_tokens);
 	if (i > 1)
 		option = 1;
 	if (!b_tokens->cmd_args[i])
 		return (ft_echo_none(b_tokens, i));
 	if (b_tokens->cmd_args[i])
-		tmp = ft_create_echo(b_tokens, tmp, i);
-	if (!tmp)
-		return (1);
+		ft_create_echo(b_tokens, i);
 	if (!option)
-		tmp = ft_strjoin_free(tmp, "\n", 1);
-	ft_putstr_fd(tmp, b_tokens->fdout);
-	free(tmp);
+		ft_putstr_fd("\n", b_tokens->fdout);
 	return (0);
 }

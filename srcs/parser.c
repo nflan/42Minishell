@@ -51,13 +51,6 @@ int	access_file(char *file)
 		return (0);
 }
 
-int	no_red(t_big_token **tmp_b, t_token **tokens)
-{
-	(void)tmp_b;
-	(void)tokens;
-	return (0);
-}
-
 int	parse(t_big_token **b_tokens, t_info *info, int btok_info[2])
 {
 	t_big_token	*tmp_b;

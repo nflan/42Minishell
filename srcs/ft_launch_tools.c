@@ -10,6 +10,7 @@ void	ft_close_pdes(int fd, int pdes)
 
 void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
 {
+	(void)child;
 	if (!info->nb_cmd)
 		ft_close_pdes(info->pdes[1], 1);
 	else if (b_tokens->type == TOK_LEFT_PIPE)
@@ -21,11 +22,11 @@ void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
 	else
 	{
 		waitpid(child, &child, 0);
+		if (WIFEXITED(child))
+			info->status = WEXITSTATUS(child);
 		ft_close_pdes(info->pdes[1], 1);
 		ft_close_pdes(info->pdes[0], 0);
 	}
-	if (WIFEXITED(child))
-		info->status = WEXITSTATUS(child);
 }
 
 int	ft_lead_fd(t_info *info, t_big_token *b_tokens)
@@ -50,22 +51,6 @@ int	ft_lead_fd(t_info *info, t_big_token *b_tokens)
 	}
 	return (0);
 }
-
-/*int	ft_deeper_bt(t_big_token *b_tokens, t_big_token **tmp_b)
-{
-	int	i;
-
-	i = 0;
-	*tmp_b = b_tokens;
-	if (!tmp_b)
-		return (-1);
-	while ((*tmp_b)->child)
-	{
-		*tmp_b = (*tmp_b)->child;
-		i++;
-	}
-	return (i);
-}*/
 
 int	ft_wash_btoken(t_info *info, t_big_token *b_tokens)
 {

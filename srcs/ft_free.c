@@ -46,7 +46,12 @@ void	ft_free_all(t_info *info, t_env *env)
 		info->pid = NULL;
 	}
 	if (env)
+	{
 		ft_free_env(env);
+		if (info->home)
+			free(info->home);
+		info->home = NULL;
+	}
 }
 
 void	ft_free_b_tokens(t_big_token *b_tokens)

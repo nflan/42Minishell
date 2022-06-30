@@ -36,7 +36,7 @@ int	ft_realloc_args(t_wildcards *wd, t_big_token *b, int *it, int j)
 		return (1);
 	while (wd && j < count)
 	{
-		if (wd && !ft_do_keep(b->cmd_args[it[0]], wd, it[1], j))
+		if (wd && !ft_do_keep(b->cmd_args[it[0]], wd, it[0], it[1]))
 		{
 			if (ft_check_dir_wd(wd, b, it))
 				tmp[it[0] + j] = ft_strjoin(wd->dir->d_name, "/");
