@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 20:09:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/30 22:42:46 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_tab(char **tab)
 		printf("\nvoici le b_tokens avec ses args: ");
 		while (tab[i])
 		{
-			printf("%s\n", tab[i]);
+			printf("%s(%d)\n", tab[i], i);
 			i++;
 		}
 		printf("\n");
@@ -60,7 +60,7 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 		printf("\n");
 		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
 		printf("   --->>    ");
-	//	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
+//	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
 		print_tab(tmp_b->cmd_args);
 	//	printf("\n");
 		printf("It's type is: %d\n", tmp_b->type);
@@ -161,7 +161,7 @@ void	print_s_tokens(t_token **tokens, int start, int length)
 	move_tok_2_ind(&tmp_s, start);
 	while (i < length && tmp_s)
 	{
-		printf("%s(%d)", tmp_s->value, tmp_s->index);
+		printf("%s(%d)(%d)", tmp_s->value, tmp_s->index, tmp_s->token);
 		tmp_s = tmp_s->next;
 		i++;
 	}

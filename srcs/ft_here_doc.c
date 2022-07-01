@@ -12,21 +12,26 @@
 
 #include "../include/minishell.h"
 
-void	ft_write_here(t_fd *fd, char *str, int i, int red)
+int	ft_write_here(t_fd *fd, char **str, int i, int red)
 {
 	if (i == 1)
 	{	
 		ft_putstr_fd("That's not a good way to do things but EOF (wanted ", 2);
-		ft_putstr_fd(str, 2);
+		ft_putstr_fd(*str, 2);
 		ft_putstr_fd(")\n", 2);
 	}
 	else if (i == 2)
 	{
 		if (red == 2)
-			expand(&str, fd->info);
-		write(fd->fd, str, ft_strlen(str));
+		{
+			*str = ft_expand_l(*str, fd->info, 1);
+			if (!*str)
+				return (1);
+		}
+		write(fd->fd, *str, ft_strlen(*str));
 		write(fd->fd, "\n", 1);
 	}
+	return (0);
 }
 
 int	ft_here(t_fd *fd, int red)
@@ -34,7 +39,6 @@ int	ft_here(t_fd *fd, int red)
 	char	*buf;
 	char	*to_free;
 
-	buf = NULL;
 	to_free = ft_strjoiiin("heredoc \"", fd->delimitator, "\" > ");
 	if (!to_free)
 		return (1);
@@ -42,12 +46,13 @@ int	ft_here(t_fd *fd, int red)
 	{
 		buf = readline(to_free);
 		if (!buf)
-			ft_write_here(fd, fd->delimitator, 1, red);
+			ft_write_here(fd, &fd->delimitator, 1, red);
 		if (!buf || !ft_strncmp(buf, fd->delimitator,
 				ft_strlen(fd->delimitator) + 1))
 			break ;
 		else
-			ft_write_here(fd, buf, 2, red);
+			if (ft_write_here(fd, &buf, 2, red))
+				return (1);
 		free(buf);
 		buf = NULL;
 	}

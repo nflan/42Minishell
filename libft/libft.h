@@ -109,6 +109,7 @@ void	ft_putchar_fd(char c, int fd);
 // PUTSTR
 int		ft_putstr_fd(char *s, int fd);
 int		ft_putstr_fd_3(char *s, char *s1, char *s2, int fd);
+int		ft_putstr_error(char *str);
 //
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);

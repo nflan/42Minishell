@@ -12,7 +12,16 @@
 
 #include "../include/minishell.h"
 
-void	init_tok_type_tab(t_tok_type (*tok_type_tab)[127])
+void	init_tok_type_tab_bis(t_tok_type tok_type_tab[128], int i)
+{
+	while (++i < 124)
+		tok_type_tab[i] = TOK_WORD;
+	tok_type_tab[i] = TOK_OPERATOR; // i = 124
+	while (++i < 128)
+		tok_type_tab[i] = TOK_WORD;
+}
+
+void	init_tok_type_tab(t_tok_type (*tok_type_tab)[128])
 {
 	int	i;
 
@@ -36,9 +45,5 @@ void	init_tok_type_tab(t_tok_type (*tok_type_tab)[127])
 	(*tok_type_tab)[i] = TOK_REDIRECTOR_LEFT; // i = 38
 	(*tok_type_tab)[++i] = TOK_WORD; // i = 33
 	(*tok_type_tab)[++i] = TOK_REDIRECTOR_RIGHT; // i = 38
-	while (++i < 124)
-		(*tok_type_tab)[i] = TOK_WORD;
-	(*tok_type_tab)[i] = TOK_OPERATOR;  // i = 124
-	while (++i < 128)
-		(*tok_type_tab)[i] = TOK_WORD;
+	init_tok_type_tab_bis(*tok_type_tab, i);
 }
