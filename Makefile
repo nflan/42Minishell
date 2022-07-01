@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 17:27:46 by nflan             #+#    #+#              #
-#    Updated: 2022/06/28 23:55:26 by omoudni          ###   ########.fr        #
+#    Updated: 2022/07/01 03:14:29 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  ft_wildcards_do.c ft_signal.c ft_wildcards_do2.c init_tok_type_tab.c\
 		  ft_start.c ft_env_tools.c ft_env_tools2.c big_tokenizer_5.c\
 		  big_tokenizer_6.c ft_expand_tools.c ft_expand_line.c ft_expand_args.c\
-		  ft_fd_tools.c ft_expand_1.c
+		  ft_fd_tools.c ft_expand_1.c\
+		  big_tokenizer_4-1.c big_tokenizer_4-2.c handle_dir.c handle_par_dir.c handle_par.c\ 
 
 INC = include/minishell.h
 

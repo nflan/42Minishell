@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/29 00:39:24 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/30 22:42:46 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_tab(char **tab)
 		printf("\nvoici le b_tokens avec ses args: ");
 		while (tab[i])
 		{
-			printf("%s\n", tab[i]);
+			printf("%s(%d)\n", tab[i], i);
 			i++;
 		}
 		printf("\n");

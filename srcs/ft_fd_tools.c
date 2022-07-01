@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_fd_tools.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 02:51:58 by omoudni           #+#    #+#             */
+/*   Updated: 2022/07/01 02:52:00 by omoudni          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 // itscl[0] = i, itscl[1] = type_red, itscl[2] = save_word, 
@@ -26,7 +38,7 @@ int	ft_fill_fdnew(t_fd *fd, t_token **tmp, int itscl[5], int *hd)
 
 // itscl[0] = i, itscl[1] = type_red, itscl[2] = save_word
 // itscl[3] = cmd_args_nums, itscl[4] = b_length
-int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int itscl[5])
+int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int itscl[7])
 {
 	t_fd	*new;
 

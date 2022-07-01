@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/28 21:42:20 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/30 22:57:52 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ int	detect_tokens(t_info *in)
 	i = 0;
 	if (!in->rdline)
 		return (ft_putstr_error("Command error in detect_tokens "));
+	printf("this is the length of the word: %d\n", (int)ft_strlen(in->rdline));
 	while (in->rdline[i])
 	{
 		length = 1;
 		start = i;
 		t = get_real_tok_type(in->rdline[i], &(in->tokens), in->tok_type_tab);
+		printf("this is i: %d and this is in->rdline[i]: %c and this is its type: %d\n", i, in->rdline[i], t);
 		i++;
 		while (in->rdline[i] && check_tok_type(t, in->rdline[i], in, 1))
 		{
