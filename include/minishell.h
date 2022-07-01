@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/01 03:11:29 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/01 03:22:14 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ void			ft_end(t_info *info);
 int				ft_launch_minishell(t_info info, char *word);
 
 //-----------ft_start.c---------------------------------------------------------
-void			ft_keep_history(char *str);
+void			ft_keep_history(t_info *info, char *str);
 int				ft_init_info(t_info *info);
 char			*ft_rdline_word(t_info *info);
 int				ft_init_first(t_info *info, char **envp);
@@ -434,6 +434,12 @@ int				sophisticated_piped(t_token **tokens, int start, int length);
 void			count_cmd_args(t_big_token **tmp_b, int ind, t_token **tokens, int len);
 void			rd_inout_type(char *str, int *type_red);
 int				handle_par(t_big_token **b_tokens, t_info *info);
+//-----------big_tokenizer_4_tool.c---------------------------------------------
+void			handle_par_1(t_token **toks, t_big_token *b, int *adv, int *t);
+void			handle_par_2(t_token **t, t_big_token *b, int *to, t_token *tk);
+void			handle_par_3(t_big_token **b, int t, int adv_steps, t_info *i);
+int				check_if_piped(t_big_token **tmp_b, int ind, t_info *i, int l);
+void			rd_inout_type(char *str, int *type_red);
 
 //-----------big_tokenizer_4-1.c--------------------------------------------------
 int				handle_piped(t_big_token **tmp_b, t_info *info);
@@ -468,6 +474,12 @@ void			handle_par_2(t_token **s, t_big_token *b, int *t_r, t_token *t);
 void			handle_par_3(t_big_token **b, int t_r, int a_s, t_info *i);
 void			handle_par_4(int (*p)[2], t_token **s, t_big_token *b, t_info *i);
 int				handle_par_5(t_token **s, t_big_token **b, t_tab *t, t_info *i);
+//-----------big_tokenizer_8.c--------------------------------------------------
+void			init_params(int *adv_steps, int *to_reduce);
+void			count_cmd_args(t_big_token **tmp_b, int i, t_token **t, int l);
+
+//-----------big_tokenizer_8.c--------------------------------------------------
+int				handle_piped(t_big_token **tmp_b, t_info *info);
 
 //------------printer.c--------------------------------------------------------
 void			ft_print_wildcards(t_wildcards *wd);

@@ -1,13 +1,29 @@
 #include "../include/minishell.h"
 
-void	ft_keep_history(char *str)
+extern int	g_sc;
+
+void	ft_keep_history(t_info *info, char *str)
 {
-	if (str)
-		while (*str && *str == '\n')
-			str++;
-	if (!*str)
-		return ;
-	add_history(str);
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = readline(str);
+	free(str);
+	if (g_sc)
+		info->status = g_sc;
+	if (tmp && info->rdline && strncmp(tmp, info->rdline, ft_strlen(tmp) + 1))
+	{
+		while (tmp[i] && tmp[i] == '\n')
+			i++;
+		if (tmp[i])
+			add_history(tmp);
+	}
+	else if (tmp && !info->rdline)
+		add_history(tmp);
+	if (info->rdline)
+		free(info->rdline);
+	info->rdline = tmp;
 }
 
 int	ft_init_info(t_info *info)

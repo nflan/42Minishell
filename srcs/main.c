@@ -28,13 +28,9 @@ int	ft_launch_minishell(t_info info, char *word)
 		if (!word)
 			return (ft_free_all(&info, info.env),
 				ft_putstr_error("Word Error\n"));
-		info.rdline = readline(word);
-		free(word);
-		if (g_sc)
-			info.status = g_sc;
+		ft_keep_history(&info, word);
 		if (!info.rdline)
 			break ;
-		ft_keep_history(info.rdline);
 		if (!ft_init_info(&info))
 		{
 			if (info.nb_cmd != 10)

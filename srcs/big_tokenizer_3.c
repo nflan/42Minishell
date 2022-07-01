@@ -70,9 +70,9 @@ static int	dbp_4(int (*binfo)[2], int (*ij)[2], t_info *i, t_big_token **tmp_b)
 int	divide_by_pipe(t_big_token **b_tokens, t_info *info)
 {
 	t_tmp	tmp;
-	int btok_info[2];
-	int stend_par[2];
-	int ij[2];
+	int		btok_info[2];
+	int		stend_par[2];
+	int		ij[2];
 
 	tmp.s = info->tokens;
 	tmp.b = *b_tokens;
