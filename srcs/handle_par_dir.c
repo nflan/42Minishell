@@ -12,14 +12,14 @@
 
 #include "../include/minishell.h"
 
-int	handle_par_dir_0(t_token **t, t_big_token **b, t_info **info, int (*itctlt)[7])
+int	handle_par_dir_0(t_token **t, t_big_token **b, t_info *i, int (*itctlt)[7])
 {
-	(*t) = (*info)->tokens;
+	(*t) = i->tokens;
 	(*itctlt)[0] = 0;
 	(*itctlt)[1] = 0;
-	(*itctlt)[3] = 0; 
+	(*itctlt)[3] = 0;
 	(*itctlt)[5] = 0;
-	handle_piped(b, *info);
+	handle_piped(b, i);
 	move_tok_2_ind(t, (*b)->ind_tok_start);
 	if ((*t)->token == TOK_SEP)
 	{
@@ -34,7 +34,7 @@ int	handle_par_dir_0(t_token **t, t_big_token **b, t_info **info, int (*itctlt)[
 		(*itctlt)[3] += 2;
 		move_tok_2_ind(t, (*itctlt)[2] + 1);
 		(*itctlt)[4] = (*b)->length + (*b)->ind_tok_start - 1 - (*itctlt)[2];
-		if (check_if_piped(b, (*itctlt)[2] + 1, *info, (*itctlt)[4]))
+		if (check_if_piped(b, (*itctlt)[2] + 1, i, (*itctlt)[4]))
 			return (0);
 		(*itctlt)[3] += (*itctlt)[4];
 	}
@@ -43,7 +43,7 @@ int	handle_par_dir_0(t_token **t, t_big_token **b, t_info **info, int (*itctlt)[
 
 int	handle_par_dir_1(t_token **t, t_big_token **b, int (*itctlt)[7], int step)
 {
-	if(step == 1)
+	if (step == 1)
 	{
 		if ((*itctlt)[1] == 1 || (*itctlt)[1] == 2)
 		{
@@ -59,26 +59,28 @@ int	handle_par_dir_1(t_token **t, t_big_token **b, int (*itctlt)[7], int step)
 	{
 		(*t) = (*t)->next;
 		((*itctlt)[4])--;
-}
-if (step == 3)
-{
-(*b)->ind_tok_start += (*itctlt)[5];
-(*b)->length -= (*itctlt)[3];
-(*b)->par = 1;
-}
-return (0);
+	}
+	if (step == 3)
+	{
+		(*b)->ind_tok_start += (*itctlt)[5];
+		(*b)->length -= (*itctlt)[3];
+		(*b)->par = 1;
+	}
+	return (0);
 }
 
 int	handle_par_dir_2(t_token *tmp, int (*itctlt)[7], int step)
 {
 	if (step == 1)
 	{
-		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && ((*itctlt)[0]) % 2)
+		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token
+				== TOK_REDIRECTOR_RIGHT) && ((*itctlt)[0]) % 2)
 			return (1);
 	}
 	if (step == 2)
 	{
-	if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token == TOK_REDIRECTOR_RIGHT) && !((*itctlt)[0] % 2))
+		if ((tmp->token == TOK_REDIRECTOR_LEFT || tmp->token
+				== TOK_REDIRECTOR_RIGHT) && !((*itctlt)[0] % 2))
 			return (1);
 	}
 	if (step == 3)
@@ -91,28 +93,27 @@ int	handle_par_dir_2(t_token *tmp, int (*itctlt)[7], int step)
 
 int	handle_par_dir(t_big_token **tmp_b, t_info *info)
 {
-	t_token *tmp;
-	int	itctlt[7];
+	t_token	*tmp;
+	int		itctlt[7];
 
-	if(!handle_par_dir_0(&tmp, tmp_b, &info, &itctlt))
+	if (!handle_par_dir_0(&tmp, tmp_b, info, &itctlt))
 		return (0);
-while (tmp && itctlt[4]--)
-{
-	if (handle_par_dir_2(tmp, &itctlt, 1))
-		return (1);
-	if (handle_par_dir_2(tmp, &itctlt, 2))
-		itctlt[6] = handle_par_dir_2(tmp, &itctlt, 3);
-	else if (tmp->token == TOK_WORD && (!(itctlt[0] % 2) || !itctlt[1]))
-		return (1);
-	if (tmp->token != TOK_SEP && (itctlt[0] % 2))
+	while (tmp && itctlt[4]--)
 	{
-		if(handle_par_dir_1(&tmp, tmp_b, &itctlt, 1))
-			return (ft_putstr_error("in handle par dir "));
+		if (handle_par_dir_2(tmp, &itctlt, 1))
+			return (1);
+		if (handle_par_dir_2(tmp, &itctlt, 2))
+			itctlt[6] = handle_par_dir_2(tmp, &itctlt, 3);
+		else if (tmp->token == TOK_WORD && (!(itctlt[0] % 2) || !itctlt[1]))
+			return (1);
+		if (tmp->token != TOK_SEP && (itctlt[0] % 2))
+		{
+			if (handle_par_dir_1(&tmp, tmp_b, &itctlt, 1))
+				return (ft_putstr_error("in handle par dir "));
+		}
+		else
+			itctlt[6] = handle_par_dir_1(&tmp, tmp_b, &itctlt, 2);
 	}
-	else
-		itctlt[6] = handle_par_dir_1(&tmp, tmp_b, &itctlt, 2);
+	itctlt[6] = handle_par_dir_1(&tmp, tmp_b, &itctlt, 3);
+	return (0);
 }
-		itctlt[6] = handle_par_dir_1(&tmp, tmp_b, &itctlt, 3);
-return (0);
-}
-
