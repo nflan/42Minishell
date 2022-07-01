@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/29 18:33:20 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/01 13:34:06 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **envp)
 	word = NULL;
 	g_sc = 0;
 	if (ac > 1)
-		info.nb_cmd = 10;
+		return (1);
 	if (ft_init_first(&info, envp))
 		return (1);
 	return (ft_launch_minishell(info, word));
