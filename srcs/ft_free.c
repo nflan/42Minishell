@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 21:19:16 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/24 16:34:07 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/01 12:41:37 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ void	ft_free_all(t_info *info, t_env *env)
 		if (info->tokens)
 			ft_free_tokens(info->tokens);
 		info->tokens = NULL;
-		if (info->old_tokens)
-			ft_free_tokens(info->old_tokens);
-		info->old_tokens = NULL;
 		if (info->parse)
 			ft_free_b_tokens(info->parse);
 		info->parse = NULL;

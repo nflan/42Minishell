@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_start.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 13:14:18 by omoudni           #+#    #+#             */
+/*   Updated: 2022/07/01 13:14:23 by omoudni          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 extern int	g_sc;
@@ -67,7 +79,6 @@ int	ft_init_first(t_info *info, char **envp)
 	info->status = 0;
 	info->rdline = NULL;
 	info->parse = NULL;
-	info->old_tokens = NULL;
 	info->tokens = NULL;
 	info->pid = NULL;
 	init_tok_type_tab(&(info->tok_type_tab));

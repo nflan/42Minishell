@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/01 03:22:14 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/01 13:18:44 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,6 @@ typedef struct s_info
 	int			nb_cmd;
 	t_env		*env;
 	t_big_token	*parse;
-	t_token		*old_tokens;
 	t_token		*tokens;
 	int			*pid;
 	char		*home;
@@ -189,16 +188,16 @@ typedef struct s_info
 	int			tmp[2];
 }	t_info;
 
-typedef struct	s_tmp
+typedef struct s_tmp
 {
-t_token		*s;
-t_big_token	*b;
+	t_token		*s;
+	t_big_token	*b;
 }				t_tmp;
 
-typedef struct	s_tab
+typedef struct s_tab
 {
-int	params[2];
-int	stend_par[2];
+	int			params[2];
+	int			stend_par[2];
 }				t_tab;
 
 //-----------main.c-------------------------------------------------------------

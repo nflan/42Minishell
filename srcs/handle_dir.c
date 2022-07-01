@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:56:02 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 02:57:16 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/01 12:36:38 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	handle_dir(t_big_token **tmp_b, t_info *info)
 				return (1);
 		}
 		else
-			itscl[5] = handle_dir_2(&tmp, &itscl, 1, tmp_b); //PROBLEM LA
+			itscl[5] = handle_dir_2(&tmp, &itscl, 2, tmp_b);
 	}
 	(*tmp_b)->par = 0;
 	return (0);
