@@ -1,0 +1,6 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/omoudni/nminishell'
+make: Leaving directory '/home/omoudni/nminishell'
+ 
+Makefile:37: *** recipe commences before first target.  Stop.
+

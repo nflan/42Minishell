@@ -29,9 +29,6 @@ void	ft_free_all(t_info *info, t_env *env)
 {
 	if (info)
 	{
-		if (info->rdline)
-			free(info->rdline);
-		info->rdline = NULL;
 		if (info->tokens)
 			ft_free_tokens(info->tokens);
 		info->tokens = NULL;
@@ -51,6 +48,9 @@ void	ft_free_all(t_info *info, t_env *env)
 		if (info->home)
 			free(info->home);
 		info->home = NULL;
+		if (info->rdline)
+			free(info->rdline);
+		info->rdline = NULL;
 	}
 }
 

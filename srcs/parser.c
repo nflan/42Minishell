@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:11:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/28 21:52:17 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/06/30 21:53:07 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ int	parse(t_big_token **b_tokens, t_info *info, int btok_info[2])
 		}
 		tmp_b = tmp_b->sibling;
 	}
+	print_b_tokens(&(info->parse), &(info->tokens), 0, 0);
+	exit(0);
 	return (0);
 }
