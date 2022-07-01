@@ -12,36 +12,37 @@
 
 #include "../include/minishell.h"
 
-void handle_par_1(t_token **tmp_s, t_big_token *tmp_b, int *adv_steps, int *to_reduce)
+void	handle_par_1(t_token **tmp_s, t_big_token *tmp_b, int *adv, int *tr)
 {
 	move_tok_2_ind(tmp_s, tmp_b->ind_tok_start + 1);
-	(*adv_steps)++;
-	(*to_reduce)++;
+	(*adv)++;
+	(*tr)++;
 }
 
-void handle_par_2(t_token **tmp_s, t_big_token *tmp_b, int *to_reduce, t_token *tokens)
+void	handle_par_2(t_token **tmp_s, t_big_token *b, int *tr, t_token *tokens)
 {
 	*tmp_s = tokens;
-	move_tok_2_ind(tmp_s, tmp_b->ind_tok_start + tmp_b->length - 2);
-	(*to_reduce)++;
+	move_tok_2_ind(tmp_s, b->ind_tok_start + b->length - 2);
+	(*tr)++;
 }
 
-void handle_par_3(t_big_token **tmp_b, int to_reduce, int adv_steps, t_info *info)
+void	handle_par_3(t_big_token **tmp_b, int tr, int adv_steps, t_info *info)
 {
-	int		i;
 	t_token	*tmp_s;
+	int		i;
 
 	i = 0;
 	tmp_s = info->tokens;
 	(*tmp_b)->par = 1;
-	(*tmp_b)->length -= (2 + to_reduce);
+	(*tmp_b)->length -= (2 + tr);
 	(*tmp_b)->ind_tok_start += (1 + adv_steps);
 	(*tmp_b)->cmd_args_num = 1;
 	(*tmp_b)->cmd_args = ft_calloc(2, sizeof(char *));
 	while (i < (*tmp_b)->length)
 	{
 		move_tok_2_ind(&tmp_s, (*tmp_b)->ind_tok_start + i);
-		((*tmp_b)->cmd_args)[0] = ft_strjoin_free(((*tmp_b)->cmd_args)[0], tmp_s->value, 1);
+		((*tmp_b)->cmd_args)[0] = ft_strjoin_free(((*tmp_b)->cmd_args)[0],
+				tmp_s->value, 1);
 		i++;
 	}
 }
@@ -53,9 +54,7 @@ void	handle_par_4(int (*p)[2], t_token **s, t_big_token *b, t_info *i)
 	move_tok_2_ind(s, b->ind_tok_start);
 	if ((*s)->token == TOK_SEP && b->length > 2)
 		handle_par_1(s, b, &((*p)[0]), &((*p)[1]));
-
 }
-
 
 int	handle_par_5(t_token **s, t_big_token **b, t_tab *t, t_info *i)
 {
@@ -76,5 +75,3 @@ int	handle_par_5(t_token **s, t_big_token **b, t_tab *t, t_info *i)
 	}
 	return (0);
 }
-
-
