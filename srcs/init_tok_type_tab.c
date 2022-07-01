@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:22:37 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/27 21:04:43 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/01 13:03:02 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_tok_type_tab_bis(t_tok_type tok_type_tab[128], int i)
 {
 	while (++i < 124)
 		tok_type_tab[i] = TOK_WORD;
-	tok_type_tab[i] = TOK_OPERATOR; // i = 124
+	tok_type_tab[i] = TOK_OPERATOR;
 	while (++i < 128)
 		tok_type_tab[i] = TOK_WORD;
 }
@@ -31,19 +31,19 @@ void	init_tok_type_tab(t_tok_type (*tok_type_tab)[128])
 	(*tok_type_tab)[i] = TOK_SEP;
 	while (++i < 32)
 		(*tok_type_tab)[i] = TOK_WORD;
-	(*tok_type_tab)[i] = TOK_SEP; // i = 32
-	(*tok_type_tab)[++i] = TOK_WORD; // i = 33
-	(*tok_type_tab)[++i] = TOK_D_QUOTER; //i = 34
+	(*tok_type_tab)[i] = TOK_SEP;
+	(*tok_type_tab)[++i] = TOK_WORD;
+	(*tok_type_tab)[++i] = TOK_D_QUOTER;
 	while (++i < 38)
 		(*tok_type_tab)[i] = TOK_WORD;
-	(*tok_type_tab)[i] = TOK_OPERATOR; // i = 38
-	(*tok_type_tab)[++i] = TOK_S_QUOTER; //i = 39
-	(*tok_type_tab)[++i] = TOK_EXPANDER_OP; //i = 40
-	(*tok_type_tab)[++i] = TOK_EXPANDER_CL; //i = 41
+	(*tok_type_tab)[i] = TOK_OPERATOR;
+	(*tok_type_tab)[++i] = TOK_S_QUOTER;
+	(*tok_type_tab)[++i] = TOK_EXPANDER_OP;
+	(*tok_type_tab)[++i] = TOK_EXPANDER_CL;
 	while (++i < 60)
 		(*tok_type_tab)[i] = TOK_WORD;
-	(*tok_type_tab)[i] = TOK_REDIRECTOR_LEFT; // i = 38
-	(*tok_type_tab)[++i] = TOK_WORD; // i = 33
-	(*tok_type_tab)[++i] = TOK_REDIRECTOR_RIGHT; // i = 38
+	(*tok_type_tab)[i] = TOK_REDIRECTOR_LEFT;
+	(*tok_type_tab)[++i] = TOK_WORD;
+	(*tok_type_tab)[++i] = TOK_REDIRECTOR_RIGHT;
 	init_tok_type_tab_bis(*tok_type_tab, i);
 }
