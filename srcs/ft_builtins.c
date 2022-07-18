@@ -37,10 +37,13 @@ int	ft_env(t_info *info, t_big_token *b_tok)
 	{
 		while (print)
 		{
-			line = ft_strjoiiin(print->name, "=", print->value);
-			line = ft_strjoin_free(line, "\n", 1);
-			ft_putstr_fd(line, b_tok->fdout);
-			free(line);
+			if (print->value)
+			{
+				line = ft_strjoiiin(print->name, "=", print->value);
+				line = ft_strjoin_free(line, "\n", 1);
+				ft_putstr_fd(line, b_tok->fdout);
+				free(line);
+			}
 			print = print->next;
 		}
 	}

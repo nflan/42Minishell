@@ -95,8 +95,8 @@ int	ft_fill_envnew(t_env *env, char *line, int i, int j)
 		env->name[j] = line[j];
 	if (line[j] != '=')
 		return (0);
-	i = 0;
 	j++;
+	i = 0;
 	while (line[j + i])
 		i++;
 	env->value = ft_calloc(sizeof(char), i + 1);

@@ -264,6 +264,8 @@ int				ft_unset(t_info *info, t_big_token *b_tokens);
 int				ft_cd(t_info *info, t_big_token *b_tokens);
 //-----------ft_export.c--------------------------------------------------------
 int				ft_export(t_info *info, t_big_token *b_tokens);
+//-----------ft_export_tools.c--------------------------------------------------
+void			ft_export_solo(t_env *env, t_big_token *b_tokens);
 //-----------ft_echo.c----------------------------------------------------------
 int				ft_echo(t_big_token *b_tokens);
 void			ft_create_echo(t_big_token *b_tokens, int i);
