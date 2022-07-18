@@ -24,3 +24,16 @@ size_t	ft_strlen(const char *str)
 			i++;
 	return (i);
 }
+
+size_t	ft_tablen(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return (0);
+	if (tab)
+		while (tab[i])
+			i++;
+	return (i);
+}

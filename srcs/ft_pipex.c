@@ -102,6 +102,8 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 			return (2147483647);
 		if (tmp->sc == -1)
 		{
+			if (ft_expanding(info, tmp))
+				return (ft_putstr_error("Expand error\n"));
 			if (ft_add_wildcards(info, tmp))
 				return (ft_putstr_error("Wildcards error\n"));
 			ft_launch_cmd_pipex(info, tmp, pid[i]);

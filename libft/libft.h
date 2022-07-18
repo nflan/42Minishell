@@ -72,6 +72,7 @@ int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
 size_t	ft_strlen(const char *str);
+size_t	ft_tablen(char **tab);
 void	*ft_memset(void *str, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
@@ -101,6 +102,7 @@ char	*ft_strjoiiin_free(char *s1, char *s2, char *s3, int i);
 //
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
+char	**ft_split2(char const *s, char c, size_t size);
 char	**ft_free_split(char **tab);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));

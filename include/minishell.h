@@ -234,6 +234,7 @@ void			ft_close_all_fd(t_fd *fd, int fd_type);
 void			ft_close_fd(t_big_token *b_tokens);
 
 //-----------ft_exec.c----------------------------------------------------------
+int				ft_expanding(t_info *info, t_big_token *b_tokens);
 int				ft_exec_simple(t_info *info, t_big_token *b_tokens);
 int				exec_the_bulk(t_info *info, int sib_child, t_big_token *b);
 
@@ -503,6 +504,7 @@ char			*ft_expand_l(char *str, t_info *info, int hd);
 void			ft_count_q(char *str, char c, size_t *i, size_t *q);
 size_t			ft_strlen_nq(char *str);
 void			ft_type(char c, int *t);
+int				ft_postype(char *str, int pos);
 char			*ft_strndup(char *str, int len);
 char			*strjoin_4(char *str1, char *str2);
 //-----------ft_expand_1.c------------------------------------------------------

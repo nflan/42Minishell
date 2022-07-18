@@ -12,6 +12,18 @@
 
 #include "../include/minishell.h"
 
+int	ft_expanding(t_info *info, t_big_token *b)
+{
+	if (!b->par)
+	{
+		if (ft_expand_args(b, info))
+			return (1);
+		if (ft_noquote_args(b))
+			return (1);
+	}
+	return (0);
+}
+
 int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 {
 	t_big_token	*tmp_b;
@@ -21,6 +33,8 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 		return (2147483647);
 	if (tmp_b->sc == -1)
 	{
+		if (ft_expanding(info, b_tokens))
+			return (ft_putstr_error("Expand error\n"));
 		if (ft_add_wildcards(info, b_tokens))
 			return (ft_putstr_error("Wildcards error\n"));
 		ft_launch_cmd(info, tmp_b);
@@ -35,13 +49,6 @@ int	exec_the_bulk(t_info *info, int sib_child, t_big_token *b)
 	info->nb_cmd = 0;
 	if (!ft_open_fd(b))
 	{
-		if (!b->par)
-		{
-			if (ft_expand_args(b, info))
-				return (1);
-			if (ft_noquote_args(b))
-				return (1);
-		}
 		if (sib_child >= 1 && sib_child <= 3)
 			ft_exec_simple(info, b);
 		else if (sib_child == 4)
