@@ -241,7 +241,7 @@ int				exec_the_bulk(t_info *info, int sib_child, t_big_token *b);
 //-----------ft_launch_cmd------------------------------------------------------
 int				ft_exit_cmd(t_info *info, char *str, int err);
 int				ft_fork_par(t_info *info, t_big_token *b_tokens);
-int				ft_do_solo(t_info *info, t_big_token *b_tokens);
+int				ft_do_solo(t_info *info, t_big_token *b_tokens, int ret);
 int				ft_launch_cmd(t_info *info, t_big_token *b_tokens);
 
 //int				ft_launch_sibling(t_info *info, t_big_token *b_tokens);
@@ -282,7 +282,7 @@ int				ft_perror_free(char *error, char *str, int i);
 char			*ft_get_env_value(t_info *info, char *name);
 
 //----------ft_pipex.c----------------------------------------------------------
-int				ft_do_pipex(t_info *info, t_big_token *b_tokens);
+int				ft_do_pipex(t_info *info, t_big_token *b_tokens, int ret);
 int				ft_pipex(t_info *info, t_big_token *b_tokens);
 int				ft_launch_cmd_pipex(t_info *info, t_big_token *b_toks, int pid);
 int				ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid);
@@ -319,7 +319,7 @@ void			ft_free_env(t_env *env);
 // WILDCARDS
 //-----------------ft_wildcards_check.c-----------------------------------------
 int				ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i);
-int				ft_add_wildcards(t_info *info, t_big_token *b_tokens);
+int				ft_add_wildcards(t_big_token *b_tokens);
 int				ft_keep(char *str, char *dir, int *i, int j);
 int				ft_do_keep(char *str, t_wildcards *wd, int type, int i);
 int				ft_wd_nb_args(t_wildcards *wd, t_big_token *b, int i, int t);

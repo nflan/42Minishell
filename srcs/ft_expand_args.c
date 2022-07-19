@@ -95,15 +95,13 @@ char	*ft_minisplit(char *str)
 	return (tmp);
 }
 
-int	ft_resplit(t_big_token *b, int *i)
+int	ft_resplit(t_big_token *b, int *i, char *str)
 {
 	char	**tmp;
-	char	*str;
 	int		j;
 	int		l;
 
-	tmp = ft_calloc(sizeof(char *), ft_tablen(b->cmd_args) + ft_splitlen(b->cmd_args[*i]));
-	str = b->cmd_args[*i];
+	tmp = ft_calloc(sizeof(char *), ft_tablen(b->cmd_args) + ft_splitlen(str));
 	j = 0;
 	l = *i + 1;
 	while (j < *i)
@@ -148,8 +146,9 @@ int	ft_expand_args(t_big_token *b, t_info *info)
 				b->cmd_args[i] = ft_expand_l(b->cmd_args[i], info, 0);
 				if (!b->cmd_args[i])
 					return (1);
-				if (ft_resplit(b, &i))
-					return (1);
+				if (b->cmd_args[i][0] != '\0')
+					if (ft_resplit(b, &i, b->cmd_args[i]))
+						return (1);
 			}
 		}
 	}

@@ -12,18 +12,42 @@
 
 #include "../include/minishell.h"
 
+int	ft_mystic_exit(t_big_token *b, unsigned long long *ret)
+{
+	if (!b)
+		return (0);
+	if (*ret > 9223372036854775807 || ft_digital(b->cmd_args[1]))
+	{
+		ft_putstr_fd_3("minishell: exit: ", b->cmd_args[1],
+			": numeric argument required\n", 2);
+		*ret = 2;
+		return (2);
+	}
+	else if (b->cmd_args[2])
+	{
+		ft_putstr_fd_3("minishell: exit: ", NULL, "too many arguments\n", 2);
+		*ret = 1;
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_exit(t_info *info, t_big_token *b_tokens)
 {
-	int	ret;
+	unsigned long long	ret;
 
 	ret = info->status;
 	if (b_tokens && b_tokens->cmd_args[1])
 		ret = ft_atoi(b_tokens->cmd_args[1]);
 	ft_putstr_fd("exit\n", 1);
-	if (b_tokens)
-		ft_free_all(info, info->env);
-	rl_clear_history();
-	exit(ret);
+	if (ft_mystic_exit(b_tokens, &ret) != 1)
+	{
+		if (b_tokens)
+			ft_free_all(info, info->env);
+		rl_clear_history();
+		exit(ret);
+	}
+	return (ret);
 }
 
 int	ft_env(t_info *info, t_big_token *b_tok)

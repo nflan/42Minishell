@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-int	ft_do_pipex(t_info *info, t_big_token *b_tokens)
+int	ft_do_pipex(t_info *info, t_big_token *b_tokens, int ret)
 {
 	rl_clear_history();
 	if (!ft_check_builtins(b_tokens))
@@ -27,8 +27,9 @@ int	ft_do_pipex(t_info *info, t_big_token *b_tokens)
 		if (info->nb_cmd && ft_strnstr(b_tokens->cmd_args[0],
 				"cat", ft_strlen(b_tokens->cmd_args[0])))
 			wait(NULL);
-		if (ft_command(info, b_tokens))
-			ft_exit_cmd(info, b_tokens->cmd_args[0], 127);
+		ret = ft_command(info, b_tokens);
+		if (ret > 0)
+			ft_exit_cmd(info, b_tokens->cmd_args[0], ret);
 		else
 		{
 			if (execve(b_tokens->cmd_args[0],
@@ -63,7 +64,7 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens)
 		rec_exec(info, &(b_tokens)->child, 0);
 		ft_exit_cmd(info, NULL, 0);
 	}
-	info->status = ft_do_pipex(info, b_tokens);
+	info->status = ft_do_pipex(info, b_tokens, 0);
 	return (0);
 }
 
@@ -104,8 +105,6 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 		{
 			if (ft_expanding(info, tmp))
 				return (ft_putstr_error("Expand error\n"));
-			if (ft_add_wildcards(info, tmp))
-				return (ft_putstr_error("Wildcards error\n"));
 			ft_launch_cmd_pipex(info, tmp, pid[i]);
 			info->nb_cmd++;
 			tmp->sc = info->status;

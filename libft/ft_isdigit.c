@@ -18,3 +18,19 @@ int	ft_isdigit(int c)
 		return (1);
 	return (0);
 }
+
+int	ft_digital(char *c)
+{
+	if (!c)
+		return (1);
+	if (c)
+	{
+		while (*c)
+		{
+			if (!ft_isdigit(*c))
+				return (1);
+			c++;
+		}
+	}
+	return (0);
+}

@@ -43,6 +43,8 @@ char	*ft_noquote_line(char *line)
 
 int	ft_get_length(char *str, int length, int t)
 {
+	if (!ft_isalpha(str[length]))
+		return (2);
 	if (str[length] && t == 1)
 		while (str[length] && str[length] != '\"' && str[length] != ' ')
 			length++;
@@ -61,11 +63,10 @@ char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 	char	*tmp[4];
 	int		length;
 
-	length = *i;
 	tmp[0] = ft_substr(str, 0, *i - 1);
 	if (!tmp[0])
 		return (NULL);
-	length = ft_get_length(str, length, t);
+	length = ft_get_length(str, *i, t);
 	tmp[3] = ft_substr(str, *i, length - *i);
 	if (!tmp[3])
 		return (free(tmp[0]), NULL);

@@ -18,6 +18,8 @@ int	ft_expanding(t_info *info, t_big_token *b)
 	{
 		if (ft_expand_args(b, info))
 			return (1);
+		if (ft_add_wildcards(b))
+			return (ft_putstr_error("Wildcards error\n"));
 		if (ft_noquote_args(b))
 			return (1);
 	}
@@ -35,8 +37,6 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 	{
 		if (ft_expanding(info, b_tokens))
 			return (ft_putstr_error("Expand error\n"));
-		if (ft_add_wildcards(info, b_tokens))
-			return (ft_putstr_error("Wildcards error\n"));
 		ft_launch_cmd(info, tmp_b);
 		tmp_b->sc = info->status;
 	}
