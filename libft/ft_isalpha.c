@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:34:52 by nflan             #+#    #+#             */
-/*   Updated: 2021/11/25 12:42:07 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 17:07:36 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,21 @@ int	ft_isalpha(int c)
 {
 	if ((64 < c && c < 91) || (96 < c && c < 123))
 		return (1);
+	return (0);
+}
+
+int	ft_wordigit(char *str)
+{
+	if (!str)
+		return (1);
+	if (!ft_isalpha(*str))
+		return (1);
+	str++;
+	while (*str)
+	{
+		if (!ft_isalpha(*str) && !ft_isdigit(*str))
+			return (1);
+		str++;
+	}
 	return (0);
 }

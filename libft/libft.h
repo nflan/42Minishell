@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:50:07 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 19:50:49 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 17:08:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ typedef struct s_global
 }	t_global;
 
 int		ft_isalpha(int c);
+int		ft_wordigit(char *str);
 int		ft_isdigit(int c);
-int		ft_digital(char *c);
+int		ft_digital(char *str);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);

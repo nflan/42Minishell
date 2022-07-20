@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/26 14:20:48 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 17:11:14 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ int	ft_unset_name(t_env **tmp, char *name)
 	i = 0;
 	if (!tmp || !name)
 		return (1);
+	if (ft_wordigit(name))
+		return (ft_exp_err(name, 2));
 	while ((*tmp)->next)
 	{
 		i = 0;

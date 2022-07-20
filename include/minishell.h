@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/20 16:23:38 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 17:36:47 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,8 @@ int				ft_unset(t_info *info, t_big_token *b_tokens);
 //-----------ft_cd.c------------------------------------------------------------
 int				ft_cd(t_info *info, t_big_token *b_tokens);
 //-----------ft_export.c--------------------------------------------------------
+int				ft_exp_err(char *line, int i);
+int				ft_export_replace(t_env *env, char *line, int i);
 int				ft_export(t_info *info, t_big_token *b_tokens);
 //-----------ft_export_tools.c--------------------------------------------------
 void			ft_export_solo(t_env *env, t_big_token *b_tokens);

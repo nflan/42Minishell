@@ -6,15 +6,19 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 20:46:21 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 17:11:36 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_exp_err(char *line)
+int	ft_exp_err(char *line, int i)
 {
+	if (i == 1)
 	ft_putstr_fd_3("minishell: export: `", line,
+			"': not a valid identifier\n", 2);
+	if (i == 2)
+	ft_putstr_fd_3("minishell: unset: `", line,
 			"': not a valid identifier\n", 2);
 	return (1);
 }
@@ -27,11 +31,11 @@ int	ft_not_valid_id(char *line)
 	if (line)
 	{
 		if (line[i] == '\0')
-			return (ft_exp_err(line));
+			return (ft_exp_err(line, 1));
 		while (line[i] && line[i] != '=')
 		{
 			if (!ft_isdigit(line[i]) && !ft_isalpha(line[i]))
-				return (ft_exp_err(line));
+				return (ft_exp_err(line, 1));
 			i++;
 		}
 	}
@@ -43,7 +47,7 @@ int	ft_check_export(char *line)
 	if (!line)
 		return (1);
 	if (ft_isdigit(line[0]))
-		return (ft_exp_err(line));
+		return (ft_exp_err(line, 1));
 	if (ft_not_valid_id(line))
 		return (1);
 	return (0);
