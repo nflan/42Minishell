@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/01 13:18:44 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/20 11:12:14 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,9 +226,9 @@ int				ft_create_tmp(t_fd *fd, int hd);
 char			*ft_create_del(t_token **tmp, int *red);
 void			ft_fdadd_back(t_fd **alst, t_fd *new);
 //-----------ft_fd_open.c-------------------------------------------------------
-int				ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd);
-int				ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd);
-int				ft_open_fd(t_big_token *b_tokens);
+int				ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd, t_info *inf);
+int				ft_open_all_fdin(t_big_token *b_tokens, t_fd *fd, t_info *inf);
+int				ft_open_fd(t_big_token *b_tokens, t_info *info);
 //-----------ft_fd_close.c------------------------------------------------------
 void			ft_close_all_fd(t_fd *fd, int fd_type);
 void			ft_close_fd(t_big_token *b_tokens);

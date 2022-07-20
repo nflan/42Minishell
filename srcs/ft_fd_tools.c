@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:58 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 02:52:00 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/20 10:53:20 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,15 @@ int	ft_fill_fdnew(t_fd *fd, t_info **info, int itscl[5], int *hd)
 		*hd += 1;
 		fd->delimitator = ft_create_del(&(*info)->tokens, itscl);
 		if (ft_create_tmp(fd, *hd))
-			return (1);
+			return (ft_putstr_error("Malloc error in fd_tools.c\n"));
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		ft_here(fd, itscl[1], (*info));
+		if (ft_here(fd, itscl[1], (*info)))
+			return (1);
 	}
 	else
 		fd->file = ft_create_del(&(*info)->tokens, itscl);
 	if (!fd->file)
-		return (1);
+		return (ft_putstr_error("Malloc error in fd_tools.c\n"));
 	return (0);
 }
 
@@ -44,10 +45,10 @@ int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_info **info, int itscl[7])
 
 	new = ft_calloc(sizeof(t_fd), 1);
 	if (!new)
-		return (ft_putstr_error("Malloc error in ft_fdnew "));
+		return (ft_putstr_error("Malloc error in fd_tools.c\n"));
 	new->info = b_tokens->info;
 	if (ft_fill_fdnew(new, info, itscl, &(b_tokens)->nb_hd))
-		return (ft_putstr_error("Malloc error in ft_fdnew "));
+		return (1);
 	ft_fdadd_back(fd, new);
 	return (0);
 }
@@ -83,7 +84,7 @@ char	*ft_create_del(t_token **tmp, int itscl[5])
 	del = NULL;
 	if (tmp[0])
 	{
-		while (tmp[0] && tmp[0]->token != TOK_SEP)
+		while (tmp[0] && tmp[0]->token != TOK_SEP && tmp[0]->token != TOK_OPERATOR)
 		{
 			if (tmp[0]->token != TOK_S_QUOTER && tmp[0]->token != TOK_D_QUOTER)
 			{

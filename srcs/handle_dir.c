@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:56:02 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 12:36:38 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/20 10:09:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	handle_dir_1(t_info **t, int (*itscl)[6], int step, t_big_token **b)
 				= ft_strjoin_free((*b)->cmd_args[(*b)->cmd_args_num
 					- (*itscl)[3]], (*t)->tokens->value, 1);
 			if (!(*b)->cmd_args[(*b)->cmd_args_num - (*itscl)[3]])
-				return (ft_putstr_error("handle dir "));
+				return (ft_putstr_error("handle dir.c\n"));
 			(*t)->tokens = (*t)->tokens->next;
 			((*itscl)[4])--;
 		}
@@ -62,11 +62,11 @@ int	handle_dir_2(t_info **t, int (*itscl)[6], int step, t_big_token **b)
 		if ((*itscl)[1] == 1 || (*itscl)[1] == 2)
 		{
 			if (ft_fdnew(*b, &((*b)->fd_in), t, *itscl))
-				return (ft_putstr_error("in handle dir "));
+				return (1);
 		}
 		else
 			if (ft_fdnew(*b, &((*b)->fd_out), t, *itscl))
-				return (ft_putstr_error("in handle dir "));
+				return (1);
 		((*itscl)[2]) = 0;
 		((*itscl)[0])++;
 	}

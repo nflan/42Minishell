@@ -6,11 +6,13 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 11:24:43 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 12:17:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern int g_sc;
 
 int	ft_write_here(t_fd *fd, char **str, int i, int red)
 {
@@ -45,7 +47,7 @@ int	ft_fill_here(t_fd *fd, int red)
 	while (1)
 	{
 		buf = readline(to_free);
-		if (!buf)
+		if (!buf && !g_sc)
 			ft_write_here(fd, &fd->delimitator, 1, red);
 		if (!buf || !ft_strncmp(buf, fd->delimitator,
 				ft_strlen(fd->delimitator) + 1))
@@ -58,7 +60,20 @@ int	ft_fill_here(t_fd *fd, int red)
 	}
 	if (buf)
 		free(buf);
-	return (0);
+	return (free(to_free), 0);
+}
+
+void	ft_sighere(int sig)
+{
+//	printf("sig = %d\n", sig);
+	if (sig == 2)
+	{
+		write(1, "\n", 1);
+		g_sc = 130;
+		close(0);
+//		rl_redisplay();
+//		rl_replace_line(, 0);
+	}
 }
 
 int	ft_here(t_fd *fd, int red, t_info *info)
@@ -72,18 +87,20 @@ int	ft_here(t_fd *fd, int red, t_info *info)
 	signal(SIGINT, SIG_IGN);
 	if ((int) pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, &ft_sighere);
 		ft_fill_here(fd, red);
 		if (info->tokens)
 			while (info->tokens)
 				info->tokens = info->tokens->prev;
-		ft_exit_cmd(info, NULL, 1);
+		ft_exit_cmd(info, NULL, g_sc);
 	}
 	waitpid((int)pid, &pid, 0);
 	signal(SIGINT, &ft_signal);
 	close(fd->fd);
 	fd->fd = 0;
-	return (0);
+	if (WIFEXITED(pid))
+		g_sc = WEXITSTATUS(pid);
+	return (g_sc);
 }
 
 char	**ft_env_to_tab(t_env *env)
