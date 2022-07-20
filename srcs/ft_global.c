@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:29:38 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/27 15:56:50 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 15:25:05 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_change_cmd(t_big_token *b_tokens, char *tofree)
 	return (0);
 }
 
-int	ft_path(t_info *info, t_big_token *b_tokens)
+int	ft_path(t_info *info, t_big_token *b_tokens, int err)
 {
 	char	*tofree;
 	char	**path;
@@ -34,15 +34,16 @@ int	ft_path(t_info *info, t_big_token *b_tokens)
 		return (ft_free_split(path), ft_putstr_error("Malloc error ft_path\n"));
 	while (path[i] && access(tofree, X_OK | R_OK) != 0)
 	{
-		//demander conseil a Brice car le /bin/ls pas droit mais ptete le /usr/bin/ls si
+		if (access(tofree, F_OK) == 0)
+			err = 126;
 		free(tofree);
+		i++;
 		tofree = ft_strjoiiin(path[i], "/", b_tokens->cmd_args[0]);
 		if (!tofree)
 			return (ft_free_split(path), ft_putstr_error("Malloc error path\n"));
-		i++;
 	}
 	if (!path[i])
-		return (ft_free_split(path), free(tofree), 127);
+		return (ft_free_split(path), free(tofree), err);
 	else
 		return (ft_free_split(path), ft_change_cmd(b_tokens, tofree));
 }
@@ -72,9 +73,8 @@ int	ft_command(t_info *info, t_big_token *b_tokens)
 				return (126);
 		return (0);
 	}
-	else if (ft_get_env_value(info, "PATH")
-		&& b_tokens->cmd_args[0][1] != '.' && b_tokens->cmd_args[0][1] != '/')
-		return (ft_path(info, b_tokens));
+	else if (ft_get_env_value(info, "PATH"))
+		return (ft_path(info, b_tokens, 127));
 	else
 		return (127);
 	return (0);

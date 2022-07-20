@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/20 12:17:19 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 14:01:00 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	ft_here(t_fd *fd, int red, t_info *info)
 		if (info->tokens)
 			while (info->tokens)
 				info->tokens = info->tokens->prev;
+		free(fd->delimitator);
 		ft_exit_cmd(info, NULL, g_sc);
 	}
 	waitpid((int)pid, &pid, 0);

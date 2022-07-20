@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:58 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/20 10:53:20 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 13:51:54 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_fill_fdnew(t_fd *fd, t_info **info, int itscl[5], int *hd)
 			return (ft_putstr_error("Malloc error in fd_tools.c\n"));
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (ft_here(fd, itscl[1], (*info)))
-			return (1);
+			return (free(fd->delimitator), 1);
 	}
 	else
 		fd->file = ft_create_del(&(*info)->tokens, itscl);
