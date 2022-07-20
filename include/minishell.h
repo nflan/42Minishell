@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/20 11:12:14 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 16:23:38 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,8 +220,8 @@ int				ft_init_env(t_info *info, char **envp);
 
 // FD
 //-----------ft_fd_tools.c------------------------------------------------------
-int				ft_fill_fdnew(t_fd *fd, t_info **tmp, int itscl[5], int *hd);
-int				ft_fdnew(t_big_token *b_toks, t_fd **fd, t_info **t, int r[7]);
+int				ft_fill_fdnew(t_fd *fd, t_token **tmp, int itscl[5], int *hd);
+int				ft_fdnew(t_big_token *b_toks, t_fd **fd, t_token **t, int r[7]);
 int				ft_create_tmp(t_fd *fd, int hd);
 char			*ft_create_del(t_token **tmp, int *red);
 void			ft_fdadd_back(t_fd **alst, t_fd *new);
@@ -290,7 +290,7 @@ int				ft_init_pipex(t_info *info, t_big_token *b_tokens);
 
 //---------ft_here_doc.c--------------------------------------------------------
 int				ft_write_here(t_fd *fd, char **str, int i, int red);
-int				ft_here(t_fd *fd, int red, t_info *info);
+int				ft_here(t_fd *fd, int red);
 char			**ft_env_to_tab(t_env *env);
 
 //---------ft_pipex_utils.c-----------------------------------------------------
@@ -435,7 +435,7 @@ int				sophisticated_piped(t_token **tokens, int start, int length);
 //-----------big_tokenizer_4-1.c------------------------------------------------
 int				handle_par(t_big_token **b_tokens, t_info *info);
 //-----------big_tokenizer_4_tool.c---------------------------------------------
-int				check_if_piped(t_big_token **tmp_b, int ind, t_token *i, int l);
+int				check_if_piped(t_big_token **tmp_b, int ind, t_info *i, int l);
 void			rd_inout_type(char *str, int *type_red);
 
 //-----------big_tokenizer_3.c--------------------------------------------------
@@ -451,7 +451,7 @@ int				is_pipe(t_token *tmp_s);
 //-----------handle_par_dir.c---------------------------------------------------
 int				handle_par_dir_0(t_token **t, t_big_token **b, t_info *info,
 					int (*itctlt)[7]);
-int				handle_par_dir_1(t_info **t, t_big_token **b, int (*itctlt)[7],
+int				handle_par_dir_1(t_token **t, t_big_token **b, int (*itctlt)[7],
 					int step);
 int				handle_par_dir_2(t_token *tmp, int (*itctlt)[7], int step);
 int				handle_par_dir(t_big_token **tmp_b, t_info *info);
@@ -460,8 +460,8 @@ int				handle_par_dir(t_big_token **tmp_b, t_info *info);
 
 void			handle_dir_0(t_token **t, t_big_token **b, t_info *in,
 					int (*itscl)[6]);
-int				handle_dir_1(t_info **t, int (*it)[6], int s, t_big_token **b);
-int				handle_dir_2(t_info **t, int (*it)[6], int s, t_big_token **b);
+int				handle_dir_1(t_token **t, int (*it)[6], int s, t_big_token **b);
+int				handle_dir_2(t_token **t, int (*it)[6], int s, t_big_token **b);
 int				handle_dir(t_big_token **tmp_b, t_info *info);
 
 //-----------handle_par.c-------------------------------------------------------

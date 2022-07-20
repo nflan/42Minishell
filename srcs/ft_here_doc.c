@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/20 14:01:00 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 16:55:32 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_sighere(int sig)
 	}
 }
 
-int	ft_here(t_fd *fd, int red, t_info *info)
+int	ft_here(t_fd *fd, int red)
 {
 	pid_t	pid;
 
@@ -89,11 +89,8 @@ int	ft_here(t_fd *fd, int red, t_info *info)
 	{
 		signal(SIGINT, &ft_sighere);
 		ft_fill_here(fd, red);
-		if (info->tokens)
-			while (info->tokens)
-				info->tokens = info->tokens->prev;
 		free(fd->delimitator);
-		ft_exit_cmd(info, NULL, g_sc);
+		ft_exit_cmd(fd->info, NULL, g_sc);
 	}
 	waitpid((int)pid, &pid, 0);
 	signal(SIGINT, &ft_signal);

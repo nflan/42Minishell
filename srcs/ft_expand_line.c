@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 13:11:57 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/20 15:57:23 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ int	ft_get_length(char *str, int length, int t)
 		while (str[length] && str[length] != '\"' && str[length] != ' ')
 			length++;
 	else if (str[length] && t == 0)
-		while (str[length] && str[length] != '\"' && str[length] != '\''
-			&& str[length] != ' ')
+//		while (str[length] && str[length] != '\"' && str[length] != '\''
+//			&& str[length] != ' ')
+		while (str[length] && ft_isalpha(str[length]))
 			length++;
 	else if (str[length] && t == 2)
 		while (str[length] && str[length] != '\'' && str[length] != ' ')
@@ -70,6 +71,7 @@ char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 	tmp[3] = ft_substr(str, *i, length - *i);
 	if (!tmp[3])
 		return (free(tmp[0]), NULL);
+	//printf("tmp[0] = %s && tmp[1] = %s && tmp[2] = %s && tmp[3] = %s\n", tmp[0], tmp[1], tmp[2], tmp[3]);
 	tmp[1] = ft_expanded_value(info, tmp[3]);
 	if (!tmp[1])
 		return (free(tmp[0]), NULL);
