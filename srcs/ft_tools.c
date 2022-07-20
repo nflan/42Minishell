@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:10:52 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/06 17:49:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/01 15:28:59 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_get_env_value(t_info *info, char *name)
 	if (!info->env || !name)
 		return (NULL);
 	env = info->env;
-	while (env && ft_strncmp(env->name, name, ft_strlen(env->name)))
+	while (env && ft_strncmp(env->name, name, ft_strlen(env->name) + 1))
 		env = env->next;
 	if (!env)
 		return (NULL);
