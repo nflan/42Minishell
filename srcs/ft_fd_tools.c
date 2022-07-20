@@ -14,7 +14,7 @@
 
 // itscl[0] = i, itscl[1] = type_red, itscl[2] = save_word, 
 // itscl[3] = cmd_args_nums, itscl[4] = b_length
-int	ft_fill_fdnew(t_fd *fd, t_token **tmp, int itscl[5], int *hd)
+int	ft_fill_fdnew(t_fd *fd, t_info **info, int itscl[5], int *hd)
 {
 	if (itscl[1] == 1 || itscl[1] == 2)
 		fd->red = itscl[1] - 1;
@@ -23,14 +23,14 @@ int	ft_fill_fdnew(t_fd *fd, t_token **tmp, int itscl[5], int *hd)
 	if (itscl[1] == 2)
 	{
 		*hd += 1;
-		fd->delimitator = ft_create_del(tmp, itscl);
+		fd->delimitator = ft_create_del(&(*info)->tokens, itscl);
 		if (ft_create_tmp(fd, *hd))
 			return (1);
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		ft_here(fd, itscl[1]);
+		ft_here(fd, itscl[1], (*info));
 	}
 	else
-		fd->file = ft_create_del(tmp, itscl);
+		fd->file = ft_create_del(&(*info)->tokens, itscl);
 	if (!fd->file)
 		return (1);
 	return (0);
@@ -38,7 +38,7 @@ int	ft_fill_fdnew(t_fd *fd, t_token **tmp, int itscl[5], int *hd)
 
 // itscl[0] = i, itscl[1] = type_red, itscl[2] = save_word
 // itscl[3] = cmd_args_nums, itscl[4] = b_length
-int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int itscl[7])
+int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_info **info, int itscl[7])
 {
 	t_fd	*new;
 
@@ -46,7 +46,7 @@ int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int itscl[7])
 	if (!new)
 		return (ft_putstr_error("Malloc error in ft_fdnew "));
 	new->info = b_tokens->info;
-	if (ft_fill_fdnew(new, tmp, itscl, &(b_tokens)->nb_hd))
+	if (ft_fill_fdnew(new, info, itscl, &(b_tokens)->nb_hd))
 		return (ft_putstr_error("Malloc error in ft_fdnew "));
 	ft_fdadd_back(fd, new);
 	return (0);
@@ -54,19 +54,22 @@ int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int itscl[7])
 
 int	ft_create_tmp(t_fd *fd, int hd)
 {
-	int	i;
+	unsigned long long	i;
 
 	i = 0;
 	if (hd)
 	{
-		fd->file = ft_strdup("/tmp/.tmp_hd_");
+		fd->file = ft_strdup("/tmp/.tmp_hd_0");
 		if (!fd->file)
 			return (1);
-		while (--hd)
+		while (access(fd->file, F_OK) == 0)
+		{
 			i++;
-		fd->file = ft_strjoin_free(fd->file, ft_itoa(i), 4);
-		if (!fd->file)
-			return (1);
+			free(fd->file);
+			fd->file = ft_strjoin_free("/tmp/.tmp_hd_", ft_itoa(i), 2);
+			if (!fd->file)
+				return (1);
+		}
 	}
 	return (0);
 }

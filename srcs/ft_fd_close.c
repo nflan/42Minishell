@@ -30,13 +30,9 @@ void	ft_close_fd(t_big_token *b_tokens)
 {
 	if (b_tokens)
 	{
-		while (b_tokens)
-		{
-			if (b_tokens->fd_out)
-				ft_close_all_fd(b_tokens->fd_out, 1);
-			if (b_tokens->fd_in)
-				ft_close_all_fd(b_tokens->fd_in, 0);
-			b_tokens = b_tokens->sibling;
-		}
+		if (b_tokens->fd_out)
+			ft_close_all_fd(b_tokens->fd_out, 1);
+		if (b_tokens->fd_in)
+			ft_close_all_fd(b_tokens->fd_in, 0);
 	}
 }

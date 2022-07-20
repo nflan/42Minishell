@@ -49,6 +49,9 @@ int	ft_path(t_info *info, t_big_token *b_tokens)
 
 int	ft_is_cmd(t_big_token *b_tokens)
 {
+	if (b_tokens->cmd_args[0][0] == '.' && b_tokens->cmd_args[0][1] == '/'
+			&& ft_strlen(b_tokens->cmd_args[0]) == 2)
+		return (2);
 	if (b_tokens->cmd_args[0][0] == '.' && b_tokens->cmd_args[0][1] == '/')
 		return (0);
 	if (b_tokens->cmd_args[0][0] == '/' || b_tokens->cmd_args[0][1] == '/')
@@ -60,17 +63,14 @@ int	ft_command(t_info *info, t_big_token *b_tokens)
 {
 	if (!b_tokens->cmd_args)
 		return (1);
+	if (ft_is_cmd(b_tokens) == 2)
+		return (-4);
 	if (!ft_is_cmd(b_tokens))
 	{
 		if (access(b_tokens->cmd_args[0], F_OK) == 0)
-		{
 			if (access(b_tokens->cmd_args[0], X_OK) != 0)
 				return (126);
-			else
-				return (0);
-		}
-		else
-			return (-4);
+		return (0);
 	}
 	else if (ft_get_env_value(info, "PATH")
 		&& b_tokens->cmd_args[0][1] != '.' && b_tokens->cmd_args[0][1] != '/')

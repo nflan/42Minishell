@@ -28,33 +28,28 @@ int	ft_expanding(t_info *info, t_big_token *b)
 
 int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 {
-	t_big_token	*tmp_b;
-
-	tmp_b = b_tokens;
-	if (ft_wash_btoken(info, tmp_b))
+	if (ft_wash_btoken(info, b_tokens))
 		return (2147483647);
-	if (tmp_b->sc == -1)
+	if (b_tokens->sc == -1)
 	{
+		if (ft_open_fd(b_tokens))
+			return (1);
 		if (ft_expanding(info, b_tokens))
 			return (ft_putstr_error("Expand error\n"));
-		ft_launch_cmd(info, tmp_b);
-		tmp_b->sc = info->status;
+		ft_launch_cmd(info, b_tokens);
+		b_tokens->sc = info->status;
+		ft_close_fd(b_tokens);
 	}
-	ft_close_fd(b_tokens);
 	return (0);
 }
 
 int	exec_the_bulk(t_info *info, int sib_child, t_big_token *b)
 {
 	info->nb_cmd = 0;
-	if (!ft_open_fd(b))
-	{
-		if (sib_child >= 1 && sib_child <= 3)
-			ft_exec_simple(info, b);
-		else if (sib_child == 4)
-			ft_init_pipex(info, b);
-	}
-	ft_close_fd(b);
+	if (sib_child >= 1 && sib_child <= 3)
+		ft_exec_simple(info, b);
+	else if (sib_child == 4)
+		ft_init_pipex(info, b);
 	if (b && b->parent)
 		give_parent_sc(&(b), &(b->parent));
 	return (0);

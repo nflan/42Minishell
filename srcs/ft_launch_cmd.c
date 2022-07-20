@@ -17,8 +17,8 @@ int	ft_exit_cmd(t_info *info, char *str, int err)
 	info->status = err;
 	if (err == -4 && str)
 	{
-		ft_putstr_fd_3("minishell: ", str, ": No such file or directory\n", 2);
-		info->status = 127;
+		ft_putstr_fd_3("minishell: ", str, ": Is a directory\n", 2);
+		info->status = 126;
 	}
 	else if (err == 126 && str)
 		ft_putstr_fd_3("minishell: ", str, ": Permission denied\n", 2);

@@ -86,14 +86,10 @@ int	ft_open_fd(t_big_token *b_tokens)
 	err = 0;
 	if (b_tokens)
 	{
-		while (b_tokens)
-		{
-			if (b_tokens->fd_out)
-				err += ft_open_all_fdout(b_tokens, b_tokens->fd_out);
-			if (b_tokens->fd_in)
-				err += ft_open_all_fdin(b_tokens, b_tokens->fd_in);
-			b_tokens = b_tokens->sibling;
-		}
+		if (b_tokens->fd_out)
+			err += ft_open_all_fdout(b_tokens, b_tokens->fd_out);
+		if (b_tokens->fd_in)
+			err += ft_open_all_fdin(b_tokens, b_tokens->fd_in);
 	}
 	return (err);
 }

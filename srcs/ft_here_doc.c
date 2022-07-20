@@ -34,7 +34,7 @@ int	ft_write_here(t_fd *fd, char **str, int i, int red)
 	return (0);
 }
 
-int	ft_here(t_fd *fd, int red)
+int	ft_fill_here(t_fd *fd, int red)
 {
 	char	*buf;
 	char	*to_free;
@@ -52,15 +52,38 @@ int	ft_here(t_fd *fd, int red)
 			break ;
 		else
 			if (ft_write_here(fd, &buf, 2, red))
-				return (1);
+				return (free(to_free), free(buf), 1);
 		free(buf);
 		buf = NULL;
 	}
 	if (buf)
 		free(buf);
+	return (0);
+}
+
+int	ft_here(t_fd *fd, int red, t_info *info)
+{
+	pid_t	pid;
+
+	pid = -1;
+	pid = fork();
+	if ((int) pid == -1)
+		return (ft_putstr_error("Child error\n"));
+	signal(SIGINT, SIG_IGN);
+	if ((int) pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		ft_fill_here(fd, red);
+		if (info->tokens)
+			while (info->tokens)
+				info->tokens = info->tokens->prev;
+		ft_exit_cmd(info, NULL, 1);
+	}
+	waitpid((int)pid, &pid, 0);
+	signal(SIGINT, &ft_signal);
 	close(fd->fd);
 	fd->fd = 0;
-	return (free(to_free), 0);
+	return (0);
 }
 
 char	**ft_env_to_tab(t_env *env)

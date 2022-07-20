@@ -99,6 +99,8 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 	tmp = b_tokens;
 	while (tmp)
 	{
+		if (ft_open_fd(tmp))
+			return (1);
 		if (ft_wash_btoken(info, tmp))
 			return (2147483647);
 		if (tmp->sc == -1)
@@ -111,6 +113,7 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 			i++;
 		}
 		b_tokens->sc = tmp->sc;
+		ft_close_fd(tmp);
 		tmp = tmp->sibling;
 	}
 	return (0);

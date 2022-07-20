@@ -24,13 +24,13 @@ void	rd_inout_type(char *str, int *type_red)
 		(*type_red) = 4;
 }
 
-int	check_if_piped(t_big_token **tmp_b, int ind, t_info *info, int len)
+int	check_if_piped(t_big_token **tmp_b, int ind, t_token *info, int len)
 {
 	t_token	*tmp;
 	int		i;
 
 	(void) tmp_b;
-	tmp = info->tokens;
+	tmp = info;
 	i = 0;
 	move_tok_2_ind(&tmp, ind);
 	while (tmp && i < len)

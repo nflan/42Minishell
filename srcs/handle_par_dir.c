@@ -20,28 +20,28 @@ int	handle_par_dir_0(t_token **t, t_big_token **b, t_info *i, int (*itctlt)[7])
 	(*itctlt)[3] = 0;
 	(*itctlt)[5] = 0;
 	handle_piped(b, i);
-	move_tok_2_ind(t, (*b)->ind_tok_start);
-	if ((*t)->token == TOK_SEP)
+	move_tok_2_ind(&(i)->tokens, (*b)->ind_tok_start);
+	if (i->tokens->token == TOK_SEP)
 	{
-		move_tok_2_ind(t, (*b)->ind_tok_start + 1);
+		move_tok_2_ind(&(i)->tokens, (*b)->ind_tok_start + 1);
 		((*itctlt)[3])++;
 		((*itctlt)[5])++;
 	}
-	if ((*t)->token == TOK_EXPANDER_OP)
+	if (i->tokens->token == TOK_EXPANDER_OP)
 	{
 		((*itctlt)[5])++;
-		(*itctlt)[2] = cl_par_ind(t, (*t)->index);
+		(*itctlt)[2] = cl_par_ind(&(i)->tokens, (i)->tokens->index);
 		(*itctlt)[3] += 2;
-		move_tok_2_ind(t, (*itctlt)[2] + 1);
+		move_tok_2_ind(&(i)->tokens, (*itctlt)[2] + 1);
 		(*itctlt)[4] = (*b)->length + (*b)->ind_tok_start - 1 - (*itctlt)[2];
-		if (check_if_piped(b, (*itctlt)[2] + 1, i, (*itctlt)[4]))
+		if (check_if_piped(b, (*itctlt)[2] + 1, *t, (*itctlt)[4]))
 			return (0);
 		(*itctlt)[3] += (*itctlt)[4];
 	}
 	return (-1);
 }
 
-int	handle_par_dir_1(t_token **t, t_big_token **b, int (*itctlt)[7], int step)
+int	handle_par_dir_1(t_info **t, t_big_token **b, int (*itctlt)[7], int step)
 {
 	if (step == 1)
 	{
@@ -57,7 +57,7 @@ int	handle_par_dir_1(t_token **t, t_big_token **b, int (*itctlt)[7], int step)
 	}
 	if (step == 2)
 	{
-		(*t) = (*t)->next;
+		(*t)->tokens = (*t)->tokens->next;
 		((*itctlt)[4])--;
 	}
 	if (step == 3)
@@ -98,22 +98,23 @@ int	handle_par_dir(t_big_token **tmp_b, t_info *info)
 
 	if (!handle_par_dir_0(&tmp, tmp_b, info, &itctlt))
 		return (0);
-	while (tmp && itctlt[4]--)
+	while (info->tokens && itctlt[4]--)
 	{
-		if (handle_par_dir_2(tmp, &itctlt, 1))
+		if (handle_par_dir_2(info->tokens, &itctlt, 1))
 			return (1);
-		if (handle_par_dir_2(tmp, &itctlt, 2))
-			itctlt[6] = handle_par_dir_2(tmp, &itctlt, 3);
-		else if (tmp->token == TOK_WORD && (!(itctlt[0] % 2) || !itctlt[1]))
+		if (handle_par_dir_2(info->tokens, &itctlt, 2))
+			itctlt[6] = handle_par_dir_2(info->tokens, &itctlt, 3);
+		else if (info->tokens->token == TOK_WORD && (!(itctlt[0] % 2) || !itctlt[1]))
 			return (1);
-		if (tmp->token != TOK_SEP && (itctlt[0] % 2))
+		if (info->tokens->token != TOK_SEP && (itctlt[0] % 2))
 		{
-			if (handle_par_dir_1(&tmp, tmp_b, &itctlt, 1))
+			if (handle_par_dir_1(&info, tmp_b, &itctlt, 1))
 				return (ft_putstr_error("in handle par dir "));
 		}
 		else
-			itctlt[6] = handle_par_dir_1(&tmp, tmp_b, &itctlt, 2);
+			itctlt[6] = handle_par_dir_1(&info, tmp_b, &itctlt, 2);
 	}
-	itctlt[6] = handle_par_dir_1(&tmp, tmp_b, &itctlt, 3);
+	itctlt[6] = handle_par_dir_1(&info, tmp_b, &itctlt, 3);
+	info->tokens = tmp;
 	return (0);
 }
