@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 15:14:31 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/22 12:33:16 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:49:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,20 @@
 void	ft_free_3_str(char *s1, char *s2, char *s3, int i)
 {
 	if (s1 && i != 2 && i != 3)
+	{
 		free(s1);
+		s1 = NULL;
+	}
 	if (s2 && i != 1 && i != 3)
+	{
 		free(s2);
+		s2 = NULL;
+	}
 	if (s3 && i != 1 && i != 2)
+	{
 		free(s3);
+		s3 = NULL;
+	}
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)

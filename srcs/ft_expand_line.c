@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/21 15:24:56 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 16:11:14 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ char	*ft_noquote_line(char *line)
 	while (line[++ij[0]])
 	{
 		if (line[ij[0]] == '\'')
-			while (line[++ij[0]] != '\'')
+			while (line[++ij[0]] && line[ij[0]] != '\'')
 				new[ij[1]++] = line[ij[0]];
 		if (line[ij[0]] == '\"')
-			while (line[++ij[0]] != '\"')
+		{
+			while (line[++ij[0]] && line[ij[0]] != '\"')
 				new[ij[1]++] = line[ij[0]];
-		if (line[ij[0]] != '\'' && line[ij[0]] != '\"')
+		}
+		if (line[ij[0]] && line[ij[0]] != '\'' && line[ij[0]] != '\"')
 			new[ij[1]++] = line[ij[0]];
 	}
 	return (free(line), new);
@@ -53,6 +55,8 @@ int	ft_get_length(char *str, int i, int t)
 	int	length;
 
 	length = i;
+	if (!t && (str[length] == '\'' || str[length] == '\"'))
+		return (0);
 	if (str[length] == '?' || ft_isdigit(str[length]))
 		return (1);
 	if (!ft_isalpha(str[length]))
@@ -84,11 +88,11 @@ char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 	tmp[3] = ft_substr(str, *i, length);
 	if (!tmp[3])
 		return (free(tmp[0]), NULL);
-//	printf("tmp[0] = %s && tmp[1] = %s && tmp[2] = %s && tmp[3] = %s\n", tmp[0], tmp[1], tmp[2], tmp[3]);
+//	printf("tmp[3] = %s\n", tmp[3]);
 	tmp[1] = ft_expanded_value(info, tmp[3]);
 	if (!tmp[1])
 		return (free(tmp[0]), NULL);
-	tmp[2] = ft_substr(str, length + *i, ft_strlen(str));
+	tmp[2] = ft_substr(str, length + *i, ft_strlen(str) + ft_strlen(tmp[1]));
 	if (!tmp[2])
 		return (free(tmp[0]), free(tmp[1]), NULL);
 	free(str);
@@ -111,7 +115,7 @@ char	*ft_expand_l(char *str, t_info *info, int hd)
 		if (str[i] == '$')
 		{
 			i++;
-			if ((t < 2 || hd) && (ft_isdigit(str[i]) || ft_isalpha(str[i]) || str[i] == '?'))
+			if (str[i] && (t < 2 || hd) && (ft_isdigit(str[i]) || ft_isalpha(str[i]) || str[i] == '?'))
 			{
 				str = ft_expand_line(str, &i, info, t);
 				if (!str)

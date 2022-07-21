@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 14:33:08 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 15:29:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	ft_create_echo(t_big_token *b_tokens, int i)
 		if (b_tokens->cmd_args[i][0])
 			ft_putstr_fd(b_tokens->cmd_args[i], b_tokens->fdout);
 		i++;
+		if (b_tokens->cmd_args[i])
+			ft_putstr_fd(" ", b_tokens->fdout);
 	}
 }
 
