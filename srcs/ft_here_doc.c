@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/20 16:55:32 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 18:50:40 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_fill_here(t_fd *fd, int red)
 void	ft_sighere(int sig)
 {
 //	printf("sig = %d\n", sig);
-	if (sig == 2)
+	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
 		g_sc = 130;
