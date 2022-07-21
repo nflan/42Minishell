@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/21 11:40:22 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 15:24:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,27 @@ char	*ft_noquote_line(char *line)
 	return (free(line), new);
 }
 
-int	ft_get_length(char *str, int length, int t)
+int	ft_get_length(char *str, int i, int t)
 {
+	int	length;
+
+	length = i;
+	if (str[length] == '?' || ft_isdigit(str[length]))
+		return (1);
 	if (!ft_isalpha(str[length]))
 		return (2);
 	if (str[length] && t == 1)
 		while (str[length] && str[length] != '\"' && str[length] != ' ')
 			length++;
 	else if (str[length] && t == 0)
-//		while (str[length] && str[length] != '\"' && str[length] != '\''
-//			&& str[length] != ' ')
-		while (str[length] && ft_isalpha(str[length]))
+	{
+		while (str[length] && (ft_isalpha(str[length]) || ft_isdigit(str[length]) || str[length] == '_'))
 			length++;
+	}
 	else if (str[length] && t == 2)
 		while (str[length] && str[length] != '\'' && str[length] != ' ')
 			length++;
+	length -= i;
 	return (length);
 }
 
@@ -75,18 +81,18 @@ char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 	if (!tmp[0])
 		return (NULL);
 	length = ft_get_length(str, *i, t);
-	tmp[3] = ft_substr(str, *i, length - *i);
+	tmp[3] = ft_substr(str, *i, length);
 	if (!tmp[3])
 		return (free(tmp[0]), NULL);
-	//printf("tmp[0] = %s && tmp[1] = %s && tmp[2] = %s && tmp[3] = %s\n", tmp[0], tmp[1], tmp[2], tmp[3]);
+//	printf("tmp[0] = %s && tmp[1] = %s && tmp[2] = %s && tmp[3] = %s\n", tmp[0], tmp[1], tmp[2], tmp[3]);
 	tmp[1] = ft_expanded_value(info, tmp[3]);
 	if (!tmp[1])
 		return (free(tmp[0]), NULL);
-	tmp[2] = ft_substr(str, length, ft_strlen(str));
+	tmp[2] = ft_substr(str, length + *i, ft_strlen(str));
 	if (!tmp[2])
 		return (free(tmp[0]), free(tmp[1]), NULL);
 	free(str);
-	*i = length - 1;
+	*i = *i + ft_strlen(tmp[1]) - 1;
 	return (ft_strjoiiin_free(tmp[0], tmp[1], tmp[2], 4));
 }
 //	printf("tmp[0] = '%s' && tmp[1] = '%s' && tmp[2] = '%s'\n",
@@ -105,7 +111,7 @@ char	*ft_expand_l(char *str, t_info *info, int hd)
 		if (str[i] == '$')
 		{
 			i++;
-			if (t < 2 || hd)
+			if ((t < 2 || hd) && (ft_isdigit(str[i]) || ft_isalpha(str[i]) || str[i] == '?'))
 			{
 				str = ft_expand_line(str, &i, info, t);
 				if (!str)

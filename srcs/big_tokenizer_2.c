@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/20 10:12:38 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 14:30:08 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ static int	divide_by_or_and_3(int i, t_info *info, t_big_token **b_tokens)
 {
 	if (i)
 		return (1);
-	if (handle_par(b_tokens, info) == 1)
-		return (1);
-	return (0);
+	return (handle_par(b_tokens, info));
 }
 
 int	divide_by_or_and(t_big_token **b_tokens, t_info *info, int btok_info[2])
