@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:13:07 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/20 11:12:24 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 11:48:47 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int	ft_open_err(t_big_token *b_tok, t_fd *fd, int i, t_info *info)
 	char	*err;
 
 	err = NULL;
-	b_tok->sc = 1;
+	b_tok->sc = -1;
 	info->nb_cmd++;
 	if (!i)
-		fd->fd = 0;
+		b_tok->fdin = -1;
 	if (i == 1)
-		fd->fd = 0;
+		b_tok->fdout = -1;
 	err = ft_strjoin("minishell: ", fd->file);
 	if (!err)
 		return (1);

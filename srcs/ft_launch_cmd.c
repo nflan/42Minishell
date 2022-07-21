@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/28 12:03:00 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 09:55:26 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,14 @@ int	ft_do_solo(t_info *info, t_big_token *b, int ret)
 
 int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 {
+	if (!b_tokens->cmd_args[0])
+		return (1);
 	if (b_tokens->par == 1)
 		return (ft_fork_par(info, b_tokens));
 	b_tokens->envp = ft_env_to_tab(info->env);
 	if (!ft_check_builtins(b_tokens))
 		info->status = ft_builtins(info, b_tokens);
-	else if (ft_check_builtins(b_tokens) == 1)
+	else if (ft_check_builtins(b_tokens))
 		ft_do_solo(info, b_tokens, 0);
 	return (info->status);
 }

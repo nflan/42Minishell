@@ -6,27 +6,34 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/20 15:57:23 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 11:40:22 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	ft_init_noquote(char **new, int ij[2])
+{
+	ij[0] = -1;
+	ij[1] = 0;
+	new = NULL;
+}
 
 char	*ft_noquote_line(char *line)
 {
 	char	*new;
 	int		ij[2];
 
-	ij[0] = -1;
-	ij[1] = 0;
-	new = NULL;
-	if (!line)
+	ft_init_noquote(&new, ij);
+	if (!line || !ft_strlen(line))
 		return (NULL);
 	if (ft_strlen(line) == ft_strlen_nq(line))
 		return (line);
 	new = ft_calloc(sizeof(char), ft_strlen_nq(line) + 1);
 	if (!new)
-		return (NULL);
+		return (ft_putstr_error("Malloc error\n"), NULL);
+	if (!ft_strncmp(line, "\"\"", 3))
+		return (new);
 	while (line[++ij[0]])
 	{
 		if (line[ij[0]] == '\'')

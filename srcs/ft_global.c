@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:29:38 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/20 17:25:19 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 09:20:09 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	ft_is_cmd(t_big_token *b_tokens)
 
 int	ft_command(t_info *info, t_big_token *b_tokens)
 {
+	if (b_tokens->cmd_args[0][0] == '\0')
+		return (127);
 	if (!b_tokens->cmd_args || !ft_strlen(b_tokens->cmd_args[0]))
 		return (1);
 	if (ft_is_cmd(b_tokens) == 2)

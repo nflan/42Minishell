@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/20 18:03:03 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 09:39:29 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	ft_newpwd(t_info *info)
 	pwd = getcwd(pwd, 0);
 	if (!pwd || !tmp)
 		return (1);
-	printf("pwd = %s\n", pwd);
 	while (ft_strncmp(tmp->name, "PWD", 4))
 		tmp = tmp->next;
 	return (ft_export_replace(tmp, pwd, -1));
@@ -102,6 +101,8 @@ int	ft_do_cd(t_info *info, t_big_token *b_tokens)
 	{
 		if (chdir(ft_get_env_value(info, "OLDPWD")))
 			return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
+		ft_putstr_fd(ft_get_env_value(info, "OLDPWD"), b_tokens->fdout);
+		ft_putstr_fd("\n", b_tokens->fdout);
 		ft_oldpwd(info);
 	}
 	else

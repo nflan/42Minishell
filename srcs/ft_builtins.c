@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/20 17:11:14 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 12:08:07 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_mystic_exit(t_big_token *b, unsigned long long *ret)
 {
-	if (!b)
+	if (!b || !b->cmd_args[1])
 		return (0);
 	if (*ret > 9223372036854775807 || ft_digital(b->cmd_args[1]))
 	{

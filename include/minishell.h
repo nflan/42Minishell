@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/20 17:36:47 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 10:48:04 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -499,7 +499,7 @@ char			*ft_expanded_value(t_info *info, char *tmp);
 int				ft_expand_args(t_big_token *b_tokens, t_info *info);
 //-----------ft_expand_line.c---------------------------------------------------
 char			*ft_noquote_line(char *line);
-int				ft_get_length(char *str, int length, int i);
+int				ft_get_length(char *str, int length, int t);
 char			*ft_expand_line(char *str, int *i, t_info *info, int t);
 char			*ft_expand_l(char *str, t_info *info, int hd);
 //-----------ft_expand_tools.c--------------------------------------------------
