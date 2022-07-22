@@ -33,7 +33,7 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  big_tokenizer_6.c ft_expand_tools.c ft_expand_line.c ft_expand_args.c\
 		  ft_fd_tools.c big_tokenizer_4-1.c handle_dir.c\
 		  handle_par_dir.c handle_par.c big_tokenizer_8.c big_tokenizer_9.c\
-		  big_tokenizer_4_tool.c syntax_errorinizer_4.c
+		  big_tokenizer_4_tool.c syntax_errorinizer_4.c ft_printer.c ft_export_tools.c\
 
 INC = include/minishell.h
 

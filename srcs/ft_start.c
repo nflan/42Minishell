@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:14:18 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/22 01:24:50 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/20 12:20:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	ft_init_info(t_info *info)
 	if (err)
 	{
 		info->status = err;
+		if (g_sc == 130)
+			info->status = g_sc;
 		return (ft_free_all(info, NULL), 1);
 	}
 	return (0);

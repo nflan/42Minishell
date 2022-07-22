@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:43 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/28 21:39:37 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/21 14:30:08 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ static void	divide_by_or_and_2(t_token *t, t_big_token **b, int p[2], t_info *i)
 static int	divide_by_or_and_3(int i, t_info *info, t_big_token **b_tokens)
 {
 	if (i)
-		return (ft_putstr_error("in divide by or and "));
-	if (handle_par(b_tokens, info) == 1)
-		return (ft_putstr_error("in divide by or and "));
-	return (0);
+		return (1);
+	return (handle_par(b_tokens, info));
 }
 
 int	divide_by_or_and(t_big_token **b_tokens, t_info *info, int btok_info[2])

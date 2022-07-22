@@ -16,7 +16,7 @@ void	ft_error_2(int i, t_info *info, t_big_token *b_tokens)
 {
 	if (i == 4)
 	{
-		perror("Exec error");
+		ft_perror("minishell: ", b_tokens->cmd_args[0]);
 		ft_close_fd(b_tokens);
 		ft_free_all(info, info->env);
 		rl_clear_history();
@@ -30,6 +30,8 @@ void	ft_error_2(int i, t_info *info, t_big_token *b_tokens)
 int	ft_error(int i, t_info *info, t_big_token *b_tokens)
 {
 	info->status = 1;
+	if (i == 3 || i == 4)
+		info->status = 127;
 	if (i == 1)
 	{
 		dup2(b_tokens->fdin, info->pdes[0]);
@@ -45,10 +47,7 @@ int	ft_error(int i, t_info *info, t_big_token *b_tokens)
 		exit(1);
 	}
 	else if (i == 3)
-	{
-		info->status = 127;
 		perror("Command not found");
-	}
 	else if (i >= 4)
 		ft_error_2(i, info, b_tokens);
 	return (info->status);

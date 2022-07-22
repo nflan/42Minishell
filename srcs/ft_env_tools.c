@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:04:01 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 13:04:49 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/22 11:24:41 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int	ft_fill_envnew(t_env *env, char *line, int i, int j)
 		env->name[j] = line[j];
 	if (line[j] != '=')
 		return (0);
-	i = 0;
 	j++;
+	i = 0;
 	while (line[j + i])
 		i++;
 	env->value = ft_calloc(sizeof(char), i + 1);

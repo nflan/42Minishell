@@ -6,13 +6,13 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:31:10 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 18:37:59 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 13:23:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i)
+/*int	ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i)
 {
 	t_token	*tmp_s;
 
@@ -26,20 +26,29 @@ int	ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i)
 		&& tmp_s->token != TOK_WORD_D_QUOTED)
 		return (0);
 	return (1);
-}
+}*/
 
-int	ft_add_wildcards(t_info *info, t_big_token *b_tokens)
+int	ft_add_wildcards(t_big_token *b_tokens)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	if (b_tokens->cmd_args)
 	{
 		while (b_tokens->cmd_args[i])
 		{
-			if (!ft_check_wildcards(info, b_tokens, i))
-				if (ft_do_wildcards(b_tokens, i))
-					return (1);
+			j = 0;
+			while (b_tokens->cmd_args[i][j])
+			{
+				if (b_tokens->cmd_args[i][j] == '*' && !ft_postype(b_tokens->cmd_args[i], j))
+				{
+					if (ft_do_wildcards(b_tokens, i))
+						return (1);
+					break ;
+				}
+				j++;
+			}
 			i++;
 		}
 	}
@@ -64,6 +73,7 @@ int	ft_keep(char *str, char *dir, int *i, int j)
 			return (1);
 		if (dir[*i] && dir[*i] == *str)
 			*i += 1;
+//		printf("dir = %s && i = %d && str = %s\n", dir, *i, str);
 	}
 	return (0);
 }
@@ -78,17 +88,27 @@ int	ft_do_keep(char *str, t_wildcards *wd, int type, int i)
 	if (!str || !dir
 		|| ft_manage_type(str, wd->dir->d_name, wd->dir->d_type, type))
 		return (1);
+	if (*str == '*')
+		i++;
 	while (*str)
 	{
-		if (!ft_keep(str, dir, &i, j) || *str == '*' || *str == '/')
+		if (*str == '*' || *str == '/')
 		{
-			str++;
-			if (*str == '*' || *str == '/')
-				while (*str == '*' || *str == '/')
-					str++;
+			while (*str == '/')
+			{
+				str++;
+				if (*str)// && *str != '/') AVIS ?
+					return (1);
+			}
+			while (*str == '*')
+				str++;
+//			while (*str == '*' || *str == '/') AVIS ?
+//				str++;
 			if (!*str)
 				return (0);
 		}
+		else if (!ft_keep(str, dir, &i, j))
+			str++;
 		else
 			return (1);
 	}

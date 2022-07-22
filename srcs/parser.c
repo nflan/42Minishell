@@ -56,7 +56,7 @@ int	parse(t_big_token **b_tokens, t_info *info, int btok_info[2])
 	t_big_token	*tmp_b;
 
 	if (divide_by_or_and(b_tokens, info, btok_info))
-		return (ft_putstr_error("Parsing error\n"));
+		return (1);
 	tmp_b = *b_tokens;
 	if (!tmp_b || (!tmp_b->par && tmp_b->type == TOK_CLEAN))
 		return (0);
@@ -67,7 +67,7 @@ int	parse(t_big_token **b_tokens, t_info *info, int btok_info[2])
 		else if (piped(info, tmp_b->ind_tok_start, tmp_b->length))
 		{
 			if (divide_by_pipe(&tmp_b, info))
-				return (ft_putstr_error("in parse "));
+				return (1);
 			if (tmp_b->child)
 				sub_parse_2(&tmp_b->child, &tmp_b, info);
 		}

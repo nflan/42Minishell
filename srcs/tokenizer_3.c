@@ -98,12 +98,15 @@ int	fill_tok_value(t_token **tok, char *str)
 	if (!*tok || !str)
 		return (1);
 	tmp = *tok;
-	while (tmp)
+	if (tmp)
 	{
-		tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
-		if (!tmp->value)
-			return (ft_putstr_error("Error in ft_strncpy in fill_tok_value\n"));
-		tmp = tmp->next;
+		while (tmp)
+		{
+			tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
+			if (!tmp->value)
+				return (ft_putstr_error("Error in ft_strncpy in fill_tok_value"));
+			tmp = tmp->next;
+		}
 	}
 	return (0);
 }

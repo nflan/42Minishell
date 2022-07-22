@@ -53,6 +53,26 @@ void	ft_type(char c, int *t)
 		*t = 0;
 }
 
+int	ft_postype(char *str, int pos)
+{
+	int	t;
+	int	i;
+
+	t = 0;
+	i = 0;
+	if (str)
+	{
+		while (str[i])
+		{
+			ft_type(str[i], &t);
+			if (i == pos)
+				return (t);
+			i++;
+		}
+	}
+	return (0);
+}
+
 char	*ft_strndup(char *str, int len)
 {
 	char	*ret;

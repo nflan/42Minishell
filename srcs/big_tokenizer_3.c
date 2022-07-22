@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:57:08 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/30 17:28:34 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/20 12:20:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static int	dbp_1(t_big_token **tmp_b, int b_info[2], t_info *info)
 	if (!(*tmp_b)->child)
 	{
 		if (add_b_tok_sib_last(&((*tmp_b)->child), TOK_CLEAN, b_info, info))
-			return (ft_putstr_error("in divide by pipe "));
+			return (1);
 	}
 	else
 	{
 		if (add_b_tok_sib_last(&((*tmp_b)->child), TOK_PIPE_LAST, b_info, info))
-			return (ft_putstr_error("in divide by pipe "));
+			return (1);
 	}
 	if (handle_par(&((*tmp_b)->child), info))
-		return (ft_putstr_error("in divie by pipe "));
+		return (1);
 	return (0);
 }
 
@@ -61,7 +61,7 @@ static int	dbp_4(int (*binfo)[2], int (*ij)[2], t_info *i, t_big_token **tmp_b)
 	tmp = *tmp_b;
 	((*binfo)[1])--;
 	if (add_b_tok_sib_last(&(tmp->child), TOK_LEFT_PIPE, *binfo, i))
-		return (ft_putstr_error("in divide by pipe "));
+		return (1);
 	(*binfo)[1] = 0;
 	(*ij)[0]++;
 	return (0);
@@ -84,7 +84,7 @@ int	divide_by_pipe(t_big_token **b_tokens, t_info *info)
 		if (is_pipe(tmp.s))
 		{
 			if (dbp_4(&btok_info, &ij, info, &(tmp.b)))
-				return (ft_putstr_error("in divide by pipe "));
+				return (1);
 			btok_info[0] = (tmp.s)->index + 1;
 			ij[1] = btok_info[0];
 		}

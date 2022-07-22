@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 03:00:36 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 03:01:36 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/20 10:18:22 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	handle_par_5(t_token **s, t_big_token **b, t_tab *t, t_info *i)
 	else if ((*s)->token == TOK_WORD)
 	{
 		if (handle_par_dir(b, i))
-			return (ft_putstr_error("in handle par "));
+			return (ft_putstr_error("in handle par blblbl handle_par.c"));
 	}
 	return (0);
 }
