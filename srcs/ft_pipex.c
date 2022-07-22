@@ -25,7 +25,7 @@ int	ft_do_pipex(t_info *info, t_big_token *b_tokens, int ret)
 	else if (ft_check_builtins(b_tokens) == 1)
 	{
 		ret = ft_command(info, b_tokens);
-		if (ret > 0)
+		if (ret)
 			ft_exit_cmd(info, b_tokens->cmd_args[0], ret);
 		else
 		{

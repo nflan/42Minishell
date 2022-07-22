@@ -94,16 +94,14 @@ int	ft_do_keep(char *str, t_wildcards *wd, int type, int i)
 	{
 		if (*str == '*' || *str == '/')
 		{
-			while (*str == '/')
+			while (*str == '/') 
 			{
 				str++;
-				if (*str)// && *str != '/') AVIS ?
+				if (*str && *str != '/')
 					return (1);
 			}
 			while (*str == '*')
 				str++;
-//			while (*str == '*' || *str == '/') AVIS ?
-//				str++;
 			if (!*str)
 				return (0);
 		}

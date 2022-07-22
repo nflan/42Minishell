@@ -71,8 +71,12 @@ int	ft_command(t_info *info, t_big_token *b_tokens)
 	if (!ft_is_cmd(b_tokens) || !ft_get_env_value(info, "PATH"))
 	{
 		if (access(b_tokens->cmd_args[0], F_OK) == 0)
+		{
 			if (access(b_tokens->cmd_args[0], X_OK) != 0)
 				return (126);
+		}
+		else if (access(b_tokens->cmd_args[0], F_OK))
+			return (-5);
 		return (0);
 	}
 	else if (ft_get_env_value(info, "PATH"))
