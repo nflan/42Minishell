@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 22:19:42 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/22 22:30:15 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ void	ft_create_echo(t_big_token *b_tokens, int i)
 				ft_putstr_fd(" ", b_tokens->fdout);
 		}
 		else if (b_tokens->cmd_args[i + 1] && b_tokens->cmd_args[i][0] == '\0')
-		{
 			ft_putstr_fd(" ", b_tokens->fdout);
-			printf("i: %d, ---%s\n", i,  b_tokens->cmd_args[i]);
-		}
 		i++;
 	}
 	exit (0);
