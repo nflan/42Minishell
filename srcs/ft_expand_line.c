@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/22 21:20:47 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 22:29:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_noquote_line(char *line)
 	int		ij[2];
 
 	ft_init_noquote(&new, ij);
-	if (!line)
+	if (!line || !line[0])
 		return (NULL);
 	if (ft_strlen(line) == ft_strlen_nq(line))
 		return (line);
@@ -40,10 +40,8 @@ char	*ft_noquote_line(char *line)
 			while (line[++ij[0]] && line[ij[0]] != '\'')
 				new[ij[1]++] = line[ij[0]];
 		if (line[ij[0]] == '\"')
-		{
 			while (line[++ij[0]] && line[ij[0]] != '\"')
 				new[ij[1]++] = line[ij[0]];
-		}
 		if (line[ij[0]] && line[ij[0]] != '\'' && line[ij[0]] != '\"')
 			new[ij[1]++] = line[ij[0]];
 	}
