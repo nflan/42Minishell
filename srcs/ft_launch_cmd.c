@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 09:55:26 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 19:40:21 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_exit_cmd(t_info *info, char *str, int err)
 	info->status = err;
 	if (err == -4 && str)
 	{
-		printf("alhuile\n");
 		ft_putstr_fd_3("minishell: ", str, ": Is a directory\n", 2);
 		info->status = 126;
 	}

@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:29:38 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 18:58:37 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 19:49:43 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,45 @@ int	ft_path(t_info *info, t_big_token *b_tokens, int err)
 		return (ft_free_split(path), ft_change_cmd(b_tokens, tofree));
 }
 
-int	ft_is_cmd(t_big_token *b_tokens)
+int	ft_cmd_nopath(t_big_token *b_tokens)
 {
-	if (b_tokens->cmd_args[0][0] == '.' && b_tokens->cmd_args[0][1] == '/'
-			&& ft_strlen(b_tokens->cmd_args[0]) == 2)
-		return (2);
-	if (b_tokens->cmd_args[0][0] == '.' && b_tokens->cmd_args[0][1] == '/')
-		return (0);
-	if (b_tokens->cmd_args[0][0] == '/' || b_tokens->cmd_args[0][1] == '/')
-		return (0);
+	int	i;
+
+	i = 0;
+	if (!access(b_tokens->cmd_args[0], F_OK))
+	{
+		if (access(b_tokens->cmd_args[0], X_OK))
+			return (0);
+		if (!access(b_tokens->cmd_args[0], X_OK | R_OK))
+		{
+			i = open(b_tokens->cmd_args[0], O_DIRECTORY);
+			if (i > 0)
+				return (close(i), 2);
+			return (0);
+		}
+	}
+	return (0);
+}
+
+int	ft_is_cmd(t_big_token *b_tokens, t_info *info)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_get_env_value(info, "PATH"))
+		return (ft_cmd_nopath(b_tokens));
+	while (b_tokens->cmd_args[0][++i])
+	{
+		if (b_tokens->cmd_args[0][i] == '/')
+		{
+			while (b_tokens->cmd_args[0][i] == '/')
+				i++;
+			if (!b_tokens->cmd_args[0][i])
+				return (2);
+			else
+				return (0);
+		}
+	}
 	return (1);
 }
 
@@ -66,23 +96,17 @@ int	ft_command(t_info *info, t_big_token *b_tokens)
 		return (127);
 	if (!b_tokens->cmd_args || !ft_strlen(b_tokens->cmd_args[0]))
 		return (1);
-	if (ft_is_cmd(b_tokens) == 2)
+	else if (ft_is_cmd(b_tokens, info) == 2)
 		return (-4);
-	if (!ft_is_cmd(b_tokens) || !ft_get_env_value(info, "PATH"))
+	else if (!ft_is_cmd(b_tokens, info))
 	{
-		if (access(b_tokens->cmd_args[0], F_OK) == 0)
-		{
-			if (access(b_tokens->cmd_args[0], X_OK) != 0)
+		if (!access(b_tokens->cmd_args[0], F_OK))
+			if (access(b_tokens->cmd_args[0], X_OK))
 				return (126);
-		}
-		else if (access(b_tokens->cmd_args[0], F_OK))
-			return (-5);
 		return (0);
 	}
 	else if (ft_get_env_value(info, "PATH"))
 		return (ft_path(info, b_tokens, 127));
-	else if (access(b_tokens->cmd_args[0], F_OK == 0))
-		return (0);
 	else
 		return (127);
 	return (0);
