@@ -16,7 +16,7 @@ void	ft_init_noquote(char **new, int ij[2])
 {
 	ij[0] = -1;
 	ij[1] = 0;
-	new = NULL;
+	*new = NULL;
 }
 
 char	*ft_noquote_line(char *line)

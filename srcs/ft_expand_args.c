@@ -31,9 +31,7 @@ int	ft_noquote_args(t_big_token *b_tokens)
 char	*ft_expanded_value(t_info *info, char *tmp)
 {
 	char	*exp;
-	int		i;
 
-	i = 0;
 	exp = NULL;
 	if (tmp && !ft_strncmp(tmp, "?", 2))
 		exp = ft_itoa(info->status);
