@@ -6,11 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/07/22 01:44:59 by omoudni          ###   ########.fr       */
-=======
-/*   Updated: 2022/07/21 10:48:04 by nflan            ###   ########.fr       */
->>>>>>> parse
+/*   Updated: 2022/07/22 17:12:55 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -503,7 +499,7 @@ int				ft_check_dol(char *str);
 int				ft_check_expand(t_token *token, int start, int length);
 int				ft_check_exp_line(char *str);
 //-----------ft_expand_args.c---------------------------------------------------
-int				ft_noquote_args(t_big_token *b_tokens, t_info *info);
+int				ft_noquote_args(t_big_token *b_tokens);
 char			*ft_expanded_value(t_info *info, char *tmp);
 int				ft_expand_args(t_big_token *b_tokens, t_info *info);
 //-----------ft_expand_line.c---------------------------------------------------

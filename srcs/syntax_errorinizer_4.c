@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 00:18:30 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/22 01:32:18 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/22 17:31:18 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static int par_not_afore_op_1(t_token *tmp)
 {
 	t_token *tmp_prev;
+
+	tmp_prev = NULL;
 	if (tmp->token == TOK_EXPANDER_OP && tmp->index > 0)
 	{
 		if (tmp->prev->token == TOK_SEP && tmp->index > 1)
@@ -30,13 +32,15 @@ static int par_not_afore_op_1(t_token *tmp)
 static int par_not_afore_op_2(t_token *tmp)
 {
 	t_token *tmp_next;
+
+	tmp_next = NULL;
 	if (tmp->token == TOK_EXPANDER_CL && tmp->next)
 	{
 		if (tmp->next->token == TOK_SEP && tmp->next->next)
 			tmp_next = tmp->next->next;
 		else if (tmp->next->token != TOK_SEP)
 			tmp_next = tmp->next;
-		if (!(tmp->next->token == TOK_OPERATOR || tmp->next->token == TOK_EXPANDER_CL || tmp->next->token == TOK_REDIRECTOR_RIGHT))
+		if (!(tmp_next->token == TOK_OPERATOR || tmp_next->token == TOK_EXPANDER_CL || tmp_next->token == TOK_REDIRECTOR_RIGHT))
 			return (1);
 	}
 	return (0);

@@ -6,11 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/07/21 22:56:59 by omoudni          ###   ########.fr       */
-=======
-/*   Updated: 2022/07/22 11:11:05 by nflan            ###   ########.fr       */
->>>>>>> parse
+/*   Updated: 2022/07/22 18:03:14 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +39,7 @@ int	ft_exit(t_info *info, t_big_token *b_tokens)
 	ret = info->status;
 	if (b_tokens && b_tokens->cmd_args[1])
 		ret = ft_atoi(b_tokens->cmd_args[1]);
-	ft_putstr_fd("exit\n", 1);
+	ft_putstr_fd("exit\n", 2);
 	if (ft_mystic_exit(b_tokens, &ret) != 1)
 	{
 		if (b_tokens)
