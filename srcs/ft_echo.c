@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 21:22:56 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 21:27:27 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	ft_option_echo(t_big_token *b_toks)
 			if (!b_toks->cmd_args[i][y])
 				option++;
 		}
+		else
+			break ;
 		i++;
 	}
 	return (option);
