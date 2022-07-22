@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 12:08:07 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 11:11:05 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,13 @@ int	ft_pwd(t_big_token *b_tok)
 
 int	ft_unset_name(t_env **tmp, char *name)
 {
-	int	i;
-
-	i = 0;
 	if (!tmp || !name)
 		return (1);
 	if (ft_wordigit(name))
 		return (ft_exp_err(name, 2));
 	while ((*tmp)->next)
 	{
-		i = 0;
-		while (name[i] && (*tmp)->next->name[i]
-			&& name[i] == (*tmp)->next->name[i])
-			i++;
-		if ((size_t)i == ft_strlen(name)
-			&& ft_strlen(name) == ft_strlen((*tmp)->next->name))
+		if (!ft_strncmp((*tmp)->next->name, name, ft_strlen(name) + 1))
 			return (0);
 		else
 			*tmp = (*tmp)->next;
@@ -124,10 +116,19 @@ int	ft_unset(t_info *info, t_big_token *b_tokens)
 	ptr = NULL;
 	if (!tmp || !b_tokens->cmd_args[0])
 		return (1);
-	if (ft_unset_name(&tmp, b_tokens->cmd_args[1]))
+	if (!ft_strncmp(tmp->name, b_tokens->cmd_args[1], ft_strlen(tmp->name) + 1))
+	{
+		ptr = tmp;
+		tmp = tmp->next;
+		info->env = tmp;
+	}
+	else if (!ft_unset_name(&tmp, b_tokens->cmd_args[1]))
+	{
+		ptr = tmp->next;
+		tmp->next = tmp->next->next;
+	}
+	else
 		return (1);
-	ptr = tmp->next;
-	tmp->next = ptr->next;
 	ptr->next = NULL;
 	ft_free_env(ptr);
 	return (0);
