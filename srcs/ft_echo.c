@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 15:29:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 19:55:54 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,23 @@ int	ft_option_echo(t_big_token *b_toks)
 {
 	int	option;
 	int	y;
+	int	i;
 
+	i = 0;
 	option = 1;
 	if (!b_toks->cmd_args[1])
 		return (1);
-	y = -1;
-	if ((b_toks->cmd_args[1][++y] == '-' && b_toks->cmd_args[1][++y] == 'n'))
+	while (b_toks->cmd_args[i])
 	{
-		while (b_toks->cmd_args[1][y] && b_toks->cmd_args[1][y] == 'n')
-			y++;
-		if (!b_toks->cmd_args[1][y])
-			option++;
+		y = -1;
+		if ((b_toks->cmd_args[i][++y] == '-' && b_toks->cmd_args[i][++y] == 'n'))
+		{
+			while (b_toks->cmd_args[i][y] && b_toks->cmd_args[i][y] == 'n')
+				y++;
+			if (!b_toks->cmd_args[i][y])
+				option++;
+		}
+		i++;
 	}
 	return (option);
 }
