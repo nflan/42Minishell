@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/29 18:34:19 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/21 23:20:28 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_create_echo(t_big_token *b_tokens, int i)
 		if (b_tokens->cmd_args[i][0])
 		{
 			ft_putstr_fd(b_tokens->cmd_args[i], b_tokens->fdout);
-			ft_putstr_fd(" ", b_tokens->fdout);
+			ft_putstr_fd(" ", b_tokens->fdout); //j'ai l'impression que que l'espace faut pas l'ajouter au cas ou y a rien dans le i++
 		}
 		i++;
 	}

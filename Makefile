@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 17:27:46 by nflan             #+#    #+#              #
-#    Updated: 2022/07/01 13:33:35 by nflan            ###   ########.fr        #
+#    Updated: 2022/07/22 01:11:26 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  big_tokenizer_6.c ft_expand_tools.c ft_expand_line.c ft_expand_args.c\
 		  ft_fd_tools.c big_tokenizer_4-1.c handle_dir.c\
 		  handle_par_dir.c handle_par.c big_tokenizer_8.c big_tokenizer_9.c\
-		  big_tokenizer_4_tool.c
+		  big_tokenizer_4_tool.c syntax_errorinizer_4.c
 
 INC = include/minishell.h
 

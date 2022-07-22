@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/26 14:20:48 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 22:56:59 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,3 +103,5 @@ int	ft_unset(t_info *info, t_big_token *b_tokens)
 	ft_free_env(ptr);
 	return (0);
 }
+
+//j'ai l'impression qu'on fait les choses mal ici. On unset pas si jamais la variable est la premiere de l'env

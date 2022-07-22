@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-Makefile:37: *** recipe commences before first target.  Stop.
-
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -8,11 +6,7 @@ Makefile:37: *** recipe commences before first target.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-<<<<<<< HEAD
-# Make data base, printed on Fri Jul  1 12:19:27 2022
-=======
-# Make data base, printed on Fri Jul  1 03:22:14 2022
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
+# Make data base, printed on Fri Jul 22 01:11:29 2022
 
 # Variables
 
@@ -21,25 +15,32 @@ Makefile:37: *** recipe commences before first target.  Stop.
 # automatic
 ?F = $(notdir $?)
 # environment
-WSLENV = ELECTRON_RUN_AS_NODE/w:
+DESKTOP_SESSION = ubuntu
 # default
 .SHELLFLAGS := -c
+# environment
+XDG_SESSION_CLASS = user
+# environment
+XDG_SESSION_TYPE = x11
 # environment
 VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
-# automatic
-@F = $(notdir $@)
+# environment
+XAUTHORITY = /mnt/nfs/homes/omoudni/.Xauthority
+# environment
+GDMSESSION = ubuntu
+# environment
+XMODIFIERS = @im=ibus
 # makefile
-CURDIR := /home/omoudni/nminishell
+CURDIR := /mnt/nfs/homes/omoudni/minishell
 # makefile
 SHELL = /bin/sh
+# makefile (from 'libft/Makefile', line 29)
+RM = rm -fr
 # environment
-VTE_VERSION = 6003
-# environment
-<<<<<<< HEAD
 VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
@@ -48,44 +49,39 @@ _ = /usr/bin/code
 # makefile (from 'libft/Makefile', line 31)
 CFLAGS = -Wall -Wextra -Werror -g
 # environment
-JOURNAL_STREAM = 9:96641
+JOURNAL_STREAM = 9:1920908
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'libft/Makefile', line 1)
 MAKEFILE_LIST :=  Makefile libft/Makefile
-=======
-VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
-# environment
-_ = /mnt/c/Users/Ouafae/AppData/Local/Programs/Microsoft VS Code/bin/code
-# makefile (from 'Makefile', line 1)
-MAKEFILE_LIST :=  Makefile
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
 # makefile (from 'Makefile', line 20)
 LIB_DIR = libft/
+# automatic
+@F = $(notdir $@)
 # environment
-<<<<<<< HEAD
-IM_CONFIG_PHASE = 1
+GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/terminator.desktop
 # 'override' directive
-=======
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
 GNUMAKEFLAGS := 
 # makefile (from 'Makefile', line 18)
 OBJ_DIR = bin/
 # environment
-XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
+MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
+# environment
+XDG_DATA_DIRS = /usr/share/gnome:/usr/share/ubuntu:/mnt/nfs/homes/omoudni/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101608/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-<<<<<<< HEAD
-MANAGERPID = 15679
+MANAGERPID = 454144
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-d86f0df5-a746-480d-acff-3b4270345e75.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-86dd5c68-10ac-4998-80aa-74bfa4ede7cd.sock
 # environment
 VSCODE_CWD = /mnt/nfs/homes/omoudni/minishell
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session8
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101608_AFqBny
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_CEODBC
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -95,7 +91,7 @@ GPG_AGENT_INFO = /run/user/101608/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/e3r11p15.42.fr:@/tmp/.ICE-unix/16169,unix/e3r11p15.42.fr:/tmp/.ICE-unix/16169
+SESSION_MANAGER = local/e1r11p15.clusters.42paris.fr:@/tmp/.ICE-unix/454644,unix/e1r11p15.clusters.42paris.fr:/tmp/.ICE-unix/454644
 # environment
 XDG_RUNTIME_DIR = /run/user/101608
 # environment
@@ -105,7 +101,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 903e084fadc646fe9728d1dd1f5f9770
+INVOCATION_ID = dcf46389dc6f49da91a8b1f221cf1100
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -118,25 +114,8 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/101608/keyring/ssh
-=======
-TERMINATOR_UUID = urn:uuid:6f45bb95-4aec-42f5-a02b-2194ec48257b
 # environment
-LESSOPEN = | /usr/bin/lesspipe %s
-# environment
-VSCODE_CWD = /mnt/c/Users/Ouafae/AppData/Local/Programs/Microsoft VS Code
-# default
-MAKE_HOST := x86_64-pc-linux-gnu
-# environment
-PATH = /home/omoudni/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/home/omoudni/.local/bin:/home/omoudni/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files/Rockwell Software/RSCommon:/mnt/c/Program Files (x86)/Intel/iCLS Client/:/mnt/c/Program Files/Intel/iCLS Client/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/IPT:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/IPT:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/GnuPG/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/Ouafae/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Ouafae/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin:/home/omoudni/.local/bin:/home/omoudni/.local/bin:/home/omoudni/.local/bin
-# environment
-VSCODE_LOG_STACK = false
-# environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-8b0ef065-6f03-4f43-9e85-646b761533db.sock
-# default
-.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
-# environment
-LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
+GIO_LAUNCHED_DESKTOP_FILE_PID = 457141
 # automatic
 %F = $(notdir $%)
 # environment
@@ -144,36 +123,36 @@ DISPLAY = :0
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /home/omoudni/nminishell
+PWD = /mnt/nfs/homes/omoudni/minishell
 # default
 .LOADED := 
-<<<<<<< HEAD
 # environment
-SSH_AGENT_PID = 16134
+SSH_AGENT_PID = 454609
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
-=======
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
 # makefile (from 'Makefile', line 19)
 INC_DIR = include/
 # environment
+GTK_MODULES = gail:atk-bridge
+# environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-HOME = /home/omoudni
+HOME = /mnt/nfs/homes/omoudni
 # environment
-<<<<<<< HEAD
 VSCODE_CLI = 1
 # environment
 VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/omoudni/.config/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
-=======
-LESSCLOSE = /usr/bin/lesspipe %s %s
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
 # environment
 LOGNAME = omoudni
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+ 
+# environment
+ZSH = /mnt/nfs/homes/omoudni/.oh-my-zsh
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
@@ -185,40 +164,49 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
-<<<<<<< HEAD
 QT_IM_MODULE = ibus
 # makefile (from 'libft/Makefile', line 17)
 SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_strchr.c ft_strdup.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_tolower.c ft_toupper.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_printf.c ft_printf_tools.c
 # environment
-SHLVL = 1
-# makefile (from 'Makefile', line 36)
+SHLVL = 2
+# makefile (from 'Makefile', line 42)
 LIBFT = libft/libft.a
 # makefile (from 'libft/Makefile', line 27)
 CC = cc
-# makefile (from 'Makefile', line 40)
+# makefile (from 'Makefile', line 46)
 LIBPATH = -L $(LIB_DIR)
-=======
-SHLVL = 2
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
+# environment
+IM_CONFIG_PHASE = 1
 # default
 MAKE_VERSION := 4.2.1
 # environment
 USER = omoudni
 # makefile
-.DEFAULT_GOAL := 
+.DEFAULT_GOAL := all
 # environment
-NAME = Code
+XDG_CURRENT_DESKTOP = Unity
+# environment
+LIBVIRT_DEFAULT_URI = qemu:///system
+# environment
+LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
-# environment
-VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/Ouafae/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.3
 # default
 MAKE_COMMAND := make
+# makefile (from 'Makefile', line 38)
+INC = include/minishell.h
+# environment
+OLDPWD = /mnt/nfs/homes/omoudni
+# environment
+TERMINATOR_DBUS_PATH = /net/tenshu/Terminator2
 # default
 .VARIABLES := 
 # automatic
 *F = $(notdir $*)
- 
+# environment
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+VSCODE_IPC_HOOK = /run/user/101608/vscode-6e3f0dc7-1.68.1-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -227,36 +215,50 @@ MFLAGS = -pqrR
 *D = $(patsubst %/,%,$(dir $*))
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
+# environment
+GDK_BACKEND = x11
 # automatic
 +F = $(notdir $+)
 # environment
-VSCODE_HANDLES_SIGPIPE = true
+QT_ACCESSIBILITY = 1
+# environment
+DEFAULTS_PATH = /usr/share/gconf/ubuntu.default.path
+# makefile (from 'Makefile', line 40)
+objets = $(addprefix $(OBJ_DIR), $(sources:%.c=%.o))
+# 'override' directive
+.SHELLSTATUS := 0
 # default
 MAKEFILES := 
 # makefile (from 'Makefile', line 22)
-sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c ft_here_doc.c ft_pipex.c ft_global.c ft_tools2.c big_tokenizer_1.c big_tokenizer_2.c big_tokenizer_3.c parser.c big_tokenizer_3_tool.c big_tokenizer_4.c tokenizer_1.c tokenizer_1_tool.c tokenizer_3.c tokenizer_2.c ft_exec.c syntax_errorinizer_1.c syntax_errorinizer_2.c syntax_errorinizer_3.c ft_launch_built.c ft_launch_cmd.c ft_launch_tools.c ft_echo.c main_O.c printer.c ft_executer.c ft_executer_tools.c ft_free.c ft_free2.c ft_expand_check.c ft_fd_open.c ft_fd_close.c  ft_wildcards_check.c ft_wildcards_tools.c ft_wildcards_do.c ft_signal.c ft_wildcards_do2.c init_tok_type_tab.c ft_start.c ft_env_tools.c ft_env_tools2.c big_tokenizer_5.c big_tokenizer_6.c ft_expand_tools.c ft_expand_line.c ft_expand_args.c ft_fd_tools.c ft_expand_1.c big_tokenizer_4-1.c big_tokenizer_4-2.c handle_dir.c handle_par_dir.c handle_par.c\ 
+sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c ft_here_doc.c ft_pipex.c ft_global.c ft_tools2.c big_tokenizer_1.c big_tokenizer_2.c big_tokenizer_3.c parser.c big_tokenizer_3_tool.c tokenizer_1.c tokenizer_1_tool.c tokenizer_3.c tokenizer_2.c ft_exec.c syntax_errorinizer_1.c syntax_errorinizer_2.c syntax_errorinizer_3.c ft_launch_built.c ft_launch_cmd.c ft_launch_tools.c ft_echo.c main_O.c ft_executer.c ft_executer_tools.c ft_free.c ft_free2.c ft_expand_check.c ft_fd_open.c ft_fd_close.c  ft_wildcards_check.c ft_wildcards_tools.c ft_wildcards_do.c ft_signal.c ft_wildcards_do2.c init_tok_type_tab.c ft_start.c ft_env_tools.c ft_env_tools2.c big_tokenizer_5.c big_tokenizer_6.c ft_expand_tools.c ft_expand_line.c ft_expand_args.c ft_fd_tools.c big_tokenizer_4-1.c handle_dir.c handle_par_dir.c handle_par.c big_tokenizer_8.c big_tokenizer_9.c big_tokenizer_4_tool.c syntax_errorinizer_4.c
 # makefile (from 'Makefile', line 17)
 SRC_DIR = srcs/
 # automatic
 <F = $(notdir $<)
 # environment
+PAGER = less
+# environment
 LC_ALL = C
+# makefile (from 'libft/Makefile', line 15)
+DIR = $(shell pwd | xargs basename)
+# makefile (from 'libft/Makefile', line 13)
+HEADER = libft.h
 # environment
-<<<<<<< HEAD
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
-# environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/2395deda_6311_4529_9a84_9c7fcba89542
-=======
-HOSTTYPE = x86_64
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
 # automatic
 ^F = $(notdir $^)
-# environment
-GNOME_TERMINAL_SERVICE = :1.93
 # default
 SUFFIXES := 
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# makefile (from 'Makefile', line 47)
+INCPATH = -I $(INC_DIR) -I $(LIB_DIR)
 # default
 .INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# environment
+GJS_DEBUG_OUTPUT = stderr
+# makefile (from 'Makefile', line 44)
+NAME = minishell
 # default
 .RECIPEPREFIX := 
 # environment
@@ -264,21 +266,15 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-<<<<<<< HEAD
+TERMINATOR_DBUS_NAME = net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873
+# environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # environment
-VSCODE_PID = 17709
-# variable set hash-table stats:
-# Load=130/1024=13%, Rehash=0, Collisions=26/185=14%
-=======
-VSCODE_EXTHOST_WILL_SEND_SOCKET = true
+VSCODE_PID = 468581
 # environment
-WSL_DISTRO_NAME = Ubuntu
-# environment
-MOTD_SHOWN = update-motd
+TERMINATOR_UUID = urn:uuid:56865237-1cc3-4270-b059-b1a1b7c3dbc5
 # variable set hash-table stats:
-# Load=76/1024=7%, Rehash=0, Collisions=4/89=4%
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
+# Load=131/1024=13%, Rehash=0, Collisions=29/186=16%
 
 # Pattern-specific Variable Values
 
@@ -286,36 +282,48 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-<<<<<<< HEAD
-# . (device 58, inode 142283471): 10 files, no impossibilities.
+# . (device 55, inode 248512532): 12 files, no impossibilities.
 # bin: could not be stat'd.
-# srcs (device 58, inode 226698988): 26 files, no impossibilities so far.
-# libft (device 58, inode 226698986): No files, no impossibilities so far.
+# srcs (device 55, inode 248524884): 16 files, no impossibilities so far.
+# libft (device 55, inode 248524883): No files, no impossibilities so far.
 
-# 36 files, no impossibilities in 4 directories.
-=======
-# . (device 2, inode 16325548649345459): 10 files, no impossibilities.
-# libft (device 2, inode 8444249301938499): No files, no impossibilities so far.
-
-# 10 files, no impossibilities in 2 directories.
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
+# 28 files, no impossibilities in 4 directories.
 
 # Implicit Rules
- 
 
-# No implicit rules.
+bin/%.o: srcs/%.c | bin/
+#  recipe to execute (from 'Makefile', line 60):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+# 1 implicit rules, 0 (0.0%) terminal.
 
 # Files
 
 # Not a target:
-<<<<<<< HEAD
 ft_strncmp.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
+ft_lstadd_front.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/big_tokenizer_4-1.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 ft_isalnum.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+ft_lstiter.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -344,11 +352,10 @@ bin/:
 # ? := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/12=8%
-#  recipe to execute (from 'Makefile', line 57):
+#  recipe to execute (from 'Makefile', line 63):
 	@mkdir -p $(OBJ_DIR)
 
-# Not a target:
-ft_lstadd_front.c:
+bin/handle_dir.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -359,8 +366,18 @@ ft_strdup.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+bin/tokenizer_1_tool.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # Not a target:
 ft_lstdelone.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/big_tokenizer_4_tool.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -381,6 +398,11 @@ bin/ft_wildcards_do.o: include/minishell.h
 #  Modification time never checked.
 #  File has not been updated.
 
+bin/syntax_errorinizer_4.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 all: minishell
 #  Phony target (prerequisite of .PHONY).
 #  Command line target.
@@ -397,7 +419,7 @@ include/minishell.h:
 #  Modification time never checked.
 #  File has not been updated.
 
-bin/ft_launch_cmd.o: include/minishell.h
+bin/ft_launch_built.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -413,7 +435,13 @@ ft_toupper.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 .PHONY: all clean fclean re
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/tokenizer_3.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -466,18 +494,23 @@ bin/big_tokenizer_3.o: include/minishell.h
 #  Modification time never checked.
 #  File has not been updated.
 
-bin/ft_signal.o: include/minishell.h
+bin/big_tokenizer_8.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-bin/dollar_expander.o: include/minishell.h
+bin/ft_signal.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
 ft_putchar_fd.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/ft_expand_tools.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -503,24 +536,19 @@ ft_strtrim.c:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-27 22:07:16.298738592
+#  Last modified 2022-07-22 01:11:26.168621639
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 srcs/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-27 22:08:23.426796005
+#  Last modified 2022-07-21 23:30:56.33312052
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 ft_strlen.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-bin/executer.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -531,7 +559,7 @@ ft_lstadd_back.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-bin/printer.o: include/minishell.h
+bin/ft_executer.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -548,8 +576,27 @@ ft_strmapi.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-ft_lstiter.c:
+bin/ft_expand_line.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/syntax_errorinizer_3.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/ft_fd_close.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/big_tokenizer_6.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/ft_exec.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -569,7 +616,7 @@ ft_itoa.c:
 # Not a target:
 libft/Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-23 15:16:50.339542082
+#  Last modified 2022-07-21 18:16:50.698351651
 #  File has been updated.
 #  Successfully updated.
 
@@ -584,15 +631,19 @@ bin/ft_tools2.o: include/minishell.h
 #  Modification time never checked.
 #  File has not been updated.
 
-minishell: bin/main.o bin/ft_cd.o bin/ft_export.o bin/ft_tools.o bin/ft_builtins.o bin/ft_here_doc.o bin/ft_pipex.o bin/ft_global.o bin/ft_tools2.o bin/big_tokenizer_1.o bin/big_tokenizer_2.o bin/big_tokenizer_3.o bin/big_tokenizer_4.o bin/parser.o bin/tokenizer_1.o bin/tokenizer_2.o bin/syntax_errorinizer_1.o bin/syntax_errorinizer_2.o bin/tree_manipulator.o bin/ft_launch_cmd.o bin/ft_echo.o bin/main_O.o bin/printer.o bin/executer.o bin/ft_free.o bin/ft_free2.o bin/dollar_expander.o bin/ft_wildcards_check.o bin/ft_wildcards_tools.o bin/ft_wildcards_do.o bin/ft_signal.o bin/init_tok_type_tab.o include/minishell.h libft/libft.a
+bin/big_tokenizer_5.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+minishell: bin/main.o bin/ft_cd.o bin/ft_export.o bin/ft_tools.o bin/ft_builtins.o bin/ft_here_doc.o bin/ft_pipex.o bin/ft_global.o bin/ft_tools2.o bin/big_tokenizer_1.o bin/big_tokenizer_2.o bin/big_tokenizer_3.o bin/parser.o bin/big_tokenizer_3_tool.o bin/tokenizer_1.o bin/tokenizer_1_tool.o bin/tokenizer_3.o bin/tokenizer_2.o bin/ft_exec.o bin/syntax_errorinizer_1.o bin/syntax_errorinizer_2.o bin/syntax_errorinizer_3.o bin/ft_launch_built.o bin/ft_launch_cmd.o bin/ft_launch_tools.o bin/ft_echo.o bin/main_O.o bin/ft_executer.o bin/ft_executer_tools.o bin/ft_free.o bin/ft_free2.o bin/ft_expand_check.o bin/ft_fd_open.o bin/ft_fd_close.o bin/ft_wildcards_check.o bin/ft_wildcards_tools.o bin/ft_wildcards_do.o bin/ft_signal.o bin/ft_wildcards_do2.o bin/init_tok_type_tab.o bin/ft_start.o bin/ft_env_tools.o bin/ft_env_tools2.o bin/big_tokenizer_5.o bin/big_tokenizer_6.o bin/ft_expand_tools.o bin/ft_expand_line.o bin/ft_expand_args.o bin/ft_fd_tools.o bin/big_tokenizer_4-1.o bin/handle_dir.o bin/handle_par_dir.o bin/handle_par.o bin/big_tokenizer_8.o bin/big_tokenizer_9.o bin/big_tokenizer_4_tool.o bin/syntax_errorinizer_4.o include/minishell.h libft/libft.a
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/4=0%
-#  recipe to execute (from 'Makefile', line 49):
+#  recipe to execute (from 'Makefile', line 55):
 	${CC} ${CFLAGS} ${objets} ${LIBFT} -I ${INC} -lreadline -o ${NAME}
 
 # Not a target:
@@ -605,8 +656,13 @@ libft/libft.a: ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isa
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 60):
+#  recipe to execute (from 'Makefile', line 66):
 	${MAKE} -C libft/
+
+bin/ft_expand_check.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 ft_lstlast.c:
@@ -624,7 +680,7 @@ ft_memchr.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 44):
+#  recipe to execute (from 'Makefile', line 50):
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 fclean:
@@ -632,7 +688,7 @@ fclean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 69):
+#  recipe to execute (from 'Makefile', line 75):
 	$(MAKE) fclean -C $(LIB_DIR)
 	${RM} ${OBJ_DIR}
 	${RM} ${NAME}
@@ -643,14 +699,30 @@ ft_memset.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+bin/ft_fd_tools.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # Not a target:
 ft_tolower.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
+bin/ft_expand_args.o: include/minishell.h
+ 
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # Not a target:
 ft_strrchr.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/ft_wildcards_do2.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -679,6 +751,16 @@ ft_printf.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+bin/ft_start.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/ft_env_tools2.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 bin/tokenizer_1.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -690,27 +772,11 @@ bin/ft_pipex.o: include/minishell.h
 #  File has not been updated.
 
 # Not a target:
-=======
-all:
-#  Command line target.
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-Makefile:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
 .DEFAULT:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-<<<<<<< HEAD
 # Not a target:
 ft_strlcat.c:
 #  Implicit rule search has not been done.
@@ -751,12 +817,22 @@ re: fclean all
 #  File does not exist.
 #  File has not been updated.
 
+bin/ft_executer_tools.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/big_tokenizer_3_tool.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 clean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 65):
+#  recipe to execute (from 'Makefile', line 71):
 	$(MAKE) clean -C $(LIB_DIR)
 	${RM} ${OBJ_DIR}
 
@@ -777,6 +853,11 @@ libft.h:
 #  Modification time never checked.
 #  File has not been updated.
 
+bin/handle_par_dir.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # Not a target:
 ft_lstnew.c:
 #  Implicit rule search has not been done.
@@ -788,13 +869,28 @@ bin/tokenizer_2.o: include/minishell.h
 #  Modification time never checked.
 #  File has not been updated.
 
+bin/ft_fd_open.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 bin/syntax_errorinizer_1.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/ft_env_tools.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
 ft_putnbr_fd.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/ft_launch_tools.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -807,10 +903,15 @@ bin/main.o: srcs/main.c include/minishell.h | bin/
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/4=0%
-#  recipe to execute (from 'Makefile', line 54):
+#  recipe to execute (from 'Makefile', line 60):
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 bin/big_tokenizer_2.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/handle_par.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -855,7 +956,7 @@ bin/ft_cd.o: include/minishell.h
 #  Modification time never checked.
 #  File has not been updated.
 
-bin/big_tokenizer_4.o: include/minishell.h
+bin/ft_launch_cmd.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -866,6 +967,11 @@ bin/ft_wildcards_tools.o: include/minishell.h
 #  File has not been updated.
 
 bin/ft_here_doc.o: include/minishell.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bin/big_tokenizer_9.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -881,54 +987,30 @@ ft_strlcpy.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-bin/tree_manipulator.o: include/minishell.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 bin/syntax_errorinizer_2.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=92/1024=9%, Rehash=0, Collisions=12/231=5%
+# Load=117/1024=11%, Rehash=0, Collisions=21/306=7%
 # VPATH Search Paths
 
- 
 vpath %.h libft
 vpath ft_%.c libft
-=======
-# files hash-table stats:
-# Load=4/1024=0%, Rehash=0, Collisions=0/5=0%
-# VPATH Search Paths
-
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
 vpath ft_%.o libft
-vpath ft_%.c libft
-vpath %.h libft
 
 # 3 'vpath' search paths.
 
+ 
 # No general ('VPATH' variable) search path.
 
-<<<<<<< HEAD
-# strcache buffers: 1 (0) / strings = 134 / storage = 1801 B / avg = 13 B
-# current buf: size = 8162 B / used = 1801 B / count = 134 / avg = 13 B
+# strcache buffers: 1 (0) / strings = 151 / storage = 2253 B / avg = 14 B
+# current buf: size = 8162 B / used = 2253 B / count = 151 / avg = 14 B
 
-# strcache performance: lookups = 234 / hit rate = 42%
+# strcache performance: lookups = 301 / hit rate = 49%
 # hash-table stats:
-# Load=134/8192=2%, Rehash=0, Collisions=5/234=2%
-# Finished Make data base on Fri Jul  1 12:19:27 2022
-=======
- 
-# strcache buffers: 1 (0) / strings = 18 / storage = 137 B / avg = 7 B
-# current buf: size = 8162 B / used = 137 B / count = 18 / avg = 7 B
-
-# strcache performance: lookups = 26 / hit rate = 30%
-# hash-table stats:
-# Load=18/8192=0%, Rehash=0, Collisions=1/26=4%
-# Finished Make data base on Fri Jul  1 03:22:14 2022
->>>>>>> 3e0d74e1bbd9730adc579102b0dad438becd4eb7
+# Load=151/8192=2%, Rehash=0, Collisions=5/301=2%
+# Finished Make data base on Fri Jul 22 01:11:29 2022
 
  

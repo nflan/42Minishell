@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:30:47 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:55:21 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 20:06:42 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,21 @@ int	ft_error(int i, t_info *info, t_big_token *b_tokens)
 	else if (i >= 4)
 		ft_error_2(i, info, b_tokens);
 	return (info->status);
+}
+
+void	ft_write(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		write(1, &str[i], 1);
+}
+
+int	ft_first_error(char *av1)
+{
+	ft_write("minishell: ");
+	ft_write(av1);
+	ft_write(": No such file or directory");
+	return (1);
 }

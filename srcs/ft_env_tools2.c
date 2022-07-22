@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:05:09 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 13:06:30 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/21 22:03:37 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int	ft_create_without_env(t_env **new, t_env *ptr)
 	while (++i < 3)
 	{
 		ptr = ft_without_env(i);
-		if (!ptr)
+		if (!ptr && !i)
 			return (ft_free_env(ptr), 1);
+		if (!ptr)
+			return (ft_free_env(*new), 1);
 		ft_envadd_back(new, ptr);
 	}
 	return (0);
@@ -41,13 +43,15 @@ int	ft_init_env(t_info *info, char **envp)
 		while (envp[++i])
 		{
 			ptr = ft_envnew(envp[i]);
-			if (!ptr)
+			if (!ptr && !i)
 				return (ft_free_env(ptr), 1);
+			else if (!ptr)
+				return (ft_free_env(new), 1);
 			ft_envadd_back(&new, ptr);
 		}
 	}
-	else
-		ft_create_without_env(&new, ptr);
+	else if (ft_create_without_env(&new, ptr))
+		return (1);
 	info->env = new;
 	return (0);
 }
