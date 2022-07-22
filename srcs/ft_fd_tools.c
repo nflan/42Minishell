@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:58 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/20 16:40:09 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 11:36:22 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*ft_create_del(t_token **tmp, int itscl[5])
 	del = NULL;
 	if (tmp[0])
 	{
-		while (tmp[0] && tmp[0]->token != TOK_SEP && tmp[0]->token != TOK_OPERATOR)
+		while (tmp[0] && (tmp[0]->token == TOK_S_QUOTER || tmp[0]->token == TOK_D_QUOTER || tmp[0]->token == TOK_WORD))
 		{
 			if (tmp[0]->token != TOK_S_QUOTER && tmp[0]->token != TOK_D_QUOTER)
 			{
