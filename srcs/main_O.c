@@ -22,10 +22,7 @@ int	main_agent_o(t_info *info)
 		return (1);
 	index_toks(&info->tokens);
 	if (syntax_err_handler(&info->tokens))
-	{
-//		printf("Error number: %d\n", syntax_err_handler(&info->tokens));
-		return (ft_putstr_error("Syntax error\n"));
-	}
+		return (ft_putstr_error("minishell: syntax error\n"));
 	btok_info[0] = 0;
 	btok_info[1] = len_ll_list(info->tokens);
 	if (parse(&info->parse, info, btok_info))
