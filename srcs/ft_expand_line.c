@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/22 20:13:55 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 21:20:47 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_noquote_line(char *line)
 	int		ij[2];
 
 	ft_init_noquote(&new, ij);
-	if (!line || !ft_strlen(line))
+	if (!line)
 		return (NULL);
 	if (ft_strlen(line) == ft_strlen_nq(line))
 		return (line);
@@ -60,7 +60,7 @@ int	ft_get_length(char *str, int i, int t)
 	if (!ft_isalpha(str[length]))
 		return (2);
 	if (str[length] && t == 1)
-		while (str[length] && str[length] != '\"' && str[length] != ' ')
+		while (str[length] && str[length] != '\"' && str[length] != '\'')
 			length++;
 	else if (str[length] && t == 0)
 	{
@@ -90,9 +90,11 @@ char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 	tmp[1] = ft_expanded_value(info, tmp[3]);
 	if (!tmp[1])
 		return (free(tmp[0]), NULL);
+//	printf("tmp[1] = %s\n", tmp[1]);
 	tmp[2] = ft_substr(str, length + *i, ft_strlen(str) + ft_strlen(tmp[1]));
 	if (!tmp[2])
 		return (free(tmp[0]), free(tmp[1]), NULL);
+//	printf("tmp[2] = %s\n", tmp[2]);
 	free(str);
 	*i = *i + ft_strlen(tmp[1]) - 1;
 	return (ft_strjoiiin_free(tmp[0], tmp[1], tmp[2], 4));
