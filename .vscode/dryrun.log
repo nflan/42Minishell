@@ -17,7 +17,6 @@ cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_2.o -c srcs/big_tokenizer_2.c
 cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_3.o -c srcs/big_tokenizer_3.c
 cc -Wall -Wextra -Werror -g -o bin/parser.o -c srcs/parser.c
 cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_3_tool.o -c srcs/big_tokenizer_3_tool.c
- 
 cc -Wall -Wextra -Werror -g -o bin/tokenizer_1.o -c srcs/tokenizer_1.c
 cc -Wall -Wextra -Werror -g -o bin/tokenizer_1_tool.o -c srcs/tokenizer_1_tool.c
 cc -Wall -Wextra -Werror -g -o bin/tokenizer_3.o -c srcs/tokenizer_3.c
@@ -35,6 +34,7 @@ cc -Wall -Wextra -Werror -g -o bin/ft_executer.o -c srcs/ft_executer.c
 cc -Wall -Wextra -Werror -g -o bin/ft_executer_tools.o -c srcs/ft_executer_tools.c
 cc -Wall -Wextra -Werror -g -o bin/ft_free.o -c srcs/ft_free.c
 cc -Wall -Wextra -Werror -g -o bin/ft_free2.o -c srcs/ft_free2.c
+ 
 cc -Wall -Wextra -Werror -g -o bin/ft_expand_check.o -c srcs/ft_expand_check.c
 cc -Wall -Wextra -Werror -g -o bin/ft_fd_open.o -c srcs/ft_fd_open.c
 cc -Wall -Wextra -Werror -g -o bin/ft_fd_close.o -c srcs/ft_fd_close.c
@@ -53,7 +53,6 @@ cc -Wall -Wextra -Werror -g -o bin/ft_expand_tools.o -c srcs/ft_expand_tools.c
 cc -Wall -Wextra -Werror -g -o bin/ft_expand_line.o -c srcs/ft_expand_line.c
 cc -Wall -Wextra -Werror -g -o bin/ft_expand_args.o -c srcs/ft_expand_args.c
 cc -Wall -Wextra -Werror -g -o bin/ft_fd_tools.o -c srcs/ft_fd_tools.c
- 
 cc -Wall -Wextra -Werror -g -o bin/big_tokenizer_4-1.o -c srcs/big_tokenizer_4-1.c
 cc -Wall -Wextra -Werror -g -o bin/handle_dir.o -c srcs/handle_dir.c
 cc -Wall -Wextra -Werror -g -o bin/handle_par_dir.o -c srcs/handle_par_dir.c
@@ -69,7 +68,6 @@ make[1]: Entering directory '/mnt/nfs/homes/omoudni/minishell/libft'
  
 cc -Wall -Wextra -Werror -g -c ft_atoi.c -o ft_atoi.o
 cc -Wall -Wextra -Werror -g -c ft_bzero.c -o ft_bzero.o
- 
 cc -Wall -Wextra -Werror -g -c ft_calloc.c -o ft_calloc.o
 cc -Wall -Wextra -Werror -g -c ft_isalnum.c -o ft_isalnum.o
 cc -Wall -Wextra -Werror -g -c ft_isalpha.c -o ft_isalpha.o

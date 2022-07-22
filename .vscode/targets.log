@@ -5,12 +5,12 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Fri Jul 22 10:48:05 2022
+# Make data base, printed on Fri Jul 22 16:33:43 2022
 
 # Variables
 
- 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -50,7 +50,7 @@ _ = /usr/bin/code
 # makefile (from 'libft/Makefile', line 31)
 CFLAGS = -Wall -Wextra -Werror -g
 # environment
-JOURNAL_STREAM = 9:53001
+JOURNAL_STREAM = 9:148027
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'libft/Makefile', line 1)
@@ -74,15 +74,15 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101608/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 2939
+MANAGERPID = 22364
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-6cf038cc-b541-443f-b6d0-085e11f0c9da.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/101608/vscode-ipc-45733e4e-b381-4a50-bd63-657a43a2d6f1.sock
 # environment
 VSCODE_CWD = /mnt/nfs/homes/omoudni/minishell
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101608_xA0nCJ
+KRB5CCNAME = FILE:/tmp/krb5cc_101608_2juWj1
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -92,7 +92,7 @@ GPG_AGENT_INFO = /run/user/101608/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/e1r12p19.clusters.42paris.fr:@/tmp/.ICE-unix/3452,unix/e1r12p19.clusters.42paris.fr:/tmp/.ICE-unix/3452
+SESSION_MANAGER = local/e1r2p9.clusters.42paris.fr:@/tmp/.ICE-unix/22876,unix/e1r2p9.clusters.42paris.fr:/tmp/.ICE-unix/22876
 # environment
 XDG_RUNTIME_DIR = /run/user/101608
 # environment
@@ -102,7 +102,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = a92f6699609247fe8b29391c1e3c67ee
+INVOCATION_ID = 07d99161277748f7a6a0ed9d2379e896
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -116,7 +116,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/101608/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3822
+GIO_LAUNCHED_DESKTOP_FILE_PID = 23283
 # automatic
 %F = $(notdir $%)
 # environment
@@ -128,7 +128,7 @@ PWD = /mnt/nfs/homes/omoudni/minishell
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 3416
+SSH_AGENT_PID = 22840
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # makefile (from 'Makefile', line 19)
@@ -270,9 +270,9 @@ TERMINATOR_DBUS_NAME = net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873
 # environment
 DOCKER_HOST = unix:///run/user/101608/docker.sock
 # environment
-VSCODE_PID = 3953
+VSCODE_PID = 23883
 # environment
-TERMINATOR_UUID = urn:uuid:47966d0d-b3e5-4bcf-b1c1-4423f9f69782
+TERMINATOR_UUID = urn:uuid:8180309a-cf21-4fc6-a42c-c7aecd5ba1a8
 # variable set hash-table stats:
 # Load=131/1024=13%, Rehash=0, Collisions=29/186=16%
 
@@ -282,17 +282,17 @@ TERMINATOR_UUID = urn:uuid:47966d0d-b3e5-4bcf-b1c1-4423f9f69782
 
 # Directories
 
-# . (device 58, inode 248512532): 9 files, no impossibilities.
+# . (device 55, inode 248512532): 9 files, no impossibilities.
 # bin: could not be stat'd.
-# srcs (device 58, inode 248524884): 16 files, no impossibilities so far.
-# libft (device 58, inode 248524883): No files, no impossibilities so far.
+# srcs (device 55, inode 248524884): 16 files, no impossibilities so far.
+# libft (device 55, inode 248524883): No files, no impossibilities so far.
 
 # 25 files, no impossibilities in 4 directories.
+ 
 
 # Implicit Rules
 
 bin/%.o: srcs/%.c | bin/
- 
 #  recipe to execute (from 'Makefile', line 60):
 	$(CC) $(CFLAGS) -o $@ -c $<
 
@@ -567,6 +567,7 @@ bin/ft_executer.o: include/minishell.h
 # Not a target:
 ft_putendl_fd.c:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -581,7 +582,6 @@ bin/ft_expand_line.o: include/minishell.h
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 bin/syntax_errorinizer_3.o: include/minishell.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -850,6 +850,7 @@ ft_striteri.c:
 # Not a target:
 libft.h:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -862,7 +863,6 @@ bin/handle_par_dir.o: include/minishell.h
 ft_lstnew.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 
 bin/tokenizer_2.o: include/minishell.h
@@ -1011,6 +1011,6 @@ vpath ft_%.o libft
 # strcache performance: lookups = 298 / hit rate = 50%
 # hash-table stats:
 # Load=148/8192=2%, Rehash=0, Collisions=5/298=2%
-# Finished Make data base on Fri Jul 22 10:48:05 2022
+# Finished Make data base on Fri Jul 22 16:33:43 2022
 
  
