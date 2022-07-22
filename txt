@@ -1,7 +1,0 @@
-bin
-include
-libft
-Makefile
-minishell
-srcs
-txt
