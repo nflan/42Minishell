@@ -34,7 +34,6 @@ int	ft_path(t_info *info, t_big_token *b_tokens)
 		return (ft_free_split(path), ft_putstr_error("Malloc error ft_path\n"));
 	while (path[i] && access(tofree, X_OK | R_OK) != 0)
 	{
-		//demander conseil a Brice car le /bin/ls pas droit mais ptete le /usr/bin/ls si
 		free(tofree);
 		tofree = ft_strjoiiin(path[i], "/", b_tokens->cmd_args[0]);
 		if (!tofree)
@@ -47,8 +46,10 @@ int	ft_path(t_info *info, t_big_token *b_tokens)
 		return (ft_free_split(path), ft_change_cmd(b_tokens, tofree));
 }
 
-int	ft_is_cmd(t_big_token *b_tokens)
+int	ft_is_cmd(t_big_token *b_tokens, t_info *info)
 {
+	if (!ft_get_env_value(info, "PATH"))
+		return (0);
 	if (b_tokens->cmd_args[0][0] == '.' && b_tokens->cmd_args[0][1] == '/'
 			&& ft_strlen(b_tokens->cmd_args[0]) == 2)
 		return (2);
@@ -63,13 +64,17 @@ int	ft_command(t_info *info, t_big_token *b_tokens)
 {
 	if (!b_tokens->cmd_args)
 		return (1);
-	if (ft_is_cmd(b_tokens) == 2)
+	if (ft_is_cmd(b_tokens, info) == 2)
 		return (-4);
-	if (!ft_is_cmd(b_tokens))
+	if (!ft_is_cmd(b_tokens, info))
 	{
 		if (access(b_tokens->cmd_args[0], F_OK) == 0)
+		{
 			if (access(b_tokens->cmd_args[0], X_OK) != 0)
 				return (126);
+		}
+		else if (access(b_tokens->cmd_args[0], F_OK))
+			return (-5);
 		return (0);
 	}
 	else if (ft_get_env_value(info, "PATH")

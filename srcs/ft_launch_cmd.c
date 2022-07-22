@@ -17,6 +17,7 @@ int	ft_exit_cmd(t_info *info, char *str, int err)
 	info->status = err;
 	if (err == -4 && str)
 	{
+		printf("alhuile\n");
 		ft_putstr_fd_3("minishell: ", str, ": Is a directory\n", 2);
 		info->status = 126;
 	}

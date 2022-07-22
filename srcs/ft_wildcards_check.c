@@ -91,15 +91,13 @@ int	ft_do_keep(char *str, t_wildcards *wd, int type, int i)
 	{
 		if (*str == '*' || *str == '/')
 		{
-//			while (*str == '/') DEMANDER A AGENT O CE QU'ELLE EN PENSE
-//			{
-//				str++;
-//				if (*str && *str != '/')
-//					return (1);
-//			}
-//			while (*str == '*')
-//				str++;
-			while (*str == '*' || *str == '/')
+			while (*str == '/') 
+			{
+				str++;
+				if (*str && *str != '/')
+					return (1);
+			}
+			while (*str == '*')
 				str++;
 			if (!*str)
 				return (0);
