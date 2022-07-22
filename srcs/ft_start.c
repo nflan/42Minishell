@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:14:18 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/20 12:20:42 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 21:38:31 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_rdline_word(t_info *info)
 
 	word = NULL;
 	tmp = ft_get_env_value(info, "HOME");
-	word = getcwd(word, 0);
+	word = ft_strdup(ft_get_env_value(info, "PWD"));
 	if (!word)
 		return (NULL);
 	if (tmp && !strncmp(tmp, word, ft_strlen(tmp)))
