@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:33:02 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/22 18:46:40 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 13:22:46 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ int	ft_manage_type(char *str, char *dir, int d_type, int type)
 		test++;
 	}
 	if (!test && str[ft_strlen(str) - 1] != '*')
-		if (d_type != type)
-			return (1);
+		if (type == 4)
+			if (d_type != type)
+				return (1);
 	return (0);
 }
 

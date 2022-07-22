@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:58 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 02:52:00 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/22 11:36:22 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // itscl[0] = i, itscl[1] = type_red, itscl[2] = save_word, 
 // itscl[3] = cmd_args_nums, itscl[4] = b_length
-int	ft_fill_fdnew(t_fd *fd, t_info **info, int itscl[5], int *hd)
+int	ft_fill_fdnew(t_fd *fd, t_token **tmp, int itscl[5], int *hd)
 {
 	if (itscl[1] == 1 || itscl[1] == 2)
 		fd->red = itscl[1] - 1;
@@ -23,31 +23,32 @@ int	ft_fill_fdnew(t_fd *fd, t_info **info, int itscl[5], int *hd)
 	if (itscl[1] == 2)
 	{
 		*hd += 1;
-		fd->delimitator = ft_create_del(&(*info)->tokens, itscl);
+		fd->delimitator = ft_create_del(tmp, itscl);
 		if (ft_create_tmp(fd, *hd))
-			return (1);
+			return (ft_putstr_error("Malloc error in fd_tools.c\n"));
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		ft_here(fd, itscl[1], (*info));
+		if (ft_here(fd, itscl[1]))
+			return (free(fd->delimitator), 1);
 	}
 	else
-		fd->file = ft_create_del(&(*info)->tokens, itscl);
+		fd->file = ft_create_del(tmp, itscl);
 	if (!fd->file)
-		return (1);
+		return (ft_putstr_error("Malloc error in fd_tools.c\n"));
 	return (0);
 }
 
 // itscl[0] = i, itscl[1] = type_red, itscl[2] = save_word
 // itscl[3] = cmd_args_nums, itscl[4] = b_length
-int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_info **info, int itscl[7])
+int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int itscl[7])
 {
 	t_fd	*new;
 
 	new = ft_calloc(sizeof(t_fd), 1);
 	if (!new)
-		return (ft_putstr_error("Malloc error in ft_fdnew "));
+		return (ft_putstr_error("Malloc error in fd_tools.c\n"));
 	new->info = b_tokens->info;
-	if (ft_fill_fdnew(new, info, itscl, &(b_tokens)->nb_hd))
-		return (ft_putstr_error("Malloc error in ft_fdnew "));
+	if (ft_fill_fdnew(new, tmp, itscl, &(b_tokens)->nb_hd))
+		return (1);
 	ft_fdadd_back(fd, new);
 	return (0);
 }
@@ -83,7 +84,7 @@ char	*ft_create_del(t_token **tmp, int itscl[5])
 	del = NULL;
 	if (tmp[0])
 	{
-		while (tmp[0] && tmp[0]->token != TOK_SEP)
+		while (tmp[0] && (tmp[0]->token == TOK_S_QUOTER || tmp[0]->token == TOK_D_QUOTER || tmp[0]->token == TOK_WORD))
 		{
 			if (tmp[0]->token != TOK_S_QUOTER && tmp[0]->token != TOK_D_QUOTER)
 			{

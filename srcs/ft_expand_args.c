@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:10:36 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 18:00:11 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 12:11:34 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	ft_noquote_args(t_big_token *b_tokens)
 		while (b_tokens->cmd_args[i])
 		{
 			b_tokens->cmd_args[i] = ft_noquote_line(b_tokens->cmd_args[i]);
-			if (!b_tokens->cmd_args[i])
-				return (1);
 			i++;
 		}
 	}
@@ -33,11 +31,13 @@ int	ft_noquote_args(t_big_token *b_tokens)
 char	*ft_expanded_value(t_info *info, char *tmp)
 {
 	char	*exp;
+	int		i;
 
+	i = 0;
 	exp = NULL;
 	if (tmp && !ft_strncmp(tmp, "?", 2))
 		exp = ft_itoa(info->status);
-	else
+	else if (tmp)
 		exp = ft_strdup(ft_get_env_value(info, tmp));
 	if (!exp)
 		return (free(tmp), NULL);
@@ -70,6 +70,7 @@ char	*ft_minisplit(char *str)
 	int			s;
 
 	s = -1;
+	tmp = NULL;
 	if (k == 0)
 		s = 0;
 	if (str)
@@ -146,7 +147,7 @@ int	ft_expand_args(t_big_token *b, t_info *info)
 				b->cmd_args[i] = ft_expand_l(b->cmd_args[i], info, 0);
 				if (!b->cmd_args[i])
 					return (1);
-				if (b->cmd_args[i][0] != '\0')
+				if (b->cmd_args[i][0] != '\0' && ft_strncmp(b->cmd_args[0], "export", 7))
 					if (ft_resplit(b, &i, b->cmd_args[i]))
 						return (1);
 			}

@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:31:10 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 18:37:59 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 13:23:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	ft_keep(char *str, char *dir, int *i, int j)
 			return (1);
 		if (dir[*i] && dir[*i] == *str)
 			*i += 1;
+//		printf("dir = %s && i = %d && str = %s\n", dir, *i, str);
 	}
 	return (0);
 }
@@ -87,6 +88,8 @@ int	ft_do_keep(char *str, t_wildcards *wd, int type, int i)
 	if (!str || !dir
 		|| ft_manage_type(str, wd->dir->d_name, wd->dir->d_type, type))
 		return (1);
+	if (*str == '*')
+		i++;
 	while (*str)
 	{
 		if (*str == '*' || *str == '/')

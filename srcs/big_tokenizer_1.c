@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:18:51 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/26 19:56:25 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/20 16:07:49 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_big_token	*ft_create_btoken(t_big_tok_type type, int s, int l, t_info *info)
 
 	tok = ft_calloc(sizeof(t_big_token), 1);
 	if (!tok)
-		return (NULL);
+		return (ft_putstr_error("Malloc error in big_tokenizer_1.c\n"), NULL);
 	tok->type = type;
 	tok->ind_tok_start = s;
 	tok->length = l;
@@ -36,8 +36,7 @@ int	add_b_tok_sib_last(t_big_token **bl, t_big_tok_type t, int b[2], t_info *i)
 	{
 		*bl = ft_create_btoken(t, b[0], b[1], i);
 		if (!*bl)
-			return (ft_putstr_error("Malloc error in ft_create_btoken\
-						in add_b_tok_sib_last "));
+			return (ft_putstr_error("Malloc error in big_tokenizer_1.c\n"));
 	}
 	else
 	{
@@ -46,8 +45,7 @@ int	add_b_tok_sib_last(t_big_token **bl, t_big_tok_type t, int b[2], t_info *i)
 			tmp = tmp->sibling;
 		tmp->sibling = ft_create_btoken(t, b[0], b[1], i);
 		if (!tmp->sibling)
-			return (ft_putstr_error("Malloc error in ft_create_btoken\
-						in add_b_tok_sib_last "));
+			return (ft_putstr_error("Malloc error in big_tokenizer_1.c\n"));
 	}
 	return (0);
 }

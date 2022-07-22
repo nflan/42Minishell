@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:13:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 13:13:55 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/21 12:48:37 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,8 @@ int	ft_lead_fd(t_info *info, t_big_token *b_tokens)
 			return (ft_error(5, info, NULL));
 		info->pdes[1] = info->tmp[1];
 	}
-	else if (info->nb_cmd)
-		info->pdes[1] = 1;
-	if (b_tokens->fdin != 0)
-	{
-		ft_close_pdes(info->pdes[0], 0);
-		info->pdes[0] = b_tokens->fdin;
-	}
-	if (b_tokens->fdout != 1)
-	{
-		ft_close_pdes(info->pdes[1], 1);
-		info->pdes[1] = b_tokens->fdout;
-	}
+	if (b_tokens->fdin < 0)
+		return (1);
 	return (0);
 }
 

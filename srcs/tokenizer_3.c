@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/06/28 21:42:20 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/20 13:53:40 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,15 @@ int	fill_tok_value(t_token **tok, char *str)
 	if (!*tok || !str)
 		return (1);
 	tmp = *tok;
-	while (tmp)
+	if (tmp)
 	{
-		tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
-		if (!tmp->value)
+		while (tmp)
+		{
+			tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
+			if (!tmp->value)
 			return (ft_putstr_error("Error in ft_strncpy in fill_tok_value"));
-		tmp = tmp->next;
+			tmp = tmp->next;
+		}
 	}
 	return (0);
 }

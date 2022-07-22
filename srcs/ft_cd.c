@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 17:41:26 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/21 09:39:29 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,21 @@ char	*ft_cd_tilde(char *home, char *dir)
 	return (new_dir);
 }
 
+int	ft_newpwd(t_info *info)
+{
+	t_env	*tmp;
+	char	*pwd;
+
+	pwd = NULL;
+	tmp = info->env;
+	pwd = getcwd(pwd, 0);
+	if (!pwd || !tmp)
+		return (1);
+	while (ft_strncmp(tmp->name, "PWD", 4))
+		tmp = tmp->next;
+	return (ft_export_replace(tmp, pwd, -1));
+}
+
 int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 {
 	if (!strncmp(arg, "~", 2) && !home)
@@ -64,7 +79,39 @@ int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 		return (1);
 	if (chdir(new_dir))
 		return (ft_perror_free("minishell: cd: ", new_dir, 2));
+	ft_newpwd(info);
 	return (free(new_dir), 0);
+}
+
+int	ft_oldpwd(t_info *info)
+{
+	t_env	*tmp;
+
+	tmp = info->env;
+	if (!tmp)
+		return (1);
+	while (ft_strncmp(tmp->name, "OLDPWD", 7))
+		tmp = tmp->next;
+	return (ft_export_replace(tmp, ft_get_env_value(info, "PWD"), -1));
+}
+
+int	ft_do_cd(t_info *info, t_big_token *b_tokens)
+{
+	if (!ft_strncmp(b_tokens->cmd_args[1], "-", 2))
+	{
+		if (chdir(ft_get_env_value(info, "OLDPWD")))
+			return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
+		ft_putstr_fd(ft_get_env_value(info, "OLDPWD"), b_tokens->fdout);
+		ft_putstr_fd("\n", b_tokens->fdout);
+		ft_oldpwd(info);
+	}
+	else
+	{
+		ft_oldpwd(info);
+		if (chdir(b_tokens->cmd_args[1]))
+			return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
+	}
+	return (0);
 }
 
 int	ft_cd(t_info *info, t_big_token *b_tokens)
@@ -80,13 +127,18 @@ int	ft_cd(t_info *info, t_big_token *b_tokens)
 	{
 		if (!home)
 			return (ft_putstr_error("minishell: cd: HOME not set\n"));
-		else if (chdir(home))
-			return (ft_perror("minishell: cd: ", home));
+		else
+		{	
+			ft_oldpwd(info);
+			if (chdir(home))
+				return (ft_perror("minishell: cd: ", home));
+		}
 	}
 	else if (!ft_is_tilde_or_home(home, b_tokens->cmd_args[1]))
 		return (ft_do_tilde(info, b_tokens->cmd_args[1], home, new_dir));
 	else
-		if (chdir(b_tokens->cmd_args[1]))
-			return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
+		if (ft_do_cd(info, b_tokens))
+			return (1);
+	ft_newpwd(info);
 	return (0);
 }
