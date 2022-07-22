@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 21:04:28 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/22 21:06:40 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	ft_option_echo(t_big_token *b_toks)
 				option++;
 		}
 		i++;
-	}
 	}
 	return (option);
 }
