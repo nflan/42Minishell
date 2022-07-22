@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 21:06:40 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/22 21:30:47 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ int	ft_option_echo(t_big_token *b_toks)
 	int	y;
 	int	i;
 
-	i = 0;
+	i = 1;
 	option = 1;
-	i = 0;
-	if (!b_toks->cmd_args[1])
+	if (!b_toks->cmd_args[i])
 		return (1);
 	while (b_toks->cmd_args[i])
 	{
@@ -33,6 +32,8 @@ int	ft_option_echo(t_big_token *b_toks)
 			if (!b_toks->cmd_args[i][y])
 				option++;
 		}
+		else
+			break ;
 		i++;
 	}
 	return (option);
@@ -50,10 +51,12 @@ void	ft_create_echo(t_big_token *b_tokens, int i)
 	while (b_tokens->cmd_args[i])
 	{
 		if (b_tokens->cmd_args[i][0])
+		{
 			ft_putstr_fd(b_tokens->cmd_args[i], b_tokens->fdout);
+			if (b_tokens->cmd_args[i + 1])
+				ft_putstr_fd(" ", b_tokens->fdout);
+		}
 		i++;
-		if (b_tokens->cmd_args[i])
-			ft_putstr_fd(" ", b_tokens->fdout);
 	}
 }
 
