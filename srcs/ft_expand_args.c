@@ -136,11 +136,13 @@ int	ft_expand_args(t_big_token *b, t_info *info)
 	int	i;
 
 	i = -1;
-	if (b->cmd_args)
+	if (b)
 	{
-		while (b->cmd_args[++i])
+		while (b)
 		{
-			if (ft_check_exp_line(b->cmd_args[i]))
+			if (!ft_check_expand(info->tokens, b->ind_tok_start, b->length))
+				return (0);
+			while (b->cmd_args[++i])
 			{
 				b->cmd_args[i] = ft_expand_l(b->cmd_args[i], info, 0);
 				if (!b->cmd_args[i])
@@ -149,6 +151,8 @@ int	ft_expand_args(t_big_token *b, t_info *info)
 					if (ft_resplit(b, &i, b->cmd_args[i]))
 						return (1);
 			}
+			i = -1;
+			b = b->sibling;
 		}
 	}
 	return (0);

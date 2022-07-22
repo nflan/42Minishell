@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
 /*   Updated: 2022/07/21 09:39:29 by nflan            ###   ########.fr       */
@@ -18,7 +18,7 @@ int	ft_is_tilde_or_home(char *home, char *dir)
 		return (0);
 	if (!dir || !ft_strncmp(dir, "\0", 1))
 		return (1);
-	if (!home && dir[1] == '/')
+	if (!home && dir[1] == '/') //est-ce normal qu'on check direct dir[1]?
 		return (1);
 	if (dir[1] == '/' || dir[1] == '+' || dir[1] == '-')
 		return (0);
@@ -34,7 +34,7 @@ char	*ft_cd_tilde(char *home, char *dir)
 	tmp = NULL;
 	if (!dir)
 		return (NULL);
-	if (dir[1] == '/')
+	if (dir[1] == '/') //de meme
 		new_dir = ft_strjoin(home, dir + 1);
 	else if (dir[1] == '+' || dir[1] == '-')
 	{
@@ -69,7 +69,7 @@ int	ft_newpwd(t_info *info)
 
 int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 {
-	if (!strncmp(arg, "~", 2) && !home)
+	if (!strncmp(arg, "~", 2) && !home) //pk tu compares tilde toute seule aved 2?
 		new_dir = ft_strdup(info->home);
 	else if (!strncmp(arg, "~", 2) && home)
 		new_dir = ft_strdup(home);

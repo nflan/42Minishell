@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 09:54:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 19:18:33 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_not_valid_id(char *line)
 			return (ft_exp_err(line, 1));
 		while (line[i] && line[i] != '=')
 		{
-			if (!ft_isdigit(line[i]) && !ft_isalpha(line[i]))
+			if (!ft_isdigit(line[i]) && !ft_isalpha(line[i]) && line[i] != '_')
 				return (ft_exp_err(line, 1));
 			i++;
 		}
@@ -109,7 +109,9 @@ int	ft_ifnot_eg(t_info *info, t_env *tmp, char *line, int i)
 int	ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i)
 {
 	int	j;
+	int	a;
 
+	a = 0;
 	j = 1;
 	while (b_tok->cmd_args[j])
 	{
@@ -127,9 +129,11 @@ int	ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i)
 				if (ft_ifnot_eg(info, tmp, b_tok->cmd_args[j], i))
 					return (1);
 		}
+		else
+			a = 1;
 		j++;
 	}
-	return (0);
+	return (a);
 }
 
 int	ft_export(t_info *info, t_big_token *b_tokens)

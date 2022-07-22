@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 10:48:04 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 17:12:55 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef enum s_par_left_right
 	PAR_PIPE_RIGHT,
 }				t_par_left_right;
 
-// quoted -> 1- dol quoted 2- d quoted 3- s quoted
+// quoted -> 1- dol quoted - 2- d quoted - 3- s quoted
 
 typedef struct s_token
 {
@@ -299,9 +299,11 @@ char			**ft_env_to_tab(t_env *env);
 int				ft_cmd_path(t_info *info, t_big_token *b_tokens);
 int				ft_command(t_info *info, t_big_token *b_tokens);
 
-//---------ft_pipex_tools2.c----------------------------------------------------
+//---------ft_tools2.c----------------------------------------------------
 void			ft_error_2(int i, t_info *info, t_big_token *b_tokens);
 int				ft_error(int i, t_info *info, t_big_token *b_tokens);
+void			ft_write(char *str);
+int				ft_first_error(char *av1);
 
 //-----------------ft_free.c----------------------------------------------------
 void			ft_signal(int sig);
@@ -356,7 +358,7 @@ void			sub_parse_2(t_big_token **b_child, t_big_token **tb, t_info *i);
 int				parse(t_big_token **b_tokens, t_info *info, int btok_info[2]);
 void			extract_fds(t_big_token **tmp_b, t_token **tokens);
 
-//----------executer.c----------------------------------------------------------
+//----------ft_executer.c----------------------------------------------------------
 
 void			lead_ao(t_info *i, t_big_token **b, t_big_token *t, int f[3]);
 void			ft_init_exec(t_big_token **b, t_big_token **t, int f[3], int a);
@@ -364,7 +366,7 @@ int				ft_first_part(t_info *info, t_big_token *tmp_b, int faoi[3]);
 void			ft_second_part(t_big_token *tmp_b, int faoi[3]);
 int				rec_exec(t_info *info, t_big_token **b_tokens, int and_or);
 
-//----------executer_tools.c----------------------------------------------------
+//----------ft_executer_tools.c----------------------------------------------------
 int				no_sib_has_child(t_big_token *b_tokens);
 void			give_parent_sc(t_big_token **child, t_big_token **parent);
 
@@ -414,6 +416,9 @@ int				ft_test_isdir(t_token *t, int i);
 int				r_dir_op_succeding(t_token **tokens);
 int				op_cl_par_succeeding(t_token **tokens);
 int				syntax_err_handler(t_token **tokens);
+
+//-----------syntax_errorinizer_3.c---------------------------------------------
+int	par_not_afore_op(t_token **tokens);
 
 //-----------big_tokenizer_1.c--------------------------------------------------
 

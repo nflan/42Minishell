@@ -68,9 +68,9 @@ int	ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd, t_info *info)
 			else
 				b_tokens->fdin = tmp_fd->fd;
 			if (tmp_fd->next)
-			{	
+			{
 				close(tmp_fd->fd);
-				tmp_fd->fd = 1;
+				tmp_fd->fd = 1; //pk le 1 ici?
 				if (tmp_fd->red)
 					unlink(tmp_fd->file);
 			}
