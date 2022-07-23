@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 13:19:33 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 13:50:24 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 
 int	ft_do_cd(t_info *info, t_big_token *b_tokens)
 {
+	char	*err;
+
+	err = NULL;
 	if (!ft_strncmp(b_tokens->cmd_args[1], "-", 2))
 	{
 		if (chdir(ft_get_env_value(info, "OLDPWD")))
@@ -108,8 +111,17 @@ int	ft_do_cd(t_info *info, t_big_token *b_tokens)
 	else
 	{
 		if (b_tokens->cmd_args[1][0] != '\0')
+		{
+			if (access(b_tokens->cmd_args[1], F_OK))
+			{
+				err = ft_strjoiiin("minishell: cd: ", b_tokens->cmd_args[1],": No such file or directory\n");
+				if (!err)
+					return (ft_putstr_error("Malloc error\n"));
+				return (ft_putstr_error(err), free(err), 1);
+			}
 			if (chdir(b_tokens->cmd_args[1]))
 				return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
+		}
 	}
 	ft_oldpwd(info);
 	return (0);
