@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 12:30:08 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 13:26:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,36 @@ int	ft_get_length(char *str, int i, int t)
 char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 {
 	char	*tmp[4];
+	//En arrivant, str est la ligne dans laquelle on va faire l'expand
+	//i est la position va donner la position du caractere apres le $
+	//t est le type, 0 = no quote, 1 = double quote, 2 = simple quote
+	//tmp[0] -> va conserver le debut de str, avant le $ qui doit etre expand
+	//tmp[1] -> va devenir l'expand du $, vide si ni ? ni une var d'environnement
+	//tmp[2] -> va conserver la suite de str, apres la valeur a expand
+	//tmp[3] -> va contenir le nom de la valeur a rechercher dans l'environnement
 	int		length;
+	//Par exemple :
+	//str = haha"$?"$USERoui
+	//PREMIERE FOIS QU'ON VA DANS LA FONCTION :
+	//str = haha"$?"$USERoui
+	//i = 6
+	//t = 1
+	//tmp[0] = haha"
+	//tmp[1] = 'status code' (on va dire 0)
+	//tmp[2] = "$USERoui
+	//tmp[3] = ?
+	//A LA SORTIE, ON RENVOI LE JOIN DE haha"0"$USERoui
+	//
+	//DEUXIEME FOIS QU'ON VA DANS LA FONCTION :
+	//str = haha"0"$USERoui
+	//i = 8 (en fonction du status code mais on va dire que c'est 0 donc fait une taille de 1)
+	//t = 0
+	//tmp[0] = haha"0"
+	//tmp[1] = nflan
+	//tmp[2] = oui
+	//tmp[3] = USER
+	//A LA SORTIE, haha"0"nflanoui
+	//Plus de dollars, on ne rentre plus dans la fonction
 
 	tmp[0] = ft_substr(str, 0, *i - 1);
 	if (!tmp[0])
