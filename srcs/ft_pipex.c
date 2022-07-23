@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 12:49:13 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 16:29:28 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 {
 	int			i;
 	t_big_token	*tmp;
+	int	err;
 
+	err = 0;
 	i = 0;
 	tmp = b_tokens;
 	while (tmp)
@@ -102,9 +104,13 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 			return (2147483647);
 		if (tmp->sc == -1)
 		{
-			if (ft_expanding(info, tmp))
-				return (ft_putstr_error("Expand error\n"));
-			ft_launch_cmd_pipex(info, tmp, pid[i]);
+			err = ft_expanding(info, tmp);
+			if (!err)
+				ft_launch_cmd_pipex(info, tmp, pid[i]);
+			else if (err == 1)
+				return (ft_close_fd(b_tokens), 1);
+			else if (err == 2)
+				info->status = 0;
 			tmp->sc = info->status;
 			i++;
 			info->nb_cmd++;
