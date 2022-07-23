@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:06:50 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/22 21:30:58 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/23 12:45:54 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 		if (ft_open_fd(b_tokens, info))
 			return (1);
 		if (ft_expanding(info, b_tokens))
-			return (ft_putstr_error("Expand error\n"));
+			return (1);
 		ft_launch_cmd(info, b_tokens);
 		b_tokens->sc = info->status;
 		ft_close_fd(b_tokens);

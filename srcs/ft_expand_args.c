@@ -6,11 +6,42 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:10:36 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/22 21:22:25 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 12:45:33 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	ft_reduce_args(t_big_token *b, size_t i)
+{
+	char	**tmp;
+	size_t	j;
+
+	j = 0;
+	tmp = NULL;
+	if (i)
+	{
+		tmp = ft_calloc(sizeof(char *), ft_tablen(b->cmd_args));
+		if (!tmp)
+			return (ft_putstr_error("Malloc error\n"));
+		while (j < i)
+		{
+			tmp[j] = ft_strdup(b->cmd_args[j]);
+			if (!tmp[j])
+				return (ft_free_split(tmp), ft_putstr_error("Malloc error\n"));
+			j++;
+		}
+		while (j < ft_tablen(b->cmd_args) - 1)
+		{
+			tmp[j] = ft_strdup(b->cmd_args[j + 1]);
+			if (!tmp[j])
+				return (ft_free_split(tmp), ft_putstr_error("Malloc error\n"));
+			j++;
+		}
+	}
+	ft_free_split(b->cmd_args);
+	return (b->cmd_args = tmp, 0);
+}
 
 int	ft_noquote_args(t_big_token *b_tokens)
 {
@@ -19,11 +50,25 @@ int	ft_noquote_args(t_big_token *b_tokens)
 	i = 0;
 	if (b_tokens->cmd_args)
 	{
-		while (b_tokens->cmd_args[i])
+		while (b_tokens->cmd_args && b_tokens->cmd_args[i])
 		{
-			b_tokens->cmd_args[i] = ft_noquote_line(b_tokens->cmd_args[i]);
-			i++;
+			if (!ft_strlen(b_tokens->cmd_args[i]))
+			{
+				if (ft_reduce_args(b_tokens, i))
+					return (1);
+			}
+			else
+			{
+				if (ft_strlen(b_tokens->cmd_args[i]) != ft_strlen_nq(b_tokens->cmd_args[i]))
+					b_tokens->cmd_args[i] = ft_noquote_line(b_tokens->cmd_args[i]);
+				i++;
+			}
 		}
+	}
+	if (!b_tokens->cmd_args)
+	{
+		ft_free_split(b_tokens->cmd_args);
+		return (2);
 	}
 	return (0);
 }

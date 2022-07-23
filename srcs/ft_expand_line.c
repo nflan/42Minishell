@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/22 22:29:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 13:30:41 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,13 @@ char	*ft_noquote_line(char *line)
 	int		ij[2];
 
 	ft_init_noquote(&new, ij);
-	if (!line || !line[0])
+	if (!line)
 		return (NULL);
-	if (ft_strlen(line) == ft_strlen_nq(line))
-		return (line);
 	new = ft_calloc(sizeof(char), ft_strlen_nq(line) + 1);
 	if (!new)
 		return (ft_putstr_error("Malloc error\n"), NULL);
 	if (!ft_strncmp(line, "\"\"", 3))
-		return (new);
+		return (free(line), new);
 	while (line[++ij[0]])
 	{
 		if (line[ij[0]] == '\'')
@@ -53,6 +51,9 @@ int	ft_get_length(char *str, int i, int t)
 	int	length;
 
 	length = i;
+//	printf("str = %s && str[length] = %c\n", str, str[length]);
+	if (!t && (str[length] == '\'' || str[length] == '\"'))
+		return (0);
 	if (str[length] == '?' || ft_isdigit(str[length]))
 		return (1);
 	if (!ft_isalpha(str[length]))
@@ -75,7 +76,36 @@ int	ft_get_length(char *str, int i, int t)
 char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 {
 	char	*tmp[4];
+	//En arrivant, str est la ligne dans laquelle on va faire l'expand
+	//i est la position va donner la position du caractere apres le $
+	//t est le type, 0 = no quote, 1 = double quote, 2 = simple quote
+	//tmp[0] -> va conserver le debut de str, avant le $ qui doit etre expand
+	//tmp[1] -> va devenir l'expand du $, vide si ni ? ni une var d'environnement
+	//tmp[2] -> va conserver la suite de str, apres la valeur a expand
+	//tmp[3] -> va contenir le nom de la valeur a rechercher dans l'environnement
 	int		length;
+	//Par exemple :
+	//str = haha"$?"$USERoui
+	//PREMIERE FOIS QU'ON VA DANS LA FONCTION :
+	//str = haha"$?"$USERoui
+	//i = 6
+	//t = 1
+	//tmp[0] = haha"
+	//tmp[1] = 'status code' (on va dire 0)
+	//tmp[2] = "$USERoui
+	//tmp[3] = ?
+	//A LA SORTIE, ON RENVOI LE JOIN DE haha"0"$USERoui
+	//
+	//DEUXIEME FOIS QU'ON VA DANS LA FONCTION :
+	//str = haha"0"$USERoui
+	//i = 8 (en fonction du status code mais on va dire que c'est 0 donc fait une taille de 1)
+	//t = 0
+	//tmp[0] = haha"0"
+	//tmp[1] = nflan
+	//tmp[2] = oui
+	//tmp[3] = USER
+	//A LA SORTIE, haha"0"nflanoui
+	//Plus de dollars, on ne rentre plus dans la fonction
 
 	tmp[0] = ft_substr(str, 0, *i - 1);
 	if (!tmp[0])
@@ -113,7 +143,7 @@ char	*ft_expand_l(char *str, t_info *info, int hd)
 		if (str[i] == '$')
 		{
 			i++;
-			if (str[i] && (!t || hd || (t == 1 && str[i] != '\'')) && (ft_isdigit(str[i] ) || ft_isalpha(str[i]) || str[i] == '_'))
+			if (str[i] && (!t || hd || (t == 1 && str[i] != '\'')) && (ft_isdigit(str[i] ) || ft_isalpha(str[i]) || str[i] == '_' || str[i] == '\"' || str[i] == '\'' || str[i] == '?'))
 			{
 				str = ft_expand_line(str, &i, info, t);
 				if (!str)
