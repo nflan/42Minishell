@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:06:50 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 12:28:43 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 12:45:54 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ int	ft_expanding(t_info *info, t_big_token *b)
 			return (1);
 		if (ft_add_wildcards(b))
 			return (ft_putstr_error("Wildcards error\n"));
-		print_tab(b->cmd_args);
 		if (ft_noquote_args(b))
 			return (1);
-		print_tab(b->cmd_args);
 	}
 	return (0);
 }

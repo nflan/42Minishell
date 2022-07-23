@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:10:36 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 12:42:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 12:45:33 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	ft_reduce_args(t_big_token *b, size_t i)
 			return (ft_putstr_error("Malloc error\n"));
 		while (j < i)
 		{
-			printf("b->cmd_args[%ld] = %s\n", j, b->cmd_args[j]);
 			tmp[j] = ft_strdup(b->cmd_args[j]);
 			if (!tmp[j])
 				return (ft_free_split(tmp), ft_putstr_error("Malloc error\n"));
@@ -34,7 +33,6 @@ int	ft_reduce_args(t_big_token *b, size_t i)
 		}
 		while (j < ft_tablen(b->cmd_args) - 1)
 		{
-			printf("b->cmd_args[%ld] = %s\n", j+ 1, b->cmd_args[j+1]);
 			tmp[j] = ft_strdup(b->cmd_args[j + 1]);
 			if (!tmp[j])
 				return (ft_free_split(tmp), ft_putstr_error("Malloc error\n"));
@@ -54,7 +52,6 @@ int	ft_noquote_args(t_big_token *b_tokens)
 	{
 		while (b_tokens->cmd_args && b_tokens->cmd_args[i])
 		{
-			printf("b_tokens->cmd_args[%d] = %s\n", i, b_tokens->cmd_args[i]);
 			if (!ft_strlen(b_tokens->cmd_args[i]))
 			{
 				if (ft_reduce_args(b_tokens, i))
