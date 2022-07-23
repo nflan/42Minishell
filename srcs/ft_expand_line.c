@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/22 22:29:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 12:10:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,13 @@ char	*ft_noquote_line(char *line)
 	int		ij[2];
 
 	ft_init_noquote(&new, ij);
-	if (!line || !line[0])
+	if (!line)
 		return (NULL);
-	if (ft_strlen(line) == ft_strlen_nq(line))
-		return (line);
 	new = ft_calloc(sizeof(char), ft_strlen_nq(line) + 1);
 	if (!new)
 		return (ft_putstr_error("Malloc error\n"), NULL);
 	if (!ft_strncmp(line, "\"\"", 3))
-		return (new);
+		return (free(line), new);
 	while (line[++ij[0]])
 	{
 		if (line[ij[0]] == '\'')
@@ -53,6 +51,9 @@ int	ft_get_length(char *str, int i, int t)
 	int	length;
 
 	length = i;
+//	printf("str = %s && str[length] = %c\n", str, str[length]);
+	if (!t && (str[length] == '\'' || str[length] == '\"'))
+		return (0);
 	if (str[length] == '?' || ft_isdigit(str[length]))
 		return (1);
 	if (!ft_isalpha(str[length]))
@@ -113,7 +114,7 @@ char	*ft_expand_l(char *str, t_info *info, int hd)
 		if (str[i] == '$')
 		{
 			i++;
-			if (str[i] && (!t || hd || (t == 1 && str[i] != '\'')) && (ft_isdigit(str[i] ) || ft_isalpha(str[i]) || str[i] == '_'))
+			if (str[i] && (!t || hd || (t == 1 && str[i] != '\'')) && (ft_isdigit(str[i] ) || ft_isalpha(str[i]) || str[i] == '_' || str[i] == '\"' || str[i] == '\''))
 			{
 				str = ft_expand_line(str, &i, info, t);
 				if (!str)

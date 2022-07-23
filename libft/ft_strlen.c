@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 15:39:17 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/20 17:03:25 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/22 23:03:33 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ size_t	ft_tablen(char **tab)
 	i = 0;
 	if (!tab)
 		return (0);
-	if (tab)
+	if (tab[i])
 		while (tab[i])
 			i++;
 	return (i);
