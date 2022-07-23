@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:10:36 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 12:02:11 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 12:42:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,20 @@ int	ft_reduce_args(t_big_token *b, size_t i)
 	tmp = NULL;
 	if (i)
 	{
-		tmp = ft_calloc(sizeof(char *), ft_tablen(b->cmd_args) + 1);
+		tmp = ft_calloc(sizeof(char *), ft_tablen(b->cmd_args));
 		if (!tmp)
 			return (ft_putstr_error("Malloc error\n"));
 		while (j < i)
 		{
+			printf("b->cmd_args[%ld] = %s\n", j, b->cmd_args[j]);
 			tmp[j] = ft_strdup(b->cmd_args[j]);
 			if (!tmp[j])
 				return (ft_free_split(tmp), ft_putstr_error("Malloc error\n"));
 			j++;
 		}
-		while (j < ft_tablen(b->cmd_args))
+		while (j < ft_tablen(b->cmd_args) - 1)
 		{
+			printf("b->cmd_args[%ld] = %s\n", j+ 1, b->cmd_args[j+1]);
 			tmp[j] = ft_strdup(b->cmd_args[j + 1]);
 			if (!tmp[j])
 				return (ft_free_split(tmp), ft_putstr_error("Malloc error\n"));
@@ -52,13 +54,18 @@ int	ft_noquote_args(t_big_token *b_tokens)
 	{
 		while (b_tokens->cmd_args && b_tokens->cmd_args[i])
 		{
-			if (ft_strlen(b_tokens->cmd_args[i]) != ft_strlen_nq(b_tokens->cmd_args[i]))
-				b_tokens->cmd_args[i] = ft_noquote_line(b_tokens->cmd_args[i]);
-			else if (!ft_strlen(b_tokens->cmd_args[i]))
+			printf("b_tokens->cmd_args[%d] = %s\n", i, b_tokens->cmd_args[i]);
+			if (!ft_strlen(b_tokens->cmd_args[i]))
+			{
 				if (ft_reduce_args(b_tokens, i))
 					return (1);
-			if (b_tokens->cmd_args && b_tokens->cmd_args[i])
+			}
+			else
+			{
+				if (ft_strlen(b_tokens->cmd_args[i]) != ft_strlen_nq(b_tokens->cmd_args[i]))
+					b_tokens->cmd_args[i] = ft_noquote_line(b_tokens->cmd_args[i]);
 				i++;
+			}
 		}
 	}
 	if (!b_tokens->cmd_args)

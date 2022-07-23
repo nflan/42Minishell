@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 09:39:29 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 12:24:20 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	ft_is_tilde_or_home(char *home, char *dir)
 {
 	if (dir && !ft_strncmp(dir, "~", 2))
 		return (0);
-	if (!dir || !ft_strncmp(dir, "\0", 1))
+	if (!dir)
 		return (1);
-	if (!home && dir[1] == '/') //est-ce normal qu'on check direct dir[1]?
-		return (1);
-	if (dir[1] == '/' || dir[1] == '+' || dir[1] == '-')
+	if (dir[0] == '~' && (dir[1] == '/' || dir[1] == '+' || dir[1] == '-'))
 		return (0);
+	if (!home && !dir)
+		return (1);
 	return (2);
 }
 
@@ -34,7 +34,7 @@ char	*ft_cd_tilde(char *home, char *dir)
 	tmp = NULL;
 	if (!dir)
 		return (NULL);
-	if (dir[1] == '/') //de meme
+	if (dir[1] == '/') //de meme -> oui parce que si tu fais ~/Documents, le bash va chercher au home alors que si t'as un + ou un -, il part du repertoire courant ou precedent. D'ou le fait que je fasse un join du home puis du path qu'on envoi +1, pour enlever le ~
 		new_dir = ft_strjoin(home, dir + 1);
 	else if (dir[1] == '+' || dir[1] == '-')
 	{
@@ -108,8 +108,9 @@ int	ft_do_cd(t_info *info, t_big_token *b_tokens)
 	else
 	{
 		ft_oldpwd(info);
-		if (chdir(b_tokens->cmd_args[1]))
-			return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
+		if (b_tokens->cmd_args[1][0] != '\0')
+			if (chdir(b_tokens->cmd_args[1]))
+				return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
 	}
 	return (0);
 }
