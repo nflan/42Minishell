@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:30:49 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 18:08:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/23 19:52:11 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	r_quotes_impair(t_token **tokens)
 		}
 		tmp = tmp->next;
 	}
-	printf("num_quotes: %d\n", d_num);
+	// printf("num_quotes: %d\n", d_num);
 	if (s_num % 2 || d_num % 2)
 		return (1);
 	return (0);
