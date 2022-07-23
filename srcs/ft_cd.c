@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 13:50:24 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 17:11:54 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ int	ft_newpwd(t_info *info)
 		return (1);
 	while (ft_strncmp(tmp->name, "PWD", 4))
 		tmp = tmp->next;
-	return (ft_export_replace(tmp, pwd, -1));
+	ft_export_replace(tmp, pwd, -1);
+	free(pwd);
+	if (!tmp)
+		return (1);
+	return (0);
 }
 
 int	ft_oldpwd(t_info *info)
@@ -92,7 +96,8 @@ int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 	if (chdir(new_dir))
 		return (ft_perror_free("minishell: cd: ", new_dir, 2));
 	ft_oldpwd(info);
-	ft_newpwd(info);
+	if (ft_newpwd(info))
+		return (1);
 	return (free(new_dir), 0);
 }
 
@@ -152,6 +157,7 @@ int	ft_cd(t_info *info, t_big_token *b_tokens)
 	else
 		if (ft_do_cd(info, b_tokens))
 			return (1);
-	ft_newpwd(info);
+	if (ft_newpwd(info))
+		return (1);
 	return (0);
 }
