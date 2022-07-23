@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 13:30:41 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 15:12:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_get_length(char *str, int i, int t)
 	if (!ft_isalpha(str[length]))
 		return (2);
 	if (str[length] && t == 1)
-		while (str[length] && str[length] != '\"' && str[length] != '\'')
+		while (str[length] && (ft_isalpha(str[length]) || ft_isdigit(str[length]) || str[length] == '_'))
 			length++;
 	else if (str[length] && t == 0)
 	{
@@ -110,6 +110,7 @@ char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 	tmp[0] = ft_substr(str, 0, *i - 1);
 	if (!tmp[0])
 		return (NULL);
+//	printf("tmp[0] = %s\n", tmp[0]);
 	length = ft_get_length(str, *i, t);
 	tmp[3] = ft_substr(str, *i, length);
 	if (!tmp[3])

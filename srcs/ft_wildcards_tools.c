@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:33:02 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 13:22:46 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 15:24:35 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_get_wildcards(t_wildcards **wd)
 	dir = NULL;
 	send = NULL;
 	tofree = NULL;
-	tofree = getcwd(tofree, 0);
+	tofree = getcwd(tofree, 0);//A CHANGER COMME PWD
 	if (!tofree)
 		return (1);
 	dir = opendir(tofree);

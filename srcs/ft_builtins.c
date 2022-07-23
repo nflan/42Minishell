@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 18:03:14 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/23 14:45:23 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	ft_pwd(t_big_token *b_tok)
 		return (1);
 	tofree = buf;
 	buf = ft_strjoin(buf, "\n");
+	//ft_putstr_fd(ft_get_env_value(b_tok->info, "PWD"), b_tok->fdout);
+	//ft_putstr_fd("\n", b_tok->fdout);
 	ft_putstr_fd(buf, b_tok->fdout);
 	free(buf);
 	free(tofree);

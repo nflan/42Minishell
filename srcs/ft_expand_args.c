@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:10:36 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 12:45:33 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 16:30:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,21 +183,16 @@ int	ft_expand_args(t_big_token *b, t_info *info)
 	i = -1;
 	if (b)
 	{
-		while (b)
+		if (!ft_check_expand(info->tokens, b->ind_tok_start, b->length))
+			return (0);
+		while (b->cmd_args && b->cmd_args[++i])
 		{
-			if (!ft_check_expand(info->tokens, b->ind_tok_start, b->length))
-				return (0);
-			while (b->cmd_args[++i])
-			{
-				b->cmd_args[i] = ft_expand_l(b->cmd_args[i], info, 0);
-				if (!b->cmd_args[i])
+			b->cmd_args[i] = ft_expand_l(b->cmd_args[i], info, 0);
+			if (!b->cmd_args[i])
+				return (1);
+			if (b->cmd_args[i][0] != '\0' && ft_strncmp(b->cmd_args[0], "export", 7))
+				if (ft_resplit(b, &i, b->cmd_args[i]))
 					return (1);
-				if (b->cmd_args[i][0] != '\0' && ft_strncmp(b->cmd_args[0], "export", 7))
-					if (ft_resplit(b, &i, b->cmd_args[i]))
-						return (1);
-			}
-			i = -1;
-			b = b->sibling;
 		}
 	}
 	return (0);
