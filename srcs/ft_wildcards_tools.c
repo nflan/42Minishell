@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:33:02 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 15:24:35 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 17:22:31 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,31 +74,25 @@ int	ft_manage_type(char *str, char *dir, int d_type, int type)
 	return (0);
 }
 
-int	ft_get_wildcards(t_wildcards **wd)
+int	ft_get_wildcards(t_wildcards **wd, char *pwd)
 {
 	DIR				*dir;
 	struct dirent	*send;
-	char			*tofree;
 
 	dir = NULL;
 	send = NULL;
-	tofree = NULL;
-	tofree = getcwd(tofree, 0);//A CHANGER COMME PWD
-	if (!tofree)
-		return (1);
-	dir = opendir(tofree);
+	dir = opendir(pwd);
 	if (!dir)
-		return (free(tofree), perror("minishell"), 1);
+		return (perror("minishell"), 1);
 	send = readdir(dir);
 	if (!send)
-		return (free(tofree), closedir(dir), perror("minishell"), 1);
+		return (closedir(dir), perror("minishell"), 1);
 	while (send)
 	{
 		if (send)
 			if (ft_wildcardsnew(wd, send, dir))
-				return (closedir(dir), free(tofree), 1);
+				return (closedir(dir), 1);
 		send = readdir(dir);
 	}
-	free(tofree);
 	return (0);
 }

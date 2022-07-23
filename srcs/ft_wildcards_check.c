@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:31:10 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 15:35:12 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 17:21:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,18 @@
 	return (1);
 }*/
 
+//On test le pwd pour savoir si le current working directory existe, si non, on n'expand pas les *
 int	ft_add_wildcards(t_big_token *b_tokens)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*pwd;
 
 	i = 0;
+	pwd = NULL;
+	pwd = getcwd(pwd, 0);
+	if (!pwd)
+		return (0);
 	if (b_tokens->cmd_args)
 	{
 		while (b_tokens->cmd_args[i])
@@ -43,8 +49,8 @@ int	ft_add_wildcards(t_big_token *b_tokens)
 			{
 				if (b_tokens->cmd_args[i][j] == '*' && !ft_postype(b_tokens->cmd_args[i], j))
 				{
-					if (ft_do_wildcards(b_tokens, i))
-						return (1);
+					if (ft_do_wildcards(b_tokens, i, pwd))
+						return (free(pwd), 1);
 					break ;
 				}
 				j++;
@@ -52,7 +58,7 @@ int	ft_add_wildcards(t_big_token *b_tokens)
 			i++;
 		}
 	}
-	return (0);
+	return (free(pwd), 0);
 }
 
 int	ft_keep(char *str, char *dir, int *i, int j)

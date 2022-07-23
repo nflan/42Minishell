@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 17:12:55 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/23 17:23:31 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,11 +333,11 @@ void			ft_wdadd_back(t_wildcards **alst, t_wildcards *new);
 int				ft_wildcardsnew(t_wildcards **wd, struct dirent *dir, DIR *fd);
 int				ft_strlen_before_ast(char *str);
 int				ft_manage_type(char *str, char *dir, int d_type, int type);
-int				ft_get_wildcards(t_wildcards **wd);
+int				ft_get_wildcards(t_wildcards **wd, char *pwd);
 
 //-----------------ft_wildcards_do.c--------------------------------------------
 char			**ft_fill_old_args(t_big_token *b, char **tmp, int j, int list);
-int				ft_do_wildcards(t_big_token *b_tokens, int i);
+int				ft_do_wildcards(t_big_token *b_tokens, int i, char *pwd);
 //-----------------ft_wildcards_do2.c-------------------------------------------
 int				ft_create_begin(t_big_token *b, int count, char ***tmp, int i);
 int				ft_end_realloc(t_big_token *b_toks, char **tmp);

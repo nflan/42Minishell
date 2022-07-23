@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 14:45:23 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/23 17:06:01 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,8 @@ int	ft_env(t_info *info, t_big_token *b_tok)
 
 int	ft_pwd(t_big_token *b_tok)
 {
-	char	*buf;
-	char	*tofree;
-
-	buf = NULL;
-	buf = getcwd(buf, 0);
-	if (!buf)
-		return (1);
-	tofree = buf;
-	buf = ft_strjoin(buf, "\n");
-	//ft_putstr_fd(ft_get_env_value(b_tok->info, "PWD"), b_tok->fdout);
-	//ft_putstr_fd("\n", b_tok->fdout);
-	ft_putstr_fd(buf, b_tok->fdout);
-	free(buf);
-	free(tofree);
+	ft_putstr_fd(ft_get_env_value(b_tok->info, "PWD"), b_tok->fdout);
+	ft_putstr_fd("\n", b_tok->fdout);
 	return (0);
 }
 
@@ -135,5 +123,3 @@ int	ft_unset(t_info *info, t_big_token *b_tokens)
 	ft_free_env(ptr);
 	return (0);
 }
-
-//j'ai l'impression qu'on fait les choses mal ici. On unset pas si jamais la variable est la premiere de l'env
