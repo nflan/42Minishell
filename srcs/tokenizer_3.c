@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/21 23:45:18 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/23 18:32:39 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	add_tok_last_bis(t_token **tok_list, t_tok_type tok_t, int q, char *value)
 
 int	add_tok(t_token **tokens, int st, int len, t_tok_type type)
 {
+	if (type == TOK_WORD_NULL_S || type == TOK_WORD_NULL_D)
+	{
 	if (type == TOK_WORD_NULL_S)
 	{
 		if (add_tok_last(tokens, TOK_WORD_S_QUOTED, 0, st))
@@ -82,6 +84,7 @@ int	add_tok(t_token **tokens, int st, int len, t_tok_type type)
 			return (ft_putstr_error("detect_tokens "));
 		if (add_tok_last(tokens, TOK_D_QUOTER, len, st))
 			return (ft_putstr_error("detect_tokens "));
+	}
 	}
 	else
 	{
