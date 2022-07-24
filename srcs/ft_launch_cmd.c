@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 22:14:35 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 22:23:12 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int	ft_fork_par(t_info *info, t_big_token *b_tokens)
 
 	pid = -1;
 	pid = fork();
-	ft_manage_sig(0);
+	ft_manage_sig(info, 0, 0);
 	if ((int) pid == -1)
 		return (ft_error(2, info, NULL));
 	else if ((int) pid == 0)
 	{
-		ft_manage_sig(1);
+		ft_manage_sig(info, 1, 0);
 		rl_clear_history();
 		dup2(b_tokens->fdin, STDIN_FILENO);
 		dup2(b_tokens->fdout, STDOUT_FILENO);
@@ -49,9 +49,7 @@ int	ft_fork_par(t_info *info, t_big_token *b_tokens)
 		ft_exit_cmd(info, NULL, info->status);
 	}
 	waitpid(pid, &pid, 0);
-	ft_manage_sig(2);
-	if (WIFEXITED(pid))
-		info->status = WEXITSTATUS(pid);
+	ft_manage_sig(info, 2, pid);
 	return (info->status);
 }
 
@@ -76,13 +74,13 @@ int	ft_do_solo(t_info *info, t_big_token *b, int ret)
 
 	pid = -1;
 	ret = ft_commanding(info, b);
+	ft_manage_sig(info, 0, 0);
 	pid = fork();
-	ft_manage_sig(0);
 	if ((int) pid == -1)
 		return (ft_error(2, info, NULL));
 	else if ((int) pid == 0)
 	{
-		ft_manage_sig(1);
+		ft_manage_sig(info, 1, 0);
 		dup2(b->fdin, STDIN_FILENO);
 		dup2(b->fdout, STDOUT_FILENO);
 		rl_clear_history();
@@ -93,9 +91,7 @@ int	ft_do_solo(t_info *info, t_big_token *b, int ret)
 				exit (ft_error(4, info, b));
 	}
 	waitpid(pid, &pid, 0);
-	ft_manage_sig(2);
-	if (WIFEXITED(pid))
-		info->status = WEXITSTATUS(pid);
+	ft_manage_sig(info, 2, pid);
 	return (info->status);
 }
 

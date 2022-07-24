@@ -6,9 +6,10 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 17:27:46 by nflan             #+#    #+#              #
-#    Updated: 2022/07/24 21:57:39 by omoudni          ###   ########.fr        #
+#    Updated: 2022/07/24 22:23:45 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 vpath %.h libft
 vpath ft_%.c libft
@@ -36,6 +37,7 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c \
 		  big_tokenizer_4_tool.c syntax_errorinizer_4.c ft_printer.c ft_export_tools.c\
 		  ft_wildcards_check_bis.c ft_export_bis.c ft_fd_tools_bis.c\
 		  ft_cd_tools.c ft_global_bis.c ft_builtins_1.c ft_builtins_2.c ft_builtins_3.c\
+		  ft_init_pipex.c
 
 INC = include/minishell.h
 

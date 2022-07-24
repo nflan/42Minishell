@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:10:34 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 18:50:47 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 22:17:49 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,15 @@ extern int	g_sc;
 void	ft_cmd_signal(int sig)
 {
 	if (sig == SIGINT)
+	{
 		write(1, "\n", 1);
+		g_sc = 130;
+	}
 	if (sig == SIGQUIT)
+	{
 		ft_putstr_fd("Quit (core dumped)\n", 2);
+		g_sc = 131;
+	}
 }
 
 void	ft_signal(int sig)
@@ -34,7 +40,7 @@ void	ft_signal(int sig)
 	}
 }
 
-void	ft_manage_sig(int sig)
+void	ft_manage_sig(t_info *info, int sig, pid_t pid)
 {
 	if (sig == 0)
 	{
@@ -43,12 +49,16 @@ void	ft_manage_sig(int sig)
 	}
 	else if (sig == 1)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, &ft_signal);
 		signal(SIGQUIT, SIG_DFL);
 	}
 	else if (sig == 2)
 	{
 		signal(SIGINT, &ft_signal);
 		signal(SIGQUIT, SIG_IGN);
+		if (WIFEXITED(pid))
+			info->status = WEXITSTATUS(pid);
 	}
+	if (g_sc == 130 || g_sc == 131)
+		info->status = g_sc;
 }
