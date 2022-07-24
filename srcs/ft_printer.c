@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 18:16:42 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 19:13:08 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,15 @@ void	print_all_everything(t_big_token **b_tokens, t_token **tokens)
 		printf("\n");
 		print_s_tokens(tokens, tmp_b->ind_tok_start, tmp_b->length);
 		printf("   --->>    ");
-//	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
 		print_tab(tmp_b->cmd_args);
-	//	printf("\n");
 		printf("It's type is: %d\n", tmp_b->type);
 		printf("It's start is: %d\n", tmp_b->ind_tok_start);
 		printf("It's length is: %d\n", tmp_b->length);
 		printf("It's par_pam is: %d\n", tmp_b->par);
-//		printf("It's rank is: %d\n", k);
 		printf("\n");
 		if (tmp_b->child)
-		print_all_child(&(tmp_b->child), tokens, i, j);
-			else
+			print_all_child(&(tmp_b->child), tokens, i, j);
+		else
 			printf("\nje n'ai pas de child moi!!\n");
 		tmp_b = tmp_b->sibling;
 		i++;
@@ -86,7 +83,7 @@ void	print_all_child(t_big_token **b_tokens, t_token **tokens, int i, int j)
 	tmp_b = *b_tokens;
 	while (tmp_b)
 	{
-			printf("\nWelcome to the bunch of childs of order: %d of the parent: %d\n", j, i);
+		printf("\nWelcome to the bunch of childs of order: %d of the parent: %d\n", j, i);
 		print_b_tokens(&tmp_b, tokens, i, j);
 		printf("\n");
 		tmp_b = tmp_b->child;
@@ -121,14 +118,8 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 	while (tmp_b)
 	{
 		printf("   --->>    ");
-	//	print_s_tokens(&tmp_s, tmp_b->ind_tok_start, tmp_b->length);
 		print_tab(tmp_b->cmd_args);
-	//	printf("\n");
-		printf("It's type is: %d\n", tmp_b->type);
-		printf("It's start is: %d\n", tmp_b->ind_tok_start);
-		printf("It's length is: %d\n", tmp_b->length);
-		printf("It's par_pam is: %d\n", tmp_b->par);
-		printf("It's rank is: %d\n", k);
+		printf("Type: %d\nstart: %d\nlength: %d\npar_pam: %d\nrank: %d\n", tmp_b->type, tmp_b->ind_tok_start, tmp_b->length, tmp_b->par, k);
 		if (tmp_b->fd_in)
 		{
 			printf("It's all fdin:\n");
@@ -140,9 +131,9 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 			print_all_fd(tmp_b->fd_out);
 		}
 		if (tmp_b->parent)
-		printf("It's got a PARENT!!\n");
+			printf("It's got a PARENT!!\n");
 		else if (!(tmp_b->parent))
-		printf("It's an ORPHAN!!\n");
+			printf("It's an ORPHAN!!\n");
 		if (k && tmp_b->child)
 			print_all_child(&tmp_b->child, tokens, i, j + 1);
 		tmp_b = tmp_b->sibling;
@@ -153,7 +144,6 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 void	print_s_tokens(t_token **tokens, int start, int length)
 {
 	int			i;
-//	t_big_token	*tmp_b;
 	t_token		*tmp_s;
 
 	tmp_s = *tokens;
@@ -161,10 +151,8 @@ void	print_s_tokens(t_token **tokens, int start, int length)
 	move_tok_2_ind(&tmp_s, start);
 	while (i < length && tmp_s)
 	{
-		// printf("%s(%d)(%d)", tmp_s->value, tmp_s->index, tmp_s->token);
 		printf("(%d)", tmp_s->token);
 		tmp_s = tmp_s->next;
 		i++;
 	}
-	// printf("\n");
 }
