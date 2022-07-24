@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 19:35:52 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 14:20:02 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,30 +131,21 @@ int	syntax_err_handler(t_token **tokens)
 	nb_cltok = count_cl_tok(tokens);
 	if (nb_optok != nb_cltok)
 		return (1);
-		// return (printf("1\n"), 1);
 	if ((*tokens)->token == TOK_OPERATOR)
 		return (2);
-		// return (printf("2\n"), 2);
 	if (check_count_errors(tokens))
 		return (3);
-		// return (printf("3\n"), 3);
 	if (op_cl_par_succeeding(tokens))
 		return (4);
-		// return (printf("4\n"), 4);
 	if (r_quotes_impair(tokens))
 		return (5);
-		// return (printf("5\n"), 5);
 	if (is_last_op(tokens))
 		return (6);
-		// return (printf("6\n"), 6);
 	if (r_2_op_succeding(tokens, -1, -1))
 		return (7);
-		// return (printf("7\n"), 7);
 	if (r_dir_op_succeding(tokens))
 		return (8);
-		// return (printf("8\n"), 8);
 	if (par_not_afore_op(tokens))
 		return (9);
-		// return (printf("9\n"), 9);
 	return (0);
 }

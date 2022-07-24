@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:04 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 19:44:32 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 14:19:19 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ int	is_quoted(t_token **tok_list, char c)
 	}
 	tmp = *tok_list;
 	if (sq < 0 && dq > 0 && c == '\'' && tmp && tmp->token == TOK_S_QUOTER)
-		return(3);		// return (printf("-4\n"), 3);
+		return(3);
 	if (sq > 0 && dq < 0 && c == '\"' && tmp && tmp->token == TOK_D_QUOTER)
-		return (4);		// return (printf("-4\n"), 4);
+		return (4);
 	if (sq < 0 && dq > 0 && c != '\'')
 		return (1);
 	else if (dq < 0 && sq > 0 && c != '\"')
 		return (2);
-		// return (printf("-2\n"), 2);
 	return (0);
 }
 //A voir ca avec Nflaninounette
