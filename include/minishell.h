@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 14:26:34 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 16:37:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,12 @@ typedef struct s_wildcards
 // red -> if 1 >> if 0 >. Si fd_in && 1, heredoc
 // file -> nom du ficher infile ou outfile ou heredoc
 // delimitator -> delimitateur si heredoc sinon NULL
-
+// inout -> in = 1; out = 2
 typedef struct s_fd
 {
 	int					fd;
 	int					red;
+	int					inout;
 	char				*file;
 	char				*delimitator;
 	struct s_fd			*next;
@@ -158,8 +159,9 @@ typedef struct s_big_token
 	char				**cmd_args;
 	char				**envp;
 	int					sc;
-	t_fd				*fd_in;
-	t_fd				*fd_out;
+//	t_fd				*fd_in;
+//	t_fd				*fd_out;
+	t_fd				*fd;
 	struct s_big_token	*parent;
 	struct s_big_token	*child;
 	struct s_big_token	*sibling;
@@ -230,7 +232,7 @@ int				ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd, t_info *inf);
 int				ft_open_all_fdin(t_big_token *b_tokens, t_fd *fd, t_info *inf);
 int				ft_open_fd(t_big_token *b_tokens, t_info *info);
 //-----------ft_fd_close.c------------------------------------------------------
-void			ft_close_all_fd(t_fd *fd, int fd_type);
+void			ft_close_all_fd(t_fd *fd);
 void			ft_close_fd(t_big_token *b_tokens);
 
 //-----------ft_exec.c----------------------------------------------------------

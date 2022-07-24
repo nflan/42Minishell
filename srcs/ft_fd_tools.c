@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:58 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/22 22:03:42 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 16:23:18 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int itscl[7])
 	if (!new)
 		return (ft_putstr_error("Malloc error in fd_tools.c\n"));
 	new->info = b_tokens->info;
+	if (itscl[1] == 1 || itscl[1] == 2)
+		new->inout = 1;
+	else
+		new->inout = 2;
 	if (ft_fill_fdnew(new, tmp, itscl, &(b_tokens)->nb_hd))
 		return (1);
 	ft_fdadd_back(fd, new);

@@ -70,7 +70,7 @@ function exec_test()
 
   rm -f msh_log
   # execute commands in bash
-  bash -posix < $pipe >msh_log 2>&-  &
+  bash < $pipe >msh_log 2>&-  &
   IFS=';' read -ra CMND <<< "$@"
   for command in "${CMND[@]}"; do
     echo $command > $pipe
@@ -461,23 +461,23 @@ fi
 # REDIRECTIONS
 if [ "$1" == "redirect" ] || [ "$1" == "all" ]; then
   printf $BOLDMAGENTA"\n\tREDIRECTION TESTS\n"$RESET
-#  exec_test 'echo test > ls ; cat ls'
-#  exec_test 'echo test > ls >> ls >> ls ; echo test >> ls ; cat ls'
-#  exec_test '> lol echo test lol ; cat lol'
-#  exec_test '>lol echo > test>lol>test>>lol>test mdr >lol test >test ; cat test'
+  exec_test 'echo test > ls' ; exec_test 'cat ls'
+  exec_test 'echo test > ls >> ls >> ls' ; exec_test 'echo test >> ls' ; exec_test 'cat ls'
+  exec_test '> lol echo test lol' ; exec_test 'cat lol'
+  exec_test '>lol echo > test>lol>test>>lol>test mdr >lol test >test' ; exec_test 'cat test'
   exec_test 'cat < ls'
-#  exec_test 'rm -f ls ; cat > ls < ls ; rm -f ls'
+  exec_test 'rm -f ls' ; exec_test 'cat > ls < ls' ; exec_test 'rm -f ls'
   exec_test 'ls > ls'
   exec_test 'cat <ls'
-#  exec_test 'pwd >pwd ; cat pwd'
-#  exec_test 'pwd >pwd ; cat pwd | echo'
-#  exec_test 'cat | <Makefile cat ; hello'
+  exec_test 'pwd >pwd' ; exec_test 'cat pwd'
+  exec_test 'pwd >pwd' ; exec_test 'cat pwd | echo'
+  exec_test 'cat | <Makefile cat' ; exec_test 'hello'
   exec_test 'cat <test.sh <ls'
-#  exec_test 'cat << stop ; 1 ; stop'
-#  exec_test 'cat << stop ; 1OF ; stopa ; stop'
-#  exec_test 'cat <test.sh <<stop ; 1 ; stop'
-#  exec_test 'cat <<stop<ls ; 1 ; stop'
-#  exec_test 'cat <test.sh << stop1 <<stop2 ; a ; b ; c ; stop1 ; run2 ; stop2'
+#  exec_test 'cat << stop' ; exec_test '1' ; exec_test 'stop'
+#  exec_test 'cat << stop' ; exec_test '1OF' ; exec_test 'stopa' ; exec_test 'stop'
+#  exec_test 'cat <test.sh <<stop' ; exec_test '1' ; exec_test 'stop'
+  exec_test 'cat <<stop<ls' ; exec_test '1' ; exec_test 'stop'
+#  exec_test 'cat <test.sh << stop1 <<stop2' ; exec_test 'a' ; exec_test 'b' ; exec_test 'c' ; exec_test 'stop1' ; exec_test 'run2' ; exec_test 'stop2'
   exec_test 'rm -f ls >ls'
 #  exec_test 'echo jhjbsdc >> tmp1 ; cat tmp1 ; ls ; cat tmp1 ; rm tmp1'
 #  exec_test 'echo kjnsdc sdc sddc > tmp1 knsdc sdc  sdcsdc > tmp1 ; cat tmp1 ; ls ; cat tmp1 ; rm tmp1'
