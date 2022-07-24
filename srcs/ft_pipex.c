@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 10:47:58 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 14:28:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid)
 	pid = -1;
 	if (!ft_lead_fd(info, b_tokens))
 	{
+		if (ft_change__(info->env, b_tokens))
+			return (info->status = 1, 1);
 		b_tokens->envp = ft_env_to_tab(info->env);
 		pid = fork();
 		ft_manage_sig(0);

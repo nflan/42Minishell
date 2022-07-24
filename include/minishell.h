@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 17:23:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 14:26:34 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ int				exec_the_bulk(t_info *info, int sib_child, t_big_token *b);
 //-----------ft_launch_cmd------------------------------------------------------
 int				ft_exit_cmd(t_info *info, char *str, int err);
 int				ft_fork_par(t_info *info, t_big_token *b_tokens);
+int				ft_change__(t_env *env, t_big_token *b_tokens);
 int				ft_do_solo(t_info *info, t_big_token *b_tokens, int ret);
 int				ft_launch_cmd(t_info *info, t_big_token *b_tokens);
 
@@ -295,11 +296,12 @@ int				ft_write_here(t_fd *fd, char **str, int i, int red);
 int				ft_here(t_fd *fd, int red);
 char			**ft_env_to_tab(t_env *env);
 
-//---------ft_pipex_utils.c-----------------------------------------------------
+//---------ft_global.c----------------------------------------------------------
 int				ft_cmd_path(t_info *info, t_big_token *b_tokens);
+int				ft_commanding(t_info *info, t_big_token *b_tokens);
 int				ft_command(t_info *info, t_big_token *b_tokens);
 
-//---------ft_tools2.c----------------------------------------------------
+//---------ft_tools2.c----------------------------------------------------------
 void			ft_error_2(int i, t_info *info, t_big_token *b_tokens);
 int				ft_error(int i, t_info *info, t_big_token *b_tokens);
 void			ft_write(char *str);

@@ -412,48 +412,48 @@ if [ "$1" == "export" ] || [ "$1" == "all" ]; then
   ENV_SHOW="env | sort | grep -v SHLVL | grep -v _="
   EXPORT_SHOW="export | sort | grep -v SHLVL | grep -v _= | grep -v OLDPWD"
   exec_test 'export ='
-#  exec_test "export 1TEST= ; $ENV_SHOW"
-#  exec_test "export TEST ; $EXPORT_SHOW"
-#  exec_test "export ""="" ; $ENV_SHOW"
-#  exec_test "export TES=T="" ; $ENV_SHOW"
-#  exec_test "export TE+S=T="" ; $ENV_SHOW"
-#  exec_test "export TEST=LOL ; echo $TEST ; $ENV_SHOW"
-#  exec_test "export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST"
-#  exec_test "export TEST1=LOL TEST2=PIKAPIKA ; echo $TEST ; $ENV_SHOW"
+  exec_test "export 1TEST= "; exec_test "$ENV_SHOW"
+#  exec_test "export TEST"; exec_test "$EXPORT_SHOW"
+  exec_test "export ""="""; exec_test "$ENV_SHOW"
+  exec_test "export TES=T="""; exec_test "$ENV_SHOW"
+  exec_test "export TE+S=T="""; exec_test "$ENV_SHOW"
+  exec_test "export TEST=LOL"; exec_test "echo $TEST"; exec_test "$ENV_SHOW"
+  exec_test "export TEST=LOL"; exec_test "echo $TEST$TEST$TEST=lol$TEST"
+  exec_test "export TEST1=LOL TEST2=PIKAPIKA"; exec_test "echo $TEST"; exec_test "$ENV_SHOW"
   exec_test "export TEST1=LOL TEST2 $ENV_SHOW"
-#  exec_test "export TEST=LOL ; unset TEST $ENV_SHOW"
-#  exec_test "export TEST=LOL ; export TEST+=LOL ; echo $TEST ; $ENV_SHOW"
+  exec_test "export TEST=LOL"; exec_test "unset TEST $ENV_SHOW"
+  exec_test "export TEST=LOL"; exec_test "export TEST+=LOL"; exec_test "echo $TEST"; exec_test "$ENV_SHOW"
   exec_test $ENV_SHOW
-  exec_test $EXPORT_SHOW
-#  exec_test "export TEST="ls -l - a" ; echo $TEST ; $ENV_SHOW"
-#  exec_test 'export TEST=BLA ; echo test        test'
-#  exec_test 'unset _ ; env | sort'
-#  exec_test 'export TESTFCGFCSGFC ; env | sort'
-#  exec_test 'export TESTNBKJNLJ='rferfh$ref' ; env | sort'
-#  exec_test 'export TESTNBKJNLJdgf="'rferfh$ref'" ; env | sort'
-#  exec_test 'export TESTNBKJNLJtcfgvhjbk="rferfh$ref" ; env | sort'
-#  exec_test 'export = ; env | sort'
-#  exec_test 'export 1TESTHBGUHBUHB= ; env | sort'
-#  exec_test 'export TESTOUHOSIOUNXJKNK 34khh -deded ; env | sort'
-#  exec_test 'export ""="" ; env | sort'
-#  exec_test 'export "=" ; env | sort'
-#  exec_test 'export TESTFGCHVJKNLJKHVJGCHFGVJBKNL2='' ; env | sort'
-#  exec_test 'export TESTFGCHVJKNLJKHVJGCHFGVJBKNL3="" ; env | sort'
-#  exec_test 'export "$" ; env | sort'
-#  exec_test 'export TESTJHBSJCBJHSC111=T="" ; env | sort'
-#  exec_test 'export TESTNJNCKJDCKDCKDJN222+S=T="" ; env | sort'
-#  exec_test 'export TESTKXSLXSLX333=LOL ; env | sort'
-#  exec_test 'export TESTYGVSBNJKHBXGJHN444=LOL ; env | sort'
-#  exec_test 'export TESTREDTUHINJO555=LOL ; env | sort'
-#  exec_test 'export TESTYRFTGUIHUJOKL666=lol ; env | sort'
-#  exec_test 'export TESTYRFTGUIHUJOKL666=LOLdfgtgh ; env | sort'
-#  exec_test 'export TESTYTFUGYHIUNJ777="ls       -l     - a" ; env | sort'
-#  exec_test 'export | grep TEST ; env | sort'
-#  exec_test 'export arg='"hello"' ; env | sort'
-#  exec_test 'export TESTFGCHVJKNLJKHVJGCHFGVJBKNL4="$" ; env | sort'
+#  exec_test $EXPORT_SHOW
+#  exec_test "export TEST="ls -l - a""; exec_test "echo $TEST"; exec_test "$ENV_SHOW"
+#  exec_test 'export TEST=BLA'; exec_test 'echo test        test'
+#  exec_test 'unset _'; exec_test 'env | sort'
+#  exec_test 'export TESTFCGFCSGFC'; exec_test 'env | sort'
+#  exec_test 'export TESTNBKJNLJ='rferfh$ref''; exec_test 'env | sort'
+#  exec_test 'export TESTNBKJNLJdgf="'rferfh$ref'"'; exec_test 'env | sort'
+#  exec_test 'export TESTNBKJNLJtcfgvhjbk="rferfh$ref"'; exec_test 'env | sort'
+#  exec_test 'export ='; exec_test 'env | sort'
+#  exec_test 'export 1TESTHBGUHBUHB='; exec_test 'env | sort'
+#  exec_test 'export TESTOUHOSIOUNXJKNK 34khh -deded'; exec_test 'env | sort'
+#  exec_test 'export ""=""'; exec_test 'env | sort'
+#  exec_test 'export "="'; exec_test 'env | sort'
+#  exec_test 'export TESTFGCHVJKNLJKHVJGCHFGVJBKNL2='''; exec_test 'env | sort'
+#  exec_test 'export TESTFGCHVJKNLJKHVJGCHFGVJBKNL3=""'; exec_test 'env | sort'
+#  exec_test 'export "$"'; exec_test 'env | sort'
+#  exec_test 'export TESTJHBSJCBJHSC111=T=""'; exec_test 'env | sort'
+#  exec_test 'export TESTNJNCKJDCKDCKDJN222+S=T=""'; exec_test 'env | sort'
+#  exec_test 'export TESTKXSLXSLX333=LOL'; exec_test 'env | sort'
+#  exec_test 'export TESTYGVSBNJKHBXGJHN444=LOL'; exec_test 'env | sort'
+#  exec_test 'export TESTREDTUHINJO555=LOL'; exec_test 'env | sort'
+#  exec_test 'export TESTYRFTGUIHUJOKL666=lol'; exec_test 'env | sort'
+#  exec_test 'export TESTYRFTGUIHUJOKL666=LOLdfgtgh'; exec_test 'env | sort'
+#  exec_test 'export TESTYTFUGYHIUNJ777="ls       -l     - a"'; exec_test 'env | sort'
+#  exec_test 'export | grep TEST'; exec_test 'env | sort'
+#  exec_test 'export arg='"hello"''; exec_test 'env | sort'
+#  exec_test 'export TESTFGCHVJKNLJKHVJGCHFGVJBKNL4="$"'; exec_test 'env | sort'
 #  exec_test 'export TESTrsxydtcfyvgubhnijomkonjbhiugv=bla ; export TESTtdcvhbknlm="YO" ; export TESTjknmlmklnj='kuhkuhk' ; export TESTjkndfv='"kuhku"hk' ; export TESTjkndfvnj='"ku$?hku"hk' ; export | grep TEST ; unset TESTtdcvhbknlm | unset TESTjknmlmklnj ; export | grep TEST ; unset TESTtdcvhbknlm | TESTjknmlmklnj ; export | grep TEST ; unset   TESTjkndfv='"kuhku"hk' ; export | grep TEST ; unset   _TESTjkndfv= ; export | grep TEST ; unset   __TESTjkndfv= ; export | grep TEST ; unset 0 ; export | grep TEST ; unset   567890RFUYGVHBK | unset 65798uhjnk ; export | grep TEST ; unset       "TESTrsxydtcfyvgubhnijomkonjbhiugv" ; export | grep TEST'
-#  exec_test 'unset PATH ; echo $PATH ; ls ; unset "" test ; unset = ; unset PWD ; echo "END"'
-#  exec_test 'echo $test ; export test="  foo    bar  " ; echo $test ; export test="  foo    bar  " ; echo ab$test ; export test="  foo    bar  " ; echo "ab"$test ; export test=" foo   bar " ; echo ab"$test" | cat -e ; export test=" foo   bar " ; echo "$test" ; export test=" foo   bar " ; echo ""$test"" ; export test=" foo   bar " ; echo """$test"""'
+  exec_test 'unset PATH'; exec_test 'echo $PATH'; exec_test 'ls'; exec_test 'unset "" test'; exec_test 'unset ='; exec_test 'unset PWD'; exec_test 'echo "END"'
+  exec_test 'echo $test'; exec_test 'export test="  foo    bar  "'; exec_test 'echo $test'; exec_test 'export test="  foo    bar  "'; exec_test 'echo ab$test' ; exec_test 'export test="  foo    bar  "' ; exec_test 'echo "ab"$test' ; exec_test 'export test=" foo   bar "' ; exec_test 'echo ab"$test" | cat -e' ; exec_test 'export test=" foo   bar "' ; exec_test 'echo "$test"' ; exec_test 'export test=" foo   bar "' ; exec_test 'echo ""$test""'; exec_test 'export test=" foo   bar "' ; exec_test 'echo """$test"""'
 #  exec_test 'export _TEST=tewfqq ; export'
 
 fi

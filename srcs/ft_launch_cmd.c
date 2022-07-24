@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 21:06:09 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 14:29:50 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,27 @@ int	ft_fork_par(t_info *info, t_big_token *b_tokens)
 	return (info->status);
 }
 
+int	ft_change__(t_env *env, t_big_token *b_tokens)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	if (!tmp)
+		return (1);
+	while (ft_strncmp(tmp->name, "_", 2))
+		tmp = tmp->next;
+	if (tmp)
+		return (ft_export_replace(tmp, b_tokens->cmd_args[0], -1));
+	else
+		return (0);
+}
+
 int	ft_do_solo(t_info *info, t_big_token *b, int ret)
 {
 	pid_t	pid;
 
 	pid = -1;
+	ret = ft_commanding(info, b);
 	pid = fork();
 	ft_manage_sig(0);
 	if ((int) pid == -1)
@@ -70,7 +86,6 @@ int	ft_do_solo(t_info *info, t_big_token *b, int ret)
 		dup2(b->fdin, STDIN_FILENO);
 		dup2(b->fdout, STDOUT_FILENO);
 		rl_clear_history();
-		ret = ft_command(info, b);
 		if (ret)
 			ft_exit_cmd(info, b->cmd_args[0], ret);
 		else
@@ -91,6 +106,8 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 	if (b_tokens->par == 1)
 		return (ft_fork_par(info, b_tokens));
 	b_tokens->envp = ft_env_to_tab(info->env);
+	if (ft_change__(info->env, b_tokens))
+		return (info->status = 1, 1);
 	if (!ft_check_builtins(b_tokens))
 		info->status = ft_builtins(info, b_tokens);
 	else if (ft_check_builtins(b_tokens))
