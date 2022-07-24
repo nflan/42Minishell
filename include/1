@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   1                                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 22:47:11 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 22:48:37 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,7 @@ int				ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd, t_info *inf);
 int				ft_open_all_fdin(t_big_token *b_tokens, t_fd *fd, t_info *inf);
 int				ft_open_fd(t_big_token *b_tokens, t_info *info);
 //-----------ft_fd_close.c------------------------------------------------------
-void			ft_close_all_fd(t_fd *fd, int fd_type);
+void			ft_close_all_fd(t_fd *fd);
 void			ft_close_fd(t_big_token *b_tokens);
 //-----------ft_exec.c----------------------------------------------------------
 int				ft_expanding(t_info *info, t_big_token *b_tokens);
@@ -328,7 +328,7 @@ int				ft_first_error(char *av1);
 //-----------------ft_free.c----------------------------------------------------
 void			ft_signal(int sig);
 void			ft_cmd_signal(int sig);
-void			ft_manage_sig(t_info *info, int a, int b);
+void			ft_manage_sig(int sig);
 //-----------------ft_free.c----------------------------------------------------
 void			ft_free_wildcards(t_wildcards *wd);
 void			ft_free_all(t_info *info, t_env *env);
@@ -374,13 +374,13 @@ void			sub_parse_1(t_big_token **b, t_info *i, int b_start, int b_l);
 void			sub_parse_2(t_big_token **b_child, t_big_token **tb, t_info *i);
 int				parse(t_big_token **b_tokens, t_info *info, int btok_info[2]);
 void			extract_fds(t_big_token **tmp_b, t_token **tokens);
-//----------ft_executer.c----------------------------------------------------
+//----------ft_executer.c------------------------------------------------------
 void			lead_ao(t_info *i, t_big_token **b, t_big_token *t, int f[3]);
 void			ft_init_exec(t_big_token **b, t_big_token **t, int f[3], int a);
 int				ft_first_part(t_info *info, t_big_token *tmp_b, int faoi[3]);
 void			ft_second_part(t_big_token *tmp_b, int faoi[3]);
 int				rec_exec(t_info *info, t_big_token **b_tokens, int and_or);
-//----------ft_executer_tools.c----------------------------------------------
+//----------ft_executer_tools.c--------------------------------------------------
 int				no_sib_has_child(t_big_token *b_tokens);
 void			give_parent_sc(t_big_token **child, t_big_token **parent);
 //----------printer.c-----------------------------------------------------------
@@ -493,19 +493,19 @@ void			print_all_child(t_big_token **b, t_token **toks, int i, int j);
 int				ft_check_dol(char *str);
 int				ft_check_expand(t_token *token, int start, int length);
 int				ft_check_exp_line(char *str);
-//-----------ft_expand_args_1.c----------------------------------------------
+//-----------ft_expand_args_1.c---------------------------------------------------
 int				ra_sub(char **tmpj, char *cmd_arg);
 int				ft_reduce_args(t_big_token *b, size_t i);
 int				nqa_tool(t_big_token *b_tokens);
 int				ft_noquote_args(t_big_token *b_tokens);
 char			*ft_expanded_value(t_info *info, char *tmp);
-//-----------ft_expand_args_2.c------------------------------------------------
+//-----------ft_expand_args_2.c---------------------------------------------------
 int				ft_splitlen(char *str);
 char			*ms_tool(int *a, char **str, int b, int type);
 char			*ft_minisplit(char *str);
 int				resplit_tool(int (*jl)[2], char **tmp, char *to_copy, int type);
 void			resplit_tool_2(int (*jl)[2], int i, char ***cmd_args, int step);
-//-----------ft_expand_args_3.c-------------------------------------------------
+//-----------ft_expand_args_3.c---------------------------------------------------
 int				resplit_tool_3(char ***tmp, int len1, int len2);
 int				ft_resplit(t_big_token *b, int *i, char *str);
 int				ft_expand_args(t_big_token *b, t_info *info);

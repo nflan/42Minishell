@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtins.c                                      :+:      :+:    :+:   */
+/*   ft_builtins_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 21:46:36 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 22:30:31 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_mystic_exit(t_big_token *b, unsigned long long *ret)
 	if (ft_ex_val(b) || ft_digital(b->cmd_args[1]))
 	{
 		ft_putstr_fd_3("minishell: exit: ", b->cmd_args[1],
-				": numeric argument required\n", 2);
+			": numeric argument required\n", 2);
 		*ret = 2;
 		return (2);
 	}
