@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 18:29:31 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 18:37:04 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 20:00:58 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,3 @@ void	resplit_tool_2(int (*jl)[2], int i, char ***cmd_args, int step)
 	else
 		ft_free_split(*cmd_args);
 }
-
-

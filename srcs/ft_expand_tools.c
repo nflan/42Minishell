@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:12:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 13:12:29 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 20:17:50 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,5 @@ char	*ft_strndup(char *str, int len)
 		ret[i] = str[i];
 		i++;
 	}
-	return (ret);
-}
-
-char	*strjoin_4(char *str1, char *str2)
-{
-	char	*ret;
-
-	ret = ft_strjoin(str1, str2);
-	free(str1);
 	return (ret);
 }
