@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 19:18:33 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 10:35:08 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_not_valid_id(char *line)
 	i = 0;
 	if (line)
 	{
-		if (line[i] == '\0')
+		if (line[i] == '\0' || line[i] == '=')
 			return (ft_exp_err(line, 1));
 		while (line[i] && line[i] != '=')
 		{

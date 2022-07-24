@@ -6,17 +6,51 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 17:06:01 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 11:32:01 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+int	ft_ex_val(t_big_token *b)
+{
+	char		llmax[20] = "9223372036854775807";
+	char		llmin[20] = "-9223372036854775808";
+	int			i;
+
+	i = 0;
+	if (b->cmd_args[1][0] != '-')
+	{
+		if (ft_strlen(b->cmd_args[1]) == 19)
+		{
+			while (llmax[i] && b->cmd_args[1][i] && b->cmd_args[1][i] <= llmax[i])
+				i++;
+			if (llmax[i] || b->cmd_args[1][i])
+				return (1);
+		}
+		else if (ft_strlen(b->cmd_args[1]) > 19)
+			return (1);
+	}
+	else if (b->cmd_args[1][0] == '-')
+	{
+		if (ft_strlen(b->cmd_args[1]) == 20)
+		{
+			while (llmin[i] && b->cmd_args[1][i] && b->cmd_args[1][i] <= llmin[i])
+				i++;
+			if (llmin[i] || b->cmd_args[1][i])
+				return (1);
+		}
+		else if (ft_strlen(b->cmd_args[1]) > 20)
+			return (1);
+	}
+	return (0);
+}
+
 int	ft_mystic_exit(t_big_token *b, unsigned long long *ret)
 {
 	if (!b || !b->cmd_args[1])
 		return (0);
-	if (*ret > 9223372036854775807 || ft_digital(b->cmd_args[1]))
+	if (ft_ex_val(b) || ft_digital(b->cmd_args[1]))
 	{
 		ft_putstr_fd_3("minishell: exit: ", b->cmd_args[1],
 			": numeric argument required\n", 2);

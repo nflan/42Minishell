@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 16:29:28 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 10:47:58 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 	tmp = b_tokens;
 	while (tmp)
 	{
-		ft_open_fd(tmp, info);
+		if (ft_open_fd(tmp, info))
+			info->status = 1;
 		if (ft_wash_btoken(info, tmp))
 			return (2147483647);
 		if (tmp->sc == -1)
@@ -119,7 +120,7 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 		ft_close_fd(tmp);
 		tmp = tmp->sibling;
 	}
-	return (0);
+	return (info->status);
 }
 
 int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
@@ -145,5 +146,5 @@ int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 	if (info->pid)
 		free(info->pid);
 	info->pid = NULL;
-	return (0);
+	return (info->status);
 }

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:13:07 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/21 11:48:47 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 10:49:12 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd, t_info *info)
 			if (tmp_fd->next)
 			{
 				close(tmp_fd->fd);
-				tmp_fd->fd = 1; //pk le 1 ici?
+				tmp_fd->fd = 1;
 				if (tmp_fd->red)
 					unlink(tmp_fd->file);
 			}
@@ -90,9 +90,11 @@ int	ft_open_fd(t_big_token *b_tokens, t_info *info)
 		if (b_tokens->fd_in)
 			err += ft_open_all_fdin(b_tokens, b_tokens->fd_in, info);
 		if (err)
-			return (err);
+			return (b_tokens->sc = 1, err);
 		if (b_tokens->fd_out)
 			err += ft_open_all_fdout(b_tokens, b_tokens->fd_out, info);
 	}
+	if (err)
+		b_tokens->sc = 1;
 	return (err);
 }
