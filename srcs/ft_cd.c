@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 14:18:54 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 19:58:56 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_is_tilde_or_home(char *home, char *dir)
 	return (2);
 }
 
-char	*ft_cd_tilde(char *home, char *dir)
+char	*ft_cd_tilde(t_info *info, char *home, char *dir)
 {
 	char	*new_dir;
 	char	*tmp;
@@ -38,14 +38,14 @@ char	*ft_cd_tilde(char *home, char *dir)
 		new_dir = ft_strjoin(home, dir + 1);
 	else if (dir[1] == '+' || dir[1] == '-')
 	{
-		new_dir = getcwd(new_dir, 0);
 		if (dir[1] == '+')
+		{
+			new_dir = ft_strdup(ft_get_env_value(info, "PWD"));
 			new_dir = ft_strjoin_free(new_dir, dir + 2, 1);
+		}
 		else
 		{
-			tmp = ft_strrchr(new_dir, '/');
-			new_dir = ft_substr_free(new_dir, 0,
-					ft_strlen(new_dir) - ft_strlen(tmp));
+			new_dir = ft_strdup(ft_get_env_value(info, "OLDPWD"));
 			new_dir = ft_strjoin_free(new_dir, dir + 2, 1);
 		}
 	}
@@ -93,7 +93,7 @@ int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 	else if (!strncmp(arg, "~", 2) && home)
 		new_dir = ft_strdup(home);
 	else
-		new_dir = ft_cd_tilde(info->home, arg);
+		new_dir = ft_cd_tilde(info, info->home, arg);
 	if (!new_dir)
 		return (1);
 	if (chdir(new_dir))
@@ -135,13 +135,18 @@ int	ft_do_cd(t_info *info, t_big_token *b_tokens)
 	return (0);
 }
 
+void	ft_cd_tool(t_info *info, char **home, char **new_dir)
+{
+	*home = ft_get_env_value(info, "HOME");
+	*new_dir = NULL;
+}
+
 int	ft_cd(t_info *info, t_big_token *b_tokens)
 {
 	char	*home;
 	char	*new_dir;
 
-	home = ft_get_env_value(info, "HOME");
-	new_dir = NULL;
+	ft_cd_tool(info, &home, &new_dir);
 	if (b_tokens->cmd_args_num > 2)
 		return (ft_putstr_error("minishell: cd: too many arguments\n"));
 	if (ft_is_tilde_or_home(home, b_tokens->cmd_args[1]) == 1)
