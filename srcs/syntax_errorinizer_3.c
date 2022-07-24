@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:59:19 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 14:20:02 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 19:32:45 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,13 @@ int	op_cl_par_succeeding(t_token **tokens)
 
 int	syntax_err_handler(t_token **tokens)
 {
-	int	nb_optok;
-	int	nb_cltok;
+	int	nb_opcltok[2];
 
 	if (!*tokens)
 		return (-1);
-	nb_optok = count_op_tok(tokens);
-	nb_cltok = count_cl_tok(tokens);
-	if (nb_optok != nb_cltok)
+	nb_opcltok[0] = count_op_tok(tokens);
+	nb_opcltok[1] = count_cl_tok(tokens);
+	if (nb_opcltok[0] != nb_opcltok[1])
 		return (1);
 	if ((*tokens)->token == TOK_OPERATOR)
 		return (2);
