@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 22:19:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/25 00:36:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, pid_t pid)
 				return (ft_free_cmd(b_tokens), 1);
 			ft_exit_cmd(info, NULL, 0);
 		}
+		info->status = 0;
 	}
 	ft_close_cmd(info, b_tokens, pid);
 	return (info->status);
@@ -116,10 +117,10 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, pid_t *pid)
 		info->status = 0;
 		if (ft_open_fd(tmp, info))
 			info->status = 1;
+		info->nb_cmd++;
 		if (tmp->sc == -1)
 			if (ft_exec_pipexx(info, tmp, pid, &i))
 				return (1);
-		info->nb_cmd++;
 		tmp->sc = info->status;
 		b_tokens->sc = tmp->sc;
 		ft_close_fd(tmp);

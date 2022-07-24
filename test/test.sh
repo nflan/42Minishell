@@ -1349,20 +1349,20 @@ fi
 if [ "$1" == "bonus" ] || [ "$1" == "wildcard" ]; then
   printf $BOLDMAGENTA"\n\tBONUS WILDCARD\n"$RESET
   exec_test "echo * | wc"
-  exec_test "echo * | wc' ; exec_test 'echo *"
-#  exec_test "cd .. ' ; exec_test 'echo * | wc' ; exec_test 'echo *"
+  exec_test "echo * | wc" ; exec_test "echo *"
+  exec_test "cd .. " ; exec_test "echo * | wc" ; exec_test "echo *"
   exec_test "echo .* | wc"
-#  exec_test "cd ..' ; exec_test 'echo M*e"
-#  exec_test "cd ..' ; exec_test 'echo M*"
-#  exec_test "cd ..' ; exec_test 'echo *e"
-#  exec_test "cd ..' ; exec_test 'echo *t"
-#  exec_test "cd ..' ; exec_test 'echo *a*e"
-#  exec_test "cd ..' ; exec_test 'echo M*e*e"
-#  exec_test "cd ..' ; exec_test 'echo M*k*f*l*"
-#  exec_test "cd ..' ; exec_test 'echo M*e*ee"
-#  exec_test "cd ..' ; exec_test 'echo *e*e"
+  exec_test "cd .." ; exec_test "echo M*e"
+  exec_test "cd .." ; exec_test "echo M*"
+  exec_test "cd .." ; exec_test "echo *e"
+  exec_test "cd .." ; exec_test "echo *t"
+  exec_test "cd .." ; exec_test "echo *a*e"
+  exec_test "cd .." ; exec_test "echo M*e*e"
+  exec_test "cd .." ; exec_test "echo M*k*f*l*"
+  exec_test "cd .." ; exec_test "echo M*e*ee"
+  exec_test "cd .." ; exec_test "echo *e*e"
   exec_test "echo *.mp3"
-#  exec_test "mkdir empty' ; exec_test 'cd empty' ; exec_test 'pwd' ; exec_test 'echo *' ; exec_test 'cd ..' ; exec_test 'rm -rf empty"
+#  exec_test "mkdir empty" ; exec_test "cd empty" ; exec_test "pwd" ; exec_test "echo *" ; exec_test "cd .." ; exec_test "rm -rf empty"
 fi
 
 # BONUS OPERATOR && || ()
