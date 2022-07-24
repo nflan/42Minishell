@@ -6,12 +6,15 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 20:24:02 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 22:17:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define LLMAX "9223372036854775807"
+# define LLMIN "-9223372036854775808"
 
 # include "../libft/libft.h"
 # include <stdio.h>
@@ -134,7 +137,7 @@ typedef struct s_wildcards
 // red -> if 1 >> if 0 >. Si fd_in && 1, heredoc
 // file -> nom du ficher infile ou outfile ou heredoc
 // delimitator -> delimitateur si heredoc sinon NULL
-// inout -> in = 1; out = 2
+
 typedef struct s_fd
 {
 	int					fd;
@@ -159,8 +162,6 @@ typedef struct s_big_token
 	char				**cmd_args;
 	char				**envp;
 	int					sc;
-//	t_fd				*fd_in;
-//	t_fd				*fd_out;
 	t_fd				*fd;
 	struct s_big_token	*parent;
 	struct s_big_token	*child;
@@ -219,7 +220,15 @@ t_env			*ft_without_env(int i);
 int				ft_fill_envnew(t_env *env, char *line, int i, int j);
 //-----------ft_env_tools2.c----------------------------------------------------
 int				ft_init_env(t_info *info, char **envp);
-
+//-----------ft_global.c----------------------------------------------------
+int			ft_change_cmd(t_big_token *b_tokens, char *tofree);
+int				ft_path(t_info *info, t_big_token *b_tokens, int err);
+int				ft_cmd_nopath(t_big_token *b_tokens);
+int				ft_is_cmd(t_big_token *b_tokens, t_info *info);
+int				ft_commanding(t_info *info, t_big_token *b_tokens);
+//-----------ft_global_bis.c----------------------------------------------------
+int				ft_command(t_info *info, t_big_token *b_tokens);
+char			*strjoin_4(char *str1, char *str2);
 // FD
 //-----------ft_fd_tools.c------------------------------------------------------
 int				ft_fill_fdnew(t_fd *fd, t_token **tmp, int itscl[5], int *hd);
@@ -227,14 +236,12 @@ int				ft_fdnew(t_big_token *b_toks, t_fd **fd, t_token **t, int r[7]);
 int				ft_create_tmp(t_fd *fd, int hd);
 char			*ft_create_del(t_token **tmp, int *red);
 void			ft_fdadd_back(t_fd **alst, t_fd *new);
-//-----------ft_fd_tools_bis.c------------------------------------------------------
-int				create_del_cond(t_tok_type tok);
 //-----------ft_fd_open.c-------------------------------------------------------
 int				ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd, t_info *inf);
 int				ft_open_all_fdin(t_big_token *b_tokens, t_fd *fd, t_info *inf);
 int				ft_open_fd(t_big_token *b_tokens, t_info *info);
 //-----------ft_fd_close.c------------------------------------------------------
-void			ft_close_all_fd(t_fd *fd);
+void			ft_close_all_fd(t_fd *fd, int fd_type);
 void			ft_close_fd(t_big_token *b_tokens);
 
 //-----------ft_exec.c----------------------------------------------------------
@@ -260,19 +267,25 @@ int				ft_wash_btoken(t_info *info, t_big_token *b_tokens);
 int				ft_check_builtins(t_big_token *b_tokens);
 int				ft_builtins(t_info *info, t_big_token *b_tokens);
 
-//-----------builtins-----------------------------------------------------------
-int				ft_pwd(t_big_token *b_tok);
-int				ft_env(t_info *info, t_big_token *b_tok);
-//int			ft_exit(t_info *env, int ret);
+
+//-----------ft_builtins_1-----------------------------------------------------------
+int				ft_ex_val_1(int *i, char *cmd_args_1);
+int				ft_ex_val_2(int *i, char *cmd_args_1);
+int				ft_ex_val(t_big_token *b);
+int				ft_mystic_exit(t_big_token *b, unsigned long long *ret);
 int				ft_exit(t_info *info, t_big_token *b_tokens);
+//-----------ft_builtins_2-----------------------------------------------------------
+int				ft_env_err(t_big_token *b, int	i);
+int				ft_env_error(t_big_token *b);
+int				ft_env(t_info *info, t_big_token *b_tok);
+int				ft_pwd(t_big_token *b_tok);
+int				ft_unset_name(t_env **tmp, char *name);
+//-----------ft_builtins_3-----------------------------------------------------------
+void			unset_tool(t_env **ptr, t_env **tmp, t_info **info, int type);
 int				ft_unset(t_info *info, t_big_token *b_tokens);
 //-----------ft_cd.c------------------------------------------------------------
-int				ft_is_tilde_or_home(char *home, char *dir);
-char			*ft_cd_tilde(t_info *info, char *home, char *dir);
-int				ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir);
-int				ft_do_cd(t_info *info, t_big_token *b);
 int				ft_cd(t_info *info, t_big_token *b_tokens);
-//-----------ft_cd_tools.c------------------------------------------------------
+//-----------ft_cd_tools.c------------------------------------------------------------
 void			ft_cd_tool(t_info *info, char **home, char **new_dir);
 int				ft_newpwd(t_info *info);
 int				ft_oldpwd(t_info *info);
@@ -282,8 +295,7 @@ int				ft_not_valid_id(char *line);
 int				ft_check_export(char *line);
 int				ft_export_new(t_env *env, t_env *tmp, char *line);
 int				ft_export_replace(t_env *env, char *line, int i);
-//-----------ft_export_bis.c----------------------------------------------------
-int				ft_export_concat(t_env *env, char *line, int i);
+//-----------ft_export_bis.c--------------------------------------------------------
 int				ft_if_eg(t_info *info, t_env *tmp, char *line, int i);
 int				ft_ifnot_eg(t_info *info, t_env *tmp, char *line, int i);
 int				ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i);
@@ -316,16 +328,11 @@ int				ft_write_here(t_fd *fd, char **str, int i, int red);
 int				ft_here(t_fd *fd, int red);
 char			**ft_env_to_tab(t_env *env);
 
-//---------ft_global.c----------------------------------------------------------
-int				ft_change_cmd(t_big_token *b_tokens, char *tofree);
-int				ft_path(t_info *info, t_big_token *b_tokens, int err);
-int				ft_cmd_nopath(t_big_token *b_tokens);
-int				ft_is_cmd(t_big_token *b_tokens, t_info *info);
-int				ft_commanding(t_info *info, t_big_token *b_tokens);
-//---------ft_global_bis.c----------------------------------------------------------
+//---------ft_pipex_utils.c-----------------------------------------------------
+int				ft_cmd_path(t_info *info, t_big_token *b_tokens);
 int				ft_command(t_info *info, t_big_token *b_tokens);
-char			*strjoin_4(char *str1, char *str2);
-//---------ft_tools2.c----------------------------------------------------------
+
+//---------ft_tools2.c----------------------------------------------------
 void			ft_error_2(int i, t_info *info, t_big_token *b_tokens);
 int				ft_error(int i, t_info *info, t_big_token *b_tokens);
 void			ft_write(char *str);
@@ -448,7 +455,7 @@ int				op_cl_par_succeeding(t_token **tokens);
 int				syntax_err_handler(t_token **tokens);
 
 //-----------syntax_errorinizer_3.c---------------------------------------------
-int	par_not_afore_op(t_token **tokens);
+int				par_not_afore_op(t_token **tokens);
 
 //-----------big_tokenizer_1.c--------------------------------------------------
 
