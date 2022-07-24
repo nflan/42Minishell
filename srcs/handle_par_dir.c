@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:23 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/20 16:52:46 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 20:01:57 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,3 @@ int	handle_par_dir(t_big_token **tmp_b, t_info *info)
 	itctlt[6] = handle_par_dir_1(&tmp, tmp_b, &itctlt, 3);
 	return (0);
 }
-
