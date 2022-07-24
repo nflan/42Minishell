@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 15:57:15 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 19:31:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ int	ft_not_valid_id(char *line)
 		while (line[i] && line[i] != '=')
 		{
 			if (!ft_isdigit(line[i]) && !ft_isalpha(line[i]) && line[i] != '_')
+			{
+				if (line[i] == '+')
+					if (line[i + 1] == '=')
+						break ;
 				return (ft_exp_err(line, 1));
+			}
 			i++;
 		}
 	}
@@ -67,9 +72,10 @@ int	ft_export_replace(t_env *env, char *line, int i)
 	int	j;
 
 	j = i + 1;
-	if (line[j])
-		while (line[j])
-			j++;
+	if (line)
+		if (line[j])
+			while (line[j])
+				j++;
 	free(env->value);
 	env->value = NULL;
 	if (j > i + 1)

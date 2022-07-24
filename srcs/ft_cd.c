@@ -62,12 +62,12 @@ int	ft_newpwd(t_info *info)
 	pwd = getcwd(pwd, 0);
 	if (!pwd || !tmp)
 		return (1);
-	while (ft_strncmp(tmp->name, "PWD", 4))
+	while (tmp && ft_strncmp(tmp->name, "PWD", 4))
 		tmp = tmp->next;
+	if (!tmp)
+		return (free(pwd), 0);
 	ft_export_replace(tmp, pwd, -1);
 	free(pwd);
-	if (!tmp)
-		return (1);
 	return (0);
 }
 
@@ -78,9 +78,12 @@ int	ft_oldpwd(t_info *info)
 	tmp = info->env;
 	if (!tmp)
 		return (1);
-	while (ft_strncmp(tmp->name, "OLDPWD", 7))
+	while (tmp && ft_strncmp(tmp->name, "OLDPWD", 7))
 		tmp = tmp->next;
-	return (ft_export_replace(tmp, ft_get_env_value(info, "PWD"), -1));
+	if (tmp)
+		return (ft_export_replace(tmp, ft_get_env_value(info, "PWD"), -1));
+	else
+		return (0);
 }
 
 int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)

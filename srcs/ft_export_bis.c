@@ -12,10 +12,30 @@
 
 #include "../include/minishell.h"
 
+int	ft_export_concat(t_env *env, char *line, int i)
+{
+	env->value = ft_strjoin_free(env->value, line + i + 1, 1);
+	if (!env->value)
+		return (1);
+	return (0);
+}
+
 int	ft_if_eg(t_info *info, t_env *tmp, char *line, int i)
 {
-	while (tmp && ft_strncmp(tmp->name, line, i + 1) != -61)
-		tmp = tmp->next;
+	if (line[i - 1] == '+')
+	{
+		while (tmp && ft_strncmp(tmp->name, line, i) != -43)
+				tmp = tmp->next;
+		if (tmp)
+		{
+			if (ft_export_concat(tmp, line, i))
+				return (1);
+			return (0);
+		}
+	}
+	else
+		while (tmp && ft_strncmp(tmp->name, line, i + 1) != -61)
+			tmp = tmp->next;
 	if (!tmp)
 	{
 		if (ft_export_new(info->env, tmp, line))
@@ -43,8 +63,8 @@ int	ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i)
 	int	a;
 
 	a = 0;
-	j = 0;
-	while (b_tok->cmd_args[++j])
+	j = 1;
+	while (b_tok->cmd_args[j])
 	{
 		i = 0;
 		if (!ft_check_export(b_tok->cmd_args[j]))
@@ -62,6 +82,7 @@ int	ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i)
 		}
 		else
 			a = 1;
+		j++;
 	}
 	return (a);
 }

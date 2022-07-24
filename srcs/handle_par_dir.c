@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:23 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 20:01:57 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 20:04:04 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ int	handle_par_dir_1(t_token **t, t_big_token **b, int (*itctlt)[7], int step)
 {
 	if (step == 1)
 	{
-		if ((*itctlt)[1] == 1 || (*itctlt)[1] == 2)
+		if (ft_fdnew(*b, &((*b)->fd), t, *itctlt))
+			return (1);
+/*		if ((*itctlt)[1] == 1 || (*itctlt)[1] == 2)
 		{
 			if (ft_fdnew(*b, &((*b)->fd_in), t, *itctlt))
 				return (1);
@@ -53,7 +55,7 @@ int	handle_par_dir_1(t_token **t, t_big_token **b, int (*itctlt)[7], int step)
 		else
 			if (ft_fdnew(*b, &((*b)->fd_out), t, *itctlt))
 				return (1);
-		(*itctlt)[0]++;
+*/		(*itctlt)[0]++;
 	}
 	if (step == 2)
 	{

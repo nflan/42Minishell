@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:13:07 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 10:49:12 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 19:42:12 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ int	ft_open_err(t_big_token *b_tok, t_fd *fd, int i, t_info *info)
 	return (1);
 }
 
+int	ft_is_last_fd(t_fd *tmp, int i)
+{
+	if (tmp)
+	{
+		while (tmp)
+		{
+			if (tmp->inout == i)
+				return (1);
+			tmp = tmp->next;
+		}
+	}
+	return (0);
+}
+
 int	ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd, t_info *info)
 {
 	if (fd)
@@ -45,7 +59,7 @@ int	ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd, t_info *info)
 				return (ft_open_err(b_tokens, fd, 1, info));
 			else
 				b_tokens->fdout = fd->fd;
-			if (fd->next)
+			if (ft_is_last_fd(fd->next, 2))
 			{
 				close(fd->fd);
 				fd->fd = 0;
@@ -60,21 +74,17 @@ int	ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd, t_info *info)
 {
 	if (tmp_fd)
 	{
-		while (tmp_fd)
+		tmp_fd->fd = open(tmp_fd->file, O_RDONLY);
+		if (tmp_fd->fd < 0)
+			return (ft_open_err(b_tokens, tmp_fd, 0, info));
+		else
+			b_tokens->fdin = tmp_fd->fd;
+		if (ft_is_last_fd(tmp_fd->next, 1))
 		{
-			tmp_fd->fd = open(tmp_fd->file, O_RDONLY);
-			if (tmp_fd->fd < 0)
-				return (ft_open_err(b_tokens, tmp_fd, 0, info));
-			else
-				b_tokens->fdin = tmp_fd->fd;
-			if (tmp_fd->next)
-			{
-				close(tmp_fd->fd);
-				tmp_fd->fd = 1;
-				if (tmp_fd->red)
-					unlink(tmp_fd->file);
-			}
-			tmp_fd = tmp_fd->next;
+			close(tmp_fd->fd);
+			tmp_fd->fd = 1;
+			if (tmp_fd->red)
+				unlink(tmp_fd->file);
 		}
 	}
 	return (0);
@@ -82,17 +92,23 @@ int	ft_open_all_fdin(t_big_token *b_tokens, t_fd *tmp_fd, t_info *info)
 
 int	ft_open_fd(t_big_token *b_tokens, t_info *info)
 {
-	int	err;
+	int		err;
+	t_fd	*tmp_fd;
 
 	err = 0;
-	if (b_tokens)
+	tmp_fd = b_tokens->fd;
+	if (tmp_fd && b_tokens)
 	{
-		if (b_tokens->fd_in)
-			err += ft_open_all_fdin(b_tokens, b_tokens->fd_in, info);
-		if (err)
-			return (b_tokens->sc = 1, err);
-		if (b_tokens->fd_out)
-			err += ft_open_all_fdout(b_tokens, b_tokens->fd_out, info);
+		while (tmp_fd)
+		{
+			if (tmp_fd->inout == 1)
+				err += ft_open_all_fdin(b_tokens, tmp_fd, info);
+			else if (tmp_fd->inout == 2)
+				err += ft_open_all_fdout(b_tokens, tmp_fd, info);
+			if (err)
+				return (b_tokens->sc = 1, err);
+			tmp_fd = tmp_fd->next; 
+		}
 	}
 	if (err)
 		b_tokens->sc = 1;

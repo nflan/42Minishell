@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 21:19:16 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/01 12:41:37 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 16:34:44 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ void	ft_free_cmd(t_big_token *b_tokens)
 		ft_free_split(b_tokens->cmd_args);
 	if (b_tokens->envp)
 		ft_free_split(b_tokens->envp);
-	if (b_tokens->fd_out)
-		ft_free_fd(b_tokens->fd_out);
-	if (b_tokens->fd_in)
-		ft_free_fd(b_tokens->fd_in);
+	if (b_tokens->fd)
+		ft_free_fd(b_tokens->fd);
+//	if (b_tokens->fd_in)
+//		ft_free_fd(b_tokens->fd_in);
 	b_tokens = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 19:26:38 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 19:30:57 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,12 @@ typedef struct s_wildcards
 // red -> if 1 >> if 0 >. Si fd_in && 1, heredoc
 // file -> nom du ficher infile ou outfile ou heredoc
 // delimitator -> delimitateur si heredoc sinon NULL
-
+// inout -> in = 1; out = 2
 typedef struct s_fd
 {
 	int					fd;
 	int					red;
+	int					inout;
 	char				*file;
 	char				*delimitator;
 	struct s_fd			*next;
@@ -158,8 +159,9 @@ typedef struct s_big_token
 	char				**cmd_args;
 	char				**envp;
 	int					sc;
-	t_fd				*fd_in;
-	t_fd				*fd_out;
+//	t_fd				*fd_in;
+//	t_fd				*fd_out;
+	t_fd				*fd;
 	struct s_big_token	*parent;
 	struct s_big_token	*child;
 	struct s_big_token	*sibling;
@@ -232,7 +234,7 @@ int				ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd, t_info *inf);
 int				ft_open_all_fdin(t_big_token *b_tokens, t_fd *fd, t_info *inf);
 int				ft_open_fd(t_big_token *b_tokens, t_info *info);
 //-----------ft_fd_close.c------------------------------------------------------
-void			ft_close_all_fd(t_fd *fd, int fd_type);
+void			ft_close_all_fd(t_fd *fd);
 void			ft_close_fd(t_big_token *b_tokens);
 
 //-----------ft_exec.c----------------------------------------------------------
@@ -243,6 +245,7 @@ int				exec_the_bulk(t_info *info, int sib_child, t_big_token *b);
 //-----------ft_launch_cmd------------------------------------------------------
 int				ft_exit_cmd(t_info *info, char *str, int err);
 int				ft_fork_par(t_info *info, t_big_token *b_tokens);
+int				ft_change__(t_env *env, t_big_token *b_tokens);
 int				ft_do_solo(t_info *info, t_big_token *b_tokens, int ret);
 int				ft_launch_cmd(t_info *info, t_big_token *b_tokens);
 
@@ -272,6 +275,7 @@ int				ft_check_export(char *line);
 int				ft_export_new(t_env *env, t_env *tmp, char *line);
 int				ft_export_replace(t_env *env, char *line, int i);
 //-----------ft_export_bis.c--------------------------------------------------------
+int				ft_export_concat(t_env *env, char *line, int i);
 int				ft_if_eg(t_info *info, t_env *tmp, char *line, int i);
 int				ft_ifnot_eg(t_info *info, t_env *tmp, char *line, int i);
 int				ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i);
@@ -304,11 +308,12 @@ int				ft_write_here(t_fd *fd, char **str, int i, int red);
 int				ft_here(t_fd *fd, int red);
 char			**ft_env_to_tab(t_env *env);
 
-//---------ft_pipex_utils.c-----------------------------------------------------
+//---------ft_global.c----------------------------------------------------------
 int				ft_cmd_path(t_info *info, t_big_token *b_tokens);
+int				ft_commanding(t_info *info, t_big_token *b_tokens);
 int				ft_command(t_info *info, t_big_token *b_tokens);
 
-//---------ft_tools2.c----------------------------------------------------
+//---------ft_tools2.c----------------------------------------------------------
 void			ft_error_2(int i, t_info *info, t_big_token *b_tokens);
 int				ft_error(int i, t_info *info, t_big_token *b_tokens);
 void			ft_write(char *str);

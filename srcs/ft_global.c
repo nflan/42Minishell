@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:29:38 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 10:54:12 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 18:34:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,18 @@ int	ft_is_cmd(t_big_token *b_tokens, t_info *info)
 	return (1);
 }
 
+int	ft_commanding(t_info *info, t_big_token *b_tokens)
+{
+	int	err;
+
+	err = ft_command(info, b_tokens);
+	if (ft_change__(info->env, b_tokens))
+		return (info->status = 1, 1);
+	ft_free_split(b_tokens->envp);
+	b_tokens->envp = ft_env_to_tab(info->env);
+	return (err);
+}
+
 int	ft_command(t_info *info, t_big_token *b_tokens)
 {
 	if (b_tokens->cmd_args[0][0] == '\0')
@@ -101,8 +113,11 @@ int	ft_command(t_info *info, t_big_token *b_tokens)
 	else if (!ft_is_cmd(b_tokens, info))
 	{
 		if (!access(b_tokens->cmd_args[0], F_OK))
-			if (access(b_tokens->cmd_args[0], X_OK))
+		{
+			if (ft_cmd_nopath(b_tokens)
+				|| access(b_tokens->cmd_args[0], X_OK | R_OK))
 				return (126);
+		}
 		return (0);
 	}
 	else if (ft_get_env_value(info, "PATH"))
