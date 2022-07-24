@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 17:27:46 by nflan             #+#    #+#              #
-#    Updated: 2022/07/24 19:26:11 by omoudni          ###   ########.fr        #
+#    Updated: 2022/07/24 20:13:17 by nflan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  ft_expand_args_2.c ft_expand_args_3.c ft_fd_tools.c big_tokenizer_4-1.c handle_dir.c\
 		  handle_par_dir.c handle_par.c big_tokenizer_8.c big_tokenizer_9.c\
 		  big_tokenizer_4_tool.c syntax_errorinizer_4.c ft_printer.c ft_export_tools.c\
-		  ft_wildcards_check_bis.c ft_export_bis.c ft_fd_tools_bis.c
+		  ft_wildcards_check_bis.c ft_export_bis.c ft_fd_tools_bis.c\
+		  ft_cd_tools.c
 
 INC = include/minishell.h
 

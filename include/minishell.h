@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 19:30:57 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 20:09:16 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,14 +267,22 @@ int				ft_env(t_info *info, t_big_token *b_tok);
 int				ft_exit(t_info *info, t_big_token *b_tokens);
 int				ft_unset(t_info *info, t_big_token *b_tokens);
 //-----------ft_cd.c------------------------------------------------------------
+int				ft_is_tilde_or_home(char *home, char *dir);
+char			*ft_cd_tilde(t_info *info, char *home, char *dir);
+int				ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir);
+int				ft_do_cd(t_info *info, t_big_token *b);
 int				ft_cd(t_info *info, t_big_token *b_tokens);
+//-----------ft_cd_tools.c------------------------------------------------------
+void			ft_cd_tool(t_info *info, char **home, char **new_dir);
+int				ft_newpwd(t_info *info);
+int				ft_oldpwd(t_info *info);
 //-----------ft_export.c--------------------------------------------------------
 int				ft_exp_err(char *line, int i);
 int				ft_not_valid_id(char *line);
 int				ft_check_export(char *line);
 int				ft_export_new(t_env *env, t_env *tmp, char *line);
 int				ft_export_replace(t_env *env, char *line, int i);
-//-----------ft_export_bis.c--------------------------------------------------------
+//-----------ft_export_bis.c----------------------------------------------------
 int				ft_export_concat(t_env *env, char *line, int i);
 int				ft_if_eg(t_info *info, t_env *tmp, char *line, int i);
 int				ft_ifnot_eg(t_info *info, t_env *tmp, char *line, int i);
