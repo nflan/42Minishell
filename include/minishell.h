@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 19:26:38 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 19:30:57 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ int				ft_check_export(char *line);
 int				ft_export_new(t_env *env, t_env *tmp, char *line);
 int				ft_export_replace(t_env *env, char *line, int i);
 //-----------ft_export_bis.c--------------------------------------------------------
+int				ft_export_concat(t_env *env, char *line, int i);
 int				ft_if_eg(t_info *info, t_env *tmp, char *line, int i);
 int				ft_ifnot_eg(t_info *info, t_env *tmp, char *line, int i);
 int				ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i);

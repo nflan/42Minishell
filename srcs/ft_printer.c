@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:33:29 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 19:13:08 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 19:31:48 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,8 @@ void	print_b_tokens(t_big_token **b_tokens, t_token **tokens, int i, int j)
 		printf("   --->>    ");
 		print_tab(tmp_b->cmd_args);
 		printf("Type: %d\nstart: %d\nlength: %d\npar_pam: %d\nrank: %d\n", tmp_b->type, tmp_b->ind_tok_start, tmp_b->length, tmp_b->par, k);
-		if (tmp_b->fd_in)
-		{
-			printf("It's all fdin:\n");
+		if (tmp_b->fd)
 			print_all_fd(tmp_b->fd);
-		}
 		if (tmp_b->parent)
 			printf("It's got a PARENT!!\n");
 		else if (!(tmp_b->parent))

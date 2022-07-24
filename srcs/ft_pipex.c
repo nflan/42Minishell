@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 18:55:39 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 19:42:27 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens)
 int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid)
 {
 	pid = -1;
-	if (!ft_lead_fd(info, b_tokens) && !info->status)
+	if (!ft_lead_fd(info, b_tokens))
 	{
 		if (ft_change__(info->env, b_tokens))
 			return (info->status = 1, 1);
@@ -113,10 +113,10 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 				return (ft_close_fd(b_tokens), 1);
 			else if (err == 2)
 				info->status = 0;
-			tmp->sc = info->status;
 			i++;
-			info->nb_cmd++;
 		}
+		info->nb_cmd++;
+		tmp->sc = info->status;
 		b_tokens->sc = tmp->sc;
 		ft_close_fd(tmp);
 		tmp = tmp->sibling;
