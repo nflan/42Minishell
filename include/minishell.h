@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 22:47:11 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 22:53:22 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,12 +235,14 @@ int				ft_fdnew(t_big_token *b_toks, t_fd **fd, t_token **t, int r[7]);
 int				ft_create_tmp(t_fd *fd, int hd);
 char			*ft_create_del(t_token **tmp, int *red);
 void			ft_fdadd_back(t_fd **alst, t_fd *new);
+//-----------ft_fd_tools_bis.c--------------------------------------------------
+int				create_del_cond(t_tok_type tok);
 //-----------ft_fd_open.c-------------------------------------------------------
 int				ft_open_all_fdout(t_big_token *b_tokens, t_fd *fd, t_info *inf);
 int				ft_open_all_fdin(t_big_token *b_tokens, t_fd *fd, t_info *inf);
 int				ft_open_fd(t_big_token *b_tokens, t_info *info);
 //-----------ft_fd_close.c------------------------------------------------------
-void			ft_close_all_fd(t_fd *fd, int fd_type);
+void			ft_close_all_fd(t_fd *fd);
 void			ft_close_fd(t_big_token *b_tokens);
 //-----------ft_exec.c----------------------------------------------------------
 int				ft_expanding(t_info *info, t_big_token *b_tokens);
