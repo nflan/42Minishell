@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 19:32:22 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 23:23:47 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	ft_option_echo(t_big_token *b_toks)
 	int	y;
 	int	i;
 
-	i = 1;
+	i = 0;
 	option = 1;
-	if (!b_toks->cmd_args[i])
+	if (!b_toks->cmd_args[i + 1])
 		return (1);
-	while (b_toks->cmd_args[i])
+	while (b_toks->cmd_args[++i])
 	{
 		y = -1;
 		if ((b_toks->cmd_args[i][++y] == '-'
@@ -32,10 +32,11 @@ int	ft_option_echo(t_big_token *b_toks)
 				y++;
 			if (!b_toks->cmd_args[i][y])
 				option++;
+			else
+				return (option);
 		}
 		else
 			break ;
-		i++;
 	}
 	return (option);
 }
