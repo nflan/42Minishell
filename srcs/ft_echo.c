@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 12:44:59 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 18:57:57 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ft_option_echo(t_big_token *b_toks)
 		y = -1;
 		if ((b_toks->cmd_args[i][++y] == '-' && b_toks->cmd_args[i][++y] == 'n'))
 		{
+			printf("allo ?\n");
 			while (b_toks->cmd_args[i][y] && b_toks->cmd_args[i][y] == 'n')
 				y++;
 			if (!b_toks->cmd_args[i][y])

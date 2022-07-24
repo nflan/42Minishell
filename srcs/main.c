@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 19:01:30 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 18:43:15 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_launch_minishell(t_info info, char *word)
 		ft_keep_history(&info, word);
 		if (!info.rdline)
 			break ;
-		if (!ft_init_info(&info))
+		if (info.rdline[0] && !ft_init_info(&info))
 		{
 			if (info.nb_cmd != 10)
 				rec_exec(&info, &info.parse, 0);

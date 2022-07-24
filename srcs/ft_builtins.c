@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:22:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 11:32:01 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 18:14:00 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,45 @@ int	ft_exit(t_info *info, t_big_token *b_tokens)
 	return (ret);
 }
 
+int	ft_env_err(t_big_token *b, int	i)
+{
+	if (i == 1)
+	{
+		ft_putstr_fd_3("env: ‘", b->cmd_args[1],
+			"': No such file or directory\n", 2);
+		return (127);
+	}
+	else if (i == 2)
+	{
+		ft_putstr_fd_3("env: ‘", b->cmd_args[1], "': Permission denied\n", 2);
+		return (126);
+	}
+	return (0);
+}
+
+int	ft_env_error(t_big_token *b)
+{
+	int	i;
+
+	i = 0;
+	if (access(b->cmd_args[1], F_OK))
+		return (ft_env_err(b, 1));
+	else
+	{
+		if (!access(b->cmd_args[1], X_OK | R_OK) && b->cmd_args[1][ft_strlen(b->cmd_args[1]) - 1] == '/')
+		{
+			i = open(b->cmd_args[1], O_DIRECTORY);
+			if (i > 0)
+				return (close(i), ft_env_err(b, 2));
+			else
+				return (ft_env_err(b, 1));
+		}
+		else
+			return (ft_env_err(b, 1));
+	}
+	return (0);
+}
+
 int	ft_env(t_info *info, t_big_token *b_tok)
 {
 	t_env	*print;
@@ -91,7 +130,7 @@ int	ft_env(t_info *info, t_big_token *b_tok)
 
 	print = info->env;
 	line = NULL;
-	if (print)
+	if (print && !b_tok->cmd_args[1])
 	{
 		while (print)
 		{
@@ -105,6 +144,8 @@ int	ft_env(t_info *info, t_big_token *b_tok)
 			print = print->next;
 		}
 	}
+	else if (b_tok->cmd_args[1])
+		return (ft_env_error(b_tok));
 	return (0);
 }
 
@@ -120,7 +161,7 @@ int	ft_unset_name(t_env **tmp, char *name)
 	if (!tmp || !name)
 		return (1);
 	if (ft_wordigit(name))
-		return (ft_exp_err(name, 2));
+		return (ft_exp_err(name, 2), 2);
 	while ((*tmp)->next)
 	{
 		if (!ft_strncmp(name, (*tmp)->next->name, ft_strlen(name) + 1))
@@ -135,25 +176,38 @@ int	ft_unset(t_info *info, t_big_token *b_tokens)
 {
 	t_env	*tmp;
 	t_env	*ptr;
+	int		i;
+	int		check;
+	int		err;
 
-	tmp = info->env;
-	ptr = NULL;
-	if (!tmp || !b_tokens->cmd_args[0])
+	i = 1;
+	err = 0;
+	if (!info->env || !b_tokens->cmd_args[0] || !b_tokens->cmd_args[1])
 		return (1);
-	if (!ft_strncmp(tmp->name, b_tokens->cmd_args[1], ft_strlen(tmp->name) + 1))
+	while (b_tokens->cmd_args[i])
 	{
-		ptr = tmp;
-		tmp = tmp->next;
-		info->env = tmp;
+		ptr = NULL;
+		tmp = info->env;
+		check = ft_unset_name(&tmp, b_tokens->cmd_args[i]);
+		if (!ft_strncmp(tmp->name, b_tokens->cmd_args[i], ft_strlen(tmp->name) + 1))
+		{
+			ptr = tmp;
+			tmp = tmp->next;
+			info->env = tmp;
+		}
+		else if (!check)
+		{
+			ptr = tmp->next;
+			tmp->next = tmp->next->next;
+		}
+		else if (check == 2)
+			err = 1;
+		i++;
+		if (ptr)
+		{
+			ptr->next = NULL;
+			ft_free_env(ptr);
+		}
 	}
-	else if (!ft_unset_name(&tmp, b_tokens->cmd_args[1]))
-	{
-		ptr = tmp->next;
-		tmp->next = tmp->next->next;
-	}
-	else
-		return (1);
-	ptr->next = NULL;
-	ft_free_env(ptr);
-	return (0);
+	return (err);
 }

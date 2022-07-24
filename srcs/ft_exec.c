@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:06:50 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 10:40:05 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 18:44:32 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_expanding(t_info *info, t_big_token *b)
 {
 	int	err;
 
-	err = 1;
+	err = 0;
 	if (!b->par)
 	{
 		if (ft_expand_args(b, info))
@@ -24,10 +24,8 @@ int	ft_expanding(t_info *info, t_big_token *b)
 		if (ft_add_wildcards(b))
 			return (ft_putstr_error("Wildcards error\n"));
 		err = ft_noquote_args(b);
-		if (err == 1)
-			return (1);
-		else if (err == 2)
-			return (2);
+		if (err)
+			return (err);
 	}
 	return (0);
 }
@@ -37,8 +35,6 @@ int	ft_exec_simple(t_info *info, t_big_token *b_tokens)
 	int	err;
 
 	err = 0;
-	if (ft_wash_btoken(info, b_tokens))
-		return (2147483647);
 	if (b_tokens->sc == -1)
 	{
 		if (ft_open_fd(b_tokens, info))

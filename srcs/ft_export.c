@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 15:22:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 17:07:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ int	ft_export_replace(t_env *env, char *line, int i)
 	int	j;
 
 	j = i + 1;
-	if (line[j])
-		while (line[j])
-			j++;
+	if (line)
+		if (line[j])
+			while (line[j])
+				j++;
 	free(env->value);
 	env->value = NULL;
 	if (j > i + 1)

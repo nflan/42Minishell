@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 14:29:50 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 18:23:04 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 int	ft_exit_cmd(t_info *info, char *str, int err)
 {
-	info->status = err;
 	if (err == -4 && str)
 	{
 		ft_putstr_fd_3("minishell: ", str, ": Is a directory\n", 2);
-		info->status = 126;
+		err = 126;
 	}
 	else if (err == 126 && str)
 		ft_putstr_fd_3("minishell: ", str, ": Permission denied\n", 2);
@@ -26,6 +25,7 @@ int	ft_exit_cmd(t_info *info, char *str, int err)
 		ft_putstr_fd_3(NULL, str, ": command not found\n", 2);
 	if (info)
 		ft_free_all(info, info->env);
+	info->status = err;
 	rl_clear_history();
 	exit(info->status);
 }

@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 14:28:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 18:55:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens)
 int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid)
 {
 	pid = -1;
-	if (!ft_lead_fd(info, b_tokens))
+	if (!ft_lead_fd(info, b_tokens) && !info->status)
 	{
 		if (ft_change__(info->env, b_tokens))
 			return (info->status = 1, 1);
@@ -101,10 +101,9 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 	tmp = b_tokens;
 	while (tmp)
 	{
+		info->status = 0;
 		if (ft_open_fd(tmp, info))
 			info->status = 1;
-		if (ft_wash_btoken(info, tmp))
-			return (2147483647);
 		if (tmp->sc == -1)
 		{
 			err = ft_expanding(info, tmp);
@@ -140,8 +139,7 @@ int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 	tmp_b = b_tokens;
 	if (pipe(info->pdes) == -1)
 		return (free(info->pid), ft_error(5, info, NULL));
-	if (ft_exec_pipex(info, b_tokens, info->pid) == 2147483647)
-		return (free(info->pid), 2147483647);
+	ft_exec_pipex(info, b_tokens, info->pid);
 	i = -1;
 	while (++i < info->nb_cmd)
 		waitpid(info->pid[i], &info->pid[i], 0);
