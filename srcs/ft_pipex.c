@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 20:17:41 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 22:19:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens)
 	return (0);
 }
 
-int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid)
+int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, pid_t pid)
 {
 	pid = -1;
 	if (!ft_lead_fd(info, b_tokens))
@@ -73,30 +73,42 @@ int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, int pid)
 		if (ft_change__(info->env, b_tokens))
 			return (info->status = 1, 1);
 		b_tokens->envp = ft_env_to_tab(info->env);
+		ft_manage_sig(info, 0, 0);
 		pid = fork();
-		ft_manage_sig(0);
 		if ((int) pid == -1)
 			return (ft_error(2, info, NULL));
 		else if ((int) pid == 0)
 		{
-			ft_manage_sig(1);
+			ft_manage_sig(info, 1, 0);
 			if (ft_pipex(info, b_tokens))
 				return (ft_free_cmd(b_tokens), 1);
 			ft_exit_cmd(info, NULL, 0);
 		}
-		ft_manage_sig(2);
 	}
 	ft_close_cmd(info, b_tokens, pid);
 	return (info->status);
 }
 
-int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
+int	ft_exec_pipexx(t_info *info, t_big_token *tmp, pid_t *pid, int *i)
+{
+	int	err;
+
+	err = ft_expanding(info, tmp);
+	if (!err)
+		ft_launch_cmd_pipex(info, tmp, pid[*i]);
+	else if (err == 1)
+		return (ft_close_fd(tmp), 1);
+	else if (err == 2)
+		info->status = 0;
+	(*i)++;
+	return (0);
+}
+
+int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, pid_t *pid)
 {
 	int			i;
 	t_big_token	*tmp;
-	int			err;
 
-	err = 0;
 	i = 0;
 	tmp = b_tokens;
 	while (tmp)
@@ -105,46 +117,13 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 		if (ft_open_fd(tmp, info))
 			info->status = 1;
 		if (tmp->sc == -1)
-		{
-			err = ft_expanding(info, tmp);
-			if (!err)
-				ft_launch_cmd_pipex(info, tmp, pid[i]);
-			else if (err == 1)
-				return (ft_close_fd(b_tokens), 1);
-			else if (err == 2)
-				info->status = 0;
-			i++;
-		}
+			if (ft_exec_pipexx(info, tmp, pid, &i))
+				return (1);
 		info->nb_cmd++;
 		tmp->sc = info->status;
 		b_tokens->sc = tmp->sc;
 		ft_close_fd(tmp);
 		tmp = tmp->sibling;
 	}
-	return (info->status);
-}
-
-int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
-{
-	t_big_token	*tmp_b;
-	int			i;
-
-	tmp_b = b_tokens;
-	i = 0;
-	while (tmp_b && ++i)
-		tmp_b = tmp_b->sibling;
-	info->pid = ft_calloc(sizeof(int), i);
-	if (!info->pid)
-		return (1);
-	tmp_b = b_tokens;
-	if (pipe(info->pdes) == -1)
-		return (free(info->pid), ft_error(5, info, NULL));
-	ft_exec_pipex(info, b_tokens, info->pid);
-	i = -1;
-	while (++i < info->nb_cmd)
-		waitpid(info->pid[i], &info->pid[i], 0);
-	if (info->pid)
-		free(info->pid);
-	info->pid = NULL;
 	return (info->status);
 }

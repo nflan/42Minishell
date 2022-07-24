@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 20:17:17 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 22:18:06 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,6 @@ typedef struct s_big_token
 	char				**cmd_args;
 	char				**envp;
 	int					sc;
-//	t_fd				*fd_in;
-//	t_fd				*fd_out;
 	t_fd				*fd;
 	struct s_big_token	*parent;
 	struct s_big_token	*child;
@@ -184,7 +182,7 @@ typedef struct s_info
 	t_env		*env;
 	t_big_token	*parse;
 	t_token		*tokens;
-	int			*pid;
+	pid_t		*pid;
 	char		*home;
 	int			pdes[2];
 	int			tmp[2];
@@ -249,8 +247,6 @@ int				ft_change__(t_env *env, t_big_token *b_tokens);
 int				ft_do_solo(t_info *info, t_big_token *b_tokens, int ret);
 int				ft_launch_cmd(t_info *info, t_big_token *b_tokens);
 
-//int				ft_launch_sibling(t_info *info, t_big_token *b_tokens);
-//int				ft_find_cmd(t_info *info);
 //-----------ft_launch_tools.c--------------------------------------------------
 void			ft_close_pdes(int fd, int pdes);
 void			ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child);
@@ -263,7 +259,6 @@ int				ft_builtins(t_info *info, t_big_token *b_tokens);
 //-----------builtins-----------------------------------------------------------
 int				ft_pwd(t_big_token *b_tok);
 int				ft_env(t_info *info, t_big_token *b_tok);
-//int			ft_exit(t_info *env, int ret);
 int				ft_exit(t_info *info, t_big_token *b_tokens);
 int				ft_unset(t_info *info, t_big_token *b_tokens);
 //-----------ft_cd.c------------------------------------------------------------
@@ -304,12 +299,14 @@ int				ft_perror(char *error, char *str);
 int				ft_perror_free(char *error, char *str, int i);
 char			*ft_get_env_value(t_info *info, char *name);
 
+//----------ft_init_pipex.c-----------------------------------------------------
+int				ft_init_pipex(t_info *info, t_big_token *b_tokens);
 //----------ft_pipex.c----------------------------------------------------------
 int				ft_do_pipex(t_info *info, t_big_token *b_tokens, int ret);
 int				ft_pipex(t_info *info, t_big_token *b_tokens);
-int				ft_launch_cmd_pipex(t_info *info, t_big_token *b_toks, int pid);
-int				ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid);
-int				ft_init_pipex(t_info *info, t_big_token *b_tokens);
+int				ft_launch_cmd_pipex(t_info *info, t_big_token *b_toks, pid_t pid);
+int				ft_exec_pipexx(t_info *in, t_big_token *b, pid_t *pid, int *i);
+int				ft_exec_pipex(t_info *info, t_big_token *b_tokens, pid_t *pid);
 
 //---------ft_here_doc.c--------------------------------------------------------
 int				ft_write_here(t_fd *fd, char **str, int i, int red);
@@ -322,7 +319,7 @@ int				ft_path(t_info *info, t_big_token *b_tokens, int err);
 int				ft_cmd_nopath(t_big_token *b_tokens);
 int				ft_is_cmd(t_big_token *b_tokens, t_info *info);
 int				ft_commanding(t_info *info, t_big_token *b_tokens);
-//---------ft_global_bis.c----------------------------------------------------------
+//---------ft_global_bis.c-------\\\--------------------------------------------
 int				ft_command(t_info *info, t_big_token *b_tokens);
 char			*strjoin_4(char *str1, char *str2);
 //---------ft_tools2.c----------------------------------------------------------
@@ -331,10 +328,10 @@ int				ft_error(int i, t_info *info, t_big_token *b_tokens);
 void			ft_write(char *str);
 int				ft_first_error(char *av1);
 
-//-----------------ft_free.c----------------------------------------------------
+//-----------------ft_signal.c--------------------------------------------------
 void			ft_signal(int sig);
 void			ft_cmd_signal(int sig);
-void			ft_manage_sig(int sig);
+void			ft_manage_sig(t_info *info, int sig, pid_t pid);
 
 //-----------------ft_free.c----------------------------------------------------
 void			ft_free_wildcards(t_wildcards *wd);

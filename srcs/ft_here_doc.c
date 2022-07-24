@@ -6,13 +6,13 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 18:50:40 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 21:40:45 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-extern int g_sc;
+extern int	g_sc;
 
 int	ft_write_here(t_fd *fd, char **str, int i, int red)
 {
@@ -65,14 +65,11 @@ int	ft_fill_here(t_fd *fd, int red)
 
 void	ft_sighere(int sig)
 {
-//	printf("sig = %d\n", sig);
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
 		g_sc = 130;
 		close(0);
-//		rl_redisplay();
-//		rl_replace_line(, 0);
 	}
 }
 
