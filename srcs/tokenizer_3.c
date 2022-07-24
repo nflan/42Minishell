@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 18:32:39 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 15:50:52 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,20 @@ int	add_tok(t_token **tokens, int st, int len, t_tok_type type)
 {
 	if (type == TOK_WORD_NULL_S || type == TOK_WORD_NULL_D)
 	{
-	if (type == TOK_WORD_NULL_S)
-	{
-		if (add_tok_last(tokens, TOK_WORD_S_QUOTED, 0, st))
-			return (ft_putstr_error("detect_tokens "));
-		if (add_tok_last(tokens, TOK_S_QUOTER, len, st))
-			return (ft_putstr_error("detect_tokens "));
-	}
-	else if (type == TOK_WORD_NULL_D)
-	{
-		if (add_tok_last(tokens, TOK_WORD_D_QUOTED, 0, st))
-			return (ft_putstr_error("detect_tokens "));
-		if (add_tok_last(tokens, TOK_D_QUOTER, len, st))
-			return (ft_putstr_error("detect_tokens "));
-	}
+		if (type == TOK_WORD_NULL_S)
+		{
+			if (add_tok_last(tokens, TOK_WORD_S_QUOTED, 0, st))
+				return (ft_putstr_error("detect_tokens "));
+			if (add_tok_last(tokens, TOK_S_QUOTER, len, st))
+				return (ft_putstr_error("detect_tokens "));
+		}
+		else if (type == TOK_WORD_NULL_D)
+		{
+			if (add_tok_last(tokens, TOK_WORD_D_QUOTED, 0, st))
+				return (ft_putstr_error("detect_tokens "));
+			if (add_tok_last(tokens, TOK_D_QUOTER, len, st))
+				return (ft_putstr_error("detect_tokens "));
+		}
 	}
 	else
 	{
@@ -107,7 +107,7 @@ int	fill_tok_value(t_token **tok, char *str)
 		{
 			tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
 			if (!tmp->value)
-				return (ft_putstr_error("Error in ft_strncpy in fill_tok_value"));
+				return (ft_putstr_error("Error while creating tokens"));
 			tmp = tmp->next;
 		}
 	}

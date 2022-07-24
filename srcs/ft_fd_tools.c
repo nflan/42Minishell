@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:58 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 16:23:18 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 19:24:05 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,11 @@ char	*ft_create_del(t_token **tmp, int itscl[5])
 	del = NULL;
 	if (tmp[0])
 	{
-		while (tmp[0] && (tmp[0]->token == TOK_WORD || tmp[0]->token == TOK_WORD_S_QUOTED || tmp[0]->token == TOK_WORD_D_QUOTED || tmp[0]->token == TOK_WORD_NULL_S || tmp[0]->token == TOK_WORD_NULL_D || tmp[0]->token == TOK_D_QUOTER || tmp[0]->token == TOK_S_QUOTER || tmp[0]->token == TOK_QUOTER))
+		while (tmp[0] && create_del_cond(tmp[0]->token))
 		{
-			if (tmp[0]->token != TOK_QUOTER && tmp[0]->token != TOK_D_QUOTER && tmp[0]->token != TOK_S_QUOTER)
-			del = ft_strjoin_free(del, tmp[0]->value, 1);
+			if (tmp[0]->token != TOK_QUOTER && tmp[0]->token != TOK_D_QUOTER
+				&& tmp[0]->token != TOK_S_QUOTER)
+				del = ft_strjoin_free(del, tmp[0]->value, 1);
 			if (!del)
 				return (NULL);
 			if (itscl[1] != 8)

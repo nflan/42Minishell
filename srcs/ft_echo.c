@@ -25,7 +25,8 @@ int	ft_option_echo(t_big_token *b_toks)
 	while (b_toks->cmd_args[i])
 	{
 		y = -1;
-		if ((b_toks->cmd_args[i][++y] == '-' && b_toks->cmd_args[i][++y] == 'n'))
+		if ((b_toks->cmd_args[i][++y] == '-'
+			&& b_toks->cmd_args[i][++y] == 'n'))
 		{
 			printf("allo ?\n");
 			while (b_toks->cmd_args[i][y] && b_toks->cmd_args[i][y] == 'n')
