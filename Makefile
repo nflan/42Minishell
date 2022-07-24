@@ -6,10 +6,10 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 17:27:46 by nflan             #+#    #+#              #
-#    Updated: 2022/07/24 21:30:21 by nflan            ###   ########.fr        #
-#    Updated: 2022/07/24 20:13:50 by omoudni          ###   ########.fr        #
+#    Updated: 2022/07/24 22:23:45 by omoudni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 vpath %.h libft
 vpath ft_%.c libft
@@ -20,7 +20,7 @@ OBJ_DIR = bin/
 INC_DIR = include/
 LIB_DIR = libft/
 
-sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
+sources = main.c ft_cd.c ft_export.c ft_tools.c \
 		  ft_here_doc.c ft_pipex.c ft_global.c ft_tools2.c\
 		  big_tokenizer_1.c big_tokenizer_2.c big_tokenizer_3.c parser.c\
 		  big_tokenizer_3_tool.c tokenizer_1.c tokenizer_1_tool.c tokenizer_3.c\
@@ -36,7 +36,8 @@ sources = main.c ft_cd.c ft_export.c ft_tools.c ft_builtins.c\
 		  handle_par_dir.c handle_par.c big_tokenizer_8.c big_tokenizer_9.c\
 		  big_tokenizer_4_tool.c syntax_errorinizer_4.c ft_printer.c ft_export_tools.c\
 		  ft_wildcards_check_bis.c ft_export_bis.c ft_fd_tools_bis.c\
-		  ft_cd_tools.c ft_global_bis.c ft_init_pipex.c
+		  ft_cd_tools.c ft_global_bis.c ft_builtins_1.c ft_builtins_2.c ft_builtins_3.c\
+		  ft_init_pipex.c
 
 INC = include/minishell.h
 
