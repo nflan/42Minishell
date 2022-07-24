@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:29:38 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 19:49:43 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 10:54:12 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_is_cmd(t_big_token *b_tokens, t_info *info)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (!ft_get_env_value(info, "PATH"))
 		return (ft_cmd_nopath(b_tokens));
 	while (b_tokens->cmd_args[0][++i])
