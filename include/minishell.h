@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 19:30:57 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 20:17:17 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,10 +309,14 @@ int				ft_here(t_fd *fd, int red);
 char			**ft_env_to_tab(t_env *env);
 
 //---------ft_global.c----------------------------------------------------------
-int				ft_cmd_path(t_info *info, t_big_token *b_tokens);
+int				ft_change_cmd(t_big_token *b_tokens, char *tofree);
+int				ft_path(t_info *info, t_big_token *b_tokens, int err);
+int				ft_cmd_nopath(t_big_token *b_tokens);
+int				ft_is_cmd(t_big_token *b_tokens, t_info *info);
 int				ft_commanding(t_info *info, t_big_token *b_tokens);
+//---------ft_global_bis.c----------------------------------------------------------
 int				ft_command(t_info *info, t_big_token *b_tokens);
-
+char			*strjoin_4(char *str1, char *str2);
 //---------ft_tools2.c----------------------------------------------------------
 void			ft_error_2(int i, t_info *info, t_big_token *b_tokens);
 int				ft_error(int i, t_info *info, t_big_token *b_tokens);

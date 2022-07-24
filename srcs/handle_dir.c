@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:56:02 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 16:25:12 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 20:06:15 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,7 @@ int	handle_dir_2(t_token **t, int (*itscl)[6], int step, t_big_token **b)
 	{
 		if (ft_fdnew(*b, &((*b)->fd), t, *itscl))
 			return (1);
-/*		if ((*itscl)[1] == 1 || (*itscl)[1] == 2)
-		{
-			if (ft_fdnew(*b, &((*b)->fd_in), t, *itscl))
-				return (1);
-		}
-		else
-			if (ft_fdnew(*b, &((*b)->fd_out), t, *itscl))
-				return (1);
-*/		((*itscl)[2]) = 0;
+		((*itscl)[2]) = 0;
 		((*itscl)[0])++;
 	}
 	if (step == 2)

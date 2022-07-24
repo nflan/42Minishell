@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:29:38 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 18:34:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 20:13:14 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,29 +100,4 @@ int	ft_commanding(t_info *info, t_big_token *b_tokens)
 	ft_free_split(b_tokens->envp);
 	b_tokens->envp = ft_env_to_tab(info->env);
 	return (err);
-}
-
-int	ft_command(t_info *info, t_big_token *b_tokens)
-{
-	if (b_tokens->cmd_args[0][0] == '\0')
-		return (127);
-	if (!b_tokens->cmd_args || !ft_strlen(b_tokens->cmd_args[0]))
-		return (1);
-	else if (ft_is_cmd(b_tokens, info) == 2)
-		return (-4);
-	else if (!ft_is_cmd(b_tokens, info))
-	{
-		if (!access(b_tokens->cmd_args[0], F_OK))
-		{
-			if (ft_cmd_nopath(b_tokens)
-				|| access(b_tokens->cmd_args[0], X_OK | R_OK))
-				return (126);
-		}
-		return (0);
-	}
-	else if (ft_get_env_value(info, "PATH"))
-		return (ft_path(info, b_tokens, 127));
-	else
-		return (127);
-	return (0);
 }
