@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 19:42:27 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 20:17:41 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid)
 {
 	int			i;
 	t_big_token	*tmp;
-	int	err;
+	int			err;
 
 	err = 0;
 	i = 0;

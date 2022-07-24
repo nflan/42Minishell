@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 15:52:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 20:18:06 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 20:19:53 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i)
 	int	a;
 
 	a = 0;
-	j = 1;
-	while (b_tok->cmd_args[j])
+	j = 0;
+	while (b_tok->cmd_args[++j])
 	{
 		i = 0;
 		if (!ft_check_export(b_tok->cmd_args[j]))
@@ -82,7 +82,6 @@ int	ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i)
 		}
 		else
 			a = 1;
-		j++;
 	}
 	return (a);
 }

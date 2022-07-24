@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 19:58:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 20:07:24 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_cd_tilde(t_info *info, char *home, char *dir)
 	tmp = NULL;
 	if (!dir)
 		return (NULL);
-	if (dir[1] == '/') //de meme -> oui parce que si tu fais ~/Documents, le bash va chercher au home alors que si t'as un + ou un -, il part du repertoire courant ou precedent. D'ou le fait que je fasse un join du home puis du path qu'on envoi +1, pour enlever le ~
+	if (dir[1] == '/')
 		new_dir = ft_strjoin(home, dir + 1);
 	else if (dir[1] == '+' || dir[1] == '-')
 	{
@@ -52,43 +52,9 @@ char	*ft_cd_tilde(t_info *info, char *home, char *dir)
 	return (new_dir);
 }
 
-int	ft_newpwd(t_info *info)
-{
-	t_env	*tmp;
-	char	*pwd;
-
-	pwd = NULL;
-	tmp = info->env;
-	pwd = getcwd(pwd, 0);
-	if (!pwd || !tmp)
-		return (1);
-	while (tmp && ft_strncmp(tmp->name, "PWD", 4))
-		tmp = tmp->next;
-	if (!tmp)
-		return (free(pwd), 0);
-	ft_export_replace(tmp, pwd, -1);
-	free(pwd);
-	return (0);
-}
-
-int	ft_oldpwd(t_info *info)
-{
-	t_env	*tmp;
-
-	tmp = info->env;
-	if (!tmp)
-		return (1);
-	while (tmp && ft_strncmp(tmp->name, "OLDPWD", 7))
-		tmp = tmp->next;
-	if (tmp)
-		return (ft_export_replace(tmp, ft_get_env_value(info, "PWD"), -1));
-	else
-		return (0);
-}
-
 int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 {
-	if (!strncmp(arg, "~", 2) && !home) //pk tu compares tilde toute seule aved 2? -> pour eviter comparer "~\0" car potentiellement, je peux avoir "~+" ou "~/" etc
+	if (!strncmp(arg, "~", 2) && !home)
 		new_dir = ft_strdup(info->home);
 	else if (!strncmp(arg, "~", 2) && home)
 		new_dir = ft_strdup(home);
@@ -104,41 +70,29 @@ int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 	return (free(new_dir), 0);
 }
 
-int	ft_do_cd(t_info *info, t_big_token *b_tokens)
+int	ft_do_cd(t_info *info, t_big_token *b)
 {
-	char	*err;
-
-	err = NULL;
-	if (!ft_strncmp(b_tokens->cmd_args[1], "-", 2))
+	if (!ft_strncmp(b->cmd_args[1], "-", 2))
 	{
 		if (chdir(ft_get_env_value(info, "OLDPWD")))
-			return (ft_perror("minishell: cd: ", ft_get_env_value(info, "OLDPWD")));
-		ft_putstr_fd(ft_get_env_value(info, "OLDPWD"), b_tokens->fdout);
-		ft_putstr_fd("\n", b_tokens->fdout);
+			return (ft_perror("minishell: cd: ",
+					ft_get_env_value(info, "OLDPWD")));
+		ft_putstr_fd(ft_get_env_value(info, "OLDPWD"), b->fdout);
+		ft_putstr_fd("\n", b->fdout);
 	}
 	else
 	{
-		if (b_tokens->cmd_args[1][0] != '\0')
+		if (b->cmd_args[1][0] != '\0')
 		{
-			if (access(b_tokens->cmd_args[1], F_OK))
-			{
-				err = ft_strjoiiin("minishell: cd: ", b_tokens->cmd_args[1],": No such file or directory\n");
-				if (!err)
-					return (ft_putstr_error("Malloc error\n"));
-				return (ft_putstr_error(err), free(err), 1);
-			}
-			if (chdir(b_tokens->cmd_args[1]))
-				return (ft_perror("minishell: cd: ", b_tokens->cmd_args[1]));
+			if (access(b->cmd_args[1], F_OK))
+				return (ft_putstr_fd_3("minishell: cd: ",
+						b->cmd_args[1], ": No such file or directory\n", 2), 1);
+			if (chdir(b->cmd_args[1]))
+				return (ft_perror("minishell: cd: ", b->cmd_args[1]));
 		}
 	}
 	ft_oldpwd(info);
 	return (0);
-}
-
-void	ft_cd_tool(t_info *info, char **home, char **new_dir)
-{
-	*home = ft_get_env_value(info, "HOME");
-	*new_dir = NULL;
 }
 
 int	ft_cd(t_info *info, t_big_token *b_tokens)
