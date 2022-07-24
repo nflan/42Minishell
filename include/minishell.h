@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 17:23:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 18:40:58 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,14 @@ int				ft_unset(t_info *info, t_big_token *b_tokens);
 int				ft_cd(t_info *info, t_big_token *b_tokens);
 //-----------ft_export.c--------------------------------------------------------
 int				ft_exp_err(char *line, int i);
+int				ft_not_valid_id(char *line);
+int				ft_check_export(char *line);
+int				ft_export_new(t_env *env, t_env *tmp, char *line);
 int				ft_export_replace(t_env *env, char *line, int i);
+//-----------ft_export_bis.c--------------------------------------------------------
+int				ft_if_eg(t_info *info, t_env *tmp, char *line, int i);
+int				ft_ifnot_eg(t_info *info, t_env *tmp, char *line, int i);
+int				ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i);
 int				ft_export(t_info *info, t_big_token *b_tokens);
 //-----------ft_export_tools.c--------------------------------------------------
 void			ft_export_solo(t_env *env, t_big_token *b_tokens);
@@ -322,9 +329,13 @@ void			ft_free_env(t_env *env);
 
 // WILDCARDS
 //-----------------ft_wildcards_check.c-----------------------------------------
+void			init_wc(int *i, char **pwd);
 int				ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i);
 int				ft_add_wildcards(t_big_token *b_tokens);
 int				ft_keep(char *str, char *dir, int *i, int j);
+int				ft_dk_util(char **tmp, char *dir, int *i, int j);
+
+//-----------------ft_wildcards_check_bis.c-----------------------------------------
 int				ft_do_keep(char *str, t_wildcards *wd, int type, int i);
 int				ft_wd_nb_args(t_wildcards *wd, t_big_token *b, int i, int t);
 
@@ -498,10 +509,22 @@ void			print_all_child(t_big_token **b, t_token **toks, int i, int j);
 int				ft_check_dol(char *str);
 int				ft_check_expand(t_token *token, int start, int length);
 int				ft_check_exp_line(char *str);
-//-----------ft_expand_args.c---------------------------------------------------
+//-----------ft_expand_args_1.c---------------------------------------------------
+int				ra_sub(char **tmpj, char *cmd_arg);
+int				ft_reduce_args(t_big_token *b, size_t i);
+int				nqa_tool(t_big_token *b_tokens);
 int				ft_noquote_args(t_big_token *b_tokens);
 char			*ft_expanded_value(t_info *info, char *tmp);
-int				ft_expand_args(t_big_token *b_tokens, t_info *info);
+//-----------ft_expand_args_2.c---------------------------------------------------
+int				ft_splitlen(char *str);
+char			*ms_tool(int *a, char **str, int b, int type);
+char			*ft_minisplit(char *str);
+int				resplit_tool(int (*jl)[2], char **tmp, char *to_copy, int type);
+void			resplit_tool_2(int (*jl)[2], int i, char ***cmd_args, int step);
+//-----------ft_expand_args_3.c---------------------------------------------------
+int				resplit_tool_3(char ***tmp, int len1, int len2);
+int				ft_resplit(t_big_token *b, int *i, char *str);
+int				ft_expand_args(t_big_token *b, t_info *info);
 //-----------ft_expand_line.c---------------------------------------------------
 char			*ft_noquote_line(char *line);
 int				ft_get_length(char *str, int length, int t);
