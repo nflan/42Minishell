@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:12:44 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 16:37:39 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 22:20:28 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,5 @@ void	ft_close_fd(t_big_token *b_tokens)
 	{
 		if (b_tokens->fd)
 			ft_close_all_fd(b_tokens->fd);
-//		if (b_tokens->fd_in)
-//			ft_close_all_fd(b_tokens->fd_in, 0);
 	}
 }
