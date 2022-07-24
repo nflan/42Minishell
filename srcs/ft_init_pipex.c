@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 21:28:26 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 22:18:45 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 22:35:18 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 	i = -1;
 	while (++i < info->nb_cmd)
 		waitpid(info->pid[i], &info->pid[i], 0);
-	ft_manage_sig(info, 2, info->pid[i]);
+	ft_manage_sig(info, 2, info->status);
 	if (info->pid)
 		free(info->pid);
 	info->pid = NULL;
