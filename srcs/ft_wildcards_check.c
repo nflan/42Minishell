@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:31:10 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 15:46:49 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 23:04:07 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,28 +86,25 @@ int	ft_keep(char *str, char *dir, int *i, int j)
 	return (0);
 }
 
-int	ft_dk_util(char **tmp, char *dir, int *i, int j)
+int	ft_dk_util(char **str, char *dir, int *i, int j)
 {
-	char	*str;
-
-	str = *tmp;
-	while (*str)
+	while (**str)
 	{
-		if (*str == '*' || *str == '/')
+		if (**str == '*' || **str == '/')
 		{
-			while (*str == '/')
+			while (**str == '/')
 			{
-				str++;
-				if (*str && *str != '/')
+				(*str)++;
+				if (**str && **str != '/')
 					return (1);
 			}
-			while (*str == '*')
-				str++;
-			if (!*str)
+			while (**str == '*')
+				(*str)++;
+			if (!**str)
 				return (-1);
 		}
-		else if (!ft_keep(str, dir, i, j))
-			str++;
+		else if (!ft_keep(*str, dir, i, j))
+			(*str)++;
 		else
 			return (1);
 	}
