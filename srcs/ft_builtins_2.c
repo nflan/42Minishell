@@ -6,18 +6,18 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 21:41:14 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 21:52:36 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 22:30:06 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_env_err(t_big_token *b, int	i)
+int	ft_env_err(t_big_token *b, int i)
 {
 	if (i == 1)
 	{
 		ft_putstr_fd_3("env: ‘", b->cmd_args[1],
-				"': No such file or directory\n", 2);
+			"': No such file or directory\n", 2);
 		return (127);
 	}
 	else if (i == 2)
@@ -37,8 +37,8 @@ int	ft_env_error(t_big_token *b)
 		return (ft_env_err(b, 1));
 	else
 	{
-		if (!access(b->cmd_args[1], X_OK | R_OK) 
-				&& b->cmd_args[1][ft_strlen(b->cmd_args[1]) - 1] == '/')
+		if (!access(b->cmd_args[1], X_OK | R_OK)
+			&& b->cmd_args[1][ft_strlen(b->cmd_args[1]) - 1] == '/')
 		{
 			i = open(b->cmd_args[1], O_DIRECTORY);
 			if (i > 0)

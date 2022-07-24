@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 21:42:30 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 21:45:19 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 22:34:21 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	unset_tool(t_env **ptr, t_env **tmp, t_info **info, int type)
 
 int	ft_unset(t_info *info, t_big_token *b_tokens)
 {
-	t_env	*tmp;
+	t_env	*t;
 	t_env	*ptr;
 	int		i;
 	int		check;
@@ -47,16 +47,16 @@ int	ft_unset(t_info *info, t_big_token *b_tokens)
 	while (b_tokens->cmd_args[++i])
 	{
 		ptr = NULL;
-		tmp = info->env;
-		check = ft_unset_name(&tmp, b_tokens->cmd_args[i]);
-		if (!ft_strncmp(tmp->name, b_tokens->cmd_args[i], ft_strlen(tmp->name) + 1))
-			unset_tool(&ptr, &tmp, &info, 1);
+		t = info->env;
+		check = ft_unset_name(&t, b_tokens->cmd_args[i]);
+		if (!ft_strncmp(t->name, b_tokens->cmd_args[i], ft_strlen(t->name) + 1))
+			unset_tool(&ptr, &t, &info, 1);
 		else if (!check)
-			unset_tool(&ptr, &tmp, &info, 2);
+			unset_tool(&ptr, &t, &info, 2);
 		else if (check == 2)
 			err = 1;
 		if (ptr)
-			unset_tool(&ptr, &tmp, &info, 3);
+			unset_tool(&ptr, &t, &info, 3);
 	}
 	return (err);
 }
