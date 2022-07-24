@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 15:14:47 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/24 15:22:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ int	ft_export_replace(t_env *env, char *line, int i)
 
 int	ft_export_concat(t_env *env, char *line, int i)
 {
-
+	env->value = ft_strjoin_free(env->value, line + i + 1, 1);
+	if (!env->value)
+		return (1);
 	return (0);
 }
 
@@ -98,9 +100,12 @@ int	ft_if_eg(t_info *info, t_env *tmp, char *line, int i)
 	{
 		while (tmp && ft_strncmp(tmp->name, line, i) != -43)
 				tmp = tmp->next;
-		if (ft_export_concat(tmp, line, i))
-			return (1);
-		return (0);
+		if (tmp)
+		{
+			if (ft_export_concat(tmp, line, i))
+				return (1);
+			return (0);
+		}
 	}
 	else
 		while (tmp && ft_strncmp(tmp->name, line, i + 1) != -61)
