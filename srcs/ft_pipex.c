@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:11:06 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/25 00:36:39 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/25 12:44:05 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,29 @@ int	ft_pipex(t_info *info, t_big_token *b_tokens)
 	return (0);
 }
 
-int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, pid_t pid)
+int	ft_launch_cmd_pipex(t_info *info, t_big_token *b_tokens, pid_t *pid)
 {
-	pid = -1;
+	*pid = -1;
 	if (!ft_lead_fd(info, b_tokens))
 	{
 		if (ft_change__(info->env, b_tokens))
 			return (info->status = 1, 1);
 		b_tokens->envp = ft_env_to_tab(info->env);
 		ft_manage_sig(info, 0, 0);
-		pid = fork();
-		if ((int) pid == -1)
+		*pid = fork();
+		if ((int) *pid == -1)
 			return (ft_error(2, info, NULL));
-		else if ((int) pid == 0)
+		else if ((int) *pid == 0)
 		{
 			ft_manage_sig(info, 1, 0);
+			if (ft_open_fd(b_tokens, info))
+				ft_exit_cmd(info, NULL, 1);
 			if (ft_pipex(info, b_tokens))
 				return (ft_free_cmd(b_tokens), 1);
 			ft_exit_cmd(info, NULL, 0);
 		}
-		info->status = 0;
 	}
-	ft_close_cmd(info, b_tokens, pid);
+	ft_close_cmd(info, b_tokens, *pid);
 	return (info->status);
 }
 
@@ -96,7 +97,7 @@ int	ft_exec_pipexx(t_info *info, t_big_token *tmp, pid_t *pid, int *i)
 
 	err = ft_expanding(info, tmp);
 	if (!err)
-		ft_launch_cmd_pipex(info, tmp, pid[*i]);
+		ft_launch_cmd_pipex(info, tmp, &pid[*i]);
 	else if (err == 1)
 		return (ft_close_fd(tmp), 1);
 	else if (err == 2)
@@ -114,16 +115,12 @@ int	ft_exec_pipex(t_info *info, t_big_token *b_tokens, pid_t *pid)
 	tmp = b_tokens;
 	while (tmp)
 	{
-		info->status = 0;
-		if (ft_open_fd(tmp, info))
-			info->status = 1;
-		info->nb_cmd++;
 		if (tmp->sc == -1)
 			if (ft_exec_pipexx(info, tmp, pid, &i))
 				return (1);
+		info->nb_cmd++;
 		tmp->sc = info->status;
 		b_tokens->sc = tmp->sc;
-		ft_close_fd(tmp);
 		tmp = tmp->sibling;
 	}
 	return (info->status);

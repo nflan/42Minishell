@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:13:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/21 12:48:37 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/25 12:19:25 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
 	}
 	else
 	{
-		waitpid(child, &child, 0);
-		if (WIFEXITED(child))
-			info->status = WEXITSTATUS(child);
 		ft_close_pdes(info->pdes[1], 1);
 		ft_close_pdes(info->pdes[0], 0);
 	}

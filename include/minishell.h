@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 23:51:22 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/25 12:38:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,7 +316,7 @@ char			*ft_get_env_value(t_info *info, char *name);
 //----------ft_pipex.c----------------------------------------------------------
 int				ft_do_pipex(t_info *info, t_big_token *b_tokens, int ret);
 int				ft_pipex(t_info *info, t_big_token *b_tokens);
-int				ft_launch_cmd_pipex(t_info *info, t_big_token *b_toks, int pid);
+int				ft_launch_cmd_pipex(t_info *info, t_big_token *b, pid_t *pid);
 int				ft_exec_pipex(t_info *info, t_big_token *b_tokens, int *pid);
 int				ft_init_pipex(t_info *info, t_big_token *b_tokens);
 //---------ft_here_doc.c--------------------------------------------------------
