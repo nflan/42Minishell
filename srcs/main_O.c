@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:08:35 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/23 16:46:13 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 23:25:57 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ extern int	g_sc;
 
 int	main_agent_o(t_info *info)
 {
+	int	err;
 	int	btok_info[2];
 
+	err = 0;
 	if (detect_tokens(info))
 		return (1);
 	if (fill_tok_value(&info->tokens, info->rdline))
@@ -27,9 +29,6 @@ int	main_agent_o(t_info *info)
 		return (ft_putstr_error("minishell: syntax error\n"), 2);
 	btok_info[0] = 0;
 	btok_info[1] = len_ll_list(info->tokens);
-	if (parse(&info->parse, info, btok_info))
-		return (1);
-	if (info->nb_cmd == 10)
-		print_all_everything(&info->parse, &info->tokens);
-	return (0);
+	err = parse(&info->parse, info, btok_info);
+	return (err);
 }

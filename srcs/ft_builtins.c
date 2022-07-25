@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 21:42:30 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 23:44:03 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/25 21:02:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,24 @@ void	unset_tool(t_env **ptr, t_env **tmp, t_info **info, int type)
 
 int	ft_pwd(t_big_token *b_tok)
 {
-	ft_putstr_fd(ft_get_env_value(b_tok->info, "PWD"), b_tok->fdout);
+	char	*tmp;
+
+	if (b_tok->cmd_args[1] && b_tok->cmd_args[1][0] == '-')
+		return (ft_putstr_error("minishell: pwd with option\n"), 2);
+	tmp = NULL;
+	tmp = getcwd(tmp, 0);
+	if (!tmp && ft_get_env_value(b_tok->info, "PWD"))
+	{
+		tmp = ft_get_env_value(b_tok->info, "PWD");
+		ft_putstr_fd(tmp, b_tok->fdout);
+		ft_putstr_fd("\n", b_tok->fdout);
+		return (0);
+	}
+	else if (!tmp)
+		return (ft_putstr_error("minishell: PWD error\n"));
+	ft_putstr_fd(tmp, b_tok->fdout);
 	ft_putstr_fd("\n", b_tok->fdout);
-	return (0);
+	return (free(tmp), 0);
 }
 
 int	ft_unset_name(t_env **tmp, char *name)
@@ -45,6 +60,8 @@ int	ft_unset_name(t_env **tmp, char *name)
 		return (1);
 	if (ft_wordigit(name))
 		return (ft_exp_err(name, 2), 2);
+	if (!ft_strncmp((*tmp)->name, name, ft_strlen((*tmp)->name) + 1))
+		return (3);
 	while ((*tmp)->next)
 	{
 		if (!ft_strncmp(name, (*tmp)->next->name, ft_strlen(name) + 1))
@@ -55,29 +72,29 @@ int	ft_unset_name(t_env **tmp, char *name)
 	return (1);
 }
 
-int	ft_unset(t_info *info, t_big_token *b_tokens)
+int	ft_unset(t_info *info, t_big_token *b_tokens, int err)
 {
 	t_env	*t;
 	t_env	*ptr;
 	int		i;
 	int		check;
-	int		err;
 
 	i = 0;
-	err = 0;
 	if (!info->env || !b_tokens->cmd_args[0] || !b_tokens->cmd_args[1])
 		return (1);
+	if (b_tokens->cmd_args[1] && b_tokens->cmd_args[1][0] == '-')
+		return (ft_putstr_error("minishell: unset with option\n"), 2);
 	while (b_tokens->cmd_args[++i])
 	{
 		ptr = NULL;
 		t = info->env;
 		check = ft_unset_name(&t, b_tokens->cmd_args[i]);
-		if (!ft_strncmp(t->name, b_tokens->cmd_args[i], ft_strlen(t->name) + 1))
-			unset_tool(&ptr, &t, &info, 1);
-		else if (!check)
+		if (!check)
 			unset_tool(&ptr, &t, &info, 2);
 		else if (check == 2)
 			err = 1;
+		else if (check == 3)
+			unset_tool(&ptr, &t, &info, 1);
 		if (ptr)
 			unset_tool(&ptr, &t, &info, 3);
 	}

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 18:29:31 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 20:00:58 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/26 00:24:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,30 +79,24 @@ char	*ft_minisplit(char *str)
 
 int	resplit_tool(int (*jl)[2], char **tmp, char *to_copy, int type)
 {
-	int	k;
 	int	j;
 
 	j = (*jl)[0];
-	k = -1;
 	if (type == 1)
 		tmp[j] = ft_strdup(to_copy);
 	else if (type == 2)
 		tmp[j] = ft_minisplit(to_copy);
 	else if (type == 3)
-		tmp[j] = ft_strdup(to_copy);
+		tmp[j] = NULL;
 	if (!tmp[j])
-	{
-		while (++k < j)
-			free(tmp[k]);
 		return (1);
-	}
 	((*jl)[0])++;
 	if (type == 3)
 		((*jl)[1])++;
 	return (0);
 }
 
-void	resplit_tool_2(int (*jl)[2], int i, char ***cmd_args, int step)
+void	resplit_tool_2(int (*jl)[2], int i, t_big_token *b, int step)
 {
 	if (step == 1)
 	{
@@ -110,5 +104,5 @@ void	resplit_tool_2(int (*jl)[2], int i, char ***cmd_args, int step)
 		(*jl)[1] = i + 1;
 	}
 	else
-		ft_free_split(*cmd_args);
+		ft_free_split(b->cmd_args);
 }

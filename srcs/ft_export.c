@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:32:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 19:31:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/25 19:08:41 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,18 @@ int	ft_check_export(char *line)
 		return (1);
 	if (ft_isdigit(line[0]))
 		return (ft_exp_err(line, 1));
-	if (ft_not_valid_id(line))
-		return (1);
-	return (0);
+	return (ft_not_valid_id(line));
 }
 
 int	ft_export_new(t_env *env, t_env *tmp, char *line)
 {
+	t_env	*new;
+
+	new = env;
 	tmp = ft_envnew(line);
 	if (!tmp)
 		return (1);
-	ft_envadd_back(&env, tmp);
+	ft_envadd_back(&new, tmp);
 	return (0);
 }
 

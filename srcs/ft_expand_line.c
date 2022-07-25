@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:41 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 21:36:37 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 00:42:36 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ char	*ft_noquote_line(char *line)
 	ij[0] = -1;
 	ij[1] = 0;
 	new = NULL;
-	if (!line)
-		return (NULL);
 	new = ft_calloc(sizeof(char), ft_strlen_nq(line) + 1);
 	if (!new)
-		return (ft_putstr_error("Malloc error\n"), NULL);
+		return (free(line), NULL);
 	if (!ft_strncmp(line, "\"\"", 3))
 		return (free(line), new);
 	while (line[++ij[0]])
@@ -105,17 +103,17 @@ char	*ft_expand_line(char *str, int *i, t_info *info, int t)
 
 	tmp[0] = ft_substr(str, 0, *i - 1);
 	if (!tmp[0])
-		return (NULL);
+		return (free(str), NULL);
 	length = ft_get_length(str, *i, t);
 	tmp[3] = ft_substr(str, *i, length);
 	if (!tmp[3])
-		return (free(tmp[0]), NULL);
+		return (free(str), free(tmp[0]), NULL);
 	tmp[1] = ft_expanded_value(info, tmp[3]);
 	if (!tmp[1])
-		return (free(tmp[0]), NULL);
+		return (free(str), free(tmp[0]), NULL);
 	tmp[2] = ft_substr(str, length + *i, ft_strlen(str) + ft_strlen(tmp[1]));
 	if (!tmp[2])
-		return (free(tmp[0]), free(tmp[1]), NULL);
+		return (free(str), free(tmp[0]), free(tmp[1]), NULL);
 	free(str);
 	*i = *i + ft_strlen(tmp[1]) - 1;
 	return (ft_strjoiiin_free(tmp[0], tmp[1], tmp[2], 4));

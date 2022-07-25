@@ -6,7 +6,7 @@
 #    By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 17:27:46 by nflan             #+#    #+#              #
-#    Updated: 2022/07/24 23:51:51 by nflan            ###   ########.fr        #
+#    Updated: 2022/07/25 18:41:42 by nflan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ_DIR = bin/
 INC_DIR = include/
 LIB_DIR = libft/
 
-sources = main.c ft_cd.c ft_export.c ft_tools.c \
+sources = main.c ft_cd.c ft_export.c ft_tools.c ft_cd_2.c\
 		  ft_here_doc.c ft_pipex.c ft_global.c ft_tools2.c\
 		  big_tokenizer_1.c big_tokenizer_2.c big_tokenizer_3.c parser.c\
 		  big_tokenizer_3_tool.c tokenizer_1.c tokenizer_1_tool.c tokenizer_3.c\

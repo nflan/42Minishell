@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 17:46:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 11:13:44 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/25 22:24:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,15 @@ void	ft_free_env(t_env *env)
 		free(tmp);
 		tmp = NULL;
 	}
+}
+
+int	ft_mal_err(t_info *info, t_env *env, char *err)
+{
+	if (err)
+		ft_putstr_fd(err, 2);
+	if (info && env)
+		ft_free_all(info, env);
+	else if (info && !env)
+		ft_free_all(info, NULL);
+	return (1);
 }

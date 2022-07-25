@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:06:50 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/25 12:51:54 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 00:38:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ int	ft_expanding(t_info *info, t_big_token *b)
 	if (!b->par)
 	{
 		if (ft_expand_args(b, info))
-			return (1);
+			exit (ft_mal_err(info, info->env, "Malloc error in Expanding\n"));
 		if (ft_add_wildcards(b))
-			return (ft_putstr_error("Wildcards error\n"));
+			exit (ft_mal_err(info, info->env, "Malloc error in Wildcards\n"));
 		err = ft_noquote_args(b);
-		if (err)
+		if (err == 1)
+			exit (ft_mal_err(info, info->env, "Malloc error in Del quotes\n"));
+		else if (err == 2)
 			return (err);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:33:02 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/23 17:22:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 00:26:54 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_wildcardsnew(t_wildcards **wd, struct dirent *dir, DIR *fd)
 	new = NULL;
 	new = ft_calloc(sizeof(t_wildcards), 1);
 	if (!new)
-		return (ft_putstr_error("Malloc error in get_wildcards: "));
+		return (ft_putstr_error("Malloc error in Wildcards\n"));
 	new->fd = fd;
 	new->dir = dir;
 	ft_wdadd_back(wd, new);

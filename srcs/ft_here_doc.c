@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 22:23:03 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 23:45:31 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ int	ft_fill_here(t_fd *fd, int red)
 
 	to_free = ft_strjoiiin("heredoc \"", fd->delimitator, "\" > ");
 	if (!to_free)
-		return (1);
+		return (ft_putstr_error("Malloc error\n"));
 	while (1)
 	{
 		buf = readline(to_free);
 		if (!buf && !g_sc)
 			ft_write_here(fd, &fd->delimitator, 1, red);
 		if (!buf || !ft_strncmp(buf, fd->delimitator,
-				ft_strlen(fd->delimitator) + 1))
+				ft_strlen(fd->delimitator) + 1) || g_sc)
 			break ;
 		else
 			if (ft_write_here(fd, &buf, 2, red))
@@ -78,24 +78,28 @@ int	ft_here(t_fd *fd, int red)
 	pid_t	pid;
 
 	pid = -1;
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if ((int) pid == -1)
 		return (ft_putstr_error("Child error\n"));
-	signal(SIGINT, SIG_IGN);
 	if ((int) pid == 0)
 	{
 		signal(SIGINT, &ft_sighere);
-		ft_fill_here(fd, red);
+		if (ft_fill_here(fd, red))
+			g_sc = -999;
 		free(fd->delimitator);
+		free(fd->file);
 		ft_exit_cmd(fd->info, NULL, g_sc);
 	}
-	waitpid((int)pid, &pid, 0);
+	waitpid(pid, &pid, 0);
+	if (pid == 2)
+		fd->info->status = 130;
 	signal(SIGINT, &ft_signal);
+	if (WIFEXITED(pid))
+		fd->info->status = WEXITSTATUS(pid);
 	close(fd->fd);
 	fd->fd = 0;
-	if (WIFEXITED(pid))
-		g_sc = WEXITSTATUS(pid);
-	return (g_sc);
+	return (fd->info->status);
 }
 
 char	**ft_env_to_tab(t_env *env)

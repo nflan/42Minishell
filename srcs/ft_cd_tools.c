@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 20:06:31 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 22:01:31 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 18:34:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,26 @@ int	ft_newpwd(t_info *info)
 int	ft_oldpwd(t_info *info)
 {
 	t_env	*tmp;
+	char	*pwd;
 
+	pwd = NULL;
 	tmp = info->env;
 	if (!tmp)
 		return (1);
 	while (tmp && ft_strncmp(tmp->name, "OLDPWD", 7))
 		tmp = tmp->next;
 	if (tmp)
-		return (ft_export_replace(tmp, ft_get_env_value(info, "PWD"), -1));
-	else
-		return (0);
+	{
+		if (!ft_get_env_value(info, "PWD"))
+		{
+			pwd = getcwd(pwd, 0);
+			if (!pwd)
+				return (1);
+			free(tmp->value);
+			tmp->value = pwd;
+		}
+		else
+			return (ft_export_replace(tmp, ft_get_env_value(info, "PWD"), -1));
+	}
+	return (0);
 }

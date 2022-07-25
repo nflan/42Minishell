@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 21:41:14 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 23:52:10 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/25 19:20:02 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ int	ft_env_args(t_big_token *b_tok, int *i)
 	return (0);
 }
 
-int	ft_env(t_info *info, t_big_token *b_tok)
+int	ft_env(t_info *info, t_big_token *b_tok, int i)
 {
 	t_env	*print;
 	char	*line;
-	int		i;
 
 	print = info->env;
 	line = NULL;
-	i = 0;
+	if (b_tok->cmd_args[1] && b_tok->cmd_args[1][0] == '-')
+		return (ft_putstr_error("minishell: env with option\n"), 2);
 	if (b_tok->cmd_args[1])
 		if (ft_env_args(b_tok, &i))
 			return (ft_env_error(b_tok, i));

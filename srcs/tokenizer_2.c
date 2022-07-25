@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 21:38:29 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/25 22:46:55 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	detect_tokens(t_info *in)
 	int				start;
 
 	i = 0;
-	if (!in->rdline)
-		return (ft_putstr_error("Command error in detect_tokens\n"));
 	while (in->rdline[i])
 	{
 		length = 1;
@@ -56,7 +54,7 @@ int	detect_tokens(t_info *in)
 			i++;
 		}
 		if (add_tok(&(in->tokens), start, length, t))
-			return (ft_putstr_error("Error while detecting tokens"));
+			return (1);
 	}
 	return (0);
 }

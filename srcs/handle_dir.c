@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:56:02 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 20:06:15 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 23:47:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	handle_dir_1(t_token **t, int (*itscl)[6], int step, t_big_token **b)
 				= ft_strjoin_free((*b)->cmd_args[(*b)->cmd_args_num
 					- (*itscl)[3]], (*t)->value, 1);
 			if (!(*b)->cmd_args[(*b)->cmd_args_num - (*itscl)[3]])
-				return (ft_putstr_error("handle dir.c\n"));
+				return (ft_putstr_error("Malloc error\n"));
 			(*t) = (*t)->next;
 			((*itscl)[4])--;
 		}

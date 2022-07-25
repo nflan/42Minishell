@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:23 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 20:06:56 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 23:28:52 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	handle_par_dir_0(t_token **t, t_big_token **b, t_info *i, int (*itctlt)[7])
 		(*itctlt)[3] += 2;
 		move_tok_2_ind(t, (*itctlt)[2] + 1);
 		(*itctlt)[4] = (*b)->length + (*b)->ind_tok_start - 1 - (*itctlt)[2];
-		if (check_if_piped(b, (*itctlt)[2] + 1, i, (*itctlt)[4]))
+		if (check_if_piped((*itctlt)[2] + 1, i, (*itctlt)[4]))
 			return (0);
 		(*itctlt)[3] += (*itctlt)[4];
 	}
@@ -103,7 +103,7 @@ int	handle_par_dir(t_big_token **tmp_b, t_info *info)
 		if (tmp->token == TOK_WORD && (itctlt[0] % 2))
 		{
 			if (handle_par_dir_1(&tmp, tmp_b, &itctlt, 1))
-				return (ft_putstr_error("in handle par dir "));
+				return (1);
 		}
 		else
 			itctlt[6] = handle_par_dir_1(&tmp, tmp_b, &itctlt, 2);

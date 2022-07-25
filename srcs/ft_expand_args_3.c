@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 18:31:14 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 18:41:00 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/26 00:22:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,20 @@ int	ft_resplit(t_big_token *b, int *i, char *str)
 	while (jl[0] < *i)
 	{
 		if (resplit_tool(&(jl), tmp, b->cmd_args[(jl[0])], 1))
-			return (free(tmp), 1);
+			return (ft_free_split(tmp), 1);
 	}
 	*i = *i + ft_splitlen(str) - 1;
 	while ((jl[0]) <= *i)
 	{
 		if (resplit_tool(&(jl), tmp, str, 2))
-			return (free(tmp), 1);
+			return (ft_free_split(tmp), 1);
 	}
 	while (b->cmd_args[(jl[1])])
 	{
 		if (resplit_tool(&(jl), tmp, b->cmd_args[(jl[1])], 3))
-			return (free(tmp), 1);
+			return (ft_free_split(tmp), 1);
 	}
-	resplit_tool_2(&jl, *i, &(b->cmd_args), 2);
+	resplit_tool_2(&jl, *i, b, 2);
 	b->cmd_args = tmp;
 	return (b->cmd_args = tmp, 0);
 }

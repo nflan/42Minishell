@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:45:15 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/20 16:22:52 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/25 23:27:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ void	rd_inout_type(char *str, int *type_red)
 		(*type_red) = 4;
 }
 
-int	check_if_piped(t_big_token **tmp_b, int ind, t_info *info, int len)
+int	check_if_piped(int ind, t_info *info, int len)
 {
 	t_token	*tmp;
 	int		i;
 
-	(void) tmp_b;
 	tmp = info->tokens;
 	i = 0;
 	move_tok_2_ind(&tmp, ind);

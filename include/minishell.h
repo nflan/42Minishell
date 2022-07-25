@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/25 12:38:39 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 00:04:28 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ int				ft_builtins(t_info *info, t_big_token *b_tokens);
 int				ft_pwd(t_big_token *b_tok);
 int				ft_unset_name(t_env **tmp, char *name);
 void			unset_tool(t_env **ptr, t_env **tmp, t_info **info, int type);
-int				ft_unset(t_info *info, t_big_token *b_tokens);
+int				ft_unset(t_info *info, t_big_token *b_tokens, int err);
 //-----------ft_exit------------------------------------------------------------
 int				ft_ex_val_1(int *i, char *cmd_args_1);
 int				ft_ex_val_2(int *i, char *cmd_args_1);
@@ -279,9 +279,17 @@ int				ft_exit(t_info *info, t_big_token *b_tokens);
 int				ft_env_err(t_big_token *b, int arg, int i);
 int				ft_env_error(t_big_token *b, int arg);
 int				ft_env_args(t_big_token *b_tok, int *i);
-int				ft_env(t_info *info, t_big_token *b_tok);
+int				ft_env(t_info *info, t_big_token *b_tok, int i);
 //-----------ft_cd.c------------------------------------------------------------
+int				ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir);
+int				ft_unset_solo(t_info *info, char *name);
+int				ft_do_cd(t_info *info, t_big_token *b, char *op);
+int				ft_cd_home(t_info *info, char *home, char *op);
 int				ft_cd(t_info *info, t_big_token *b_tokens);
+//-----------ft_cd_2.c----------------------------------------------------------
+int				ft_is_tilde_or_home(char *home, char *dir);
+char			*ft_cd_tilde(t_info *info, char *home, char *dir);
+int				ft_back(t_env *env, char *op, char *home);
 //-----------ft_cd_tools.c------------------------------------------------------
 void			ft_cd_tool(t_info *info, char **home, char **new_dir);
 int				ft_newpwd(t_info *info);
@@ -299,6 +307,7 @@ int				ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp,
 					int i);
 int				ft_export(t_info *info, t_big_token *b_tokens);
 //-----------ft_export_tools.c--------------------------------------------------
+int				ft_export_concat(t_env *env, char *line, int i);
 void			ft_export_solo(t_env *env, t_big_token *b_tokens);
 //-----------ft_echo.c----------------------------------------------------------
 int				ft_echo(t_big_token *b_tokens);
@@ -331,6 +340,7 @@ void			ft_error_2(int i, t_info *info, t_big_token *b_tokens);
 int				ft_error(int i, t_info *info, t_big_token *b_tokens);
 void			ft_write(char *str);
 int				ft_first_error(char *av1);
+
 //-----------------ft_free.c----------------------------------------------------
 void			ft_signal(int sig);
 void			ft_cmd_signal(int sig);
@@ -344,6 +354,7 @@ void			ft_free_cmd(t_big_token *b_tokens);
 //-----------------ft_free2.c---------------------------------------------------
 void			ft_free_tokens(t_token *tokens);
 void			ft_free_env(t_env *env);
+int				ft_mal_err(t_info *info, t_env *env, char *err);
 
 // WILDCARDS
 //-----------------ft_wildcards_check.c-----------------------------------------
@@ -442,7 +453,6 @@ t_big_token		*ft_create_btoken(t_big_tok_type t, int its, int l, t_info *i);
 int				add_b_tok_sib_last(t_big_token **b, t_big_tok_type t,
 					int bi[2], t_info *i);
 int				check_divider_type(char *tmp_value);
-// int			is_cl_2_op(char *value_tok_op, char *value_tok_cl);
 void			move_tok_2_ind(t_token **tokens, int ind);
 //-----------big_tokenizer_2.c--------------------------------------------------
 int				divide_by_or_and(t_big_token **b, t_info *i, int btok_info[2]);
@@ -453,9 +463,8 @@ int				sophisticated_piped(t_token **tokens, int start, int length);
 //-----------big_tokenizer_4-1.c------------------------------------------------
 int				handle_par(t_big_token **b_tokens, t_info *info);
 //-----------big_tokenizer_4_tool.c---------------------------------------------
-int				check_if_piped(t_big_token **tmp_b, int ind, t_info *i, int l);
+int				check_if_piped(int ind, t_info *i, int l);
 void			rd_inout_type(char *str, int *type_red);
-// void		divide_by_or_and(t_big_token **b_tokens, t_token **tokens);
 int				divide_by_pipe(t_big_token **b_tokens, t_info *info);
 void			init_divide(t_big_token *b, t_info *i, t_big_token **o,
 					t_token **tt);
@@ -477,7 +486,7 @@ int				handle_dir(t_big_token **tmp_b, t_info *info);
 //-----------handle_par.c-------------------------------------------------------
 void			handle_par_1(t_token **s, t_big_token *b, int *a_s, int *t_r);
 void			handle_par_2(t_token **s, t_big_token *b, int *t_r, t_token *t);
-void			handle_par_3(t_big_token **b, int t_r, int a_s, t_info *i);
+int				handle_par_3(t_big_token **b, int t_r, int a_s, t_info *i);
 void			handle_par_4(int (*p)[2], t_token **s, t_big_token *b,
 					t_info *i);
 int				handle_par_5(t_token **s, t_big_token **b, t_tab *t, t_info *i);
@@ -510,7 +519,7 @@ int				ft_splitlen(char *str);
 char			*ms_tool(int *a, char **str, int b, int type);
 char			*ft_minisplit(char *str);
 int				resplit_tool(int (*jl)[2], char **tmp, char *to_copy, int type);
-void			resplit_tool_2(int (*jl)[2], int i, char ***cmd_args, int step);
+void			resplit_tool_2(int (*jl)[2], int i, t_big_token *b, int step);
 //-----------ft_expand_args_3.c-------------------------------------------------
 int				resplit_tool_3(char ***tmp, int len1, int len2);
 int				ft_resplit(t_big_token *b, int *i, char *str);

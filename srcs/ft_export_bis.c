@@ -6,19 +6,11 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 15:52:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 22:30:48 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 19:24:22 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	ft_export_concat(t_env *env, char *line, int i)
-{
-	env->value = ft_strjoin_free(env->value, line + i + 1, 1);
-	if (!env->value)
-		return (1);
-	return (0);
-}
 
 int	ft_if_eg(t_info *info, t_env *tmp, char *line, int i)
 {
@@ -57,33 +49,46 @@ int	ft_ifnot_eg(t_info *info, t_env *tmp, char *line, int i)
 	return (0);
 }
 
+int	ft_exporting(t_info *info, t_big_token *b_tok, t_env *tmp, int (*ji)[2])
+{
+	while (b_tok->cmd_args[*ji[0]][*ji[1]]
+		&& b_tok->cmd_args[*ji[0]][*ji[1]] != '=')
+		(*ji[1])++;
+	if (b_tok->cmd_args[*ji[0]][*ji[1]] == '=')
+	{
+		if (ft_if_eg(info, tmp, b_tok->cmd_args[*ji[0]], *ji[1]))
+			return (1);
+	}
+	else
+		if (ft_ifnot_eg(info, tmp, b_tok->cmd_args[*ji[0]], *ji[1]))
+			return (1);
+	return (0);
+}
+
 int	ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i)
 {
-	int	j;
+	int	ji[2];
 	int	a;
+	int	err;
 
-	a = 0;
-	j = 0;
-	while (b_tok->cmd_args[++j])
+	ji[0] = 0;
+	ji[1] = 1;
+	err = 0;
+	if (b_tok->cmd_args[1] && b_tok->cmd_args[1][0] == '-')
+		return (ft_putstr_error("minishell: export with option\n"), 2);
+	while (b_tok->cmd_args[++(ji[0])])
 	{
+		a = ft_check_export(b_tok->cmd_args[ji[0]]);
 		i = 0;
-		if (!ft_check_export(b_tok->cmd_args[j]))
+		if (!a)
 		{
-			while (b_tok->cmd_args[j][i] && b_tok->cmd_args[j][i] != '=')
-				i++;
-			if (b_tok->cmd_args[j][i] == '=')
-			{
-				if (ft_if_eg(info, tmp, b_tok->cmd_args[j], i))
-					return (1);
-			}
-			else
-				if (ft_ifnot_eg(info, tmp, b_tok->cmd_args[j], i))
-					return (1);
+			if (ft_exporting(info, b_tok, tmp, &ji))
+				return (1);
 		}
-		else
-			a = 1;
+		else if (a == 1)
+			err = 1;
 	}
-	return (a);
+	return (err);
 }
 
 int	ft_export(t_info *info, t_big_token *b_tokens)
@@ -98,7 +103,6 @@ int	ft_export(t_info *info, t_big_token *b_tokens)
 	if (!b_tokens->cmd_args[1])
 		ft_export_solo(tmp, b_tokens);
 	else
-		if (ft_do_export(info, b_tokens, tmp, i))
-			return (1);
+		return (ft_do_export(info, b_tokens, tmp, i));
 	return (0);
 }

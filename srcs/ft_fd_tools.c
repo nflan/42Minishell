@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:58 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 19:24:05 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 23:34:18 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,21 @@ int	ft_fill_fdnew(t_fd *fd, t_token **tmp, int itscl[5], int *hd)
 	{
 		*hd += 1;
 		fd->delimitator = ft_create_del(tmp, itscl);
+		if (!fd->delimitator)
+			return (ft_putstr_error("Malloc error\n"));
 		if (ft_create_tmp(fd, *hd))
-			return (ft_putstr_error("Malloc error in fd_tools.c\n"));
+			return (free(fd->delimitator), ft_putstr_error("Malloc error\n"));
 		fd->fd = open(fd->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (fd->fd < 0)
+			return (free(fd->file), free(fd->delimitator),
+				ft_putstr_error("Open Heredoc error"));
 		if (ft_here(fd, itscl[1]))
-			return (free(fd->delimitator), 1);
+			return (free(fd->file), free(fd->delimitator), 1);
 	}
 	else
 		fd->file = ft_create_del(tmp, itscl);
 	if (!fd->file)
-		return (ft_putstr_error("Malloc error in fd_tools.c\n"));
+		return (ft_putstr_error("Malloc error\n"));
 	return (0);
 }
 
@@ -45,14 +50,14 @@ int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int itscl[7])
 
 	new = ft_calloc(sizeof(t_fd), 1);
 	if (!new)
-		return (ft_putstr_error("Malloc error in fd_tools.c\n"));
+		return (ft_putstr_error("Malloc error\n"));
 	new->info = b_tokens->info;
 	if (itscl[1] == 1 || itscl[1] == 2)
 		new->inout = 1;
 	else
 		new->inout = 2;
 	if (ft_fill_fdnew(new, tmp, itscl, &(b_tokens)->nb_hd))
-		return (1);
+		return (free(new), 1);
 	ft_fdadd_back(fd, new);
 	return (0);
 }

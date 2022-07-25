@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:10:36 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/24 18:35:47 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/26 00:43:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ int	ft_reduce_args(t_big_token *b, size_t i)
 	{
 		tmp = ft_calloc(sizeof(char *), ft_tablen(b->cmd_args));
 		if (!tmp)
-			return (ft_putstr_error("Malloc error\n"));
+			return (1);
 		while (j < i)
 		{
 			if (ra_sub(&(tmp[j]), b->cmd_args[j]))
-				return (ft_free_split(tmp), ft_putstr_error("Malloc error\n"));
+				return (ft_free_split(tmp), 1);
 			j++;
 		}
 		while (j < ft_tablen(b->cmd_args) - 1)
 		{
 			if (ra_sub(&(tmp[j]), b->cmd_args[j + 1]))
-				return (ft_free_split(tmp), ft_putstr_error("Malloc error\n"));
+				return (ft_free_split(tmp), 1);
 			j++;
 		}
 	}
@@ -64,8 +64,13 @@ int	nqa_tool(t_big_token *b_tokens)
 		else
 		{
 			if (ft_strlen(b_tokens->cmd_args[i])
-				!= ft_strlen_nq(b_tokens->cmd_args[i]))
+				!= ft_strlen_nq(b_tokens->cmd_args[i])
+				&& ft_strlen(b_tokens->cmd_args[i]))
+			{
 				b_tokens->cmd_args[i] = ft_noquote_line(b_tokens->cmd_args[i]);
+				if (!b_tokens->cmd_args[i])
+					return (1);
+			}
 			i++;
 		}
 	}
