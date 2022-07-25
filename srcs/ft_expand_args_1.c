@@ -74,9 +74,6 @@ int	nqa_tool(t_big_token *b_tokens)
 
 int	ft_noquote_args(t_big_token *b_tokens)
 {
-	int	i;
-
-	i = 0;
 	if (b_tokens->cmd_args)
 	{
 		if (nqa_tool(b_tokens))

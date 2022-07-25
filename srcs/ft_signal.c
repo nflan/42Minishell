@@ -56,9 +56,9 @@ void	ft_manage_sig(t_info *info, int sig, int pid)
 	{
 		signal(SIGINT, &ft_signal);
 		signal(SIGQUIT, SIG_IGN);
-		if (WIFEXITED(pid))
+		if (g_sc)
+			info->status = g_sc;
+		else if (WIFEXITED(pid))
 			info->status = WEXITSTATUS(pid);
 	}
-	if (g_sc == 130 || g_sc == 131)
-		info->status = g_sc;
 }

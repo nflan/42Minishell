@@ -28,10 +28,8 @@ int	ft_is_tilde_or_home(char *home, char *dir)
 char	*ft_cd_tilde(t_info *info, char *home, char *dir)
 {
 	char	*new_dir;
-	char	*tmp;
 
 	new_dir = NULL;
-	tmp = NULL;
 	if (!dir)
 		return (NULL);
 	if (dir[1] == '/')

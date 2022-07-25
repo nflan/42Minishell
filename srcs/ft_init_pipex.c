@@ -29,7 +29,7 @@ int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 		return (free(info->pid), ft_error(5, info, NULL));
 	ft_exec_pipex(info, b_tokens, info->pid);
 	i = -1;
-	while (++i <= info->nb_cmd)
+	while (++i < info->nb_cmd)
 		if (info->pid[i] != -1)
 			waitpid(info->pid[i], &info->pid[i], 0);
 	ft_manage_sig(info, 2, info->pid[i]);
