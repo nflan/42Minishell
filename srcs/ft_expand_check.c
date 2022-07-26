@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:11:13 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/22 10:48:04 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/26 16:53:37 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_check_expand(t_token *token, int start, int length)
 	return (0);
 }
 
-int	ft_check_exp_line(char *str) //cette fonction fait quoi?
+int	ft_check_exp_line(char *str)
 {
 	int	t;
 	int	count;

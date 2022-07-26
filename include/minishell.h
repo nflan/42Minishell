@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/26 16:46:49 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 16:53:20 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -403,12 +403,6 @@ int				rec_exec(t_info *info, t_big_token **b_tokens, int and_or);
 //----------ft_executer_tools.c-------------------------------------------------
 int				no_sib_has_child(t_big_token *b_tokens);
 void			give_parent_sc(t_big_token **child, t_big_token **parent);
-//----------printer.c-----------------------------------------------------------
-void			print_tab(char **tab);
-void			print_all_everything(t_big_token **b_tokens, t_token **tokens);
-void			print_all_child(t_big_token **b, t_token **toks, int i, int j);
-void			print_b_tokens(t_big_token **b, t_token **tokens, int i, int j);
-void			print_s_tokens(t_token **tokens, int start, int length);
 
 // CREATE TOKENS
 //----------tokenizer_1.c-------------------------------------------------------
