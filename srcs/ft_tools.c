@@ -70,12 +70,16 @@ char	*ft_get_env_value(t_info *info, char *name)
 {
 	t_env	*env;
 
-	env = NULL;
+	env = info->env;
 	if (!info->env || !name)
 		return (NULL);
-	env = info->env;
-	while (env && ft_strncmp(env->name, name, ft_strlen(env->name) + 1))
+	while (env)
+	{
+		if (ft_strlen(env->name) == ft_strlen(name))
+			if (!ft_strncmp(env->name, name, ft_strlen(env->name)))
+				break ;
 		env = env->next;
+	}
 	if (!env)
 		return (NULL);
 	return (env->value);

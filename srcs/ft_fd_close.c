@@ -6,13 +6,13 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:12:44 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 13:12:51 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 13:10:12 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_close_all_fd(t_fd *fd, int fd_type)
+void	ft_close_all_fd(t_fd *fd)
 {
 	if (fd->next)
 		while (fd->next)
@@ -21,7 +21,7 @@ void	ft_close_all_fd(t_fd *fd, int fd_type)
 	{
 		if (fd->fd > 2)
 			close(fd->fd);
-		if (!fd_type && fd->red)
+		if (fd->inout == 1 && fd->red)
 			unlink(fd->file);
 	}
 }
@@ -29,14 +29,6 @@ void	ft_close_all_fd(t_fd *fd, int fd_type)
 void	ft_close_fd(t_big_token *b_tokens)
 {
 	if (b_tokens)
-	{
-		while (b_tokens)
-		{
-			if (b_tokens->fd_out)
-				ft_close_all_fd(b_tokens->fd_out, 1);
-			if (b_tokens->fd_in)
-				ft_close_all_fd(b_tokens->fd_in, 0);
-			b_tokens = b_tokens->sibling;
-		}
-	}
+		if (b_tokens->fd)
+			ft_close_all_fd(b_tokens->fd);
 }

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:23 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 02:51:40 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 23:28:52 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	handle_par_dir_0(t_token **t, t_big_token **b, t_info *i, int (*itctlt)[7])
 		(*itctlt)[3] += 2;
 		move_tok_2_ind(t, (*itctlt)[2] + 1);
 		(*itctlt)[4] = (*b)->length + (*b)->ind_tok_start - 1 - (*itctlt)[2];
-		if (check_if_piped(b, (*itctlt)[2] + 1, i, (*itctlt)[4]))
+		if (check_if_piped((*itctlt)[2] + 1, i, (*itctlt)[4]))
 			return (0);
 		(*itctlt)[3] += (*itctlt)[4];
 	}
@@ -45,14 +45,8 @@ int	handle_par_dir_1(t_token **t, t_big_token **b, int (*itctlt)[7], int step)
 {
 	if (step == 1)
 	{
-		if ((*itctlt)[1] == 1 || (*itctlt)[1] == 2)
-		{
-			if (ft_fdnew(*b, &((*b)->fd_in), t, *itctlt))
-				return (ft_putstr_error("in handle par dir "));
-		}
-		else
-			if (ft_fdnew(*b, &((*b)->fd_out), t, *itctlt))
-				return (ft_putstr_error("in handle par dir "));
+		if (ft_fdnew(*b, &((*b)->fd), t, *itctlt))
+			return (1);
 		(*itctlt)[0]++;
 	}
 	if (step == 2)
@@ -98,7 +92,7 @@ int	handle_par_dir(t_big_token **tmp_b, t_info *info)
 
 	if (!handle_par_dir_0(&tmp, tmp_b, info, &itctlt))
 		return (0);
-	while (tmp && itctlt[4]--)
+	while (tmp && itctlt[4])
 	{
 		if (handle_par_dir_2(tmp, &itctlt, 1))
 			return (1);
@@ -106,10 +100,10 @@ int	handle_par_dir(t_big_token **tmp_b, t_info *info)
 			itctlt[6] = handle_par_dir_2(tmp, &itctlt, 3);
 		else if (tmp->token == TOK_WORD && (!(itctlt[0] % 2) || !itctlt[1]))
 			return (1);
-		if (tmp->token != TOK_SEP && (itctlt[0] % 2))
+		if (tmp->token == TOK_WORD && (itctlt[0] % 2))
 		{
 			if (handle_par_dir_1(&tmp, tmp_b, &itctlt, 1))
-				return (ft_putstr_error("in handle par dir "));
+				return (1);
 		}
 		else
 			itctlt[6] = handle_par_dir_1(&tmp, tmp_b, &itctlt, 2);

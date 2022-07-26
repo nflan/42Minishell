@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:56:02 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 12:36:38 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 23:47:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ int	handle_dir_1(t_token **t, int (*itscl)[6], int step, t_big_token **b)
 	}
 	if (step == 2)
 	{
-		while ((*t) && (*itscl)[4] && (*t)->token != TOK_SEP)
+		while ((*t) && (*itscl)[4] && (*t)->token != TOK_SEP && (*t)->token
+			!= TOK_REDIRECTOR_LEFT && (*t)->token != TOK_REDIRECTOR_RIGHT)
 		{
 			(*b)->cmd_args[(*b)->cmd_args_num - (*itscl)[3]]
 				= ft_strjoin_free((*b)->cmd_args[(*b)->cmd_args_num
 					- (*itscl)[3]], (*t)->value, 1);
 			if (!(*b)->cmd_args[(*b)->cmd_args_num - (*itscl)[3]])
-				return (ft_putstr_error("handle dir "));
+				return (ft_putstr_error("Malloc error\n"));
 			(*t) = (*t)->next;
 			((*itscl)[4])--;
 		}
@@ -59,14 +60,8 @@ int	handle_dir_2(t_token **t, int (*itscl)[6], int step, t_big_token **b)
 			return (1);
 	if (step == 1)
 	{
-		if ((*itscl)[1] == 1 || (*itscl)[1] == 2)
-		{
-			if (ft_fdnew(*b, &((*b)->fd_in), t, *itscl))
-				return (ft_putstr_error("in handle dir "));
-		}
-		else
-			if (ft_fdnew(*b, &((*b)->fd_out), t, *itscl))
-				return (ft_putstr_error("in handle dir "));
+		if (ft_fdnew(*b, &((*b)->fd), t, *itscl))
+			return (1);
 		((*itscl)[2]) = 0;
 		((*itscl)[0])++;
 	}

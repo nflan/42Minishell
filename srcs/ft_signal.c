@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:10:34 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/26 15:39:51 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 16:33:18 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_signal(int sig)
 	}
 }
 
-void	ft_manage_sig(int sig)
+void	ft_manage_sig(t_info *info, int sig, int status)
 {
 	if (sig == 0)
 	{
@@ -48,7 +48,15 @@ void	ft_manage_sig(int sig)
 	}
 	else if (sig == 2)
 	{
+		if (status == 2)
+			info->status = 130;
+		else if (status == 131)
+			info->status = 131;
 		signal(SIGINT, &ft_signal);
 		signal(SIGQUIT, SIG_IGN);
+		if (WIFEXITED(status))
+			info->status = WEXITSTATUS(status);
+		if (g_sc == -999)
+			exit (ft_mal_err(info, info->env, NULL));
 	}
 }

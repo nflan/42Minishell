@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:33:02 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/22 18:46:40 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 00:26:54 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_wildcardsnew(t_wildcards **wd, struct dirent *dir, DIR *fd)
 	new = NULL;
 	new = ft_calloc(sizeof(t_wildcards), 1);
 	if (!new)
-		return (ft_putstr_error("Malloc error in get_wildcards: "));
+		return (ft_putstr_error("Malloc error in Wildcards\n"));
 	new->fd = fd;
 	new->dir = dir;
 	ft_wdadd_back(wd, new);
@@ -68,36 +68,31 @@ int	ft_manage_type(char *str, char *dir, int d_type, int type)
 		test++;
 	}
 	if (!test && str[ft_strlen(str) - 1] != '*')
-		if (d_type != type)
-			return (1);
+		if (type == 4)
+			if (d_type != type)
+				return (1);
 	return (0);
 }
 
-int	ft_get_wildcards(t_wildcards **wd)
+int	ft_get_wildcards(t_wildcards **wd, char *pwd)
 {
 	DIR				*dir;
 	struct dirent	*send;
-	char			*tofree;
 
 	dir = NULL;
 	send = NULL;
-	tofree = NULL;
-	tofree = getcwd(tofree, 0);
-	if (!tofree)
-		return (1);
-	dir = opendir(tofree);
+	dir = opendir(pwd);
 	if (!dir)
-		return (free(tofree), perror("minishell"), 1);
+		return (perror("minishell"), 1);
 	send = readdir(dir);
 	if (!send)
-		return (free(tofree), closedir(dir), perror("minishell"), 1);
+		return (closedir(dir), perror("minishell"), 1);
 	while (send)
 	{
 		if (send)
 			if (ft_wildcardsnew(wd, send, dir))
-				return (closedir(dir), free(tofree), 1);
+				return (closedir(dir), 1);
 		send = readdir(dir);
 	}
-	free(tofree);
 	return (0);
 }

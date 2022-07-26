@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:04:01 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/01 13:04:49 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 22:16:50 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,12 @@ t_env	*ft_envnew(char *line)
 	new->next = NULL;
 	if (ft_fill_envnew(new, line, 0, -1))
 		return (free(new), NULL);
-	if (!ft_strncmp(new->name, "SHLVL", 6))
+	if (!ft_strncmp(new->name, "SHLVL", 6) || !ft_strncmp(new->name, "PWD", 4))
 	{
-		tmp = ft_itoa(ft_atoi(new->value) + 1);
+		if (!ft_strncmp(new->name, "SHLVL", 6))
+			tmp = ft_itoa(ft_atoi(new->value) + 1);
+		else if (!ft_strncmp(new->name, "PWD", 4))
+			tmp = getcwd(tmp, 0);
 		free(new->value);
 		new->value = ft_strdup_free(tmp);
 		if (!new->value)
@@ -86,17 +89,19 @@ int	ft_fill_envnew(t_env *env, char *line, int i, int j)
 {
 	if (!line)
 		return (1);
-	while (line[i] && line[i] != '=')
+	while (line[i] && line[i] != '=' && line[i] != '+')
 		i++;
 	env->name = ft_calloc(sizeof(char), i + 1);
 	if (!env->name)
 		return (1);
 	while (++j < i)
 		env->name[j] = line[j];
-	if (line[j] != '=')
+	if (line[j] != '=' && line[j] != '+')
 		return (0);
-	i = 0;
+	if (line[j] == '+')
+		j++;
 	j++;
+	i = 0;
 	while (line[j + i])
 		i++;
 	env->value = ft_calloc(sizeof(char), i + 1);

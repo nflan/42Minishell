@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:34:22 by nflan             #+#    #+#             */
-/*   Updated: 2022/06/23 18:36:46 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 00:36:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**ft_fill_old_args(t_big_token *b_tokens, char **tmp, int j, int list)
 	return (tmp);
 }
 
-int	ft_do_wildcards(t_big_token *b_tokens, int i)
+int	ft_do_wildcards(t_big_token *b_tokens, int i, char *pwd)
 {
 	t_wildcards	*wd;
 	int			itype[2];
@@ -49,7 +49,7 @@ int	ft_do_wildcards(t_big_token *b_tokens, int i)
 	itype[0] = i;
 	itype[1] = 8;
 	wd = NULL;
-	if (ft_get_wildcards(&wd))
+	if (ft_get_wildcards(&wd, pwd))
 		return (ft_free_wildcards(wd), 1);
 	if (b_tokens->cmd_args[i][ft_strlen(b_tokens->cmd_args[i]) - 1] == '/')
 		itype[1] = 4;

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/21 23:45:18 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 22:49:56 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 	{
 		*tok_list = ft_create_token(tok_type, length, i);
 		if (!*tok_list)
-			return (ft_putstr_error("add_tok_last in "));
+			return (ft_putstr_error("Malloc error\n"));
 		(*tok_list)->prev = NULL;
 	}
 	else
@@ -31,8 +31,8 @@ int	add_tok_last(t_token **tok_list, t_tok_type tok_type, int length, int i)
 			tmp = tmp->next;
 		bef_last = tmp;
 		bef_last->next = ft_create_token(tok_type, length, i);
-		if (!*tok_list)
-			return (ft_putstr_error("add_tok_last in "));
+		if (!bef_last->next)
+			return (ft_putstr_error("Malloc error\n"));
 		bef_last = bef_last->next;
 		bef_last->prev = tmp;
 	}
@@ -69,24 +69,27 @@ int	add_tok_last_bis(t_token **tok_list, t_tok_type tok_t, int q, char *value)
 
 int	add_tok(t_token **tokens, int st, int len, t_tok_type type)
 {
-	if (type == TOK_WORD_NULL_S)
+	if (type == TOK_WORD_NULL_S || type == TOK_WORD_NULL_D)
 	{
-		if (add_tok_last(tokens, TOK_WORD_S_QUOTED, 0, st))
-			return (ft_putstr_error("detect_tokens "));
-		if (add_tok_last(tokens, TOK_S_QUOTER, len, st))
-			return (ft_putstr_error("detect_tokens "));
-	}
-	else if (type == TOK_WORD_NULL_D)
-	{
-		if (add_tok_last(tokens, TOK_WORD_D_QUOTED, 0, st))
-			return (ft_putstr_error("detect_tokens "));
-		if (add_tok_last(tokens, TOK_D_QUOTER, len, st))
-			return (ft_putstr_error("detect_tokens "));
+		if (type == TOK_WORD_NULL_S)
+		{
+			if (add_tok_last(tokens, TOK_WORD_S_QUOTED, 0, st))
+				return (1);
+			if (add_tok_last(tokens, TOK_S_QUOTER, len, st))
+				return (1);
+		}
+		else if (type == TOK_WORD_NULL_D)
+		{
+			if (add_tok_last(tokens, TOK_WORD_D_QUOTED, 0, st))
+				return (1);
+			if (add_tok_last(tokens, TOK_D_QUOTER, len, st))
+				return (1);
+		}
 	}
 	else
 	{
 		if (add_tok_last(tokens, type, len, st))
-			return (ft_putstr_error("detect_tokens "));
+			return (1);
 	}
 	return (0);
 }
@@ -98,12 +101,15 @@ int	fill_tok_value(t_token **tok, char *str)
 	if (!*tok || !str)
 		return (1);
 	tmp = *tok;
-	while (tmp)
+	if (tmp)
 	{
-		tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
-		if (!tmp->value)
-			return (ft_putstr_error("Error in ft_strncpy in fill_tok_value\n"));
-		tmp = tmp->next;
+		while (tmp)
+		{
+			tmp->value = ft_strncpy(&(str[tmp->start]), tmp->length);
+			if (!tmp->value)
+				return (ft_putstr_error("Malloc error\n"));
+			tmp = tmp->next;
+		}
 	}
 	return (0);
 }

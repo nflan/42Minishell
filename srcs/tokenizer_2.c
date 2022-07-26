@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:48 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/21 23:44:16 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/25 22:46:55 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	check_tok_type(t_tok_type type, char c, t_info *i, int test)
 	if (test == 1)
 	{
 		if (type != TOK_EXPANDER_OP && type != TOK_EXPANDER_CL
-			&& type != TOK_S_QUOTER && type != TOK_D_QUOTER
+			&& type != TOK_S_QUOTER && type != TOK_D_QUOTER && type
+			!= TOK_WORD_NULL_S && type != TOK_WORD_NULL_D
 			&& (get_real_tok_type(c, &(i->tokens), i->tok_type_tab) == type))
 			return (1);
 	}
@@ -39,8 +40,6 @@ int	detect_tokens(t_info *in)
 	int				start;
 
 	i = 0;
-	if (!in->rdline)
-		return (ft_putstr_error("Command error in detect_tokens\n"));
 	while (in->rdline[i])
 	{
 		length = 1;
@@ -55,7 +54,7 @@ int	detect_tokens(t_info *in)
 			i++;
 		}
 		if (add_tok(&(in->tokens), start, length, t))
-			return (ft_putstr_error("Error while detecting tokens"));
+			return (1);
 	}
 	return (0);
 }

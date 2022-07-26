@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:09 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/21 23:20:28 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/24 23:23:47 by omoudni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,27 @@ int	ft_option_echo(t_big_token *b_toks)
 {
 	int	option;
 	int	y;
+	int	i;
 
+	i = 0;
 	option = 1;
-	if (!b_toks->cmd_args[1])
+	if (!b_toks->cmd_args[i + 1])
 		return (1);
-	y = -1;
-	if ((b_toks->cmd_args[1][++y] == '-' && b_toks->cmd_args[1][++y] == 'n'))
+	while (b_toks->cmd_args[++i])
 	{
-		while (b_toks->cmd_args[1][y] && b_toks->cmd_args[1][y] == 'n')
-			y++;
-		if (!b_toks->cmd_args[1][y])
-			option++;
+		y = -1;
+		if ((b_toks->cmd_args[i][++y] == '-'
+			&& b_toks->cmd_args[i][++y] == 'n'))
+		{
+			while (b_toks->cmd_args[i][y] && b_toks->cmd_args[i][y] == 'n')
+				y++;
+			if (!b_toks->cmd_args[i][y])
+				option++;
+			else
+				return (option);
+		}
+		else
+			break ;
 	}
 	return (option);
 }
@@ -45,8 +55,11 @@ void	ft_create_echo(t_big_token *b_tokens, int i)
 		if (b_tokens->cmd_args[i][0])
 		{
 			ft_putstr_fd(b_tokens->cmd_args[i], b_tokens->fdout);
-			ft_putstr_fd(" ", b_tokens->fdout); //j'ai l'impression que que l'espace faut pas l'ajouter au cas ou y a rien dans le i++
+			if (b_tokens->cmd_args[i + 1])
+				ft_putstr_fd(" ", b_tokens->fdout);
 		}
+		else if (b_tokens->cmd_args[i + 1] && b_tokens->cmd_args[i][0] == '\0')
+			ft_putstr_fd(" ", b_tokens->fdout);
 		i++;
 	}
 }
