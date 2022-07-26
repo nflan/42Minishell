@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:29:38 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/24 22:12:55 by omoudni          ###   ########.fr       */
+/*   Updated: 2022/07/26 15:05:58 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_path(t_info *info, t_big_token *b_tokens, int err)
 	path = ft_split(ft_get_env_value(info, "PATH"), ':');
 	tofree = ft_strjoiiin(path[i], "/", b_tokens->cmd_args[0]);
 	if (!tofree)
-		return (ft_free_split(path), ft_putstr_error("Malloc error ft_path\n"));
+		return (ft_free_split(path), ft_putstr_error("Malloc error\n"));
 	while (path[i] && access(tofree, X_OK | R_OK) != 0)
 	{
 		if (access(tofree, F_OK) == 0)
@@ -40,7 +40,7 @@ int	ft_path(t_info *info, t_big_token *b_tokens, int err)
 		i++;
 		tofree = ft_strjoiiin(path[i], "/", b_tokens->cmd_args[0]);
 		if (!tofree)
-			return (ft_free_split(path), ft_putstr_error("Malloc error path\n"));
+			return (ft_free_split(path), ft_putstr_error("Malloc error\n"));
 	}
 	if (!path[i])
 		return (ft_free_split(path), free(tofree), err);
@@ -95,9 +95,16 @@ int	ft_commanding(t_info *info, t_big_token *b_tokens)
 	int	err;
 
 	err = ft_command(info, b_tokens);
-	if (ft_change__(info->env, b_tokens))
+	if (err)
+		exit (ft_mal_err(info, info->env, NULL));
+	err = ft_change__(info->env, b_tokens);
+	if (err == 2)
+		exit (ft_mal_err(info, info->env, "Malloc error\n"));
+	else if (err)
 		return (info->status = 1, 1);
 	ft_free_split(b_tokens->envp);
 	b_tokens->envp = ft_env_to_tab(info->env);
+	if (!b_tokens->envp)
+		exit (ft_mal_err(info, info->env, "Malloc error\n"));
 	return (err);
 }

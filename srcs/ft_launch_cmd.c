@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/26 12:14:06 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 15:04:38 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,21 @@ int	ft_fork_par(t_info *info, t_big_token *b_tokens)
 int	ft_change__(t_env *env, t_big_token *b_tokens)
 {
 	t_env	*tmp;
+	int		err;
 
+	err = 0;
 	tmp = env;
 	if (!tmp)
 		return (1);
 	while (tmp && ft_strncmp(tmp->name, "_", 2))
 		tmp = tmp->next;
 	if (tmp)
-		return (ft_export_replace(tmp, b_tokens->cmd_args[0], -1));
-	else
-		return (0);
+	{
+		err = ft_export_replace(tmp, b_tokens->cmd_args[0], -1);
+		if (err)
+			return (2);
+	}
+	return (err);
 }
 
 int	ft_do_solo(t_info *info, t_big_token *b, int ret)
