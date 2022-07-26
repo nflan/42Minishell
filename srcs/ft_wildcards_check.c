@@ -12,22 +12,6 @@
 
 #include "../include/minishell.h"
 
-/*int	ft_check_wildcards(t_info *info, t_big_token *b_tokens, int i)
-{
-	t_token	*tmp_s;
-
-	tmp_s = info->tokens;
-	if (!info || !b_tokens || !tmp_s)
-		return (1);
-	move_tok_2_ind(&tmp_s, b_tokens->ind_tok_start + (i * 2));
-	if (tmp_s && ft_strchr(b_tokens->cmd_args[i], '*')
-		&& tmp_s->token != TOK_QUOTER && tmp_s->token != TOK_D_QUOTER
-		&& tmp_s->token != TOK_WORD_S_QUOTED
-		&& tmp_s->token != TOK_WORD_D_QUOTED)
-		return (0);
-	return (1);
-}*/
-
 void	init_wc(int *i, char **pwd)
 {
 	*i = -1;

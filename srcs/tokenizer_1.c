@@ -40,7 +40,6 @@ int	is_quoted(t_token **tok_list, char c)
 		return (2);
 	return (0);
 }
-//A voir ca avec Nflaninounette
 
 unsigned int	get_real_tok_type(char c, t_token **t, t_tok_type *tok_type_tab)
 {
