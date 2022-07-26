@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 21:42:30 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/26 12:12:28 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 16:37:06 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_unset(t_info *info, t_big_token *b_tokens, int err)
 	int		check;
 
 	i = 0;
-	if (!info->env || !b_tokens->cmd_args[0] || !b_tokens->cmd_args[1])
+	if (!info->env || !b_tokens->cmd_args[0])
 		return (1);
 	if (b_tokens->cmd_args[1] && b_tokens->cmd_args[1][0] == '-')
 		return (ft_putstr_error("minishell: unset with option\n"), 2);

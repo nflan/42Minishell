@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/26 13:33:55 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 16:40:38 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,11 @@ int	ft_here(t_fd *fd, int red)
 	return (g_sc);
 }
 
-char	**ft_env_to_tab(t_env *env)
+char	**ft_env_to_tab(t_env *env, char **tab)
 {
 	t_env	*tmp;
-	char	**tab;
 	int		i;
 
-	tab = NULL;
 	tmp = env;
 	i = 0;
 	if (!env)
@@ -117,12 +115,15 @@ char	**ft_env_to_tab(t_env *env)
 		tmp = tmp->next;
 	}
 	tab = ft_calloc(sizeof(char *), i + 1);
-	i = 0;
+	if (!tab)
+		return (NULL);
+	i = -1;
 	tmp = env;
 	while (tmp)
 	{
-		tab[i] = ft_strjoiiin(tmp->name, "=", tmp->value);
-		i++;
+		tab[++i] = ft_strjoiiin(tmp->name, "=", tmp->value);
+		if (!tab[i])
+			return (ft_free_split(tab), NULL);
 		tmp = tmp->next;
 	}
 	return (tab);

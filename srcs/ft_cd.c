@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/26 12:41:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 16:20:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,5 @@ int	ft_cd(t_info *info, t_big_token *b_tokens, int err)
 	free(op);
 	if (err == 2)
 		exit (ft_mal_err(info, info->env, "Malloc error\n"));
-	return (0);
+	return (err);
 }

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:13:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/25 12:19:25 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 15:35:20 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ void	ft_close_pdes(int fd, int pdes)
 		close(fd);
 }
 
-void	ft_close_cmd(t_info *info, t_big_token *b_tokens, pid_t child)
+void	ft_close_cmd(t_info *info, t_big_token *b_tokens)
 {
-	(void)child;
 	if (!info->nb_cmd)
 		ft_close_pdes(info->pdes[1], 1);
 	else if (b_tokens->type == TOK_LEFT_PIPE)
@@ -43,7 +42,7 @@ int	ft_lead_fd(t_info *info, t_big_token *b_tokens)
 	if (info->nb_cmd && b_tokens->type == TOK_LEFT_PIPE)
 	{
 		if (pipe(info->tmp) == -1)
-			return (ft_error(5, info, NULL));
+			exit (ft_mal_err(info, info->env, "Pipe error\n"));
 		info->pdes[1] = info->tmp[1];
 	}
 	if (b_tokens->fdin < 0)

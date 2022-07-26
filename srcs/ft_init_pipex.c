@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 21:28:26 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/25 12:39:42 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 15:24:05 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	ft_init_pipex(t_info *info, t_big_token *b_tokens)
 		tmp_b = tmp_b->sibling;
 	info->pid = ft_calloc(sizeof(pid_t), i);
 	if (!info->pid)
-		return (1);
+		exit (ft_mal_err(info, info->env, "Malloc error\n"));
 	tmp_b = b_tokens;
 	if (pipe(info->pdes) == -1)
-		return (free(info->pid), ft_error(5, info, NULL));
+		exit (ft_mal_err(info, info->env, "Pipe error\n"));
 	ft_exec_pipex(info, b_tokens, info->pid);
 	i = -1;
 	while (++i < info->nb_cmd)

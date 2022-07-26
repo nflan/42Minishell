@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/26 15:04:38 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 16:41:51 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ft_exit_cmd(t_info *info, char *str, int err)
 		ft_putstr_fd_3("minishell: ", str, ": Permission denied\n", 2);
 	else if (err == 127 && str)
 		ft_putstr_fd_3(NULL, str, ": command not found\n", 2);
+	else if (err == -1 && str)
+		ft_putstr_fd_3(NULL, str, ": execve failure\n", 2);
 	if (info)
 		ft_free_all(info, info->env);
 	info->status = err;
@@ -82,7 +84,7 @@ int	ft_do_solo(t_info *info, t_big_token *b, int ret)
 	ft_manage_sig(info, 0, 0);
 	pid = fork();
 	if ((int) pid == -1)
-		return (ft_error(2, info, NULL));
+		exit (ft_mal_err(info, info->env, "Fork error\n"));
 	else if ((int) pid == 0)
 	{
 		ft_manage_sig(info, 1, 0);
@@ -106,7 +108,9 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 		return (1);
 	if (b_tokens->par == 1)
 		return (ft_fork_par(info, b_tokens));
-	b_tokens->envp = ft_env_to_tab(info->env);
+	b_tokens->envp = ft_env_to_tab(info->env, NULL);
+	if (!b_tokens->envp)
+		exit (ft_mal_err(info, info->env, "Malloc error\n"));
 	if (ft_change__(info->env, b_tokens))
 		exit (ft_mal_err(info, info->env, "Malloc error\n"));
 	if (!ft_check_builtins(b_tokens))

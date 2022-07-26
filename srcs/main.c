@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:39:37 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/25 22:37:05 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 16:18:58 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_end(t_info *info)
 
 int	ft_launch_minishell(t_info info, char *word)
 {
+	rl_outstream = stderr;
 	while (1)
 	{
 		word = ft_rdline_word(&info);

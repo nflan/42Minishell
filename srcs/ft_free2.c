@@ -6,11 +6,24 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 17:46:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/25 22:24:56 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 16:44:43 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	ft_free_wildcards(t_wildcards *wd)
+{
+	if (wd)
+	{
+		if (wd->next)
+			ft_free_wildcards(wd->next);
+		else
+			closedir(wd->fd);
+		if (wd)
+			free(wd);
+	}
+}
 
 void	ft_free_tokens(t_token *tokens)
 {
