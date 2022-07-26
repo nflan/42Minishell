@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 09:37:41 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/25 18:43:06 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 12:41:17 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 	char	*op;
 
 	op = ft_strdup(ft_get_env_value(info, "OLDPWD"));
+	if (!op)
+		exit (ft_mal_err(info, info->env, "Malloc error\n"));
 	if (!strncmp(arg, "~", 2) && !home)
 		new_dir = ft_strdup(info->home);
 	else if (!strncmp(arg, "~", 2) && home)
@@ -24,16 +26,16 @@ int	ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir)
 	else
 		new_dir = ft_cd_tilde(info, info->home, arg);
 	if (!new_dir)
-		return (free(op), 1);
+		return (free(op), 2);
 	ft_oldpwd(info);
 	if (chdir(new_dir))
 	{
 		ft_back(info->env, op, new_dir);
 		free(new_dir);
-		return (free(op), 1);
+		return (free(op), 2);
 	}
 	if (ft_newpwd(info))
-		return (free(new_dir), free(op), 1);
+		return (free(new_dir), free(op), 2);
 	return (free(new_dir), free(op), 0);
 }
 
@@ -76,7 +78,6 @@ int	ft_do_cd(t_info *info, t_big_token *b, char *op)
 	}
 	else
 	{
-		ft_oldpwd(info);
 		if (b->cmd_args[1][0] != '\0')
 		{
 			if (access(b->cmd_args[1], F_OK))
@@ -91,18 +92,27 @@ int	ft_do_cd(t_info *info, t_big_token *b, char *op)
 
 int	ft_cd_home(t_info *info, char *home, char *op)
 {
+	int	err;
+
+	err = 0;
 	if (!home)
 		return (free(op), ft_putstr_error("minishell: cd: HOME not set\n"));
 	else
 	{	
 		ft_oldpwd(info);
 		if (chdir(home))
-			return (ft_back(info->env, op, home), free(op), 1);
+		{
+			err = ft_back(info->env, op, home);
+			if (err == 2)
+				exit (ft_mal_err(info, info->env, "Malloc error\n"));
+			else if (err)
+				return (free(op), err);
+		}
 	}
 	return (0);
 }
 
-int	ft_cd(t_info *info, t_big_token *b_tokens)
+int	ft_cd(t_info *info, t_big_token *b_tokens, int err)
 {
 	char	*home;
 	char	*new_dir;
@@ -113,19 +123,20 @@ int	ft_cd(t_info *info, t_big_token *b_tokens)
 		return (ft_putstr_error("minishell: cd: too many arguments\n"));
 	op = ft_strdup(ft_get_env_value(info, "OLDPWD"));
 	if (!op)
-		return (1);
+		exit (ft_mal_err(info, info->env, "Malloc error\n"));
 	if (ft_is_tilde_or_home(home, b_tokens->cmd_args[1]) == 1)
 	{
 		if (ft_cd_home(info, home, op))
 			return (1);
 	}
 	else if (!ft_is_tilde_or_home(home, b_tokens->cmd_args[1]))
-		return (free(op), ft_do_tilde(info, b_tokens->cmd_args[1], home,
-				new_dir));
+		err = ft_do_tilde(info, b_tokens->cmd_args[1], home, new_dir);
 	else
-		if (ft_do_cd(info, b_tokens, op))
-			return (free(op), 1);
-	if (ft_newpwd(info))
-		return (free(op), 1);
-	return (free(op), 0);
+		err = ft_do_cd(info, b_tokens, op);
+	if (!err)
+		err = ft_newpwd(info);
+	free(op);
+	if (err == 2)
+		exit (ft_mal_err(info, info->env, "Malloc error\n"));
+	return (0);
 }

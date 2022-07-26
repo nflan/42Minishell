@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:37:55 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/25 18:38:30 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 12:30:34 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_back(t_env *env, char *op, char *home)
 		free(env->value);
 		env->value = ft_strdup(op);
 		if (!env->value)
-			return (ft_perror("minishell: cd: ", home));
+			return (free(op), 2);
 	}
 	return (ft_perror("minishell: cd: ", home));
 }

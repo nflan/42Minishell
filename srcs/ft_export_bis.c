@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 15:52:52 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/25 19:24:22 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 12:19:03 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_if_eg(t_info *info, t_env *tmp, char *line, int i)
 		if (tmp)
 		{
 			if (ft_export_concat(tmp, line, i))
-				return (1);
+				exit (ft_mal_err(info, info->env, "Malloc error\n"));
 			return (0);
 		}
 	}
@@ -31,11 +31,11 @@ int	ft_if_eg(t_info *info, t_env *tmp, char *line, int i)
 	if (!tmp)
 	{
 		if (ft_export_new(info->env, tmp, line))
-			return (1);
+			exit (ft_mal_err(info, info->env, "Malloc error\n"));
 	}
 	else
 		if (ft_export_replace(tmp, line, i))
-			return (1);
+			exit (ft_mal_err(info, info->env, "Malloc error\n"));
 	return (0);
 }
 
@@ -45,7 +45,7 @@ int	ft_ifnot_eg(t_info *info, t_env *tmp, char *line, int i)
 		tmp = tmp->next;
 	if (!tmp)
 		if (ft_export_new(info->env, tmp, line))
-			return (1);
+			exit (ft_mal_err(info, info->env, "Malloc error\n"));
 	return (0);
 }
 
@@ -55,13 +55,9 @@ int	ft_exporting(t_info *info, t_big_token *b_tok, t_env *tmp, int (*ji)[2])
 		&& b_tok->cmd_args[*ji[0]][*ji[1]] != '=')
 		(*ji[1])++;
 	if (b_tok->cmd_args[*ji[0]][*ji[1]] == '=')
-	{
-		if (ft_if_eg(info, tmp, b_tok->cmd_args[*ji[0]], *ji[1]))
-			return (1);
-	}
+		ft_if_eg(info, tmp, b_tok->cmd_args[*ji[0]], *ji[1]);
 	else
-		if (ft_ifnot_eg(info, tmp, b_tok->cmd_args[*ji[0]], *ji[1]))
-			return (1);
+		ft_ifnot_eg(info, tmp, b_tok->cmd_args[*ji[0]], *ji[1]);
 	return (0);
 }
 
@@ -81,10 +77,7 @@ int	ft_do_export(t_info *info, t_big_token *b_tok, t_env *tmp, int i)
 		a = ft_check_export(b_tok->cmd_args[ji[0]]);
 		i = 0;
 		if (!a)
-		{
-			if (ft_exporting(info, b_tok, tmp, &ji))
-				return (1);
-		}
+			ft_exporting(info, b_tok, tmp, &ji);
 		else if (a == 1)
 			err = 1;
 	}

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:10:15 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/26 00:04:28 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 12:39:19 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,7 @@ int				ft_do_tilde(t_info *info, char *arg, char *home, char *new_dir);
 int				ft_unset_solo(t_info *info, char *name);
 int				ft_do_cd(t_info *info, t_big_token *b, char *op);
 int				ft_cd_home(t_info *info, char *home, char *op);
-int				ft_cd(t_info *info, t_big_token *b_tokens);
+int				ft_cd(t_info *info, t_big_token *b_tokens, int err);
 //-----------ft_cd_2.c----------------------------------------------------------
 int				ft_is_tilde_or_home(char *home, char *dir);
 char			*ft_cd_tilde(t_info *info, char *home, char *dir);

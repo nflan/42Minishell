@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 21:41:14 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/25 19:20:02 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 12:44:42 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,8 @@ int	ft_env_args(t_big_token *b_tok, int *i)
 int	ft_env(t_info *info, t_big_token *b_tok, int i)
 {
 	t_env	*print;
-	char	*line;
 
 	print = info->env;
-	line = NULL;
 	if (b_tok->cmd_args[1] && b_tok->cmd_args[1][0] == '-')
 		return (ft_putstr_error("minishell: env with option\n"), 2);
 	if (b_tok->cmd_args[1])
@@ -79,10 +77,10 @@ int	ft_env(t_info *info, t_big_token *b_tok, int i)
 		{
 			if (print->value)
 			{
-				line = ft_strjoiiin(print->name, "=", print->value);
-				line = ft_strjoin_free(line, "\n", 1);
-				ft_putstr_fd(line, b_tok->fdout);
-				free(line);
+				ft_putstr_fd(print->name, b_tok->fdout);
+				ft_putstr_fd("=", b_tok->fdout);
+				ft_putstr_fd(print->value, b_tok->fdout);
+				ft_putstr_fd("\n", b_tok->fdout);
 			}
 			print = print->next;
 		}

@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:51:58 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/25 23:34:18 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 13:20:40 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	ft_fdnew(t_big_token *b_tokens, t_fd **fd, t_token **tmp, int itscl[7])
 int	ft_create_tmp(t_fd *fd, int hd)
 {
 	unsigned long long	i;
+	char				*tmp;
 
 	i = 0;
 	if (hd)
@@ -74,11 +75,16 @@ int	ft_create_tmp(t_fd *fd, int hd)
 			return (1);
 		while (access(fd->file, F_OK) == 0)
 		{
+			tmp = NULL;
 			i++;
 			free(fd->file);
-			fd->file = ft_strjoin_free("/tmp/.tmp_hd_", ft_itoa(i), 2);
-			if (!fd->file)
+			tmp = ft_itoa(i);
+			if (!tmp)
 				return (1);
+			fd->file = ft_strjoin("/tmp/.tmp_hd_", tmp);
+			if (!fd->file)
+				return (free(tmp), 1);
+			free(tmp);
 		}
 	}
 	return (0);

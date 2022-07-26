@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 18:29:31 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/26 00:24:19 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 12:06:52 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	resplit_tool(int (*jl)[2], char **tmp, char *to_copy, int type)
 	else if (type == 2)
 		tmp[j] = ft_minisplit(to_copy);
 	else if (type == 3)
-		tmp[j] = NULL;
+		tmp[j] = ft_strdup(to_copy);
 	if (!tmp[j])
 		return (1);
 	((*jl)[0])++;

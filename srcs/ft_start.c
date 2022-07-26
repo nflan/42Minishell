@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:14:18 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/25 23:44:30 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 13:34:37 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_keep_history(t_info *info, char *str)
 	i = 0;
 	tmp = readline(str);
 	free(str);
-	if (g_sc)
+	if (g_sc == 130)
 	{
 		info->status = g_sc;
 		g_sc = 0;
@@ -46,7 +46,7 @@ int	ft_init_info(t_info *info)
 	int	err;
 
 	err = main_agent_o(info);
-	if (err == 2)
+	if (err == 2 || g_sc == 130)
 	{
 		info->status = err;
 		if (g_sc == 130)

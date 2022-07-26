@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 20:06:31 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/25 18:34:17 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 12:42:39 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	ft_newpwd(t_info *info)
 		tmp = tmp->next;
 	if (!tmp)
 		return (free(pwd), 0);
-	ft_export_replace(tmp, pwd, -1);
+	if (ft_export_replace(tmp, pwd, -1))
+		return (free(pwd), 2);
 	free(pwd);
 	return (0);
 }

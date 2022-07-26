@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 10:29:00 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/25 12:51:36 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 12:14:06 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_change__(t_env *env, t_big_token *b_tokens)
 	tmp = env;
 	if (!tmp)
 		return (1);
-	while (ft_strncmp(tmp->name, "_", 2))
+	while (tmp && ft_strncmp(tmp->name, "_", 2))
 		tmp = tmp->next;
 	if (tmp)
 		return (ft_export_replace(tmp, b_tokens->cmd_args[0], -1));
@@ -103,7 +103,7 @@ int	ft_launch_cmd(t_info *info, t_big_token *b_tokens)
 		return (ft_fork_par(info, b_tokens));
 	b_tokens->envp = ft_env_to_tab(info->env);
 	if (ft_change__(info->env, b_tokens))
-		return (info->status = 1, 1);
+		exit (ft_mal_err(info, info->env, "Malloc error\n"));
 	if (!ft_check_builtins(b_tokens))
 		info->status = ft_builtins(info, b_tokens);
 	else if (ft_check_builtins(b_tokens))

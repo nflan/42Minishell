@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:13:19 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/25 23:45:31 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 13:33:55 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_write_here(t_fd *fd, char **str, int i, int red)
 		{
 			*str = ft_expand_l(*str, fd->info, 1);
 			if (!*str)
-				return (1);
+				return (ft_putstr_error("Malloc error\n"));
 		}
 		write(fd->fd, *str, ft_strlen(*str));
 		write(fd->fd, "\n", 1);
@@ -50,7 +50,7 @@ int	ft_fill_here(t_fd *fd, int red)
 		if (!buf && !g_sc)
 			ft_write_here(fd, &fd->delimitator, 1, red);
 		if (!buf || !ft_strncmp(buf, fd->delimitator,
-				ft_strlen(fd->delimitator) + 1) || g_sc)
+				ft_strlen(fd->delimitator) + 1))
 			break ;
 		else
 			if (ft_write_here(fd, &buf, 2, red))
@@ -78,10 +78,10 @@ int	ft_here(t_fd *fd, int red)
 	pid_t	pid;
 
 	pid = -1;
-	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if ((int) pid == -1)
 		return (ft_putstr_error("Child error\n"));
+	signal(SIGINT, SIG_IGN);
 	if ((int) pid == 0)
 	{
 		signal(SIGINT, &ft_sighere);
@@ -91,15 +91,13 @@ int	ft_here(t_fd *fd, int red)
 		free(fd->file);
 		ft_exit_cmd(fd->info, NULL, g_sc);
 	}
-	waitpid(pid, &pid, 0);
-	if (pid == 2)
-		fd->info->status = 130;
+	waitpid((int)pid, &pid, 0);
 	signal(SIGINT, &ft_signal);
-	if (WIFEXITED(pid))
-		fd->info->status = WEXITSTATUS(pid);
 	close(fd->fd);
 	fd->fd = 0;
-	return (fd->info->status);
+	if (WIFEXITED(pid))
+		g_sc = WEXITSTATUS(pid);
+	return (g_sc);
 }
 
 char	**ft_env_to_tab(t_env *env)

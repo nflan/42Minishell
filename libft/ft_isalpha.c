@@ -6,7 +6,7 @@
 /*   By: nflan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:34:52 by nflan             #+#    #+#             */
-/*   Updated: 2022/07/22 10:37:14 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 12:12:11 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_wordigit(char *str)
 {
 	if (!str)
 		return (1);
-	if (!ft_isalpha(*str))
+	if (!ft_isalpha(*str) && *str != '_')
 		return (1);
 	str++;
 	while (*str)

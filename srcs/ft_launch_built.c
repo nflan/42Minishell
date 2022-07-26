@@ -6,7 +6,7 @@
 /*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:13:34 by omoudni           #+#    #+#             */
-/*   Updated: 2022/07/25 19:19:34 by nflan            ###   ########.fr       */
+/*   Updated: 2022/07/26 12:39:25 by nflan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_builtins(t_info *info, t_big_token *b_tokens)
 	else if (!ft_strncmp(b_tokens->cmd_args[0], "export", len))
 		return (ft_export(info, b_tokens));
 	else if (!ft_strncmp(b_tokens->cmd_args[0], "cd", len))
-		return (ft_cd(info, b_tokens));
+		return (ft_cd(info, b_tokens, 0));
 	else if (!ft_strncmp(b_tokens->cmd_args[0], "exit", len)
 		|| !ft_strncmp(b_tokens->cmd_args[0], "exit ", 5))
 		return (ft_exit(info, b_tokens));
