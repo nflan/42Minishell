@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   big_tokenizer_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omoudni <omoudni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nflan <marvin@42.fr> 			            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:18:51 by omoudni           #+#    #+#             */
 /*   Updated: 2022/07/25 22:52:52 by nflan            ###   ########.fr       */
